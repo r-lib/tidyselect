@@ -168,14 +168,6 @@ match_var <- function(chr, table) {
   pos
 }
 
-#' @rdname se-deprecated
-#' @inheritParams select_vars
-#' @export
-select_vars_ <- function(vars, args, include = character(), exclude = character()) {
-  args <- compat_lazy_dots(args, caller_env())
-  select_vars(vars, !!! args, include = include, exclude = exclude)
-}
-
 setdiff2 <- function(x, y) {
   x[match(x, y, 0L) == 0L]
 }
@@ -202,12 +194,6 @@ rename_vars <- function(vars, ..., strict = TRUE) {
   names(select)[match(old_vars, vars)] <- new_vars
 
   select
-}
-#' @export
-#' @rdname se-deprecated
-rename_vars_ <- function(vars, args) {
-  args <- compat_lazy_dots(args, caller_env())
-  rename_vars(vars, !!! args)
 }
 
 # FIXME: that's not a tidy implementation yet because we need to
