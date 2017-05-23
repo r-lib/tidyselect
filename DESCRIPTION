@@ -21,3 +21,4 @@ License: GPL-3
 Encoding: UTF-8
 LazyData: true
 ByteCompile: true
+RoxygenNote: 6.0.1
