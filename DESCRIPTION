@@ -11,9 +11,12 @@ Depends:
     R (>= 3.4.0)
 Imports:
     glue,
-    rlang (>= 0.1)
+    rlang (>= 0.1),
+    Rcpp (>= 0.12.0)
 Suggests:
     testthat
+LinkingTo:
+    Rcpp (>= 0.12.0),
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
