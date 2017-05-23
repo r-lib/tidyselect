@@ -61,13 +61,14 @@ These functions allow you to select variables based on their names.
 * `everything()`: all variables.
 }
 \examples{
-iris <- tbl_df(iris) # so it prints a little nicer
-select(iris, starts_with("Petal"))
-select(iris, ends_with("Width"))
-select(iris, contains("etal"))
-select(iris, matches(".t."))
-select(iris, Petal.Length, Petal.Width)
-select(iris, everything())
+nms <- names(iris)
+select_vars(nms, starts_with("Petal"))
+select_vars(nms, ends_with("Width"))
+select_vars(nms, contains("etal"))
+select_vars(nms, matches(".t."))
+select_vars(nms, Petal.Length, Petal.Width)
+select_vars(nms, everything())
+
 vars <- c("Petal.Length", "Petal.Width")
-select(iris, one_of(vars))
+select_vars(nms, one_of(vars))
 }
