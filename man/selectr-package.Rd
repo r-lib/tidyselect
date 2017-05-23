@@ -6,7 +6,8 @@
 \alias{selectr-package}
 \title{selectr: Select From a Set of Strings}
 \description{
-The backend of selecting functions in the 'Tidyverse'
+A backend for the selecting functions of the 'Tidyverse'
+which makes it easy to implement select-like functions.
 }
 \author{
 \strong{Maintainer}: Lionel Henry \email{lionel@rstudio.com}
