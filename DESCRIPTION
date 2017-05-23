@@ -7,7 +7,13 @@ Authors@R: c(
     person("RStudio", role = "cph")
     )
 Description: The backend of selecting functions in the 'Tidyverse'
-Depends: R (>= 3.4.0)
+Depends:
+    R (>= 3.4.0)
+Imports:
+    glue,
+    rlang (>= 0.1)
+Suggests:
+    testthat
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
