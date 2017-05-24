@@ -5,15 +5,15 @@
 
 using namespace Rcpp;
 
-// combine_vars
-SEXP combine_vars(CharacterVector vars, ListOf<IntegerVector> xs);
-RcppExport SEXP selectr_combine_vars(SEXP varsSEXP, SEXP xsSEXP) {
+// inds_combine
+SEXP inds_combine(CharacterVector vars, ListOf<IntegerVector> xs);
+RcppExport SEXP selectr_inds_combine(SEXP varsSEXP, SEXP xsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< CharacterVector >::type vars(varsSEXP);
     Rcpp::traits::input_parameter< ListOf<IntegerVector> >::type xs(xsSEXP);
-    rcpp_result_gen = Rcpp::wrap(combine_vars(vars, xs));
+    rcpp_result_gen = Rcpp::wrap(inds_combine(vars, xs));
     return rcpp_result_gen;
 END_RCPP
 }

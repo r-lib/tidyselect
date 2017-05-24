@@ -76,7 +76,7 @@ public:
 };
 
 // [[Rcpp::export]]
-SEXP combine_vars(CharacterVector vars, ListOf<IntegerVector> xs) {
+SEXP inds_combine(CharacterVector vars, ListOf<IntegerVector> xs) {
   VarList selected(vars.size());
   if (xs.size() == 0)
     return IntegerVector::create();

@@ -124,7 +124,7 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
     )
   }
 
-  incl <- combine_vars(.vars, ind_list)
+  incl <- inds_combine(.vars, ind_list)
 
   # Include/.exclude specified variables
   sel <- set_names(.vars[incl], names(incl))
