@@ -1,4 +1,4 @@
-context("combine_indices()")
+context("combine indices")
 
 # This is the low C++ function which works on integer indices
 

@@ -230,15 +230,15 @@ test_that("can select with .data pronoun (#2715)", {
 
 # rename_vars -------------------------------------------------------------
 
-test_that("when strict = FALSE, rename_vars always succeeds", {
+test_that("when .strict = FALSE, rename_vars always succeeds", {
   expect_error(
-    rename_vars(c("a", "b"), d = e, strict = TRUE),
+    rename_vars(c("a", "b"), d = e, .strict = TRUE),
     "`e` contains unknown variables",
     fixed = TRUE
   )
 
   expect_equal(
-    rename_vars(c("a", "b"), d = e, strict = FALSE),
+    rename_vars(c("a", "b"), d = e, .strict = FALSE),
     c("a" = "a", "b" = "b")
   )
 })

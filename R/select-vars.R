@@ -9,7 +9,7 @@
 #' enquose and splice the dots to work around these limitations (see
 #' examples).
 #'
-#' @param vars A character vector of existing column names.
+#' @param .vars A character vector of existing column names.
 #' @param ...,args Expressions to compute
 #'
 #'   These arguments are automatically [quoted][rlang::quo] and
@@ -23,7 +23,7 @@
 #'   are evaluated outside that context. This is to prevent accidental
 #'   matching to `vars` elements when you refer to variables from the
 #'   calling context.
-#' @param include,exclude Character vector of column names to always
+#' @param .include,.exclude Character vector of column names to always
 #'   include/exclude.
 #' @seealso [select_var()]
 #' @export
@@ -83,24 +83,24 @@
 #'
 #' # This won't match on `include`:
 #' wrapper(include = cyl)
-select_vars <- function(vars, ..., include = character(), exclude = character()) {
+select_vars <- function(.vars, ..., .include = character(), .exclude = character()) {
   quos <- quos(...)
 
   if (is_empty(quos)) {
-    vars <- setdiff(include, exclude)
-    return(set_names(vars, vars))
+    .vars <- setdiff(.include, .exclude)
+    return(set_names(.vars, .vars))
   }
 
   # Set current_vars so available to select_helpers
-  old <- set_current_vars(vars)
+  old <- set_current_vars(.vars)
   on.exit(set_current_vars(old), add = TRUE)
 
   # Map variable names to their positions: this keeps integer semantics
-  names_list <- set_names(as.list(seq_along(vars)), vars)
+  names_list <- set_names(as.list(seq_along(.vars)), .vars)
 
   # if the first selector is exclusive (negative), start with all columns
   first <- f_rhs(quos[[1]])
-  initial_case <- if (is_negated(first)) list(seq_along(vars)) else integer(0)
+  initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
 
   # Evaluate symbols in an environment where columns are bound, but
   # not calls (select helpers are scoped in the calling environment)
@@ -112,7 +112,7 @@ select_vars <- function(vars, ..., include = character(), exclude = character())
   names(ind_list) <- c(names2(initial_case), names2(quos))
 
   # Match strings to variable positions
-  ind_list <- map_if(ind_list, is_character, match_var, table = vars)
+  ind_list <- map_if(ind_list, is_character, match_var, table = .vars)
 
   is_integerish <- map_lgl(ind_list, is_integerish)
   if (any(!is_integerish)) {
@@ -124,14 +124,14 @@ select_vars <- function(vars, ..., include = character(), exclude = character())
     )
   }
 
-  incl <- combine_vars(vars, ind_list)
+  incl <- combine_vars(.vars, ind_list)
 
-  # Include/exclude specified variables
-  sel <- set_names(vars[incl], names(incl))
-  sel <- c(setdiff2(include, sel), sel)
-  sel <- setdiff2(sel, exclude)
+  # Include/.exclude specified variables
+  sel <- set_names(.vars[incl], names(incl))
+  sel <- c(setdiff2(.include, sel), sel)
+  sel <- setdiff2(sel, .exclude)
 
-  # Ensure all output vars named
+  # Ensure all output .vars named
   if (is_empty(sel)) {
     names(sel) <- sel
   } else {
@@ -174,9 +174,9 @@ setdiff2 <- function(x, y) {
 
 #' @export
 #' @rdname select_vars
-#' @param strict If `TRUE`, will throw an error if you attempt to rename a
+#' @param .strict If `TRUE`, will throw an error if you attempt to rename a
 #'   variable that doesn't exist.
-rename_vars <- function(vars, ..., strict = TRUE) {
+rename_vars <- function(.vars, ..., .strict = TRUE) {
   exprs <- exprs(...)
   if (any(names2(exprs) == "")) {
     abort("All arguments must be named")
@@ -185,13 +185,13 @@ rename_vars <- function(vars, ..., strict = TRUE) {
   old_vars <- map2(exprs, names(exprs), switch_rename)
   new_vars <- names(exprs)
 
-  unknown_vars <- setdiff(old_vars, vars)
-  if (strict && length(unknown_vars) > 0) {
+  unknown_vars <- setdiff(old_vars, .vars)
+  if (.strict && length(unknown_vars) > 0) {
     bad_args(unknown_vars, "contains unknown variables")
   }
 
-  select <- set_names(vars, vars)
-  names(select)[match(old_vars, vars)] <- new_vars
+  select <- set_names(.vars, .vars)
+  names(select)[match(old_vars, .vars)] <- new_vars
 
   select
 }

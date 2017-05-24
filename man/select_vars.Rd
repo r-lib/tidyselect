@@ -5,12 +5,12 @@
 \alias{rename_vars}
 \title{Select variables.}
 \usage{
-select_vars(vars, ..., include = character(), exclude = character())
+select_vars(.vars, ..., .include = character(), .exclude = character())
 
-rename_vars(vars, ..., strict = TRUE)
+rename_vars(.vars, ..., .strict = TRUE)
 }
 \arguments{
-\item{vars}{A character vector of existing column names.}
+\item{.vars}{A character vector of existing column names.}
 
 \item{..., args}{Expressions to compute
 
@@ -26,10 +26,10 @@ rename_vars(vars, ..., strict = TRUE)
   matching to `vars` elements when you refer to variables from the
   calling context.}
 
-\item{include, exclude}{Character vector of column names to always
+\item{.include, .exclude}{Character vector of column names to always
 include/exclude.}
 
-\item{strict}{If `TRUE`, will throw an error if you attempt to rename a
+\item{.strict}{If `TRUE`, will throw an error if you attempt to rename a
 variable that doesn't exist.}
 }
 \value{

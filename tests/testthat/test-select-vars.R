@@ -1,4 +1,4 @@
-context("select_vars()")
+context("select vars")
 
 test_that("select_vars can rename variables", {
   vars <- c("a", "b")

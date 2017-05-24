@@ -7,8 +7,6 @@
 select_var(vars, var = -1)
 }
 \arguments{
-\item{vars}{A character vector of existing column names.}
-
 \item{var}{A variable specified as:
   * a literal variable name
   * a positive integer, giving the position counting from the left
