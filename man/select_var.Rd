@@ -24,7 +24,7 @@ The selected column name as an unnamed string.
 }
 \description{
 This function powers [pull()] and various functions of the tidyr
-package. It is similar to [select_vars()] but returns only one
+package. It is similar to [vars_select()] but returns only one
 column name and has slightly different semantics: it allows
 negative numbers to select columns from the end.
 }
@@ -40,6 +40,6 @@ var <- 10
 select_var(letters, !! var)
 }
 \seealso{
-[pull()], [select_vars()]
+[pull()], [vars_select()]
 }
 \keyword{internal}
