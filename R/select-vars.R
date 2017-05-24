@@ -56,7 +56,7 @@
 #' vars_select(names(iris), petal = starts_with("Petal"))
 #'
 #' # Rename variables preserving all existing
-#' rename_vars(names(iris), petal_length = Petal.Length)
+#' vars_rename(names(iris), petal_length = Petal.Length)
 #'
 #' # You can unquote names or formulas (or lists of)
 #' vars_select(names(iris), !!! list(quo(Petal.Length)))
@@ -176,7 +176,7 @@ setdiff2 <- function(x, y) {
 #' @rdname vars_select
 #' @param .strict If `TRUE`, will throw an error if you attempt to rename a
 #'   variable that doesn't exist.
-rename_vars <- function(.vars, ..., .strict = TRUE) {
+vars_rename <- function(.vars, ..., .strict = TRUE) {
   exprs <- exprs(...)
   if (any(names2(exprs) == "")) {
     abort("All arguments must be named")

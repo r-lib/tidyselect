@@ -228,24 +228,24 @@ test_that("can select with .data pronoun (#2715)", {
 })
 
 
-# rename_vars -------------------------------------------------------------
+# vars_rename -------------------------------------------------------------
 
-test_that("when .strict = FALSE, rename_vars always succeeds", {
+test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
-    rename_vars(c("a", "b"), d = e, .strict = TRUE),
+    vars_rename(c("a", "b"), d = e, .strict = TRUE),
     "`e` contains unknown variables",
     fixed = TRUE
   )
 
   expect_equal(
-    rename_vars(c("a", "b"), d = e, .strict = FALSE),
+    vars_rename(c("a", "b"), d = e, .strict = FALSE),
     c("a" = "a", "b" = "b")
   )
 })
 
-test_that("rename_vars() expects symbol or string", {
+test_that("vars_rename() expects symbol or string", {
   expect_error(
-    rename_vars(letters, d = 1),
+    vars_rename(letters, d = 1),
     '`d` = 1 must be a symbol or a string',
     fixed = TRUE
   )
