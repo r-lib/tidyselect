@@ -102,6 +102,6 @@ wrapper(var = cyl)
 wrapper(include = cyl)
 }
 \seealso{
-[select_var()]
+[var_select()]
 }
 \keyword{internal}
