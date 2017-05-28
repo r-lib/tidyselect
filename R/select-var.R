@@ -1,11 +1,11 @@
 #' Select variable
 #'
 #' This function powers [pull()] and various functions of the tidyr
-#' package. It is similar to [select_vars()] but returns only one
+#' package. It is similar to [vars_select()] but returns only one
 #' column name and has slightly different semantics: it allows
 #' negative numbers to select columns from the end.
 #'
-#' @inheritParams select_vars
+#' @inheritParams vars_select
 #' @param var A variable specified as:
 #'   * a literal variable name
 #'   * a positive integer, giving the position counting from the left
@@ -18,20 +18,20 @@
 #'   [quasiquotation][rlang::quasiquotation] (you can unquote column
 #'   names and column positions).
 #' @return The selected column name as an unnamed string.
-#' @seealso [pull()], [select_vars()]
+#' @seealso [pull()], [vars_select()]
 #' @export
 #' @keywords internal
 #' @examples
 #' # It takes its argument by expression:
-#' select_var(letters, c)
+#' var_select(letters, c)
 #'
 #' # Negative numbers select from the end:
-#' select_var(letters, -3)
+#' var_select(letters, -3)
 #'
 #' # You can unquote variables:
 #' var <- 10
-#' select_var(letters, !! var)
-select_var <- function(vars, var = -1) {
+#' var_select(letters, !! var)
+var_select <- function(vars, var = -1) {
   var_env <- set_names(as_list(seq_along(vars)), vars)
   var <- eval_tidy(enquo(var), var_env)
   n <- length(vars)

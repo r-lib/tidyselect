@@ -25,57 +25,57 @@
 #'   calling context.
 #' @param .include,.exclude Character vector of column names to always
 #'   include/exclude.
-#' @seealso [select_var()]
+#' @seealso [var_select()]
 #' @export
 #' @keywords internal
 #' @return A named character vector. Values are existing column names,
 #'   names are new names.
 #' @examples
 #' # Keep variables
-#' select_vars(names(iris), everything())
-#' select_vars(names(iris), starts_with("Petal"))
-#' select_vars(names(iris), ends_with("Width"))
-#' select_vars(names(iris), contains("etal"))
-#' select_vars(names(iris), matches(".t."))
-#' select_vars(names(iris), Petal.Length, Petal.Width)
-#' select_vars(names(iris), one_of("Petal.Length", "Petal.Width"))
+#' vars_select(names(iris), everything())
+#' vars_select(names(iris), starts_with("Petal"))
+#' vars_select(names(iris), ends_with("Width"))
+#' vars_select(names(iris), contains("etal"))
+#' vars_select(names(iris), matches(".t."))
+#' vars_select(names(iris), Petal.Length, Petal.Width)
+#' vars_select(names(iris), one_of("Petal.Length", "Petal.Width"))
 #'
 #' df <- as.data.frame(matrix(runif(100), nrow = 10))
 #' df <- df[c(3, 4, 7, 1, 9, 8, 5, 2, 6, 10)]
-#' select_vars(names(df), num_range("V", 4:6))
+#' vars_select(names(df), num_range("V", 4:6))
 #'
 #' # Drop variables
-#' select_vars(names(iris), -starts_with("Petal"))
-#' select_vars(names(iris), -ends_with("Width"))
-#' select_vars(names(iris), -contains("etal"))
-#' select_vars(names(iris), -matches(".t."))
-#' select_vars(names(iris), -Petal.Length, -Petal.Width)
+#' vars_select(names(iris), -starts_with("Petal"))
+#' vars_select(names(iris), -ends_with("Width"))
+#' vars_select(names(iris), -contains("etal"))
+#' vars_select(names(iris), -matches(".t."))
+#' vars_select(names(iris), -Petal.Length, -Petal.Width)
 #'
 #' # Rename variables
-#' select_vars(names(iris), petal_length = Petal.Length)
-#' select_vars(names(iris), petal = starts_with("Petal"))
+#' vars_select(names(iris), petal_length = Petal.Length)
+#' vars_select(names(iris), petal = starts_with("Petal"))
 #'
 #' # Rename variables preserving all existing
-#' rename_vars(names(iris), petal_length = Petal.Length)
+#' vars_rename(names(iris), petal_length = Petal.Length)
 #'
 #' # You can unquote names or formulas (or lists of)
-#' select_vars(names(iris), !!! list(quo(Petal.Length)))
-#' select_vars(names(iris), !! quote(Petal.Length))
+#' vars_select(names(iris), !!! list(quo(Petal.Length)))
+#' vars_select(names(iris), !! quote(Petal.Length))
 #'
 #' # The .data pronoun is available:
-#' select_vars(names(mtcars), .data$cyl)
-#' select_vars(names(mtcars), .data$mpg : .data$disp)
+#' vars_select(names(mtcars), .data$cyl)
+#' vars_select(names(mtcars), .data$mpg : .data$disp)
 #'
 #' # However it isn't available within calls since those are evaluated
 #' # outside of the data context. This would fail if run:
-#' # select_vars(names(mtcars), identical(.data$cyl))
+#' # vars_select(names(mtcars), identical(.data$cyl))
 #'
 #'
-#' # If you're writing a wrapper around select_vars(), pass the dots
-#' # via splicing to avoid matching dotted arguments to select_vars()
+#' # If you're writing a wrapper around vars_select(), pass the dots
+#' # via splicing to avoid matching dotted arguments to vars_select()
 #' # named arguments (`vars`, `include` and `exclude`):
 #' wrapper <- function(...) {
-#'   select_vars(names(mtcars), !!! quos(...))
+#'   vars_select(names(mtcars), !!! quos(...))
 #' }
 #'
 #' # This won't partial-match on `vars`:
@@ -83,7 +83,7 @@
 #'
 #' # This won't match on `include`:
 #' wrapper(include = cyl)
-select_vars <- function(.vars, ..., .include = character(), .exclude = character()) {
+vars_select <- function(.vars, ..., .include = character(), .exclude = character()) {
   quos <- quos(...)
 
   if (is_empty(quos)) {
@@ -124,7 +124,7 @@ select_vars <- function(.vars, ..., .include = character(), .exclude = character
     )
   }
 
-  incl <- combine_vars(.vars, ind_list)
+  incl <- inds_combine(.vars, ind_list)
 
   # Include/.exclude specified variables
   sel <- set_names(.vars[incl], names(incl))
@@ -173,10 +173,10 @@ setdiff2 <- function(x, y) {
 }
 
 #' @export
-#' @rdname select_vars
+#' @rdname vars_select
 #' @param .strict If `TRUE`, will throw an error if you attempt to rename a
 #'   variable that doesn't exist.
-rename_vars <- function(.vars, ..., .strict = TRUE) {
+vars_rename <- function(.vars, ..., .strict = TRUE) {
   exprs <- exprs(...)
   if (any(names2(exprs) == "")) {
     abort("All arguments must be named")

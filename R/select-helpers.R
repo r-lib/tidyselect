@@ -19,15 +19,15 @@
 #' @return An integer vector giving the position of the matched variables.
 #' @examples
 #' nms <- names(iris)
-#' select_vars(nms, starts_with("Petal"))
-#' select_vars(nms, ends_with("Width"))
-#' select_vars(nms, contains("etal"))
-#' select_vars(nms, matches(".t."))
-#' select_vars(nms, Petal.Length, Petal.Width)
-#' select_vars(nms, everything())
+#' vars_select(nms, starts_with("Petal"))
+#' vars_select(nms, ends_with("Width"))
+#' vars_select(nms, contains("etal"))
+#' vars_select(nms, matches(".t."))
+#' vars_select(nms, Petal.Length, Petal.Width)
+#' vars_select(nms, everything())
 #'
 #' vars <- c("Petal.Length", "Petal.Width")
-#' select_vars(nms, one_of(vars))
+#' vars_select(nms, one_of(vars))
 NULL
 
 cur_vars_env <- child_env(NULL)

@@ -42,10 +42,10 @@ test_that("can use a variable", {
   vars <- "x"
   names(vars) <- vars
 
-  expect_equal(select_vars(vars, starts_with(vars)), c(x = "x"))
-  expect_equal(select_vars(vars, ends_with(vars)), c(x = "x"))
-  expect_equal(select_vars(vars, contains(vars)), c(x = "x"))
-  expect_equal(select_vars(vars, matches(vars)), c(x = "x"))
+  expect_equal(vars_select(vars, starts_with(vars)), c(x = "x"))
+  expect_equal(vars_select(vars, ends_with(vars)), c(x = "x"))
+  expect_equal(vars_select(vars, contains(vars)), c(x = "x"))
+  expect_equal(vars_select(vars, matches(vars)), c(x = "x"))
 })
 
 test_that("can use a variable even if it exists in the data (#2266)", {
@@ -55,25 +55,25 @@ test_that("can use a variable even if it exists in the data (#2266)", {
   y <- "x"
   expected_result <- c(x = "x")
 
-  expect_equal(select_vars(vars, starts_with(y)), expected_result)
-  expect_equal(select_vars(vars, ends_with(y)), expected_result)
-  expect_equal(select_vars(vars, contains(y)), expected_result)
-  expect_equal(select_vars(vars, matches(y)), expected_result)
+  expect_equal(vars_select(vars, starts_with(y)), expected_result)
+  expect_equal(vars_select(vars, ends_with(y)), expected_result)
+  expect_equal(vars_select(vars, contains(y)), expected_result)
+  expect_equal(vars_select(vars, matches(y)), expected_result)
 })
 
 test_that("num_range selects numeric ranges", {
   vars <- c("x1", "x2", "x01", "x02", "x10", "x11")
   names(vars) <- vars
 
-  expect_equal(select_vars(vars, num_range("x", 1:2)), vars[1:2])
-  expect_equal(select_vars(vars, num_range("x", 1:2, width = 2)), vars[3:4])
-  expect_equal(select_vars(vars, num_range("x", 10:11)), vars[5:6])
-  expect_equal(select_vars(vars, num_range("x", 10:11, width = 2)), vars[5:6])
+  expect_equal(vars_select(vars, num_range("x", 1:2)), vars[1:2])
+  expect_equal(vars_select(vars, num_range("x", 1:2, width = 2)), vars[3:4])
+  expect_equal(vars_select(vars, num_range("x", 10:11)), vars[5:6])
+  expect_equal(vars_select(vars, num_range("x", 10:11, width = 2)), vars[5:6])
 })
 
 test_that("position must resolve to numeric variables throws error", {
   expect_error(
-    select_vars(letters, !! list()),
+    vars_select(letters, !! list()),
     'must resolve to integer column positions',
     fixed = TRUE
   )
@@ -108,10 +108,10 @@ test_that("one_of works with variables", {
   vars <- c("x", "y")
   expected_result <- c(x = "x")
   var <- "x"
-  expect_equal(select_vars(vars, one_of(var)), expected_result)
+  expect_equal(vars_select(vars, one_of(var)), expected_result)
   # error messages from rlang
-  expect_error(select_vars(vars, one_of(`_x`)), "not found")
-  expect_error(select_vars(vars, one_of(`_y`)), "not found")
+  expect_error(vars_select(vars, one_of(`_x`)), "not found")
+  expect_error(vars_select(vars, one_of(`_y`)), "not found")
 })
 
 test_that("one_of works when passed variable name matches the column name (#2266)", {
@@ -119,9 +119,9 @@ test_that("one_of works when passed variable name matches the column name (#2266
   expected_result <- c(x = "x")
   x <- "x"
   y <- "x"
-  expect_equal(select_vars(vars, one_of(!! x)), expected_result)
-  expect_equal(select_vars(vars, one_of(!! y)), expected_result)
-  expect_equal(select_vars(vars, one_of(y)), expected_result)
+  expect_equal(vars_select(vars, one_of(!! x)), expected_result)
+  expect_equal(vars_select(vars, one_of(!! y)), expected_result)
+  expect_equal(vars_select(vars, one_of(y)), expected_result)
 })
 
 # first-selector ----------------------------------------------------------
@@ -132,20 +132,20 @@ test_that("initial (single) selector defaults correctly (issue #2275)", {
   ### Single Column Selected
 
   # single columns (present), explicit
-  expect_equal(select_vars(cn, x), cn["x"])
-  expect_equal(select_vars(cn, -x), cn[c("y", "z")])
+  expect_equal(vars_select(cn, x), cn["x"])
+  expect_equal(vars_select(cn, -x), cn[c("y", "z")])
 
   # single columns (present), matched
-  expect_equal(select_vars(cn, contains("x")), cn["x"])
-  expect_equal(select_vars(cn, -contains("x")), cn[c("y", "z")])
+  expect_equal(vars_select(cn, contains("x")), cn["x"])
+  expect_equal(vars_select(cn, -contains("x")), cn[c("y", "z")])
 
   # single columns (not present), explicit
-  expect_error(select_vars(cn, foo), "not found")
-  expect_error(select_vars(cn, -foo), "not found")
+  expect_error(vars_select(cn, foo), "not found")
+  expect_error(vars_select(cn, -foo), "not found")
 
   # single columns (not present), matched
-  expect_equal(select_vars(cn, contains("foo")), cn[integer()])
-  expect_equal(select_vars(cn, -contains("foo")), cn)
+  expect_equal(vars_select(cn, contains("foo")), cn[integer()])
+  expect_equal(vars_select(cn, -contains("foo")), cn)
 })
 
 test_that("initial (of multiple) selectors default correctly (issue #2275)", {
@@ -154,98 +154,98 @@ test_that("initial (of multiple) selectors default correctly (issue #2275)", {
   ### Multiple Columns Selected
 
   # explicit(present) + matched(present)
-  expect_equal(select_vars(cn, x, contains("y")), cn[c("x", "y")])
-  expect_equal(select_vars(cn, x, -contains("y")), cn["x"])
-  expect_equal(select_vars(cn, -x, contains("y")), cn[c("y", "z")])
-  expect_equal(select_vars(cn, -x, -contains("y")), cn["z"])
+  expect_equal(vars_select(cn, x, contains("y")), cn[c("x", "y")])
+  expect_equal(vars_select(cn, x, -contains("y")), cn["x"])
+  expect_equal(vars_select(cn, -x, contains("y")), cn[c("y", "z")])
+  expect_equal(vars_select(cn, -x, -contains("y")), cn["z"])
 
   # explicit(present) + matched(not present)
-  expect_equal(select_vars(cn, x, contains("foo")), cn["x"])
-  expect_equal(select_vars(cn, x, -contains("foo")), cn["x"])
-  expect_equal(select_vars(cn, -x, contains("foo")), cn[c("y", "z")])
-  expect_equal(select_vars(cn, -x, -contains("foo")), cn[c("y", "z")])
+  expect_equal(vars_select(cn, x, contains("foo")), cn["x"])
+  expect_equal(vars_select(cn, x, -contains("foo")), cn["x"])
+  expect_equal(vars_select(cn, -x, contains("foo")), cn[c("y", "z")])
+  expect_equal(vars_select(cn, -x, -contains("foo")), cn[c("y", "z")])
 
   # matched(present) + explicit(present)
-  expect_equal(select_vars(cn, contains("x"), y), cn[c("x", "y")])
-  expect_equal(select_vars(cn, contains("x"), -y), cn["x"])
-  expect_equal(select_vars(cn, -contains("x"), y), cn[c("y", "z")])
-  expect_equal(select_vars(cn, -contains("x"), -y), cn["z"])
+  expect_equal(vars_select(cn, contains("x"), y), cn[c("x", "y")])
+  expect_equal(vars_select(cn, contains("x"), -y), cn["x"])
+  expect_equal(vars_select(cn, -contains("x"), y), cn[c("y", "z")])
+  expect_equal(vars_select(cn, -contains("x"), -y), cn["z"])
 
   # matched(not present) + explicit(not present)
-  expect_error(select_vars(cn, contains("foo"), bar), "object 'bar' not found")
-  expect_error(select_vars(cn, contains("foo"), -bar), "object 'bar' not found")
-  expect_error(select_vars(cn, -contains("foo"), bar), "object 'bar' not found")
-  expect_error(select_vars(cn, -contains("foo"), -bar), "object 'bar' not found")
+  expect_error(vars_select(cn, contains("foo"), bar), "object 'bar' not found")
+  expect_error(vars_select(cn, contains("foo"), -bar), "object 'bar' not found")
+  expect_error(vars_select(cn, -contains("foo"), bar), "object 'bar' not found")
+  expect_error(vars_select(cn, -contains("foo"), -bar), "object 'bar' not found")
 
   # matched(present) + matched(present)
-  expect_equal(select_vars(cn, contains("x"), contains("y")), cn[c("x", "y")])
-  expect_equal(select_vars(cn, contains("x"), -contains("y")), cn["x"])
-  expect_equal(select_vars(cn, -contains("x"), contains("y")), cn[c("y", "z")])
-  expect_equal(select_vars(cn, -contains("x"), -contains("y")), cn["z"])
+  expect_equal(vars_select(cn, contains("x"), contains("y")), cn[c("x", "y")])
+  expect_equal(vars_select(cn, contains("x"), -contains("y")), cn["x"])
+  expect_equal(vars_select(cn, -contains("x"), contains("y")), cn[c("y", "z")])
+  expect_equal(vars_select(cn, -contains("x"), -contains("y")), cn["z"])
 
   # matched(present) + matched(not present)
-  expect_equal(select_vars(cn, contains("x"), contains("foo")), cn["x"])
-  expect_equal(select_vars(cn, contains("x"), -contains("foo")), cn["x"])
-  expect_equal(select_vars(cn, -contains("x"), contains("foo")), cn[c("y", "z")])
-  expect_equal(select_vars(cn, -contains("x"), -contains("foo")), cn[c("y", "z")])
+  expect_equal(vars_select(cn, contains("x"), contains("foo")), cn["x"])
+  expect_equal(vars_select(cn, contains("x"), -contains("foo")), cn["x"])
+  expect_equal(vars_select(cn, -contains("x"), contains("foo")), cn[c("y", "z")])
+  expect_equal(vars_select(cn, -contains("x"), -contains("foo")), cn[c("y", "z")])
 
   # matched(not present) + matched(present)
-  expect_equal(select_vars(cn, contains("foo"), contains("x")), cn["x"])
-  expect_equal(select_vars(cn, contains("foo"), -contains("x")), cn[integer()])
-  expect_equal(select_vars(cn, -contains("foo"), contains("x")), cn)
-  expect_equal(select_vars(cn, -contains("foo"), -contains("x")), cn[c("y", "z")])
+  expect_equal(vars_select(cn, contains("foo"), contains("x")), cn["x"])
+  expect_equal(vars_select(cn, contains("foo"), -contains("x")), cn[integer()])
+  expect_equal(vars_select(cn, -contains("foo"), contains("x")), cn)
+  expect_equal(vars_select(cn, -contains("foo"), -contains("x")), cn[c("y", "z")])
 
   # matched(not present) + matched(not present)
-  expect_equal(select_vars(cn, contains("foo"), contains("bar")), cn[integer()])
-  expect_equal(select_vars(cn, contains("foo"), -contains("bar")), cn[integer()])
-  expect_equal(select_vars(cn, -contains("foo"), contains("bar")), cn)
-  expect_equal(select_vars(cn, -contains("foo"), -contains("bar")), cn)
+  expect_equal(vars_select(cn, contains("foo"), contains("bar")), cn[integer()])
+  expect_equal(vars_select(cn, contains("foo"), -contains("bar")), cn[integer()])
+  expect_equal(vars_select(cn, -contains("foo"), contains("bar")), cn)
+  expect_equal(vars_select(cn, -contains("foo"), -contains("bar")), cn)
 })
 
 test_that("middle (no-match) selector should not clear previous selectors (issue #2275)", {
   cn <- setNames(nm = c("x", "y", "z"))
 
   expect_equal(
-    select_vars(cn, contains("x"), contains("foo"), contains("z")),
+    vars_select(cn, contains("x"), contains("foo"), contains("z")),
     cn[c("x", "z")]
   )
   expect_equal(
-    select_vars(cn, contains("x"), -contains("foo"), contains("z")),
+    vars_select(cn, contains("x"), -contains("foo"), contains("z")),
     cn[c("x", "z")]
   )
 })
 
 test_that("can select with c() (#2685)", {
-  expect_identical(select_vars(letters, c(a, z)), c(a = "a", z = "z"))
+  expect_identical(vars_select(letters, c(a, z)), c(a = "a", z = "z"))
 })
 
 test_that("can select with .data pronoun (#2715)", {
-  expect_identical(select_vars("foo", .data$foo), c(foo = "foo"))
-  expect_identical(select_vars("foo", .data[["foo"]]), c(foo = "foo"))
+  expect_identical(vars_select("foo", .data$foo), c(foo = "foo"))
+  expect_identical(vars_select("foo", .data[["foo"]]), c(foo = "foo"))
 
-  expect_identical(select_vars(c("a", "b", "c"), .data$a : .data$b), c(a = "a", b = "b"))
-  expect_identical(select_vars(c("a", "b", "c"), .data[["a"]] : .data[["b"]]), c(a = "a", b = "b"))
+  expect_identical(vars_select(c("a", "b", "c"), .data$a : .data$b), c(a = "a", b = "b"))
+  expect_identical(vars_select(c("a", "b", "c"), .data[["a"]] : .data[["b"]]), c(a = "a", b = "b"))
 })
 
 
-# rename_vars -------------------------------------------------------------
+# vars_rename -------------------------------------------------------------
 
-test_that("when .strict = FALSE, rename_vars always succeeds", {
+test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
-    rename_vars(c("a", "b"), d = e, .strict = TRUE),
+    vars_rename(c("a", "b"), d = e, .strict = TRUE),
     "`e` contains unknown variables",
     fixed = TRUE
   )
 
   expect_equal(
-    rename_vars(c("a", "b"), d = e, .strict = FALSE),
+    vars_rename(c("a", "b"), d = e, .strict = FALSE),
     c("a" = "a", "b" = "b")
   )
 })
 
-test_that("rename_vars() expects symbol or string", {
+test_that("vars_rename() expects symbol or string", {
   expect_error(
-    rename_vars(letters, d = 1),
+    vars_rename(letters, d = 1),
     '`d` = 1 must be a symbol or a string',
     fixed = TRUE
   )

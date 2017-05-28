@@ -4,10 +4,10 @@
 #include <stdbool.h>
 #include <R_ext/Rdynload.h>
 
-extern SEXP selectr_combine_vars(SEXP, SEXP);
+extern SEXP selectr_inds_combine(SEXP, SEXP);
 
 static const R_CallMethodDef CallEntries[] = {
-  {"selectr_combine_vars", (DL_FUNC) &selectr_combine_vars, 2},
+  {"selectr_inds_combine", (DL_FUNC) &selectr_inds_combine, 2},
   {NULL, NULL, 0}
 };
 
