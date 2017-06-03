@@ -1,5 +1,5 @@
 #' @import rlang
 #' @importFrom glue glue
 #' @importFrom Rcpp cppFunction
-#' @useDynLib selectr, .registration = TRUE
+#' @useDynLib tidyselect, .registration = TRUE
 "_PACKAGE"

@@ -7,7 +7,7 @@ using namespace Rcpp;
 
 // inds_combine
 SEXP inds_combine(CharacterVector vars, ListOf<IntegerVector> xs);
-RcppExport SEXP selectr_inds_combine(SEXP varsSEXP, SEXP xsSEXP) {
+RcppExport SEXP tidyselect_inds_combine(SEXP varsSEXP, SEXP xsSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;

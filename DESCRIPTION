@@ -1,4 +1,4 @@
-Package: selectr
+Package: tidyselect
 Title: Select From a Set of Strings
 Version: 0.0.0.9000
 Authors@R: c(
