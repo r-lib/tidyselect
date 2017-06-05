@@ -23,15 +23,15 @@
 #' @keywords internal
 #' @examples
 #' # It takes its argument by expression:
-#' var_select(letters, c)
+#' vars_pull(letters, c)
 #'
 #' # Negative numbers select from the end:
-#' var_select(letters, -3)
+#' vars_pull(letters, -3)
 #'
 #' # You can unquote variables:
 #' var <- 10
-#' var_select(letters, !! var)
-var_select <- function(vars, var = -1) {
+#' vars_pull(letters, !! var)
+vars_pull <- function(vars, var = -1) {
   var_env <- set_names(as_list(seq_along(vars)), vars)
   var <- eval_tidy(enquo(var), var_env)
   n <- length(vars)

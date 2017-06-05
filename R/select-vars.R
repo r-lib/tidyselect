@@ -25,7 +25,7 @@
 #'   calling context.
 #' @param .include,.exclude Character vector of column names to always
 #'   include/exclude.
-#' @seealso [var_select()]
+#' @seealso [vars_pull()]
 #' @export
 #' @keywords internal
 #' @return A named character vector. Values are existing column names,
