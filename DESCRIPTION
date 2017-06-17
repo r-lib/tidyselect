@@ -9,7 +9,7 @@ Authors@R: c(
 Description: A backend for the selecting functions of the 'Tidyverse'
     which makes it easy to implement select-like functions.
 Depends:
-    R (>= 3.4.0)
+    R (>= 3.1.0)
 Imports:
     glue,
     rlang (>= 0.1),
