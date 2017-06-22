@@ -100,6 +100,15 @@ wrapper(var = cyl)
 
 # This won't match on `include`:
 wrapper(include = cyl)
+
+
+# If your wrapper takes named arguments, you need to capture then
+# unquote to pass them to vars_select(). See the vignette on
+# programming with dplyr for more on this:
+wrapper <- function(var1, var2) {
+  vars_select(names(mtcars), !! enquo(var1), !! enquo(var2))
+}
+wrapper(starts_with("d"), starts_with("c"))
 }
 \seealso{
 [vars_pull()]
