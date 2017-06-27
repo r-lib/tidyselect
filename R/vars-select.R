@@ -166,6 +166,7 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
 
   # Ensure all output .vars named
   if (is_empty(sel)) {
+    cnd_signal("tidyselect_empty", .mufflable = FALSE)
     names(sel) <- sel
   } else {
     unnamed <- names2(sel) == ""
