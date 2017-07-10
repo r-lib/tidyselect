@@ -28,3 +28,8 @@ test_that("abort on unknown columns", {
   expect_error(vars_select(letters, "foo"), "must match column names")
   expect_error(vars_select(letters, c("a", "bar", "foo", "d")), "bar, foo")
 })
+
+test_that("symbol overscope is isolated from context", {
+  foo <- 10
+  expect_error(vars_select(letters, foo), "object 'foo' not found")
+})

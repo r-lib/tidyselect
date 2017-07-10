@@ -104,18 +104,31 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   old <- set_current_vars(.vars)
   on.exit(set_current_vars(old), add = TRUE)
 
+  # The symbol overscope. Subsetting operators allow to subset the
+  # .data pronoun.
+  syms_overscope_top <- child_env(NULL,
+    `$` = base::`$`,
+    `[[` = base::`[[`,
+    `-` = base::`-`,
+    `:` = base::`:`,
+    c = base::c
+  )
   # Map variable names to their positions: this keeps integer semantics
-  names_list <- set_names(as.list(seq_along(.vars)), .vars)
+  syms_overscope_data <- set_names(as.list(seq_along(.vars)), .vars)
+  syms_overscope <- as_env(syms_overscope_data, syms_overscope_top)
+  syms_overscope <- child_env(syms_overscope, .data = syms_overscope_data)
+  syms_overscope <- new_overscope(syms_overscope, syms_overscope_top)
 
   # if the first selector is exclusive (negative), start with all columns
   first <- f_rhs(quos[[1]])
   initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
 
   # Evaluate symbols in an environment where columns are bound, but
-  # not calls (select helpers are scoped in the calling environment)
+  # not calls (select helpers are scoped in the calling environment).
   is_helper <- map_lgl(quos, quo_is_helper)
+  quos <- map_if(quos, !is_helper, set_env, empty_env())
   ind_list <- map_if(quos, is_helper, eval_tidy)
-  ind_list <- map_if(ind_list, !is_helper, eval_tidy, data = names_list)
+  ind_list <- map_if(ind_list, !is_helper, overscope_eval_next, overscope = syms_overscope)
 
   ind_list <- c(initial_case, ind_list)
   names(ind_list) <- c(names2(initial_case), names2(quos))
@@ -162,7 +175,11 @@ quo_is_helper <- function(quo) {
     return(FALSE)
   }
 
-  if (is_lang(expr, c("-", ":", "c"))) {
+  if (is_lang(expr, quote(`-`), n = 1)) {
+    return(!is_symbol(get_expr(expr[[2]])))
+  }
+
+  if (is_lang(expr, list(quote(`:`), quote(c)))) {
     return(FALSE)
   }
 
