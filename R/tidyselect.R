@@ -30,7 +30,7 @@ maybe_overtake_dplyr <- function(...) {
   if (!"dplyr" %in% loadedNamespaces()) {
     return(FALSE)
   }
-  if (utils::packageVersion("dplyr") >= "0.7.2") {
+  if (utils::packageVersion("dplyr") >= "0.7.1.9001") {
     return(FALSE)
   }
 
