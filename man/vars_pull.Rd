@@ -8,23 +8,25 @@ vars_pull(vars, var = -1)
 }
 \arguments{
 \item{var}{A variable specified as:
-  * a literal variable name
-  * a positive integer, giving the position counting from the left
-  * a negative integer, giving the position counting from the right.
+\itemize{
+\item a literal variable name
+\item a positive integer, giving the position counting from the left
+\item a negative integer, giving the position counting from the right.
+}
 
-  The default returns the last column (on the assumption that's the
-  column you've created most recently).
+The default returns the last column (on the assumption that's the
+column you've created most recently).
 
-  This argument is taken by expression and supports
-  [quasiquotation][rlang::quasiquotation] (you can unquote column
-  names and column positions).}
+This argument is taken by expression and supports
+\link[rlang:quasiquotation]{quasiquotation} (you can unquote column
+names and column positions).}
 }
 \value{
 The selected column name as an unnamed string.
 }
 \description{
-This function powers [pull()] and various functions of the tidyr
-package. It is similar to [vars_select()] but returns only one
+This function powers \code{\link[=pull]{pull()}} and various functions of the tidyr
+package. It is similar to \code{\link[=vars_select]{vars_select()}} but returns only one
 column name and has slightly different semantics: it allows
 negative numbers to select columns from the end.
 }
@@ -40,6 +42,6 @@ var <- 10
 vars_pull(letters, !! var)
 }
 \seealso{
-[pull()], [vars_select()]
+\code{\link[=pull]{pull()}}, \code{\link[=vars_select]{vars_select()}}
 }
 \keyword{internal}

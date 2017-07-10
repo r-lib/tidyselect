@@ -31,16 +31,16 @@ everything(vars = current_vars())
 \arguments{
 \item{match}{A string.}
 
-\item{ignore.case}{If `TRUE`, the default, ignores case when matching
+\item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}
 
 \item{vars}{A character vector of variable names. When called from inside
-[select()] these are automatically set to the names of the
+\code{\link[=select]{select()}} these are automatically set to the names of the
 table.}
 
 \item{prefix}{A prefix that starts the numeric range.}
 
-\item{range}{A sequence of integers, like `1:5`}
+\item{range}{A sequence of integers, like \code{1:5}}
 
 \item{width}{Optionally, the "width" of the numeric range. For example,
 a range of 2 gives "01", a range of three "001", etc.}
@@ -52,13 +52,15 @@ An integer vector giving the position of the matched variables.
 }
 \description{
 These functions allow you to select variables based on their names.
-* `starts_with()`: starts with a prefix
-* `ends_with()`: ends with a prefix
-* `contains()`: contains a literal string
-* `matches()`: matches a regular expression
-* `num_range()`: a numerical range like x01, x02, x03.
-* `one_of()`: variables in character vector.
-* `everything()`: all variables.
+\itemize{
+\item \code{starts_with()}: starts with a prefix
+\item \code{ends_with()}: ends with a prefix
+\item \code{contains()}: contains a literal string
+\item \code{matches()}: matches a regular expression
+\item \code{num_range()}: a numerical range like x01, x02, x03.
+\item \code{one_of()}: variables in character vector.
+\item \code{everything()}: all variables.
+}
 }
 \examples{
 nms <- names(iris)

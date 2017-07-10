@@ -14,36 +14,36 @@ vars_rename(.vars, ..., .strict = TRUE)
 
 \item{..., args}{Expressions to compute
 
-  These arguments are automatically [quoted][rlang::quo] and
-  [evaluated][rlang::eval_tidy] in a context where elements of
-  `vars` are objects representing their positions within
-  `vars`. They support [unquoting][rlang::quasiquotation] and
-  splicing. See `vignette("programming")` for an introduction to
-  these concepts.
+These arguments are automatically \link[rlang:quo]{quoted} and
+\link[rlang:eval_tidy]{evaluated} in a context where elements of
+\code{vars} are objects representing their positions within
+\code{vars}. They support \link[rlang:quasiquotation]{unquoting} and
+splicing. See \code{vignette("programming")} for an introduction to
+these concepts.
 
-  Note that except for `:`, `-` and `c()`, all complex expressions
-  are evaluated outside that context. This is to prevent accidental
-  matching to `vars` elements when you refer to variables from the
-  calling context.}
+Note that except for \code{:}, \code{-} and \code{c()}, all complex expressions
+are evaluated outside that context. This is to prevent accidental
+matching to \code{vars} elements when you refer to variables from the
+calling context.}
 
 \item{.include, .exclude}{Character vector of column names to always
 include/exclude.}
 
-\item{.strict}{If `TRUE`, will throw an error if you attempt to rename a
+\item{.strict}{If \code{TRUE}, will throw an error if you attempt to rename a
 variable that doesn't exist.}
 }
 \value{
 A named character vector. Values are existing column names,
-  names are new names.
+names are new names.
 }
 \description{
-These functions power [select()] and [rename()].
+These functions power \code{\link[=select]{select()}} and \code{\link[=rename]{rename()}}.
 }
 \details{
-For historic reasons, the `vars` and `include` arguments are not
-prefixed with `.`. This means that any argument starting with `v`
-might partial-match on `vars` if it is not explicitly named. Also
-`...` cannot accept arguments named `exclude` or `include`. You can
+For historic reasons, the \code{vars} and \code{include} arguments are not
+prefixed with \code{.}. This means that any argument starting with \code{v}
+might partial-match on \code{vars} if it is not explicitly named. Also
+\code{...} cannot accept arguments named \code{exclude} or \code{include}. You can
 enquose and splice the dots to work around these limitations (see
 examples).
 }
@@ -111,6 +111,6 @@ wrapper <- function(var1, var2) {
 wrapper(starts_with("d"), starts_with("c"))
 }
 \seealso{
-[vars_pull()]
+\code{\link[=vars_pull]{vars_pull()}}
 }
 \keyword{internal}
