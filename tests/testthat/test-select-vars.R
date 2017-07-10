@@ -33,3 +33,7 @@ test_that("symbol overscope is isolated from context", {
   foo <- 10
   expect_error(vars_select(letters, foo), "object 'foo' not found")
 })
+
+test_that("can select with unnamed elements", {
+  expect_identical(vars_select(c("a", ""), a), c(a = "a"))
+})

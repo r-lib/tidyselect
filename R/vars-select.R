@@ -115,6 +115,7 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   )
   # Map variable names to their positions: this keeps integer semantics
   syms_overscope_data <- set_names(as.list(seq_along(.vars)), .vars)
+  syms_overscope_data <- discard_unnamed(syms_overscope_data)
   syms_overscope <- as_env(syms_overscope_data, syms_overscope_top)
   syms_overscope <- child_env(syms_overscope, .data = syms_overscope_data)
   syms_overscope <- new_overscope(syms_overscope, syms_overscope_top)
@@ -162,6 +163,14 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   }
 
   sel
+}
+
+discard_unnamed <- function(x) {
+  if (is_env(x)) {
+    x
+  } else {
+    discard(x, names2(x) == "")
+  }
 }
 
 quo_is_helper <- function(quo) {
