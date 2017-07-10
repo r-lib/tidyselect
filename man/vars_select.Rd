@@ -3,7 +3,7 @@
 \name{vars_select}
 \alias{vars_select}
 \alias{vars_rename}
-\title{Select variables.}
+\title{Select variables}
 \usage{
 vars_select(.vars, ..., .include = character(), .exclude = character())
 
@@ -37,7 +37,7 @@ A named character vector. Values are existing column names,
 names are new names.
 }
 \description{
-These functions power \code{\link[=select]{select()}} and \code{\link[=rename]{rename()}}.
+These functions power \code{\link[dplyr:select]{dplyr::select()}} and \code{\link[dplyr:rename]{dplyr::rename()}}.
 }
 \details{
 For historic reasons, the \code{vars} and \code{include} arguments are not

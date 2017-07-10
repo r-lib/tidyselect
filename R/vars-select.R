@@ -1,6 +1,6 @@
-#' Select variables.
+#' Select variables
 #'
-#' These functions power [select()] and [rename()].
+#' These functions power [dplyr::select()] and [dplyr::rename()].
 #'
 #' For historic reasons, the `vars` and `include` arguments are not
 #' prefixed with `.`. This means that any argument starting with `v`

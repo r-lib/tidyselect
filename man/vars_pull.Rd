@@ -25,9 +25,9 @@ names and column positions).}
 The selected column name as an unnamed string.
 }
 \description{
-This function powers \code{\link[=pull]{pull()}} and various functions of the tidyr
-package. It is similar to \code{\link[=vars_select]{vars_select()}} but returns only one
-column name and has slightly different semantics: it allows
+This function powers \code{\link[dplyr:pull]{dplyr::pull()}} and various functions of the
+tidyr package. It is similar to \code{\link[=vars_select]{vars_select()}} but returns only
+one column name and has slightly different semantics: it allows
 negative numbers to select columns from the end.
 }
 \examples{
@@ -42,6 +42,6 @@ var <- 10
 vars_pull(letters, !! var)
 }
 \seealso{
-\code{\link[=pull]{pull()}}, \code{\link[=vars_select]{vars_select()}}
+\code{\link[dplyr:pull]{dplyr::pull()}}, \code{\link[=vars_select]{vars_select()}}
 }
 \keyword{internal}

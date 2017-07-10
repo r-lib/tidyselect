@@ -1,8 +1,8 @@
 #' Select variable
 #'
-#' This function powers [pull()] and various functions of the tidyr
-#' package. It is similar to [vars_select()] but returns only one
-#' column name and has slightly different semantics: it allows
+#' This function powers [dplyr::pull()] and various functions of the
+#' tidyr package. It is similar to [vars_select()] but returns only
+#' one column name and has slightly different semantics: it allows
 #' negative numbers to select columns from the end.
 #'
 #' @inheritParams vars_select
@@ -18,7 +18,7 @@
 #'   [quasiquotation][rlang::quasiquotation] (you can unquote column
 #'   names and column positions).
 #' @return The selected column name as an unnamed string.
-#' @seealso [pull()], [vars_select()]
+#' @seealso [dplyr::pull()], [vars_select()]
 #' @export
 #' @keywords internal
 #' @examples
