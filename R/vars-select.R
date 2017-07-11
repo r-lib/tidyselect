@@ -151,25 +151,26 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   sel
 }
 
-syms_overscope <- function(vars) {
-  # The symbol overscope. Subsetting operators allow to subset the
-  # .data pronoun.
-  overscope_top <- child_env(NULL,
-    `$` = base::`$`,
-    `[[` = base::`[[`,
-    `-` = base::`-`,
-    `:` = base::`:`,
-    `(` = base::`(`,
-    c = base::c
-  )
+# The top of the symbol overscope contains the functions for datawise
+# operations. Subsetting operators allow to subset the .data pronoun.
+syms_overscope_top <- child_env(NULL,
+  `$` = base::`$`,
+  `[[` = base::`[[`,
+  `-` = base::`-`,
+  `:` = base::`:`,
+  `(` = base::`(`,
+  c = base::c
+)
+lockEnvironment(syms_overscope_top, bindings = TRUE)
 
+syms_overscope <- function(vars) {
   # Map variable names to their positions: this keeps integer semantics
   data <- set_names(as.list(seq_along(vars)), vars)
   data <- discard_unnamed(data)
 
-  overscope <- as_env(data, overscope_top)
+  overscope <- as_env(data, syms_overscope_top)
   overscope <- child_env(overscope, .data = data)
-  overscope <- new_overscope(overscope, overscope_top)
+  overscope <- new_overscope(overscope, syms_overscope_top)
 
   overscope
 }
