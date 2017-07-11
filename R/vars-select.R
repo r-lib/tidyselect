@@ -104,25 +104,11 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   old <- set_current_vars(.vars)
   on.exit(set_current_vars(old), add = TRUE)
 
-  # The symbol overscope. Subsetting operators allow to subset the
-  # .data pronoun.
-  syms_overscope_top <- child_env(NULL,
-    `$` = base::`$`,
-    `[[` = base::`[[`,
-    `-` = base::`-`,
-    `:` = base::`:`,
-    c = base::c
-  )
-  # Map variable names to their positions: this keeps integer semantics
-  syms_overscope_data <- set_names(as.list(seq_along(.vars)), .vars)
-  syms_overscope_data <- discard_unnamed(syms_overscope_data)
-  syms_overscope <- as_env(syms_overscope_data, syms_overscope_top)
-  syms_overscope <- child_env(syms_overscope, .data = syms_overscope_data)
-  syms_overscope <- new_overscope(syms_overscope, syms_overscope_top)
-
   # if the first selector is exclusive (negative), start with all columns
   first <- f_rhs(quos[[1]])
   initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
+
+  syms_overscope <- syms_overscope(.vars)
 
   # Evaluate symbols in an environment where columns are bound, but
   # not calls (select helpers are scoped in the calling environment).
@@ -165,6 +151,28 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   sel
 }
 
+syms_overscope <- function(vars) {
+  # The symbol overscope. Subsetting operators allow to subset the
+  # .data pronoun.
+  overscope_top <- child_env(NULL,
+    `$` = base::`$`,
+    `[[` = base::`[[`,
+    `-` = base::`-`,
+    `:` = base::`:`,
+    `(` = base::`(`,
+    c = base::c
+  )
+
+  # Map variable names to their positions: this keeps integer semantics
+  data <- set_names(as.list(seq_along(vars)), vars)
+  data <- discard_unnamed(data)
+
+  overscope <- as_env(data, overscope_top)
+  overscope <- child_env(overscope, .data = data)
+  overscope <- new_overscope(overscope, overscope_top)
+
+  overscope
+}
 discard_unnamed <- function(x) {
   if (is_env(x)) {
     x
@@ -173,8 +181,16 @@ discard_unnamed <- function(x) {
   }
 }
 
+extract_expr <- function(expr) {
+  expr <- get_expr(expr)
+  while(is_lang(expr, paren_sym)) {
+    expr <- get_expr(expr[[2]])
+  }
+  expr
+}
+
 quo_is_helper <- function(quo) {
-  expr <- f_rhs(quo)
+  expr <- extract_expr(quo)
 
   if (!is_lang(expr)) {
     return(FALSE)
@@ -184,11 +200,12 @@ quo_is_helper <- function(quo) {
     return(FALSE)
   }
 
-  if (is_lang(expr, quote(`-`), n = 1)) {
-    return(!is_symbol(get_expr(expr[[2]])))
+  if (is_lang(expr, minus_sym, n = 1)) {
+    operand <- extract_expr(expr[[2]])
+    return(quo_is_helper(operand))
   }
 
-  if (is_lang(expr, list(quote(`:`), quote(c)))) {
+  if (is_lang(expr, list(colon_sym, c_sym))) {
     return(FALSE)
   }
 

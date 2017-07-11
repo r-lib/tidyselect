@@ -11,3 +11,8 @@ is_data_pronoun <- function(expr) {
 }
 
 commas <- function(...) paste0(..., collapse = ", ")
+
+paren_sym <- quote(`(`)
+minus_sym <- quote(`-`)
+colon_sym <- quote(`:`)
+c_sym <- quote(`c`)
