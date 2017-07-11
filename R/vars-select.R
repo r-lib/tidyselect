@@ -1,13 +1,19 @@
-#' Select variables
+#' Select or rename variables
 #'
-#' These functions power [dplyr::select()] and [dplyr::rename()].
+#' These functions power [dplyr::select()] and [dplyr::rename()]. They
+#' enable dplyr selecting or renaming semantics in your own functions.
 #'
-#' For historic reasons, the `vars` and `include` arguments are not
-#' prefixed with `.`. This means that any argument starting with `v`
-#' might partial-match on `vars` if it is not explicitly named. Also
-#' `...` cannot accept arguments named `exclude` or `include`. You can
-#' enquose and splice the dots to work around these limitations (see
-#' examples).
+#' @section Context of evaluation:
+#'
+#' Quoting verbs usually support references to both objects from the
+#' data frame and objects from the calling context. Selecting verbs
+#' behave a bit differently.
+#'
+#' * Bare names are evaluated in the data frame only. You cannot refer
+#'   to local objects unless you explicitly unquote them with `!!`.
+#'
+#' * Calls to helper functions are evaluated in the calling context
+#'   only. You can safely and directly refer to local objects.
 #'
 #' @param .vars A character vector of existing column names.
 #' @param ...,args Expressions to compute
@@ -58,9 +64,27 @@
 #' # Rename variables preserving all existing
 #' vars_rename(names(iris), petal_length = Petal.Length)
 #'
-#' # You can unquote names or formulas (or lists of)
-#' vars_select(names(iris), !!! list(quo(Petal.Length)))
+#' # You can unquote symbols or quosures
 #' vars_select(names(iris), !! quote(Petal.Length))
+#'
+#' # And unquote-splice lists of symbols or quosures
+#' vars_select(names(iris), !!! list(quo(Petal.Length), quote(Petal.Width)))
+#'
+#'
+#' # When selecting with bare symbols, you can only refer to data
+#' # objects. This avoids ambiguity. If you want to refer to local
+#' # objects, you can explicitly unquote them. They must contain
+#' # variable positions (integers) or variable names (strings):
+#' Species <- 2
+#' vars_select(names(iris), Species)     # Picks up `Species` from the data frame
+#' vars_select(names(iris), !! Species)  # Picks up the local object referring to column 2
+#'
+#' # On the other hand, function calls behave the opposite way. They
+#' # are evaluated in the local context only and cannot refer to data
+#' # frame objects. This makes it easy to refer to local variables:
+#' x <- "Petal"
+#' vars_select(names(iris), starts_with(x))  # Picks up the local variable `x`
+#'
 #'
 #' # The .data pronoun is available:
 #' vars_select(names(mtcars), .data$cyl)
