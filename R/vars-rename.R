@@ -15,7 +15,7 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
 
   if (!all(known)) {
     if (.strict) {
-      bad_args(old_vars[!known], "contains unknown variables")
+      bad_args(old_vars[!known], "contains unknown { plural(.vars) }")
     } else {
       old_vars <- old_vars[known]
       new_vars <- new_vars[known]

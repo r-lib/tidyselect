@@ -57,7 +57,7 @@ vars_pull <- function(vars, var = -1) {
   } else {
     type <- friendly_type(type_of(var))
     abort(glue(
-      "`var` must evaluate to a single number or a column name, not {type}"
+      "`var` must evaluate to a single number or a { singular(vars) } name, not {type}"
     ))
   }
 

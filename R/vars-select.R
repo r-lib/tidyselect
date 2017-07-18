@@ -153,7 +153,8 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
     first <- ind_list[!is_integerish][[1]]
     first_type <- friendly_type(type_of(first))
     bad_calls(bad,
-      "must resolve to integer column positions, not {first_type}"
+      "must resolve to integer { singular(.vars) } positions, \\
+       not { first_type }"
     )
   }
 
@@ -241,7 +242,10 @@ match_var <- function(chr, table) {
   pos <- match(chr, table)
   if (any(are_na(pos))) {
     chr <- glue::collapse(chr[are_na(pos)], ", ")
-    abort(glue("Strings must match column names. Unkown columns: {chr}"))
+    abort(glue(
+      "Strings must match { singular(table) } names. \\
+       Unknown { plural(table) }: { chr }"
+    ))
   }
   pos
 }
