@@ -2,7 +2,6 @@
 % Please edit documentation in R/select-helpers.R
 \name{select_helpers}
 \alias{select_helpers}
-\alias{current_vars}
 \alias{starts_with}
 \alias{ends_with}
 \alias{contains}
@@ -12,21 +11,19 @@
 \alias{everything}
 \title{Select helpers}
 \usage{
-current_vars()
+starts_with(match, ignore.case = TRUE, vars = peek_vars())
 
-starts_with(match, ignore.case = TRUE, vars = current_vars())
+ends_with(match, ignore.case = TRUE, vars = peek_vars())
 
-ends_with(match, ignore.case = TRUE, vars = current_vars())
+contains(match, ignore.case = TRUE, vars = peek_vars())
 
-contains(match, ignore.case = TRUE, vars = current_vars())
+matches(match, ignore.case = TRUE, vars = peek_vars())
 
-matches(match, ignore.case = TRUE, vars = current_vars())
+num_range(prefix, range, width = NULL, vars = peek_vars())
 
-num_range(prefix, range, width = NULL, vars = current_vars())
+one_of(..., vars = peek_vars())
 
-one_of(..., vars = current_vars())
-
-everything(vars = current_vars())
+everything(vars = peek_vars())
 }
 \arguments{
 \item{match}{A string.}
