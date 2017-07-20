@@ -11,13 +11,20 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
   old_vars <- map2(exprs, names(exprs), switch_rename)
   new_vars <- names(exprs)
 
-  unknown_vars <- setdiff(old_vars, .vars)
-  if (.strict && length(unknown_vars) > 0) {
-    bad_args(unknown_vars, "contains unknown variables")
+  known <- old_vars %in% .vars
+
+  if (!all(known)) {
+    if (.strict) {
+      bad_args(old_vars[!known], "contains unknown variables")
+    } else {
+      old_vars <- old_vars[known]
+      new_vars <- new_vars[known]
+    }
   }
 
   select <- set_names(.vars, .vars)
-  names(select)[match(old_vars, .vars)] <- new_vars
+  renamed_idx <- match(old_vars, .vars)
+  names(select)[renamed_idx] <- new_vars
 
   select
 }
