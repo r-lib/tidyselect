@@ -1,4 +1,4 @@
-context("select var")
+context("pull var")
 
 test_that("errors for bad inputs", {
   expect_error(

@@ -1,4 +1,4 @@
-context("select-helpers")
+context("select helpers")
 
 test_that("no set variables throws warning", {
   expect_warning(
@@ -225,33 +225,4 @@ test_that("can select with .data pronoun (#2715)", {
 
   expect_identical(vars_select(c("a", "b", "c"), .data$a : .data$b), c(a = "a", b = "b"))
   expect_identical(vars_select(c("a", "b", "c"), .data[["a"]] : .data[["b"]]), c(a = "a", b = "b"))
-})
-
-
-# vars_rename -------------------------------------------------------------
-
-test_that("when .strict = FALSE, vars_rename always succeeds", {
-  expect_error(
-    vars_rename(c("a", "b"), d = e, .strict = TRUE),
-    "`e` contains unknown columns",
-    fixed = TRUE
-  )
-
-  expect_equal(
-    vars_rename(c("a", "b"), d = e, .strict = FALSE),
-    c("a" = "a", "b" = "b")
-  )
-
-  expect_identical(
-    vars_rename("x", A = x, B = y, .strict = FALSE),
-    c(A = "x")
-  )
-})
-
-test_that("vars_rename() expects symbol or string", {
-  expect_error(
-    vars_rename(letters, d = 1),
-    '`d` = 1 must be a symbol or a string',
-    fixed = TRUE
-  )
 })
