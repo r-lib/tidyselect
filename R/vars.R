@@ -5,7 +5,7 @@
 #' Variables are made available to [select helpers][select_helpers] by
 #' registering them in a special placeholder.
 #'
-#' * `replace_vars()` changes the contents of the placeholder with a
+#' * `poke_vars()` changes the contents of the placeholder with a
 #'   new set of variables.
 #'
 #' * `scoped_vars()` changes the current variables and sets up a
@@ -17,12 +17,12 @@
 #' @param vars A character vector of variable names.
 #' @param frame The frame environment where the exit hook for
 #'   restoring the old variables should be registered.
-#' @return For `replace_vars()` and `reset_vars()`, the old variables
+#' @return For `poke_vars()` and `reset_vars()`, the old variables
 #'   invisibly. For `query_vars()`, the variables currently
 #'   registered.
 #' @export
 #' @examples
-#' replace_vars(letters)
+#' poke_vars(letters)
 #' query_vars()
 #'
 #' # Now that the variables are registered, the helpers can figure out
@@ -32,8 +32,8 @@
 #' # In a function be sure to restore the previous variables. An exit
 #' # hook is the best way to do it:
 #' fn <- function(vars) {
-#'   old <- replace_vars(vars)
-#'   on.exit(replace_vars(old))
+#'   old <- poke_vars(vars)
+#'   on.exit(poke_vars(old))
 #'
 #'   one_of("d")
 #' }
@@ -52,7 +52,7 @@
 #'   one_of("d")
 #' }
 #' fn(letters)
-replace_vars <- function(vars) {
+poke_vars <- function(vars) {
   stopifnot(is_character(vars) || is_null(vars))
 
   old <- vars_env$selected
@@ -60,18 +60,18 @@ replace_vars <- function(vars) {
 
   invisible(old)
 }
-#' @rdname replace_vars
+#' @rdname poke_vars
 #' @export
 scoped_vars <- function(vars, frame = caller_env()) {
-  old <- replace_vars(vars)
+  old <- poke_vars(vars)
 
   # Inline everything so the call will succeed in any environment
-  expr <- lang(on.exit, lang(replace_vars, old), add = TRUE)
+  expr <- lang(on.exit, lang(poke_vars, old), add = TRUE)
   eval_bare(expr, frame)
 
   invisible(old)
 }
-#' @rdname replace_vars
+#' @rdname poke_vars
 #' @export
 query_vars <- function() {
   vars_env$selected %||% warn("Can't get tidyselect variables as none were registered")
