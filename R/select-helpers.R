@@ -30,23 +30,6 @@
 #' vars_select(nms, one_of(vars))
 NULL
 
-cur_vars_env <- child_env(NULL)
-
-set_current_vars <- function(x) {
-  stopifnot(is_character(x) || is_null(x))
-
-  old <- cur_vars_env$selected
-  cur_vars_env$selected <- x
-
-  invisible(old)
-}
-
-#' @export
-#' @rdname select_helpers
-current_vars <- function() {
-  cur_vars_env$selected %||% warn("Variable context not set")
-}
-
 #' @export
 #' @rdname select_helpers
 starts_with <- function(match, ignore.case = TRUE, vars = current_vars()) {
