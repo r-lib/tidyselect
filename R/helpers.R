@@ -118,7 +118,7 @@ one_of <- function(..., vars = current_vars()) {
 
   if (!all(keep %in% vars)) {
     bad <- setdiff(keep, vars)
-    warn(glue("Unknown variables: ", paste0("`", bad, "`", collapse = ", ")))
+    warn(glue("Unknown { plural(vars) }: ", paste0("`", bad, "`", collapse = ", ")))
   }
 
   match_vars(keep, vars)

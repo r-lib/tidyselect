@@ -145,4 +145,3 @@ SEXP inds_combine(CharacterVector vars, ListOf<IntegerVector> xs) {
 
   return selected;
 }
-

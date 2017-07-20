@@ -90,12 +90,12 @@ test_that("one_of gives useful errors", {
   )
 })
 
-test_that("one_of tolerates but warns for unknown variables", {
+test_that("one_of tolerates but warns for unknown columns", {
   vars <- c("x", "y")
 
-  expect_warning(res <- one_of("z", vars = vars), "Unknown variables: `z`")
+  expect_warning(res <- one_of("z", vars = vars), "Unknown columns: `z`")
   expect_equal(res, integer(0))
-  expect_warning(res <- one_of(c("x", "z"), vars = vars), "Unknown variables: `z`")
+  expect_warning(res <- one_of(c("x", "z"), vars = vars), "Unknown columns: `z`")
   expect_equal(res, 1L)
 
 })
@@ -233,7 +233,7 @@ test_that("can select with .data pronoun (#2715)", {
 test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
-    "`e` contains unknown variables",
+    "`e` contains unknown columns",
     fixed = TRUE
   )
 

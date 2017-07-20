@@ -3,12 +3,13 @@
 
 tidyselect is the new home for the `select_vars()`, `rename_vars()`
 and `select_var()` functions. We took this opportunity to make a few
-adjustments to the API. The semantics of evaluation have changed:
+adjustments to the API.
 
-* Symbols are now evaluated in a data-only context that is isolated
-  from the calling environment. This means that you can no longer
-  refer to local variables unless you are explicitly unquoting these
-  variables with `!!`.
+* The semantics of evaluation have changed. Symbols are now evaluated
+  in a data-only context that is isolated from the calling
+  environment. This means that you can no longer refer to local
+  variables unless you are explicitly unquoting these variables with
+  `!!`.
 
   Note that since dplyr 0.7, helper calls (like `starts_with()`) obey
   the opposite behaviour and are evaluated in the calling context
@@ -17,6 +18,16 @@ adjustments to the API. The semantics of evaluation have changed:
   objects. This differs from usual R evaluation semantics where both
   the data and the calling environment are in scope (with the former
   prevailing over the latter).
+
+* Error messages can now be customised. For consistency with dplyr,
+  error messages refer to "columns" by default. This assumes that the
+  variables being selected come from a data frame. If this is not
+  appropriate for your DSL, you can now add an attribute `vars_type`
+  to the `.vars` vector to specify alternative names. This must be a
+  character vector of length 2 whose first component is the singular
+  form and the second is the plural. For example, `c("variable",
+  "variables")`.
+
 
 
 There are a few cosmetic changes as well:

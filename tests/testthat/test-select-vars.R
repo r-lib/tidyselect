@@ -43,3 +43,12 @@ test_that("symbol overscope works with parenthesised expressions", {
 test_that("can select with unnamed elements", {
   expect_identical(vars_select(c("a", ""), a), c(a = "a"))
 })
+
+test_that("can customise error messages", {
+  vars <- set_attrs(letters, type = c("variable", "variables"))
+
+  expect_error(vars_select(vars, "foo"), "match variable names. Unknown variables:")
+  expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
+  expect_error(vars_rename(vars, A = "foo"), "contains unknown variables")
+  expect_error(vars_pull(vars, !! c("a", "b")), "or a variable name")
+})
