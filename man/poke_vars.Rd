@@ -3,14 +3,14 @@
 \name{poke_vars}
 \alias{poke_vars}
 \alias{scoped_vars}
-\alias{query_vars}
+\alias{peek_vars}
 \title{Replace or get current variables}
 \usage{
 poke_vars(vars)
 
 scoped_vars(vars, frame = caller_env())
 
-query_vars()
+peek_vars()
 }
 \arguments{
 \item{vars}{A character vector of variable names.}
@@ -20,7 +20,7 @@ restoring the old variables should be registered.}
 }
 \value{
 For \code{poke_vars()} and \code{reset_vars()}, the old variables
-invisibly. For \code{query_vars()}, the variables currently
+invisibly. For \code{peek_vars()}, the variables currently
 registered.
 }
 \description{
@@ -32,12 +32,12 @@ new set of variables.
 \item \code{scoped_vars()} changes the current variables and sets up a
 function exit hook that automatically restores the previous
 variables once the current function returns.
-\item \code{query_vars()} returns the currently registered variables.
+\item \code{peek_vars()} returns the currently registered variables.
 }
 }
 \examples{
 poke_vars(letters)
-query_vars()
+peek_vars()
 
 # Now that the variables are registered, the helpers can figure out
 # the positions of elements within the variable vector:
@@ -56,7 +56,7 @@ fn(letters[3:5])
 
 # The previous variables are still registered after fn() was
 # called:
-query_vars()
+peek_vars()
 
 
 # It is often more practical to use the scoped variant as it restores

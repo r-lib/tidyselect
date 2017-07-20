@@ -12,18 +12,18 @@
 #'   function exit hook that automatically restores the previous
 #'   variables once the current function returns.
 #'
-#' * `query_vars()` returns the currently registered variables.
+#' * `peek_vars()` returns the currently registered variables.
 #'
 #' @param vars A character vector of variable names.
 #' @param frame The frame environment where the exit hook for
 #'   restoring the old variables should be registered.
 #' @return For `poke_vars()` and `reset_vars()`, the old variables
-#'   invisibly. For `query_vars()`, the variables currently
+#'   invisibly. For `peek_vars()`, the variables currently
 #'   registered.
 #' @export
 #' @examples
 #' poke_vars(letters)
-#' query_vars()
+#' peek_vars()
 #'
 #' # Now that the variables are registered, the helpers can figure out
 #' # the positions of elements within the variable vector:
@@ -42,7 +42,7 @@
 #'
 #' # The previous variables are still registered after fn() was
 #' # called:
-#' query_vars()
+#' peek_vars()
 #'
 #'
 #' # It is often more practical to use the scoped variant as it restores
@@ -73,7 +73,7 @@ scoped_vars <- function(vars, frame = caller_env()) {
 }
 #' @rdname poke_vars
 #' @export
-query_vars <- function() {
+peek_vars <- function() {
   vars_env$selected %||% warn("Can't get tidyselect variables as none were registered")
 }
 

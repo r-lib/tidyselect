@@ -32,7 +32,7 @@ NULL
 
 #' @export
 #' @rdname select_helpers
-starts_with <- function(match, ignore.case = TRUE, vars = query_vars()) {
+starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
   stopifnot(is_string(match), !is.na(match), nchar(match) > 0)
 
   if (ignore.case) match <- tolower(match)
@@ -44,7 +44,7 @@ starts_with <- function(match, ignore.case = TRUE, vars = query_vars()) {
 
 #' @export
 #' @rdname select_helpers
-ends_with <- function(match, ignore.case = TRUE, vars = query_vars()) {
+ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
   stopifnot(is_string(match), !is.na(match), nchar(match) > 0)
 
   if (ignore.case) match <- tolower(match)
@@ -58,7 +58,7 @@ ends_with <- function(match, ignore.case = TRUE, vars = query_vars()) {
 
 #' @export
 #' @rdname select_helpers
-contains <- function(match, ignore.case = TRUE, vars = query_vars()) {
+contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
   stopifnot(is_string(match), nchar(match) > 0)
 
   if (ignore.case) {
@@ -70,7 +70,7 @@ contains <- function(match, ignore.case = TRUE, vars = query_vars()) {
 
 #' @export
 #' @rdname select_helpers
-matches <- function(match, ignore.case = TRUE, vars = query_vars()) {
+matches <- function(match, ignore.case = TRUE, vars = peek_vars()) {
   stopifnot(is_string(match), nchar(match) > 0)
 
   grep_vars(match, vars, ignore.case = ignore.case)
@@ -82,7 +82,7 @@ matches <- function(match, ignore.case = TRUE, vars = query_vars()) {
 #' @param range A sequence of integers, like `1:5`
 #' @param width Optionally, the "width" of the numeric range. For example,
 #'   a range of 2 gives "01", a range of three "001", etc.
-num_range <- function(prefix, range, width = NULL, vars = query_vars()) {
+num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
   if (!is_null(width)) {
     range <- sprintf(paste0("%0", width, "d"), range)
   }
@@ -92,7 +92,7 @@ num_range <- function(prefix, range, width = NULL, vars = query_vars()) {
 #' @export
 #' @rdname select_helpers
 #' @param ... One or more character vectors.
-one_of <- function(..., vars = query_vars()) {
+one_of <- function(..., vars = peek_vars()) {
   keep <- c(...)
 
   if (!is_character(keep)) {
@@ -109,7 +109,7 @@ one_of <- function(..., vars = query_vars()) {
 
 #' @export
 #' @rdname select_helpers
-everything <- function(vars = query_vars()) {
+everything <- function(vars = peek_vars()) {
   seq_along(vars)
 }
 

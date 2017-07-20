@@ -10,5 +10,5 @@ test_that("scoped_vars() restores previous state", {
   }
   expect_identical(fn(), 2L)
 
-  expect_identical(query_vars(), vars)
+  expect_identical(peek_vars(), vars)
 })
