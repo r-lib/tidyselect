@@ -136,8 +136,7 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   }
 
   # Register vars to make them available to select helpers
-  old <- replace_vars(.vars)
-  on.exit(replace_vars(old), add = TRUE)
+  scoped_vars(.vars)
 
   # if the first selector is exclusive (negative), start with all columns
   first <- f_rhs(quos[[1]])

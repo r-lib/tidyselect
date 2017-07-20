@@ -2,15 +2,21 @@
 % Please edit documentation in R/vars.R
 \name{replace_vars}
 \alias{replace_vars}
+\alias{scoped_vars}
 \alias{query_vars}
 \title{Replace or get current variables}
 \usage{
 replace_vars(vars)
 
+scoped_vars(vars, frame = caller_env())
+
 query_vars()
 }
 \arguments{
 \item{vars}{A character vector of variable names.}
+
+\item{frame}{The frame environment where the exit hook for
+restoring the old variables should be registered.}
 }
 \value{
 For \code{replace_vars()} and \code{reset_vars()}, the old variables
@@ -23,6 +29,9 @@ registering them in a special placeholder.
 \itemize{
 \item \code{replace_vars()} changes the contents of the placeholder with a
 new set of variables.
+\item \code{scoped_vars()} changes the current variables and sets up a
+function exit hook that automatically restores the previous
+variables once the current function returns.
 \item \code{query_vars()} returns the currently registered variables.
 }
 }
@@ -48,4 +57,13 @@ fn(letters[3:5])
 # The previous variables are still registered after fn() was
 # called:
 query_vars()
+
+
+# It is often more practical to use the scoped variant as it restores
+# the state automatically when the function returns:
+fn <- function(vars) {
+  scoped_vars(vars)
+  one_of("d")
+}
+fn(letters)
 }
