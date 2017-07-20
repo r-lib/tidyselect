@@ -8,16 +8,16 @@
 #' * `replace_vars()` changes the contents of the placeholder with a
 #'   new set of variables.
 #'
-#' * `current_vars()` returns the currently registered variables.
+#' * `query_vars()` returns the currently registered variables.
 #'
 #' @param vars A character vector of variable names.
 #' @return For `replace_vars()` and `reset_vars()`, the old variables
-#'   invisibly. For `current_vars()`, the variables currently
+#'   invisibly. For `query_vars()`, the variables currently
 #'   registered.
 #' @export
 #' @examples
 #' replace_vars(letters)
-#' current_vars()
+#' query_vars()
 #'
 #' # Now that the variables are registered, the helpers can figure out
 #' # the positions of elements within the variable vector:
@@ -36,7 +36,7 @@
 #'
 #' # The previous variables are still registered after fn() was
 #' # called:
-#' current_vars()
+#' query_vars()
 replace_vars <- function(vars) {
   stopifnot(is_character(vars) || is_null(vars))
 
@@ -47,7 +47,7 @@ replace_vars <- function(vars) {
 }
 #' @export
 #' @rdname replace_vars
-current_vars <- function() {
+query_vars <- function() {
   vars_env$selected %||% warn("Can't get tidyselect variables as none were registered")
 }
 

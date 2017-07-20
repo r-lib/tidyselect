@@ -14,8 +14,8 @@ maybe_overtake_dplyr <- function(...) {
   }
 
   fns <- list(
-    current_vars = current_vars,
-    set_current_vars = set_current_vars
+    current_vars = query_vars,
+    set_current_vars = replace_vars
   )
   env <- ns_env("dplyr")
   nms <- names(fns)

@@ -2,19 +2,19 @@
 % Please edit documentation in R/vars.R
 \name{replace_vars}
 \alias{replace_vars}
-\alias{current_vars}
+\alias{query_vars}
 \title{Replace or get current variables}
 \usage{
 replace_vars(vars)
 
-current_vars()
+query_vars()
 }
 \arguments{
 \item{vars}{A character vector of variable names.}
 }
 \value{
 For \code{replace_vars()} and \code{reset_vars()}, the old variables
-invisibly. For \code{current_vars()}, the variables currently
+invisibly. For \code{query_vars()}, the variables currently
 registered.
 }
 \description{
@@ -23,12 +23,12 @@ registering them in a special placeholder.
 \itemize{
 \item \code{replace_vars()} changes the contents of the placeholder with a
 new set of variables.
-\item \code{current_vars()} returns the currently registered variables.
+\item \code{query_vars()} returns the currently registered variables.
 }
 }
 \examples{
 replace_vars(letters)
-current_vars()
+query_vars()
 
 # Now that the variables are registered, the helpers can figure out
 # the positions of elements within the variable vector:
@@ -47,5 +47,5 @@ fn(letters[3:5])
 
 # The previous variables are still registered after fn() was
 # called:
-current_vars()
+query_vars()
 }

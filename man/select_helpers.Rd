@@ -11,19 +11,19 @@
 \alias{everything}
 \title{Select helpers}
 \usage{
-starts_with(match, ignore.case = TRUE, vars = current_vars())
+starts_with(match, ignore.case = TRUE, vars = query_vars())
 
-ends_with(match, ignore.case = TRUE, vars = current_vars())
+ends_with(match, ignore.case = TRUE, vars = query_vars())
 
-contains(match, ignore.case = TRUE, vars = current_vars())
+contains(match, ignore.case = TRUE, vars = query_vars())
 
-matches(match, ignore.case = TRUE, vars = current_vars())
+matches(match, ignore.case = TRUE, vars = query_vars())
 
-num_range(prefix, range, width = NULL, vars = current_vars())
+num_range(prefix, range, width = NULL, vars = query_vars())
 
-one_of(..., vars = current_vars())
+one_of(..., vars = query_vars())
 
-everything(vars = current_vars())
+everything(vars = query_vars())
 }
 \arguments{
 \item{match}{A string.}
