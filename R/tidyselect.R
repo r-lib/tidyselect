@@ -6,14 +6,17 @@
 
 
 maybe_overtake_dplyr <- function(...) {
-  if (!"dplyr" %in% loadedNamespaces()) {
+  if (!is_installed("dplyr")) {
     return(FALSE)
   }
   if (utils::packageVersion("dplyr") >= "0.7.1.9001") {
     return(FALSE)
   }
 
-  fns <- fns_table()
+  fns <- list(
+    current_vars = current_vars,
+    set_current_vars = set_current_vars
+  )
   env <- ns_env("dplyr")
   nms <- names(fns)
 
@@ -22,27 +25,6 @@ maybe_overtake_dplyr <- function(...) {
   }
 
   TRUE
-}
-
-fns_table <- function() {
-  helpers_fns <- list(
-    starts_with = starts_with,
-    ends_with = ends_with,
-    contains = contains,
-    matches = matches,
-    num_range = num_range,
-    one_of = one_of,
-    everything = everything
-  )
-
-  ui_fns <- list(
-    current_vars = current_vars,
-    select_vars = vars_select,
-    rename_vars = vars_rename,
-    select_var = vars_pull
-  )
-
-  c(helpers_fns, ui_fns)
 }
 
 overtake_binding <- function(binding, fn, env) {
