@@ -9,8 +9,7 @@ test_that("no set variables throws warning", {
 })
 
 test_that("failed match removes all columns", {
-  old <- replace_vars(c("x", "y"))
-  on.exit(replace_vars(old))
+  scoped_vars(c("x", "y"))
 
   expect_equal(starts_with("z"), integer(0))
   expect_equal(ends_with("z"), integer(0))
@@ -21,8 +20,7 @@ test_that("failed match removes all columns", {
 
 
 test_that("matches return integer positions", {
-  old <- replace_vars(c("abc", "acd", "bbc", "bbd", "eee"))
-  on.exit(replace_vars(old))
+  scoped_vars(c("abc", "acd", "bbc", "bbd", "eee"))
 
   expect_equal(starts_with("a"), c(1L, 2L))
   expect_equal(ends_with("d"),   c(2L, 4L))
