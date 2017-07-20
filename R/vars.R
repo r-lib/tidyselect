@@ -11,7 +11,7 @@ replace_vars <- function(vars) {
 #' @export
 #' @rdname select_helpers
 current_vars <- function() {
-  vars_env$selected %||% warn("Variable context not set")
+  vars_env$selected %||% warn("Can't get tidyselect variables as none were registered")
 }
 
 vars_env <- new_environment()
