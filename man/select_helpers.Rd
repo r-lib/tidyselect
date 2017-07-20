@@ -2,7 +2,6 @@
 % Please edit documentation in R/select-helpers.R
 \name{select_helpers}
 \alias{select_helpers}
-\alias{current_vars}
 \alias{starts_with}
 \alias{ends_with}
 \alias{contains}
@@ -12,8 +11,6 @@
 \alias{everything}
 \title{Select helpers}
 \usage{
-current_vars()
-
 starts_with(match, ignore.case = TRUE, vars = current_vars())
 
 ends_with(match, ignore.case = TRUE, vars = current_vars())
