@@ -17,7 +17,7 @@
 #' @param vars A character vector of variable names.
 #' @param frame The frame environment where the exit hook for
 #'   restoring the old variables should be registered.
-#' @return For `poke_vars()` and `reset_vars()`, the old variables
+#' @return For `poke_vars()` and `scoped_vars()`, the old variables
 #'   invisibly. For `peek_vars()`, the variables currently
 #'   registered.
 #' @export
@@ -74,7 +74,7 @@ scoped_vars <- function(vars, frame = caller_env()) {
 #' @rdname poke_vars
 #' @export
 peek_vars <- function() {
-  vars_env$selected %||% warn("Can't get tidyselect variables as none were registered")
+  vars_env$selected %||% warn("No tidyselect variables were registered")
 }
 
 vars_env <- new_environment()

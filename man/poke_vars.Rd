@@ -19,7 +19,7 @@ peek_vars()
 restoring the old variables should be registered.}
 }
 \value{
-For \code{poke_vars()} and \code{reset_vars()}, the old variables
+For \code{poke_vars()} and \code{scoped_vars()}, the old variables
 invisibly. For \code{peek_vars()}, the variables currently
 registered.
 }
