@@ -33,14 +33,15 @@ registered.
 Variables are made available to \link[=select_helpers]{select helpers} by
 registering them in a special placeholder.
 \itemize{
-\item \code{poke_vars()} changes the contents of the placeholder with a new
-set of variables. It returns the previous variables invisibly and
-it is your responsibility to restore them after you are done.
 \item \code{scoped_vars()} changes the current variables and sets up a
 function exit hook that automatically restores the previous
 variables once the current function returns.
 \item \code{with_vars()} takes an expression to be evaluated in a variable
 context.
+\item \code{poke_vars()} changes the contents of the placeholder with a new
+set of variables. It returns the previous variables invisibly and
+it is your responsibility to restore them after you are
+done. This is for expert use only.
 \item \code{peek_vars()} returns the variables currently registered.
 }
 }

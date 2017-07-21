@@ -32,20 +32,20 @@ adjustments to the API.
 tidyselect provides a few more ways of establishing a variable
 context:
 
+* `scoped_vars()` sets up a variable context along with an an exit
+  hook that automatically restores the previous variables. It is the
+  preferred way of changing the variable context.
+
+  `with_vars()` takes variables and an expression and evaluates the
+  latter in the context of the former.
+
 * `poke_vars()` establishes a new variable context. It returns the
   previous context invisibly and it is your responsibility to restore
-  it after you are done.
+  it after you are done. This is for expert use only.
 
   `current_vars()` has been renamed to `peek_vars()`. This naming is a
   reference to [peek and poke](https://en.wikipedia.org/wiki/PEEK_and_POKE)
   from legacy languages.
-
-* `scoped_vars()` is like `poke_vars()` but sets up an exit hook to
-  automatically restore the previous variables. It is the preferred
-  way of changing the variable context.
-
-  `with_vars()` takes variables and an expression and evaluates the
-  latter in the context of the former.
 
 
 There are a few other cosmetic changes:
