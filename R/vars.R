@@ -75,7 +75,7 @@ poke_vars <- function(vars) {
 #' @rdname poke_vars
 #' @export
 peek_vars <- function() {
-  vars_env$selected %||% warn("No tidyselect variables were registered")
+  vars_env$selected %||% abort("No tidyselect variables were registered")
 }
 
 #' @rdname poke_vars

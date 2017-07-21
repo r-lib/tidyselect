@@ -1,11 +1,7 @@
 context("select helpers")
 
 test_that("no set variables throws warning", {
-  expect_warning(
-    starts_with("z"),
-    "No tidyselect variables were registered",
-    fixed = TRUE
-  )
+  expect_error(starts_with("z"), "No tidyselect variables were registered")
 })
 
 test_that("failed match removes all columns", {
