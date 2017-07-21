@@ -29,8 +29,26 @@ adjustments to the API.
   "variables")`.
 
 
+tidyselect provides a few more ways of establishing a variable
+context:
 
-There are a few cosmetic changes as well:
+* `poke_vars()` establishes a new variable context. It returns the
+  previous context invisibly and it is your responsibility to restore
+  it after you are done.
+
+  `current_vars()` has been renamed to `peek_vars()`. This naming is a
+  reference to [peek and poke](https://en.wikipedia.org/wiki/PEEK_and_POKE)
+  from legacy languages.
+
+* `scoped_vars()` is like `poke_vars()` but sets up an exit hook to
+  automatically restore the previous variables. It is the preferred
+  way of changing the variable context.
+
+  `with_vars()` takes variables and an expression and evaluates the
+  latter in the context of the former.
+
+
+There are a few other cosmetic changes:
 
 * `select_vars()` and `rename_vars()` are now `vars_select()` and
   `vars_rename()`. This follows the tidyverse convention that a prefix
