@@ -1,5 +1,5 @@
 
-# tidyselect 0.0.0.9000
+# tidyselect 0.1.0
 
 tidyselect is the new home for the `select_vars()`, `rename_vars()`
 and `select_var()` functions. We took this opportunity to make a few
