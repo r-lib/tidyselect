@@ -5,8 +5,9 @@
 #' Variables are made available to [select helpers][select_helpers] by
 #' registering them in a special placeholder.
 #'
-#' * `poke_vars()` changes the contents of the placeholder with a
-#'   new set of variables.
+#' * `poke_vars()` changes the contents of the placeholder with a new
+#'   set of variables. It returns the previous variables invisibly and
+#'   it is your responsibility to restore them after you are done.
 #'
 #' * `scoped_vars()` changes the current variables and sets up a
 #'   function exit hook that automatically restores the previous
@@ -15,7 +16,7 @@
 #' * `with_vars()` takes an expression to be evaluated in a variable
 #'   context.
 #'
-#' * `peek_vars()` returns the currently registered variables.
+#' * `peek_vars()` returns the variables currently registered.
 #'
 #' @param vars A character vector of variable names.
 #' @return For `poke_vars()` and `scoped_vars()`, the old variables
