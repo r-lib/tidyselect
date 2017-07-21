@@ -4,7 +4,7 @@
 \name{tidyselect-package}
 \alias{tidyselect}
 \alias{tidyselect-package}
-\title{tidyselect: Select From a Set of Strings}
+\title{tidyselect: Select from a Set of Strings}
 \description{
 A backend for the selecting functions of the 'Tidyverse'
 which makes it easy to implement select-like functions.

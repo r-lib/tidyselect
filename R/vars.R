@@ -5,9 +5,6 @@
 #' Variables are made available to [select helpers][select_helpers] by
 #' registering them in a special placeholder.
 #'
-#' * `poke_vars()` changes the contents of the placeholder with a
-#'   new set of variables.
-#'
 #' * `scoped_vars()` changes the current variables and sets up a
 #'   function exit hook that automatically restores the previous
 #'   variables once the current function returns.
@@ -15,7 +12,12 @@
 #' * `with_vars()` takes an expression to be evaluated in a variable
 #'   context.
 #'
-#' * `peek_vars()` returns the currently registered variables.
+#' * `poke_vars()` changes the contents of the placeholder with a new
+#'   set of variables. It returns the previous variables invisibly and
+#'   it is your responsibility to restore them after you are
+#'   done. This is for expert use only.
+#'
+#' * `peek_vars()` returns the variables currently registered.
 #'
 #' @param vars A character vector of variable names.
 #' @return For `poke_vars()` and `scoped_vars()`, the old variables
@@ -46,13 +48,13 @@
 #' peek_vars()
 #'
 #'
-#' # It is often more practical to use the scoped variant as it restores
-#' # the state automatically when the function returns:
+#' # It is recommended to use the scoped variant as it restores the
+#' # state automatically when the function returns:
 #' fn <- function(vars) {
 #'   scoped_vars(vars)
-#'   one_of("d")
+#'   starts_with("r")
 #' }
-#' fn(letters)
+#' fn(c("red", "blue", "rose"))
 #'
 #' # The with_vars() helper makes it easy to pass an expression that
 #' # should be evaluated in a variable context. Thanks to lazy
@@ -74,7 +76,7 @@ poke_vars <- function(vars) {
 #' @rdname poke_vars
 #' @export
 peek_vars <- function() {
-  vars_env$selected %||% warn("No tidyselect variables were registered")
+  vars_env$selected %||% abort("No tidyselect variables were registered")
 }
 
 #' @rdname poke_vars

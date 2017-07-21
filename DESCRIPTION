@@ -1,6 +1,6 @@
 Package: tidyselect
-Title: Select From a Set of Strings
-Version: 0.0.0.9000
+Title: Select from a Set of Strings
+Version: 0.1.0
 Authors@R: c(
     person("Lionel", "Henry", ,"lionel@rstudio.com", c("aut", "cre")),
     person("Hadley", "Wickham", ,"hadley@rstudio.com", "aut"),

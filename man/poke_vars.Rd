@@ -33,14 +33,16 @@ registered.
 Variables are made available to \link[=select_helpers]{select helpers} by
 registering them in a special placeholder.
 \itemize{
-\item \code{poke_vars()} changes the contents of the placeholder with a
-new set of variables.
 \item \code{scoped_vars()} changes the current variables and sets up a
 function exit hook that automatically restores the previous
 variables once the current function returns.
 \item \code{with_vars()} takes an expression to be evaluated in a variable
 context.
-\item \code{peek_vars()} returns the currently registered variables.
+\item \code{poke_vars()} changes the contents of the placeholder with a new
+set of variables. It returns the previous variables invisibly and
+it is your responsibility to restore them after you are
+done. This is for expert use only.
+\item \code{peek_vars()} returns the variables currently registered.
 }
 }
 \examples{
@@ -67,13 +69,13 @@ fn(letters[3:5])
 peek_vars()
 
 
-# It is often more practical to use the scoped variant as it restores
-# the state automatically when the function returns:
+# It is recommended to use the scoped variant as it restores the
+# state automatically when the function returns:
 fn <- function(vars) {
   scoped_vars(vars)
-  one_of("d")
+  starts_with("r")
 }
-fn(letters)
+fn(c("red", "blue", "rose"))
 
 # The with_vars() helper makes it easy to pass an expression that
 # should be evaluated in a variable context. Thanks to lazy
