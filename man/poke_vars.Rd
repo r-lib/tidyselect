@@ -2,21 +2,27 @@
 % Please edit documentation in R/vars.R
 \name{poke_vars}
 \alias{poke_vars}
-\alias{scoped_vars}
 \alias{peek_vars}
+\alias{scoped_vars}
+\alias{with_vars}
 \title{Replace or get current variables}
 \usage{
 poke_vars(vars)
 
+peek_vars()
+
 scoped_vars(vars, frame = caller_env())
 
-peek_vars()
+with_vars(vars, expr)
 }
 \arguments{
 \item{vars}{A character vector of variable names.}
 
 \item{frame}{The frame environment where the exit hook for
 restoring the old variables should be registered.}
+
+\item{expr}{An expression to be evaluated within the variable
+context.}
 }
 \value{
 For \code{poke_vars()} and \code{scoped_vars()}, the old variables
@@ -32,6 +38,8 @@ new set of variables.
 \item \code{scoped_vars()} changes the current variables and sets up a
 function exit hook that automatically restores the previous
 variables once the current function returns.
+\item \code{with_vars()} takes an expression to be evaluated in a variable
+context.
 \item \code{peek_vars()} returns the currently registered variables.
 }
 }
@@ -66,4 +74,14 @@ fn <- function(vars) {
   one_of("d")
 }
 fn(letters)
+
+# The with_vars() helper makes it easy to pass an expression that
+# should be evaluated in a variable context. Thanks to lazy
+# evaluation, you can just pass the expression argument from your
+# wrapper to with_vars():
+fn <- function(expr) {
+  vars <- c("red", "blue", "rose")
+  with_vars(vars, expr)
+}
+fn(starts_with("r"))
 }

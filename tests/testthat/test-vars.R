@@ -12,3 +12,15 @@ test_that("scoped_vars() restores previous state", {
 
   expect_identical(peek_vars(), vars)
 })
+
+test_that("with_vars() works", {
+  vars <- c("a", "b", "c")
+  scoped_vars(vars)
+
+  fn <- function(expr) {
+    with_vars(c("rose", "blue", "red"), expr)
+  }
+  expect_identical(fn(starts_with("r")), c(1L, 3L))
+
+  expect_identical(peek_vars(), vars)
+})

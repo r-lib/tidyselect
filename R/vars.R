@@ -12,11 +12,12 @@
 #'   function exit hook that automatically restores the previous
 #'   variables once the current function returns.
 #'
+#' * `with_vars()` takes an expression to be evaluated in a variable
+#'   context.
+#'
 #' * `peek_vars()` returns the currently registered variables.
 #'
 #' @param vars A character vector of variable names.
-#' @param frame The frame environment where the exit hook for
-#'   restoring the old variables should be registered.
 #' @return For `poke_vars()` and `scoped_vars()`, the old variables
 #'   invisibly. For `peek_vars()`, the variables currently
 #'   registered.
@@ -52,6 +53,16 @@
 #'   one_of("d")
 #' }
 #' fn(letters)
+#'
+#' # The with_vars() helper makes it easy to pass an expression that
+#' # should be evaluated in a variable context. Thanks to lazy
+#' # evaluation, you can just pass the expression argument from your
+#' # wrapper to with_vars():
+#' fn <- function(expr) {
+#'   vars <- c("red", "blue", "rose")
+#'   with_vars(vars, expr)
+#' }
+#' fn(starts_with("r"))
 poke_vars <- function(vars) {
   stopifnot(is_character(vars) || is_null(vars))
 
@@ -61,6 +72,14 @@ poke_vars <- function(vars) {
   invisible(old)
 }
 #' @rdname poke_vars
+#' @export
+peek_vars <- function() {
+  vars_env$selected %||% warn("No tidyselect variables were registered")
+}
+
+#' @rdname poke_vars
+#' @param frame The frame environment where the exit hook for
+#'   restoring the old variables should be registered.
 #' @export
 scoped_vars <- function(vars, frame = caller_env()) {
   old <- poke_vars(vars)
@@ -72,9 +91,12 @@ scoped_vars <- function(vars, frame = caller_env()) {
   invisible(old)
 }
 #' @rdname poke_vars
+#' @param expr An expression to be evaluated within the variable
+#'   context.
 #' @export
-peek_vars <- function() {
-  vars_env$selected %||% warn("No tidyselect variables were registered")
+with_vars <- function(vars, expr) {
+  scoped_vars(vars)
+  expr
 }
 
 vars_env <- new_environment()
