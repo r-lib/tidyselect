@@ -6,8 +6,10 @@ Authors@R: c(
     person("Hadley", "Wickham", ,"hadley@rstudio.com", "aut"),
     person("RStudio", role = "cph")
     )
-Description: A backend for the selecting functions of the 'Tidyverse'
-    which makes it easy to implement select-like functions.
+Description: A backend for the selecting functions of the 'tidyverse'.
+    It makes it easy to implement select-like functions in your own
+    packages in a way that is consistent with other 'tidyverse'
+    interfaces for selection.
 Depends:
     R (>= 3.1.0)
 Imports:
