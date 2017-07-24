@@ -1,5 +1,5 @@
 
-# tidyselect 0.1.0
+# tidyselect 0.1.1
 
 tidyselect is the new home for the legacy functions
 `dplyr::select_vars()`, `dplyr::rename_vars()` and
