@@ -6,13 +6,7 @@
 
 
 maybe_overtake_dplyr <- function(...) {
-  if (!is_installed("dplyr")) {
-    return(FALSE)
-  }
-
-  # Check whether dplyr already uses tidyselect
-  dplyr_contains <- ns_imports_env("dplyr")$contains
-  if (!is_null(dplyr_contains) && ns_env_name(dplyr_contains) == "tidyselect") {
+  if (!is_installed("dplyr") || utils::packageVersion("dplyr") > "0.7.2.9000") {
     return(FALSE)
   }
 
