@@ -172,7 +172,8 @@ vars_select_eval <- function(vars, quos, strict) {
   ind_list <- map_if(quos, !is_helper, eval_var, data, strict = strict)
 
   # All other calls are evaluated in the context only
-  ind_list <- map_if(ind_list, is_helper, eval_var)
+  # They are always evaluated strictly
+  ind_list <- map_if(ind_list, is_helper, eval_var, strict = TRUE)
 
   ind_list
 }
