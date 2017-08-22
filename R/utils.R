@@ -24,11 +24,22 @@ plural <- function(vars) {
   }
   nm[[2]]
 }
+Singular <- function(vars) {
+  capitalise_first(singular(vars))
+}
+Plural <- function(vars) {
+  capitalise_first(plural(vars))
+}
+
 vars_pluralise <- function(vars) {
   pluralise(vars, singular(vars), plural(vars))
 }
 vars_pluralise_len <- function(vars, x) {
   pluralise_len(x, singular(vars), plural(vars))
+}
+
+capitalise_first <- function(chr) {
+  gsub("(^[[:alpha:]])", "\\U\\1", chr, perl = TRUE)
 }
 
 paren_sym <- quote(`(`)
