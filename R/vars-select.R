@@ -112,20 +112,11 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
     return(set_names(.vars, .vars))
   }
 
-  # Register vars to make them available to select helpers
-  scoped_vars(.vars)
+  ind_list <- vars_select_eval(.vars, quos)
 
   # if the first selector is exclusive (negative), start with all columns
   first <- f_rhs(quos[[1]])
   initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
-
-  # Evaluate symbols in an environment where columns are bound, but
-  # not calls (select helpers are scoped in the calling environment).
-  is_helper <- map_lgl(quos, quo_is_helper)
-  ind_list <- map_if(quos, is_helper, eval_tidy)
-
-  data <- set_names(as.list(seq_along(.vars)), .vars)
-  ind_list <- map_if(ind_list, !is_helper, eval_tidy, data)
 
   ind_list <- c(initial_case, ind_list)
   names(ind_list) <- c(names2(initial_case), names2(quos))
@@ -161,6 +152,20 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   }
 
   sel
+}
+
+vars_select_eval <- function(vars, quos) {
+  scoped_vars(vars)
+
+  # Symbols and calls to `:` and `c()` are evaluated with data in scope
+  is_helper <- map_lgl(quos, quo_is_helper)
+  data <- set_names(as.list(seq_along(vars)), vars)
+  ind_list <- map_if(quos, !is_helper, eval_tidy, data)
+
+  # All other calls are evaluated in the context only
+  ind_list <- map_if(ind_list, is_helper, eval_tidy)
+
+  ind_list
 }
 
 extract_expr <- function(expr) {
