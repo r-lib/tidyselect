@@ -19,6 +19,9 @@
 #'
 #' * `peek_vars()` returns the variables currently registered.
 #'
+#' * `has_vars()` returns `TRUE` if a variable context has been set,
+#'   `FALSE` otherwise.
+#'
 #' @param vars A character vector of variable names.
 #' @return For `poke_vars()` and `scoped_vars()`, the old variables
 #'   invisibly. For `peek_vars()`, the variables currently
@@ -99,6 +102,11 @@ scoped_vars <- function(vars, frame = caller_env()) {
 with_vars <- function(vars, expr) {
   scoped_vars(vars)
   expr
+}
+
+#' @rdname poke_vars
+has_vars <- function() {
+  !is_null(vars_env$selected)
 }
 
 vars_env <- new_environment()
