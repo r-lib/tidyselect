@@ -1,5 +1,6 @@
 #' @import rlang
 #' @importFrom glue glue
+#' @importFrom purrr discard map map_chr map_if map_lgl map2
 #' @importFrom Rcpp cppFunction
 #' @useDynLib tidyselect, .registration = TRUE
 "_PACKAGE"
