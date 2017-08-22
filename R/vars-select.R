@@ -29,6 +29,7 @@
 #'   calling context.
 #' @param .include,.exclude Character vector of column names to always
 #'   include/exclude.
+#' @param .strict If `FALSE`, errors about unknown columns are ignored.
 #' @seealso [vars_pull()]
 #' @export
 #' @keywords internal
@@ -104,15 +105,23 @@
 #'   vars_select(names(mtcars), !! enquo(var1), !! enquo(var2))
 #' }
 #' wrapper(starts_with("d"), starts_with("c"))
-vars_select <- function(.vars, ..., .include = character(), .exclude = character()) {
+vars_select <- function(.vars, ...,
+                        .include = character(),
+                        .exclude = character(),
+                        .strict = TRUE) {
   quos <- quos(...)
+  ind_list <- vars_select_eval(.vars, quos, .strict)
 
-  if (is_empty(quos)) {
+  # This takes care of NULL inputs and of ignored errors when
+  # `.strict` is FALSE
+  is_empty <- map_lgl(ind_list, is_null)
+  ind_list <- discard(ind_list, is_empty)
+  quos <- discard(quos, is_empty)
+
+  if (is_empty(ind_list)) {
     .vars <- setdiff(.include, .exclude)
     return(set_names(.vars, .vars))
   }
-
-  ind_list <- vars_select_eval(.vars, quos)
 
   # if the first selector is exclusive (negative), start with all columns
   first <- f_rhs(quos[[1]])
@@ -154,18 +163,39 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   sel
 }
 
-vars_select_eval <- function(vars, quos) {
+vars_select_eval <- function(vars, quos, strict) {
   scoped_vars(vars)
 
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
   data <- set_names(as.list(seq_along(vars)), vars)
-  ind_list <- map_if(quos, !is_helper, eval_tidy, data)
+  ind_list <- map_if(quos, !is_helper, eval_var, data, strict = strict)
 
   # All other calls are evaluated in the context only
-  ind_list <- map_if(ind_list, is_helper, eval_tidy)
+  ind_list <- map_if(ind_list, is_helper, eval_var)
 
   ind_list
+}
+eval_var <- function(expr, data = NULL, strict = TRUE) {
+  if (strict) {
+    eval_tidy(expr, data)
+  } else {
+    tryCatch(eval_tidy(expr, data),
+      error = function(cnd) maybe_ignore(cnd)
+    )
+  }
+}
+maybe_ignore <- function(cnd) {
+  msg <- cnd$message
+
+  if (!inherits(cnd, "simpleError") || is_null(msg)) {
+    stop(cnd)
+  }
+  if (!grepl("^object '", msg) || !grepl("' not found$", msg)) {
+    stop(cnd)
+  }
+
+  NULL
 }
 
 extract_expr <- function(expr) {

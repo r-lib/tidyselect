@@ -7,7 +7,8 @@
 \usage{
 vars_rename(.vars, ..., .strict = TRUE)
 
-vars_select(.vars, ..., .include = character(), .exclude = character())
+vars_select(.vars, ..., .include = character(), .exclude = character(),
+  .strict = TRUE)
 }
 \arguments{
 \item{.vars}{A character vector of existing column names.}
@@ -31,6 +32,8 @@ variable that doesn't exist.}
 
 \item{.include, .exclude}{Character vector of column names to always
 include/exclude.}
+
+\item{.strict}{If \code{FALSE}, errors about unknown columns are ignored.}
 }
 \value{
 A named character vector. Values are existing column names,
