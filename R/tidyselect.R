@@ -6,7 +6,11 @@
 
 
 maybe_overtake_dplyr <- function(...) {
-  if (!is_installed("dplyr") || utils::packageVersion("dplyr") > "0.7.2.9000") {
+  if (!is_installed("dplyr")) {
+    return(FALSE)
+  }
+  # Check for new versions of dplyr that import tidyselect
+  if (!is_null(ns_env("dplyr")$uses_tidyselect)) {
     return(FALSE)
   }
 
