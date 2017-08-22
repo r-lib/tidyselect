@@ -29,10 +29,10 @@ test_that("abort on unknown columns", {
   expect_error(vars_select(letters, c("a", "bar", "foo", "d")), "bar, foo")
 })
 
-test_that("symbol overscope is isolated from context", {
+test_that("symbol overscope is not isolated from context", {
   foo <- 10
-  expect_error(vars_select(letters, foo), "object 'foo' not found")
-  expect_error(vars_select(letters, ((foo))), "object 'foo' not found")
+  expect_identical(vars_select(letters, foo), c(j = "j"))
+  expect_identical(vars_select(letters, ((foo))), c(j = "j"))
 })
 
 test_that("symbol overscope works with parenthesised expressions", {

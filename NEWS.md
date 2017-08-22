@@ -7,6 +7,34 @@
 * `vars_rename()` now handles variable positions (integers or round
   doubles) just like `vars_select()` (#20).
 
+* The semantics for data expressions have been changed back to the old
+  behaviour because the new rules were causing a lot of trouble. From
+  now on data expressions (symbols and calls to `:` and `c()`) can
+  refer to both registered variables and to objects from the context.
+
+  However the semantics for context expressions (any calls other than
+  to `:` and `c()`) remain the same. Those expressions are evaluated
+  in the context only and cannot refer to registered variables.
+
+  If you're writing functions and refer to contextual objects, it is
+  still a good idea to avoid data expressions. Since registered
+  variables are a moving part, you never know if your local objects
+  might be shadowed by a variable. Consider:
+
+  ```
+  n <- 2
+  vars_select(letters, 1:n)
+  ```
+
+  Should that select up to the second element of `letters` or up to
+  the 14th? Since the variables have precedence in a data expression,
+  this will select the 14 first letters. This can be made more robust
+  by turning the data expression into a context expression:
+
+  ```
+  vars_select(letters, seq(1, n))
+  ```
+
 
 # tidyselect 0.1.1
 

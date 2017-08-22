@@ -147,7 +147,6 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   # Evaluate symbols in an environment where columns are bound, but
   # not calls (select helpers are scoped in the calling environment).
   is_helper <- map_lgl(quos, quo_is_helper)
-  quos <- map_if(quos, !is_helper, set_env, empty_env())
   ind_list <- map_if(quos, is_helper, eval_tidy)
   ind_list <- map_if(ind_list, !is_helper, overscope_eval_next, overscope = syms_overscope)
 
