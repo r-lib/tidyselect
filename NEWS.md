@@ -4,6 +4,48 @@
 * `has_vars()` is a predicate that tests whether a variable context
   has been set (#21).
 
+* The special evaluation semantics have been changed back to the old
+  behaviour because the new rules were causing too much trouble and
+  confusion. From now on expressions are evaluated in the standard
+  way: both the data and the context are in scope, and the data
+  prevails over the context.
+
+  The motivation for the previous rules was to force users to be
+  explicit about where to find variables. Consider the following
+  example, should it select up to the second element of `letters` or
+  up to the 14th?
+
+  ```
+  n <- 2
+  vars_select(letters, 1:n)
+  ```
+
+  Since user-supplied variables are unknown, you can't be sure that
+  your local objects won't be shadowed by something in the
+  data. Furthermore, in the case of selection helpers like
+  `starts_with()` or `one_of()`, there is generally no reason to refer
+  to variables from the data. This is why we made the distinction
+  between data expressions that could only refer to variables from the
+  data, and context expressions that could only refer to objects from
+  the context.
+
+  We have reverted this behaviour but it's still a good idea to mind
+  scoping when you're writing functions. The tidy eval tools are
+  helpful in that regard. If you expect a variable to be found in the
+  data, you can use the `.data` pronoun:
+
+  ```{r}
+  vars_select(names(mtcars), .data$cyl : .data$drat)
+  ```
+
+  If you expect a variable to be found in the context, you can use
+  quasiquotation. Unquoting an expression evaluates it early and
+  outside of the data context:
+
+  ```
+  vars_select(letters, seq(1, !! n))
+  ```
+
 
 # tidyselect 0.1.1
 
