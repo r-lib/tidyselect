@@ -163,7 +163,7 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
     first <- ind_list[!is_integerish][[1]]
     first_type <- friendly_type(type_of(first))
     bad_calls(bad,
-      "must resolve to integer { singular(.vars) } positions, \\
+      "must evaluate to { singular(.vars) } positions or names, \\
        not { first_type }"
     )
   }
