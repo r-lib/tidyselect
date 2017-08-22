@@ -10,8 +10,6 @@ is_data_pronoun <- function(expr) {
     identical(node_cadr(expr), quote(.data))
 }
 
-commas <- function(...) paste0(..., collapse = ", ")
-
 singular <- function(vars) {
   nm <- attr(vars, "type") %||% c("column", "columns")
   if (!is_character(nm, 2)) {
@@ -25,6 +23,12 @@ plural <- function(vars) {
     abort("The `type` attribute must be a character vector of length 2")
   }
   nm[[2]]
+}
+vars_pluralise <- function(vars) {
+  pluralise(vars, singular(vars), plural(vars))
+}
+vars_pluralise_len <- function(vars, x) {
+  pluralise_len(x, singular(vars), plural(vars))
 }
 
 paren_sym <- quote(`(`)

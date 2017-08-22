@@ -8,8 +8,15 @@ check_pkg <- function(name, reason) {
 }
 
 # ngettext() does extra work, this function is a simpler version
-ntext <- function(n, msg1, msg2) {
-  if (n == 1) msg1 else msg2
+pluralise <- function(n, singular, plural) {
+  if (n == 1) {
+    singular
+  } else {
+    plural
+  }
+}
+pluralise_len <- function(x, singular, plural) {
+  pluralise(length(x), singular, plural)
 }
 
 bad <- function(..., .envir = parent.frame()) {
@@ -56,7 +63,7 @@ fmt_args <- function(x) {
 }
 
 fmt_pos_args <- function(x) {
-  args <- ntext(length(x), "Argument", "Arguments")
+  args <- pluralise_len(x, "Argument", "Arguments")
   glue("{args} {fmt_comma(x)}")
 }
 
@@ -78,12 +85,12 @@ fmt_wrong_eq_ops <- function(...) {
 }
 
 fmt_cols <- function(x) {
-  cols <- ntext(length(x), "Column", "Columns")
+  cols <- pluralise_len(x, "Column", "Columns")
   glue("{cols} {fmt_obj(x)}")
 }
 
 fmt_measures <- function(x) {
-  measures <- ntext(length(x), "Measure", "Measures")
+  measures <- pluralise_len(x, "Measure", "Measures")
   glue("{measures} {fmt_obj(x)}")
 }
 
@@ -116,7 +123,7 @@ fmt_comma <- function(...) {
     x[[MAX_ITEMS]] <- "..."
   }
 
-  commas(x)
+  glue::collapse(x, sep = ", ", last = " and ")
 }
 
 parse_args <- function(x) {
