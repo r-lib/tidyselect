@@ -24,3 +24,10 @@ test_that("with_vars() works", {
 
   expect_identical(peek_vars(), vars)
 })
+
+test_that("has_vars() detects variables", {
+  expect_false(has_vars())
+
+  scoped_vars(letters)
+  expect_true(has_vars())
+})

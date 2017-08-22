@@ -5,6 +5,7 @@
 \alias{peek_vars}
 \alias{scoped_vars}
 \alias{with_vars}
+\alias{has_vars}
 \title{Replace or get current variables}
 \usage{
 poke_vars(vars)
@@ -14,6 +15,8 @@ peek_vars()
 scoped_vars(vars, frame = caller_env())
 
 with_vars(vars, expr)
+
+has_vars()
 }
 \arguments{
 \item{vars}{A character vector of variable names.}
@@ -43,6 +46,8 @@ set of variables. It returns the previous variables invisibly and
 it is your responsibility to restore them after you are
 done. This is for expert use only.
 \item \code{peek_vars()} returns the variables currently registered.
+\item \code{has_vars()} returns \code{TRUE} if a variable context has been set,
+\code{FALSE} otherwise.
 }
 }
 \examples{
