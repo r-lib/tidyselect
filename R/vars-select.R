@@ -3,19 +3,6 @@
 #' These functions power [dplyr::select()] and [dplyr::rename()]. They
 #' enable dplyr selecting or renaming semantics in your own functions.
 #'
-#' @section Context of evaluation:
-#'
-#' Quoting verbs usually support references to both objects from the
-#' data frame and objects from the calling context. Selecting verbs
-#' behave a bit differently.
-#'
-#' * Bare names are evaluated in the data frame only. You cannot refer
-#'   to local objects unless you explicitly unquote them with `!!`.
-#'
-#' * Calls to helper functions are evaluated in the calling context
-#'   only. You can safely and directly refer to local objects.
-#'
-#'
 #' @section Customising error messages:
 #'
 #' For consistency with dplyr, error messages refer to "columns" by
@@ -82,28 +69,18 @@
 #' vars_select(names(iris), !!! list(quo(Petal.Length), quote(Petal.Width)))
 #'
 #'
-#' # When selecting with bare symbols, you can only refer to data
-#' # objects. This avoids ambiguity. If you want to refer to local
-#' # objects, you can explicitly unquote them. They must contain
-#' # variable positions (integers) or variable names (strings):
+#' # If you want to avoid ambiguity about where to find objects you
+#' # have two solutions provided by the tidy eval framework. If you
+#' # want to refer to local objects, you can explicitly unquote
+#' # them. They must contain variable positions (integers) or variable
+#' # names (strings):
 #' Species <- 2
 #' vars_select(names(iris), Species)     # Picks up `Species` from the data frame
 #' vars_select(names(iris), !! Species)  # Picks up the local object referring to column 2
 #'
-#' # On the other hand, function calls behave the opposite way. They
-#' # are evaluated in the local context only and cannot refer to data
-#' # frame objects. This makes it easy to refer to local variables:
-#' x <- "Petal"
-#' vars_select(names(iris), starts_with(x))  # Picks up the local variable `x`
-#'
-#'
-#' # The .data pronoun is available:
-#' vars_select(names(mtcars), .data$cyl)
-#' vars_select(names(mtcars), .data$mpg : .data$disp)
-#'
-#' # However it isn't available within calls since those are evaluated
-#' # outside of the data context. This would fail if run:
-#' # vars_select(names(mtcars), identical(.data$cyl))
+#' # If you want to make sure that a variable is picked up from the
+#' # data, you can use the `.data` pronoun:
+#' vars_select(names(iris), .data$Species)
 #'
 #'
 #' # If you're writing a wrapper around vars_select(), pass the dots
