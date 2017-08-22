@@ -4,32 +4,46 @@
 * `has_vars()` is a predicate that tests whether a variable context
   has been set (#21).
 
-* The semantics for data expressions have been changed back to the old
-  behaviour because the new rules were causing a lot of trouble. From
-  now on data expressions (symbols and calls to `:` and `c()`) can
-  refer to both registered variables and to objects from the context.
+* The special evaluation semantics have been changed back to the old
+  behaviour because the new rules were causing too much trouble and
+  confusion. From now on expressions are evaluated in the standard
+  way: both the data and the context are in scope, and the data
+  prevails over the context.
 
-  However the semantics for context expressions (any calls other than
-  to `:` and `c()`) remain the same. Those expressions are evaluated
-  in the context only and cannot refer to registered variables.
-
-  If you're writing functions and refer to contextual objects, it is
-  still a good idea to avoid data expressions. Since registered
-  variables are a moving part, you never know if your local objects
-  might be shadowed by a variable. Consider:
+  The motivation for the previous rules was to force users to be
+  explicit about where to find variables. Consider the following
+  example, should it select up to the second element of `letters` or
+  up to the 14th?
 
   ```
   n <- 2
   vars_select(letters, 1:n)
   ```
 
-  Should that select up to the second element of `letters` or up to
-  the 14th? Since the variables have precedence in a data expression,
-  this will select the 14 first letters. This can be made more robust
-  by turning the data expression into a context expression:
+  Since user-supplied variables are unknown, you can't be sure that
+  your local objects won't be shadowed by something in the
+  data. Furthermore, in the case of selection helpers like
+  `starts_with()` or `one_of()`, there is generally no reason to refer
+  to variables from the data. This is why we made the distinction
+  between data expressions that could only refer to variables from the
+  data, and context expressions that could only refer to objects from
+  the context.
+
+  We have reverted this behaviour but it's still a good idea to mind
+  scoping when you're writing functions. The tidy eval tools are
+  helpful in that regard. If you expect a variable to be found in the
+  data, you can use the `.data` pronoun:
+
+  ```{r}
+  vars_select(names(mtcars), .data$cyl : .data$drat)
+  ```
+
+  If you expect a variable to be found in the context, you can use
+  quasiquotation. Unquoting an expression evaluates it early and
+  outside of the data context:
 
   ```
-  vars_select(letters, seq(1, n))
+  vars_select(letters, seq(1, !! n))
   ```
 
 
