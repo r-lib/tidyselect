@@ -49,6 +49,6 @@ test_that("can customise error messages", {
 
   expect_error(vars_select(vars, "foo"), "match variable names. Unknown variables:")
   expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
-  expect_error(vars_rename(vars, A = "foo"), "contains unknown variables")
+  expect_error(vars_rename(vars, A = "foo"), "Unknown variable `foo`")
   expect_error(vars_pull(vars, !! c("a", "b")), "or a variable name")
 })

@@ -15,7 +15,10 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
 
   if (!all(known)) {
     if (.strict) {
-      bad_args(old_vars[!known], "contains unknown { plural(.vars) }")
+      unknown <- old_vars[!known]
+      thing <- vars_pluralise_len(.vars, unknown)
+      msg <- glue("Unknown { thing } { fmt_args(unknown) } ")
+      abort(msg)
     } else {
       old_vars <- old_vars[known]
       new_vars <- new_vars[known]

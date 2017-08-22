@@ -3,7 +3,13 @@ context("rename vars")
 test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
-    "`e` contains unknown columns",
+    "Unknown column `e`",
+    fixed = TRUE
+  )
+
+  expect_error(
+    vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE),
+    "Unknown columns `e` and `g`",
     fixed = TRUE
   )
 
