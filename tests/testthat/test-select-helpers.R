@@ -49,10 +49,10 @@ test_that("can use a variable even if it exists in the data (#2266)", {
   y <- "x"
   expected_result <- c(x = "x")
 
-  expect_equal(vars_select(vars, starts_with(!! y)), expected_result)
-  expect_equal(vars_select(vars, ends_with(!! y)), expected_result)
-  expect_equal(vars_select(vars, contains(!! y)), expected_result)
-  expect_equal(vars_select(vars, matches(!! y)), expected_result)
+  expect_equal(vars_select(vars, starts_with(y)), expected_result)
+  expect_equal(vars_select(vars, ends_with(y)), expected_result)
+  expect_equal(vars_select(vars, contains(y)), expected_result)
+  expect_equal(vars_select(vars, matches(y)), expected_result)
 })
 
 test_that("num_range selects numeric ranges", {
@@ -115,6 +115,7 @@ test_that("one_of works when passed variable name matches the column name (#2266
   y <- "x"
   expect_equal(vars_select(vars, one_of(!! x)), expected_result)
   expect_equal(vars_select(vars, one_of(!! y)), expected_result)
+  expect_equal(vars_select(vars, one_of(y)), expected_result)
 })
 
 # first-selector ----------------------------------------------------------
