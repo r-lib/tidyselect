@@ -7,6 +7,52 @@
 * `vars_rename()` now handles variable positions (integers or round
   doubles) just like `vars_select()` (#20).
 
+* The special evaluation semantics for selection have been changed
+  back to the old behaviour because the new rules were causing too
+  much trouble and confusion. From now on data expressions (symbols
+  and calls to `:` and `c()`) can refer to both registered variables
+  and to objects from the context.
+
+  However the semantics for context expressions (any calls other than
+  to `:` and `c()`) remain the same. Those expressions are evaluated
+  in the context only and cannot refer to registered variables.
+
+  If you're writing functions and refer to contextual objects, it is
+  still a good idea to avoid data expressions. Since registered
+  variables are change as a function of user input and you never know
+  if your local objects might be shadowed by a variable. Consider:
+
+  ```
+  n <- 2
+  vars_select(letters, 1:n)
+  ```
+
+  Should that select up to the second element of `letters` or up to
+  the 14th? Since the variables have precedence in a data expression,
+  this will select the 14 first letters. This can be made more robust
+  by turning the data expression into a context expression:
+
+  ```
+  vars_select(letters, seq(1, n))
+  ```
+
+  You can also use quasiquotation since unquoted arguments are
+  guaranteed to be evaluated without any user data in scope. While
+  equivalent because of the special rules for context expressions,
+  this may be clearer to the reader accustomed to tidy eval:
+
+  ```{r}
+  vars_select(letters, seq(1, !! n))
+  ```
+
+  Finally, you may want to be more explicit in the opposite direction.
+  If you expect a variable to be found in the data but not in the
+  context, you can use the `.data` pronoun:
+
+  ```{r}
+  vars_select(names(mtcars), .data$cyl : .data$drat)
+  ```
+
 
 # tidyselect 0.1.1
 

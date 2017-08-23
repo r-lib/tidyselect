@@ -3,19 +3,6 @@
 #' These functions power [dplyr::select()] and [dplyr::rename()]. They
 #' enable dplyr selecting or renaming semantics in your own functions.
 #'
-#' @section Context of evaluation:
-#'
-#' Quoting verbs usually support references to both objects from the
-#' data frame and objects from the calling context. Selecting verbs
-#' behave a bit differently.
-#'
-#' * Bare names are evaluated in the data frame only. You cannot refer
-#'   to local objects unless you explicitly unquote them with `!!`.
-#'
-#' * Calls to helper functions are evaluated in the calling context
-#'   only. You can safely and directly refer to local objects.
-#'
-#'
 #' @section Customising error messages:
 #'
 #' For consistency with dplyr, error messages refer to "columns" by
@@ -82,28 +69,18 @@
 #' vars_select(names(iris), !!! list(quo(Petal.Length), quote(Petal.Width)))
 #'
 #'
-#' # When selecting with bare symbols, you can only refer to data
-#' # objects. This avoids ambiguity. If you want to refer to local
-#' # objects, you can explicitly unquote them. They must contain
-#' # variable positions (integers) or variable names (strings):
+#' # If you want to avoid ambiguity about where to find objects you
+#' # have two solutions provided by the tidy eval framework. If you
+#' # want to refer to local objects, you can explicitly unquote
+#' # them. They must contain variable positions (integers) or variable
+#' # names (strings):
 #' Species <- 2
 #' vars_select(names(iris), Species)     # Picks up `Species` from the data frame
 #' vars_select(names(iris), !! Species)  # Picks up the local object referring to column 2
 #'
-#' # On the other hand, function calls behave the opposite way. They
-#' # are evaluated in the local context only and cannot refer to data
-#' # frame objects. This makes it easy to refer to local variables:
-#' x <- "Petal"
-#' vars_select(names(iris), starts_with(x))  # Picks up the local variable `x`
-#'
-#'
-#' # The .data pronoun is available:
-#' vars_select(names(mtcars), .data$cyl)
-#' vars_select(names(mtcars), .data$mpg : .data$disp)
-#'
-#' # However it isn't available within calls since those are evaluated
-#' # outside of the data context. This would fail if run:
-#' # vars_select(names(mtcars), identical(.data$cyl))
+#' # If you want to make sure that a variable is picked up from the
+#' # data, you can use the `.data` pronoun:
+#' vars_select(names(iris), .data$Species)
 #'
 #'
 #' # If you're writing a wrapper around vars_select(), pass the dots
@@ -142,14 +119,13 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   first <- f_rhs(quos[[1]])
   initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
 
-  syms_overscope <- syms_overscope(.vars)
-
   # Evaluate symbols in an environment where columns are bound, but
   # not calls (select helpers are scoped in the calling environment).
   is_helper <- map_lgl(quos, quo_is_helper)
-  quos <- map_if(quos, !is_helper, set_env, empty_env())
   ind_list <- map_if(quos, is_helper, eval_tidy)
-  ind_list <- map_if(ind_list, !is_helper, overscope_eval_next, overscope = syms_overscope)
+
+  data <- set_names(as.list(seq_along(.vars)), .vars)
+  ind_list <- map_if(ind_list, !is_helper, eval_tidy, data)
 
   ind_list <- c(initial_case, ind_list)
   names(ind_list) <- c(names2(initial_case), names2(quos))
@@ -185,37 +161,6 @@ vars_select <- function(.vars, ..., .include = character(), .exclude = character
   }
 
   sel
-}
-
-# The top of the symbol overscope contains the functions for datawise
-# operations. Subsetting operators allow to subset the .data pronoun.
-syms_overscope_top <- child_env(NULL,
-  `$` = base::`$`,
-  `[[` = base::`[[`,
-  `-` = base::`-`,
-  `:` = base::`:`,
-  `(` = base::`(`,
-  c = base::c
-)
-lockEnvironment(syms_overscope_top, bindings = TRUE)
-
-syms_overscope <- function(vars) {
-  # Map variable names to their positions: this keeps integer semantics
-  data <- set_names(as.list(seq_along(vars)), vars)
-  data <- discard_unnamed(data)
-
-  overscope <- as_env(data, syms_overscope_top)
-  overscope <- child_env(overscope, .data = data)
-  overscope <- new_overscope(overscope, syms_overscope_top)
-
-  overscope
-}
-discard_unnamed <- function(x) {
-  if (is_env(x)) {
-    x
-  } else {
-    discard(x, names2(x) == "")
-  }
 }
 
 extract_expr <- function(expr) {
