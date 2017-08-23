@@ -7,10 +7,11 @@
 * `vars_rename()` now handles variable positions (integers or round
   doubles) just like `vars_select()` (#20).
 
-* The semantics for data expressions have been changed back to the old
-  behaviour because the new rules were causing a lot of trouble. From
-  now on data expressions (symbols and calls to `:` and `c()`) can
-  refer to both registered variables and to objects from the context.
+* The special evaluation semantics for selection have been changed
+  back to the old behaviour because the new rules were causing too
+  much trouble and confusion. From now on data expressions (symbols
+  and calls to `:` and `c()`) can refer to both registered variables
+  and to objects from the context.
 
   However the semantics for context expressions (any calls other than
   to `:` and `c()`) remain the same. Those expressions are evaluated
@@ -18,8 +19,8 @@
 
   If you're writing functions and refer to contextual objects, it is
   still a good idea to avoid data expressions. Since registered
-  variables are a moving part, you never know if your local objects
-  might be shadowed by a variable. Consider:
+  variables are change as a function of user input and you never know
+  if your local objects might be shadowed by a variable. Consider:
 
   ```
   n <- 2
@@ -33,6 +34,23 @@
 
   ```
   vars_select(letters, seq(1, n))
+  ```
+
+  You can also use quasiquotation since unquoted arguments are
+  guaranteed to be evaluated without any user data in scope. While
+  equivalent because of the special rules for context expressions,
+  this may be clearer to the reader accustomed to tidy eval:
+
+  ```{r}
+  vars_select(letters, seq(1, !! n))
+  ```
+
+  Finally, you may want to be more explicit in the opposite direction.
+  If you expect a variable to be found in the data but not in the
+  context, you can use the `.data` pronoun:
+
+  ```{r}
+  vars_select(names(mtcars), .data$cyl : .data$drat)
   ```
 
 
