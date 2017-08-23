@@ -8,14 +8,17 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
     abort("All arguments must be named")
   }
 
-  old_vars <- map2(exprs, names(exprs), switch_rename)
+  old_vars <- map2(exprs, names(exprs), switch_rename, .vars)
   new_vars <- names(exprs)
 
   known <- old_vars %in% .vars
 
   if (!all(known)) {
     if (.strict) {
-      bad_args(old_vars[!known], "contains unknown { plural(.vars) }")
+      unknown <- old_vars[!known]
+      thing <- vars_pluralise_len(.vars, unknown)
+      msg <- glue("Unknown { thing } { fmt_args(unknown) } ")
+      abort(msg)
     } else {
       old_vars <- old_vars[known]
       new_vars <- new_vars[known]
@@ -31,15 +34,22 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
 
 # FIXME: that's not a tidy implementation yet because we need to
 # handle non-existing symbols silently when `strict = FALSE`
-switch_rename <- function(expr, name) {
+switch_rename <- function(expr, name, vars) {
   switch_type(expr,
+    integer = ,
+    double =
+      if (is_integerish(expr)) {
+        return(vars[[expr]])
+      } else {
+        abort(glue("{ Singular(vars) } positions must be round numbers"))
+      },
     string = ,
     symbol =
       return(as_string(expr)),
     language =
       if (is_data_pronoun(expr)) {
         args <- node_cdr(expr)
-        return(switch_rename(node_cadr(args)))
+        return(switch_rename(node_cadr(args), name, vars))
       } else {
         abort("Expressions are currently not supported in `rename()`")
       }

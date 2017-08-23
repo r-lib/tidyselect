@@ -4,6 +4,9 @@
 * `has_vars()` is a predicate that tests whether a variable context
   has been set (#21).
 
+* `vars_rename()` now handles variable positions (integers or round
+  doubles) just like `vars_select()` (#20).
+
 
 # tidyselect 0.1.1
 

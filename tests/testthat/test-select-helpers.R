@@ -68,7 +68,7 @@ test_that("num_range selects numeric ranges", {
 test_that("position must resolve to numeric variables throws error", {
   expect_error(
     vars_select(letters, !! list()),
-    'must resolve to integer column positions',
+    'must evaluate to column positions or names',
     fixed = TRUE
   )
 })
