@@ -110,7 +110,12 @@ vars_select <- function(.vars, ...,
                         .exclude = character(),
                         .strict = TRUE) {
   quos <- quos(...)
-  ind_list <- vars_select_eval(.vars, quos, .strict)
+
+  if (!.strict) {
+    quos <- ignore_unknown_symbols(.vars, quos)
+  }
+
+  ind_list <- vars_select_eval(.vars, quos)
 
   # This takes care of NULL inputs and of ignored errors when
   # `.strict` is FALSE
@@ -163,40 +168,46 @@ vars_select <- function(.vars, ...,
   sel
 }
 
-vars_select_eval <- function(vars, quos, strict) {
+ignore_unknown_symbols <- function(vars, quos) {
+  quos <- discard(quos, is_unknown_symbol, vars)
+  quos <- map_if(quos, is_concat_lang, lang_ignore_unknown_symbols, vars)
+  quos
+}
+lang_ignore_unknown_symbols <- function(quo, vars) {
+  expr <- get_expr(quo)
+
+  args <- lang_args(expr)
+  args <- discard(args, is_unknown_symbol, vars)
+  expr <- lang(node_car(expr), !!! args)
+
+  set_expr(quo, expr)
+}
+is_unknown_symbol <- function(quo, vars) {
+  expr <- get_expr(quo)
+
+  if (!is_symbol(expr)) {
+    return(FALSE)
+  }
+
+  !as_string(expr) %in% vars
+}
+is_concat_lang <- function(quo) {
+  quo_is_language(quo, quote(`c`))
+}
+
+vars_select_eval <- function(vars, quos) {
   scoped_vars(vars)
 
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
   data <- set_names(as.list(seq_along(vars)), vars)
-  ind_list <- map_if(quos, !is_helper, eval_var, data, strict = strict)
+  ind_list <- map_if(quos, !is_helper, eval_tidy, data)
 
   # All other calls are evaluated in the context only
   # They are always evaluated strictly
-  ind_list <- map_if(ind_list, is_helper, eval_var, strict = TRUE)
+  ind_list <- map_if(ind_list, is_helper, eval_tidy)
 
   ind_list
-}
-eval_var <- function(expr, data = NULL, strict = TRUE) {
-  if (strict) {
-    eval_tidy(expr, data)
-  } else {
-    tryCatch(eval_tidy(expr, data),
-      error = function(cnd) maybe_ignore(cnd)
-    )
-  }
-}
-maybe_ignore <- function(cnd) {
-  msg <- cnd$message
-
-  if (!inherits(cnd, "simpleError") || is_null(msg)) {
-    stop(cnd)
-  }
-  if (!grepl("^object '", msg) || !grepl("' not found$", msg)) {
-    stop(cnd)
-  }
-
-  NULL
 }
 
 extract_expr <- function(expr) {
