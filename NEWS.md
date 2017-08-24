@@ -1,5 +1,5 @@
 
-# tidyselect 0.1.1.9000
+# tidyselect 0.2.0
 
 * `has_vars()` is a predicate that tests whether a variable context
   has been set (#21).
