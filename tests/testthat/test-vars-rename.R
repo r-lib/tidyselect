@@ -3,13 +3,13 @@ context("rename vars")
 test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
-    "Unknown column `e`",
+    "object 'e' not found",
     fixed = TRUE
   )
 
   expect_error(
     vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE),
-    "Unknown columns `e` and `g`",
+    "object 'e' not found",
     fixed = TRUE
   )
 
@@ -32,7 +32,15 @@ test_that("vars_rename() works with positions", {
 test_that("vars_rename() expects symbol or string", {
   expect_error(
     vars_rename(letters, d = !! list()),
-    '`d` = list() must be a symbol or a string, not a list',
+    '`d` = list() must be a column name or position, not a list',
     fixed = TRUE
   )
+})
+
+test_that("vars_rename() sets variable context", {
+  expect_identical(vars_rename(c("a", "b"), B = one_of("b")), c(a = "a", B = "b"))
+})
+
+test_that("vars_rename() fails with vectors", {
+  expect_error(vars_rename(letters, A = 1:2), "Column positions must be scalar")
 })

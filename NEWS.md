@@ -53,6 +53,16 @@
   vars_select(names(mtcars), .data$cyl : .data$drat)
   ```
 
+* `vars_select()` gains a `.strict` argument similar to
+  `rename_vars()`.  If set to `FALSE`, errors about unknown variables
+  are ignored.
+
+* `vars_rename()` is now implemented with the tidy eval framework.
+  Like `vars_select()`, expressions are evaluated without any user
+  data in scope. In addition a variable context is now established so
+  you can wripe rename helpers. Those should return a single round
+  number or a string (variable position or variable name).
+
 
 # tidyselect 0.1.1
 
