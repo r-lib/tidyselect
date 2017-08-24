@@ -68,7 +68,7 @@ vars_select(names(mtcars), .data$cyl : .data$drat)
 * `vars_rename()` is now implemented with the tidy eval framework.
   Like `vars_select()`, expressions are evaluated without any user
   data in scope. In addition a variable context is now established so
-  you can wripe rename helpers. Those should return a single round
+  you can write rename helpers. Those should return a single round
   number or a string (variable position or variable name).
 
 * `has_vars()` is a predicate that tests whether a variable context
