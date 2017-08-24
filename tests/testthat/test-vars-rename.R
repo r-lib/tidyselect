@@ -44,3 +44,7 @@ test_that("vars_rename() sets variable context", {
 test_that("vars_rename() fails with vectors", {
   expect_error(vars_rename(letters, A = 1:2), "Column positions must be scalar")
 })
+
+test_that("vars_rename() supports `.data` pronoun", {
+  expect_identical(vars_rename(c("a", "b"), B = .data$b), c(a = "a", B = "b"))
+})

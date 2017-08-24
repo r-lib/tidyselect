@@ -40,7 +40,7 @@ vars_rename_eval <- function(quos, vars) {
   scoped_vars(vars)
 
   # Only symbols have data in scope
-  is_symbol <- map_lgl(quos, quo_is_symbol)
+  is_symbol <- map_lgl(quos, is_symbol_expr)
   data <- set_names(as.list(seq_along(vars)), vars)
   renamed <- map_if(quos, is_symbol, eval_tidy, data)
 
@@ -49,6 +49,10 @@ vars_rename_eval <- function(quos, vars) {
 
   renamed <- map2_chr(renamed, names(quos), validate_renamed_var, vars)
   renamed
+}
+is_symbol_expr <- function(quo) {
+  expr <- get_expr(quo)
+  is_symbol(expr) || is_data_pronoun(expr)
 }
 
 validate_renamed_var <- function(expr, name, vars) {
