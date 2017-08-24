@@ -3,13 +3,17 @@
 #' @param .strict If `TRUE`, will throw an error if you attempt to rename a
 #'   variable that doesn't exist.
 vars_rename <- function(.vars, ..., .strict = TRUE) {
-  exprs <- exprs(...)
-  if (any(names2(exprs) == "")) {
+  quos <- quos(...)
+
+  if (any(names2(quos) == "")) {
     abort("All arguments must be named")
   }
+  if (!.strict) {
+    quos <- discard(quos, is_unknown_symbol, .vars)
+  }
 
-  old_vars <- map2(exprs, names(exprs), switch_rename, .vars)
-  new_vars <- names(exprs)
+  new_vars <- names(quos)
+  old_vars <- vars_rename_eval(quos, .vars)
 
   known <- old_vars %in% .vars
 
@@ -32,30 +36,39 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
   select
 }
 
-# FIXME: that's not a tidy implementation yet because we need to
-# handle non-existing symbols silently when `strict = FALSE`
-switch_rename <- function(expr, name, vars) {
+vars_rename_eval <- function(quos, vars) {
+  scoped_vars(vars)
+
+  # Only symbols have data in scope
+  is_symbol <- map_lgl(quos, quo_is_symbol)
+  data <- set_names(as.list(seq_along(vars)), vars)
+  renamed <- map_if(quos, is_symbol, eval_tidy, data)
+
+  # All expressions are evaluated in the context only
+  renamed <- map_if(renamed, !is_symbol, eval_tidy)
+
+  renamed <- map2_chr(renamed, names(quos), validate_renamed_var, vars)
+  renamed
+}
+
+validate_renamed_var <- function(expr, name, vars) {
   switch_type(expr,
     integer = ,
     double =
-      if (is_integerish(expr)) {
-        return(vars[[expr]])
-      } else {
+      if (!is_integerish(expr)) {
         abort(glue("{ Singular(vars) } positions must be round numbers"))
-      },
-    string = ,
-    symbol =
-      return(as_string(expr)),
-    language =
-      if (is_data_pronoun(expr)) {
-        args <- node_cdr(expr)
-        return(switch_rename(node_cadr(args), name, vars))
+      } else if (length(expr) != 1) {
+        abort(glue("{ Singular(vars) } positions must be scalar"))
       } else {
-        abort("Expressions are currently not supported in `rename()`")
-      }
+        return(vars[[expr]])
+      },
+    string =
+      return(expr)
   )
 
   actual_type <- friendly_type(type_of(expr))
   named_call <- ll(!! name := expr)
-  bad_named_calls(named_call, "must be a symbol or a string, not {actual_type}")
+  bad_named_calls(named_call,
+    "must be a { singular(vars) } name or position, not {actual_type}"
+  )
 }
