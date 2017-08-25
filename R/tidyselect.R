@@ -7,7 +7,7 @@
 
 
 maybe_overtake_dplyr <- function(...) {
-  if (!is_installed("dplyr") || utils::packageVersion("dplyr") > "0.7.2.9000") {
+  if (!is_installed("dplyr") || utils::packageVersion("dplyr") > "99.9.0") {
     return(FALSE)
   }
 

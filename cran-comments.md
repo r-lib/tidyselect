@@ -1,24 +1,19 @@
-## Resubmission
-
-* The `Description:` field has been extended. References to the
-  tidyverse are now in lower case. These are about the tidyverse in
-  general and not the tidyverse package specifically.
-
 
 ## Test environments
 
 * local OS X install, R 3.4.1
 * ubuntu 12.04 (on travis-ci, R devel and R release)
-* Windows (on R-hub)
+* Windows (on R-hub and Win-Builder)
 
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* This is a new release.
+0 errors | 0 warnings | 0 notes
 
 
 ## Reverse dependencies
 
-This is a new release, so there are no reverse dependencies.
+I have run R CMD check on the 2 downstream dependencies. (Summary at
+https://github.com/tidyverse/tidyselect/tree/master/revdep).
+
+The package tidyr is failing, a hotfix release is on its way.
