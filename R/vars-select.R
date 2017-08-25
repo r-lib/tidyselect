@@ -201,6 +201,7 @@ vars_select_eval <- function(vars, quos) {
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
   data <- set_names(as.list(seq_along(vars)), vars)
+  data <- c(data, `:` = vars_colon)
   ind_list <- map_if(quos, !is_helper, eval_tidy, data)
 
   # All other calls are evaluated in the context only
@@ -208,6 +209,27 @@ vars_select_eval <- function(vars, quos) {
   ind_list <- map_if(ind_list, is_helper, eval_tidy)
 
   ind_list
+}
+
+vars_colon <- function(x, y) {
+  if (is_string(x)) {
+    x <- match_string(x)
+  }
+  if (is_string(y)) {
+    y <- match_string(y)
+  }
+
+  x:y
+}
+match_string <- function(x) {
+  vars <- peek_vars()
+  out <- match(x, vars)
+
+  if (is_na(out)) {
+    abort(glue("Unknown { singular(vars) } `{ x }`"))
+  }
+
+  out
 }
 
 extract_expr <- function(expr) {
