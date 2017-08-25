@@ -78,6 +78,12 @@ vars_select(names(mtcars), .data$cyl : .data$drat)
   has been set (#21).
 
 
+## Fixes
+
+* `one_of()` argument `vars` has been renamed to `.vars` to avoid
+  spurious matching.
+
+
 # tidyselect 0.1.1
 
 tidyselect is the new home for the legacy functions

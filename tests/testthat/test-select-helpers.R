@@ -78,7 +78,7 @@ test_that("position must resolve to numeric variables throws error", {
 
 test_that("one_of gives useful errors", {
   expect_error(
-    one_of(1L, vars = c("x", "y")),
+    one_of(1L, .vars = c("x", "y")),
     "All arguments must be character vectors, not integer",
     fixed = TRUE
   )
@@ -87,15 +87,15 @@ test_that("one_of gives useful errors", {
 test_that("one_of tolerates but warns for unknown columns", {
   vars <- c("x", "y")
 
-  expect_warning(res <- one_of("z", vars = vars), "Unknown columns: `z`")
+  expect_warning(res <- one_of("z", .vars = vars), "Unknown columns: `z`")
   expect_equal(res, integer(0))
-  expect_warning(res <- one_of(c("x", "z"), vars = vars), "Unknown columns: `z`")
+  expect_warning(res <- one_of(c("x", "z"), .vars = vars), "Unknown columns: `z`")
   expect_equal(res, 1L)
 
 })
 
 test_that("one_of converts names to positions", {
-  expect_equal(one_of("a", "z", vars = letters), c(1L, 26L))
+  expect_equal(one_of("a", "z", .vars = letters), c(1L, 26L))
 })
 
 test_that("one_of works with variables", {

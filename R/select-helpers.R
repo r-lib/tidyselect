@@ -12,9 +12,9 @@
 #' @param match A string.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
-#' @param vars A character vector of variable names. When called from inside
-#'   [select()] these are automatically set to the names of the
-#'   table.
+#' @param vars,.vars A character vector of variable names. When called
+#'   from inside [select()] these are automatically set to the names
+#'   of the table.
 #' @name select_helpers
 #' @return An integer vector giving the position of the matched variables.
 #' @examples
@@ -92,19 +92,19 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 #' @export
 #' @rdname select_helpers
 #' @param ... One or more character vectors.
-one_of <- function(..., vars = peek_vars()) {
+one_of <- function(..., .vars = peek_vars()) {
   keep <- c(...)
 
   if (!is_character(keep)) {
     bad("All arguments must be character vectors, not {type_of(keep)}")
   }
 
-  if (!all(keep %in% vars)) {
-    bad <- setdiff(keep, vars)
-    warn(glue("Unknown { plural(vars) }: ", paste0("`", bad, "`", collapse = ", ")))
+  if (!all(keep %in% .vars)) {
+    bad <- setdiff(keep, .vars)
+    warn(glue("Unknown { plural(.vars) }: ", paste0("`", bad, "`", collapse = ", ")))
   }
 
-  match_vars(keep, vars)
+  match_vars(keep, .vars)
 }
 
 #' @export

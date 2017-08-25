@@ -21,7 +21,7 @@ matches(match, ignore.case = TRUE, vars = peek_vars())
 
 num_range(prefix, range, width = NULL, vars = peek_vars())
 
-one_of(..., vars = peek_vars())
+one_of(..., .vars = peek_vars())
 
 everything(vars = peek_vars())
 }
@@ -31,9 +31,9 @@ everything(vars = peek_vars())
 \item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}
 
-\item{vars}{A character vector of variable names. When called from inside
-\code{\link[=select]{select()}} these are automatically set to the names of the
-table.}
+\item{vars, .vars}{A character vector of variable names. When called
+from inside \code{\link[=select]{select()}} these are automatically set to the names
+of the table.}
 
 \item{prefix}{A prefix that starts the numeric range.}
 
