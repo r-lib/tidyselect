@@ -22,6 +22,17 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
     vars_rename("x", A = x, B = y, .strict = FALSE),
     c(A = "x")
   )
+
+  expect_error(
+    vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE),
+    "Unknown columns `e` and `g`",
+    fixed = TRUE
+  )
+
+  expect_identical(
+    vars_rename("x", A = "x", B = "y", .strict = FALSE),
+    c(A = "x")
+  )
 })
 
 test_that("vars_rename() works with positions", {

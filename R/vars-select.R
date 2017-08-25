@@ -185,7 +185,7 @@ lang_ignore_unknown_symbols <- function(quo, vars) {
 is_unknown_symbol <- function(quo, vars) {
   expr <- get_expr(quo)
 
-  if (!is_symbol(expr)) {
+  if (!is_symbol(expr) && !is_string(expr)) {
     return(FALSE)
   }
 
