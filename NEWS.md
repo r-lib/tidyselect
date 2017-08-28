@@ -55,6 +55,9 @@ vars_select(names(mtcars), .data$cyl : .data$drat)
 
 ## New features
 
+* `:` and `-` now handle strings as well. This makes it easy to
+  unquote a column name: `(!! name) : last_var()` or `-(!! name)`.
+
 * `vars_select()` gains a `.strict` argument similar to
   `rename_vars()`.  If set to `FALSE`, errors about unknown variables
   are ignored.

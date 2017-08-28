@@ -169,7 +169,7 @@ vars_select <- function(.vars, ...,
 }
 
 ignore_unknown_symbols <- function(vars, quos) {
-  quos <- discard(quos, is_unknown_symbol, vars)
+  quos <- discard(quos, is_ignored, vars)
   quos <- map_if(quos, is_concat_lang, lang_ignore_unknown_symbols, vars)
   quos
 }
@@ -182,10 +182,23 @@ lang_ignore_unknown_symbols <- function(quo, vars) {
 
   set_expr(quo, expr)
 }
+
+is_ignored <- function(quo, vars) {
+  is_unknown_symbol(quo, vars) || is_ignored_minus_lang(quo, vars)
+}
+is_ignored_minus_lang <- function(quo, vars) {
+  expr <- get_expr(quo)
+
+  if (!is_language(expr, quote(`-`), 1L)) {
+    return(FALSE)
+  }
+
+  is_unknown_symbol(node_cadr(expr), vars)
+}
 is_unknown_symbol <- function(quo, vars) {
   expr <- get_expr(quo)
 
-  if (!is_symbol(expr)) {
+  if (!is_symbol(expr) && !is_string(expr)) {
     return(FALSE)
   }
 
@@ -201,6 +214,10 @@ vars_select_eval <- function(vars, quos) {
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
   data <- set_names(as.list(seq_along(vars)), vars)
+
+  # Overscope `:` and `-` with versions that handle strings
+  data <- c(data, `:` = vars_colon, `-` = vars_minus)
+
   ind_list <- map_if(quos, !is_helper, eval_tidy, data)
 
   # All other calls are evaluated in the context only
@@ -208,6 +225,38 @@ vars_select_eval <- function(vars, quos) {
   ind_list <- map_if(ind_list, is_helper, eval_tidy)
 
   ind_list
+}
+
+vars_colon <- function(x, y) {
+  if (is_string(x)) {
+    x <- match_string(x)
+  }
+  if (is_string(y)) {
+    y <- match_string(y)
+  }
+
+  x:y
+}
+vars_minus <- function(x, y) {
+  if (!missing(y)) {
+    return(x - y)
+  }
+
+  if (is_string(x)) {
+    x <- match_string(x)
+  }
+
+  -x
+}
+match_string <- function(x) {
+  vars <- peek_vars()
+  out <- match(x, vars)
+
+  if (is_na(out)) {
+    abort(glue("Unknown { singular(vars) } `{ x }`"))
+  }
+
+  out
 }
 
 extract_expr <- function(expr) {
