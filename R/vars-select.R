@@ -201,7 +201,10 @@ vars_select_eval <- function(vars, quos) {
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
   data <- set_names(as.list(seq_along(vars)), vars)
-  data <- c(data, `:` = vars_colon)
+
+  # Overscope `:` and `-` with versions that handle strings
+  data <- c(data, `:` = vars_colon, `-` = vars_minus)
+
   ind_list <- map_if(quos, !is_helper, eval_tidy, data)
 
   # All other calls are evaluated in the context only
@@ -220,6 +223,17 @@ vars_colon <- function(x, y) {
   }
 
   x:y
+}
+vars_minus <- function(x, y) {
+  if (!missing(y)) {
+    return(x - y)
+  }
+
+  if (is_string(x)) {
+    x <- match_string(x)
+  }
+
+  -x
 }
 match_string <- function(x) {
   vars <- peek_vars()

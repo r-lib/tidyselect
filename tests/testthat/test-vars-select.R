@@ -75,3 +75,11 @@ test_that("`:` handles strings", {
   expect_identical(vars_select(letters, "b":"d"), vars_select(letters, b:d))
   expect_error(vars_select(letters, "b":"Z"), "Unknown column `Z`")
 })
+
+test_that("`-` handles strings", {
+  expect_identical(vars_select(letters, -"c"), vars_select(letters, -c))
+})
+
+test_that("`-` handles positions", {
+  expect_identical(vars_select(letters, 10 - 7), vars_select(letters, 3))
+})
