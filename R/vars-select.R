@@ -169,7 +169,7 @@ vars_select <- function(.vars, ...,
 }
 
 ignore_unknown_symbols <- function(vars, quos) {
-  quos <- discard(quos, is_unknown_symbol, vars)
+  quos <- discard(quos, is_ignored, vars)
   quos <- map_if(quos, is_concat_lang, lang_ignore_unknown_symbols, vars)
   quos
 }
@@ -181,6 +181,19 @@ lang_ignore_unknown_symbols <- function(quo, vars) {
   expr <- lang(node_car(expr), !!! args)
 
   set_expr(quo, expr)
+}
+
+is_ignored <- function(quo, vars) {
+  is_unknown_symbol(quo, vars) || is_ignored_minus_lang(quo, vars)
+}
+is_ignored_minus_lang <- function(quo, vars) {
+  expr <- get_expr(quo)
+
+  if (!is_language(expr, quote(`-`), 1L)) {
+    return(FALSE)
+  }
+
+  is_unknown_symbol(node_cadr(expr), vars)
 }
 is_unknown_symbol <- function(quo, vars) {
   expr <- get_expr(quo)

@@ -67,6 +67,10 @@ test_that("unknown variables errors are ignored if `.strict` is FALSE", {
   expect_identical(vars_select(letters, `_foo`, .strict = FALSE), set_names(chr()))
   expect_identical(vars_select(letters, a, `_foo`, .strict = FALSE), c(a = "a"))
   expect_identical(vars_select(letters, a, "_foo", .strict = FALSE), c(a = "a"))
+
+  expect_identical(vars_select(letters, a, -`_foo`, .strict = FALSE), c(a = "a"))
+  expect_identical(vars_select(letters, a, -"`_foo`", .strict = FALSE), c(a = "a"))
+
   expect_identical(vars_select(letters, c(a, `_foo`, c), .strict = FALSE), c(a = "a", c = "c"))
   expect_identical(vars_select(letters, c(a, "_foo", c), .strict = FALSE), c(a = "a", c = "c"))
 })
