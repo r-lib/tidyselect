@@ -8,13 +8,14 @@
 #' * `num_range()`: a numerical range like x01, x02, x03.
 #' * `one_of()`: variables in character vector.
 #' * `everything()`: all variables.
+#' * `last_col()`: last variable, possibly with an offset.
 #'
 #' @param match A string.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
-#' @param vars A character vector of variable names. When called from inside
-#'   [select()] these are automatically set to the names of the
-#'   table.
+#' @param vars,.vars A character vector of variable names. When called
+#'   from inside [select()] these are automatically set to the names
+#'   of the table.
 #' @name select_helpers
 #' @return An integer vector giving the position of the matched variables.
 #' @examples
@@ -25,6 +26,8 @@
 #' vars_select(nms, matches(".t."))
 #' vars_select(nms, Petal.Length, Petal.Width)
 #' vars_select(nms, everything())
+#' vars_select(nms, last_col())
+#' vars_select(nms, last_col(offset = 2))
 #'
 #' vars <- c("Petal.Length", "Petal.Width")
 #' vars_select(nms, one_of(vars))
@@ -92,25 +95,42 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 #' @export
 #' @rdname select_helpers
 #' @param ... One or more character vectors.
-one_of <- function(..., vars = peek_vars()) {
+one_of <- function(..., .vars = peek_vars()) {
   keep <- c(...)
 
   if (!is_character(keep)) {
     bad("All arguments must be character vectors, not {type_of(keep)}")
   }
 
-  if (!all(keep %in% vars)) {
-    bad <- setdiff(keep, vars)
-    warn(glue("Unknown { plural(vars) }: ", paste0("`", bad, "`", collapse = ", ")))
+  if (!all(keep %in% .vars)) {
+    bad <- setdiff(keep, .vars)
+    warn(glue("Unknown { plural(.vars) }: ", paste0("`", bad, "`", collapse = ", ")))
   }
 
-  match_vars(keep, vars)
+  match_vars(keep, .vars)
 }
 
 #' @export
 #' @rdname select_helpers
 everything <- function(vars = peek_vars()) {
   seq_along(vars)
+}
+
+
+#' @export
+#' @param offset Set it to `n` to select the nth var from the end.
+#' @rdname select_helpers
+last_col <- function(offset = 0, vars = peek_vars()) {
+  stopifnot(is_integerish(offset))
+  n <- length(vars)
+
+  if (offset && n <= offset) {
+    abort("`offset` must be smaller than the number of variables")
+  } else if (n == 0) {
+    vars
+  } else {
+    vars[[n - offset]]
+  }
 }
 
 match_vars <- function(needle, haystack) {

@@ -9,6 +9,7 @@
 \alias{num_range}
 \alias{one_of}
 \alias{everything}
+\alias{last_col}
 \title{Select helpers}
 \usage{
 starts_with(match, ignore.case = TRUE, vars = peek_vars())
@@ -21,9 +22,11 @@ matches(match, ignore.case = TRUE, vars = peek_vars())
 
 num_range(prefix, range, width = NULL, vars = peek_vars())
 
-one_of(..., vars = peek_vars())
+one_of(..., .vars = peek_vars())
 
 everything(vars = peek_vars())
+
+last_col(offset = 0, vars = peek_vars())
 }
 \arguments{
 \item{match}{A string.}
@@ -31,9 +34,9 @@ everything(vars = peek_vars())
 \item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}
 
-\item{vars}{A character vector of variable names. When called from inside
-\code{\link[=select]{select()}} these are automatically set to the names of the
-table.}
+\item{vars, .vars}{A character vector of variable names. When called
+from inside \code{\link[=select]{select()}} these are automatically set to the names
+of the table.}
 
 \item{prefix}{A prefix that starts the numeric range.}
 
@@ -43,6 +46,8 @@ table.}
 a range of 2 gives "01", a range of three "001", etc.}
 
 \item{...}{One or more character vectors.}
+
+\item{offset}{Set it to \code{n} to select the nth var from the end.}
 }
 \value{
 An integer vector giving the position of the matched variables.
@@ -57,6 +62,7 @@ These functions allow you to select variables based on their names.
 \item \code{num_range()}: a numerical range like x01, x02, x03.
 \item \code{one_of()}: variables in character vector.
 \item \code{everything()}: all variables.
+\item \code{last_col()}: last variable, possibly with an offset.
 }
 }
 \examples{
@@ -67,6 +73,8 @@ vars_select(nms, contains("etal"))
 vars_select(nms, matches(".t."))
 vars_select(nms, Petal.Length, Petal.Width)
 vars_select(nms, everything())
+vars_select(nms, last_col())
+vars_select(nms, last_col(offset = 2))
 
 vars <- c("Petal.Length", "Petal.Width")
 vars_select(nms, one_of(vars))
