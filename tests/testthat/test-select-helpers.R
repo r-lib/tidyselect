@@ -221,11 +221,11 @@ test_that("can select with .data pronoun (#2715)", {
   expect_identical(vars_select(c("a", "b", "c"), .data[["a"]] : .data[["b"]]), c(a = "a", b = "b"))
 })
 
-test_that("last_var() selects last argument with offset", {
+test_that("last_col() selects last argument with offset", {
   vars <- letters[1:3]
-  expect_identical(last_var(0, vars), "c")
-  expect_identical(last_var(2, vars), "a")
+  expect_identical(last_col(0, vars), "c")
+  expect_identical(last_col(2, vars), "a")
 
-  expect_error(last_var(3, vars), "`offset` must be smaller")
-  expect_identical(last_var(vars = chr()), chr())
+  expect_error(last_col(3, vars), "`offset` must be smaller")
+  expect_identical(last_col(vars = chr()), chr())
 })

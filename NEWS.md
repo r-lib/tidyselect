@@ -55,11 +55,11 @@ vars_select(names(mtcars), .data$cyl : .data$drat)
 
 ## New features
 
-* The new select helper `last_var()` is helpful to select over a
-  custom range: `vars_select(vars, 3:last_var())`.
+* The new select helper `last_col()` is helpful to select over a
+  custom range: `vars_select(vars, 3:last_col())`.
 
 * `:` and `-` now handle strings as well. This makes it easy to
-  unquote a column name: `(!! name) : last_var()` or `-(!! name)`.
+  unquote a column name: `(!! name) : last_col()` or `-(!! name)`.
 
 * `vars_select()` gains a `.strict` argument similar to
   `rename_vars()`.  If set to `FALSE`, errors about unknown variables

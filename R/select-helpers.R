@@ -8,7 +8,7 @@
 #' * `num_range()`: a numerical range like x01, x02, x03.
 #' * `one_of()`: variables in character vector.
 #' * `everything()`: all variables.
-#' * `last_var()`: last variable, possibly with an offset.
+#' * `last_col()`: last variable, possibly with an offset.
 #'
 #' @param match A string.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
@@ -26,8 +26,8 @@
 #' vars_select(nms, matches(".t."))
 #' vars_select(nms, Petal.Length, Petal.Width)
 #' vars_select(nms, everything())
-#' vars_select(nms, last_var())
-#' vars_select(nms, last_var(offset = 2))
+#' vars_select(nms, last_col())
+#' vars_select(nms, last_col(offset = 2))
 #'
 #' vars <- c("Petal.Length", "Petal.Width")
 #' vars_select(nms, one_of(vars))
@@ -120,7 +120,7 @@ everything <- function(vars = peek_vars()) {
 #' @export
 #' @param offset Set it to `n` to select the nth var from the end.
 #' @rdname select_helpers
-last_var <- function(offset = 0, vars = peek_vars()) {
+last_col <- function(offset = 0, vars = peek_vars()) {
   stopifnot(is_integerish(offset))
   n <- length(vars)
 
