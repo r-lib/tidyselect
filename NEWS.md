@@ -80,6 +80,10 @@ vars_select(names(mtcars), .data$cyl : .data$drat)
 * `has_vars()` is a predicate that tests whether a variable context
   has been set (#21).
 
+* The selection helpers are now exported in a list
+  `vars_select_helpers`.  This is intended for APIs that embed the
+  helpers in the evaluation environment.
+
 
 ## Fixes
 
