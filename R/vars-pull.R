@@ -63,3 +63,12 @@ vars_pull <- function(vars, var = -1) {
 
   vars[[pos]]
 }
+
+# FIXME: Workaround rlang bug
+is_integerish <- function(x, n = NULL) {
+  if (typeof(x) == "integer") return(TRUE)
+  if (typeof(x) != "double") return(FALSE)
+  if (!is.finite(x)) return(FALSE)
+  if (!is_null(n) && length(x) != n) return(FALSE)
+  all(x == as.integer(x))
+}
