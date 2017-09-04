@@ -9,6 +9,8 @@
   vars_select(names(mtcars), - (!! vars))
   ```
 
+* `last_col()` now issues an error when the variable vector is empty.
+
 
 # tidyselect 0.2.0
 

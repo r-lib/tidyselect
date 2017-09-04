@@ -127,7 +127,7 @@ last_col <- function(offset = 0, vars = peek_vars()) {
   if (offset && n <= offset) {
     abort(glue("`offset` must be smaller than the number of { plural(vars) }"))
   } else if (n == 0) {
-    vars
+    abort(glue("Can't select last { singular(vars) } when input is empty"))
   } else {
     vars[[n - offset]]
   }
