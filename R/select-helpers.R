@@ -120,7 +120,7 @@ everything <- function(vars = peek_vars()) {
 #' @export
 #' @param offset Set it to `n` to select the nth var from the end.
 #' @rdname select_helpers
-last_col <- function(offset = 0, vars = peek_vars()) {
+last_col <- function(offset = 0L, vars = peek_vars()) {
   stopifnot(is_integerish(offset))
   n <- length(vars)
 
@@ -129,7 +129,7 @@ last_col <- function(offset = 0, vars = peek_vars()) {
   } else if (n == 0) {
     abort(glue("Can't select last { singular(vars) } when input is empty"))
   } else {
-    vars[[n - offset]]
+    n - as.integer(offset)
   }
 }
 
