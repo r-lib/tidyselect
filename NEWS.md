@@ -1,6 +1,14 @@
 
 # tidyselect 0.2.0.9000
 
+* `-` now supports character vectors in addition to strings. This
+  makes it easy to unquote column names to exclude from the set:
+
+  ```{r}
+  vars <- c("cyl", "am", "disp", "drat")
+  vars_select(names(mtcars), - (!! vars))
+  ```
+
 
 # tidyselect 0.2.0
 

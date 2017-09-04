@@ -137,3 +137,8 @@ parse_args <- function(x) {
 parse_named_call <- function(x) {
   map_chr(x, quo_text)
 }
+
+bad_unknown_vars <- function(vars, unknown) {
+  thing <- vars_pluralise_len(vars, unknown)
+  abort(glue("Unknown { thing } { fmt_args(unknown) } "))
+}

@@ -87,3 +87,7 @@ test_that("`-` handles strings", {
 test_that("`-` handles positions", {
   expect_identical(vars_select(letters, 10 - 7), vars_select(letters, 3))
 })
+
+test_that("`-` handles character vectors (#35)", {
+  expect_identical(vars_select(letters, - (!! letters[1:20])), vars_select(letters, -(1:20)))
+})

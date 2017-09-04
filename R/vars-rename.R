@@ -20,9 +20,7 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
   if (!all(known)) {
     if (.strict) {
       unknown <- old_vars[!known]
-      thing <- vars_pluralise_len(.vars, unknown)
-      msg <- glue("Unknown { thing } { fmt_args(unknown) } ")
-      abort(msg)
+      bad_unknown_vars(.vars, unknown)
     } else {
       old_vars <- old_vars[known]
       new_vars <- new_vars[known]
