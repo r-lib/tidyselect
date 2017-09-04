@@ -226,6 +226,6 @@ test_that("last_col() selects last argument with offset", {
   expect_identical(last_col(0, vars), "c")
   expect_identical(last_col(2, vars), "a")
 
-  expect_error(last_col(3, vars), "`offset` must be smaller")
   expect_identical(last_col(vars = chr()), chr())
+  expect_error(last_col(3, vars), "`offset` must be smaller than the number of columns")
 })

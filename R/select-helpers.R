@@ -125,7 +125,7 @@ last_col <- function(offset = 0, vars = peek_vars()) {
   n <- length(vars)
 
   if (offset && n <= offset) {
-    abort("`offset` must be smaller than the number of variables")
+    abort(glue("`offset` must be smaller than the number of { plural(vars) }"))
   } else if (n == 0) {
     vars
   } else {
