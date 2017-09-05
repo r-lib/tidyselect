@@ -9,6 +9,12 @@
   vars_select(names(mtcars), - (!! vars))
   ```
 
+* `last_col()` now issues an error when the variable vector is empty.
+
+* `last_col()` now returns column positions rather than column names
+  for consistency with other helpers. This also makes it compatible
+  with functions like `seq()`.
+
 
 # tidyselect 0.2.0
 
