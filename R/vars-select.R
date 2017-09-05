@@ -229,10 +229,10 @@ vars_select_eval <- function(vars, quos) {
 
 vars_colon <- function(x, y) {
   if (is_string(x)) {
-    x <- match_string(x)
+    x <- match_strings(x)
   }
   if (is_string(y)) {
-    y <- match_string(y)
+    y <- match_strings(y)
   }
 
   x:y
@@ -242,18 +242,19 @@ vars_minus <- function(x, y) {
     return(x - y)
   }
 
-  if (is_string(x)) {
-    x <- match_string(x)
+  if (is_character(x)) {
+    x <- match_strings(x)
   }
 
   -x
 }
-match_string <- function(x) {
+match_strings <- function(x) {
   vars <- peek_vars()
   out <- match(x, vars)
 
-  if (is_na(out)) {
-    abort(glue("Unknown { singular(vars) } `{ x }`"))
+  if (any(are_na(out))) {
+    unknown <- x[are_na(out)]
+    bad_unknown_vars(vars, unknown)
   }
 
   out
