@@ -15,6 +15,9 @@
   for consistency with other helpers. This also makes it compatible
   with functions like `seq()`.
 
+* `c()` now supports character vectors the same way as `-` and `seq()`.
+  (#37 @gergness)
+
 
 # tidyselect 0.2.0
 
