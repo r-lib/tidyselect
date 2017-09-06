@@ -217,6 +217,9 @@ vars_select_eval <- function(vars, quos) {
 
   # Overscope `:` and `-` with versions that handle strings
   data <- c(data, `:` = vars_colon, `-` = vars_minus)
+  # If there's no variable called c, overscope `c()` with a version
+  # that handles strings
+  if (!("c" %in% names(data))) data <- c(data, `c` = vars_c)
 
   ind_list <- map_if(quos, !is_helper, eval_tidy, data)
 
@@ -247,6 +250,16 @@ vars_minus <- function(x, y) {
   }
 
   -x
+}
+vars_c <- function(...) {
+  dots <- list(...)
+  dots <- lapply(dots, function(x) {
+    if (is_character(x)) {
+      x <- match_strings(x)
+    }
+    x
+  })
+  do.call(`c`, dots)
 }
 match_strings <- function(x) {
   vars <- peek_vars()
