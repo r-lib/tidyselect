@@ -1,5 +1,7 @@
 
 # tidyselect 0.2.0.9000
+* `c()` now supports character vectors the same way as `-` and `seq()`.
+  (#37 @gergness)
 
 * `-` now supports character vectors in addition to strings. This
   makes it easy to unquote column names to exclude from the set:
