@@ -1,4 +1,7 @@
 
+This release attempts to fix the R CMD check warnings that appeared on
+some platforms.
+
 ## Test environments
 
 * local OS X install, R 3.4.1
@@ -13,7 +16,7 @@
 
 ## Reverse dependencies
 
-I have run R CMD check on the 2 downstream dependencies. (Summary at
+I have run R CMD check on the 4 downstream dependencies. (Summary at
 https://github.com/tidyverse/tidyselect/tree/master/revdep).
 
-The package tidyr is failing, a hotfix release is on its way.
+There were no problems.
