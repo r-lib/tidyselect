@@ -26,7 +26,7 @@ one_of(..., .vars = peek_vars())
 
 everything(vars = peek_vars())
 
-last_col(offset = 0, vars = peek_vars())
+last_col(offset = 0L, vars = peek_vars())
 }
 \arguments{
 \item{match}{A string.}
