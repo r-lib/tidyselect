@@ -26,7 +26,7 @@ test_that("can select with character vectors", {
 
 test_that("abort on unknown columns", {
   expect_error(vars_select(letters, "foo"), "must match column names")
-  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), "bar, foo")
+  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), "`bar`")
 })
 
 test_that("symbol overscope is not isolated from context", {
@@ -90,5 +90,9 @@ test_that("`-` handles positions", {
 
 test_that("`-` handles character vectors (#35)", {
   expect_identical(vars_select(letters, - (!! letters[1:20])), vars_select(letters, -(1:20)))
-  expect_error(vars_select(letters, - c("foo", "z", "bar")), "Unknown columns `foo` and `bar`")
+  expect_error(vars_select(letters, - c("foo", "z", "bar")), "Unknown column `foo`")
+})
+
+test_that("can select `c` despite overscoped c()", {
+  expect_identical(vars_select(letters, c), c(c = "c"))
 })
