@@ -1,29 +1,30 @@
+# recipes
+
+Version: 0.1.0
+
+## In both
+
+*   checking whether package ‘recipes’ can be installed ... WARNING
+    ```
+    Found the following significant warnings:
+      Warning: package ‘dplyr’ was built under R version 3.4.2
+    See ‘/Users/lionel/Dropbox/Projects/R/lionel/tidyselect/revdep/checks/recipes/new/recipes.Rcheck/00install.out’ for details.
+    ```
+
+# sjstats
+
+Version: 0.11.2
+
+## In both
+
+*   checking Rd cross-references ... NOTE
+    ```
+    Packages unavailable to check Rd xrefs: ‘sjPlot’, ‘MuMIn’, ‘piecewiseSEM’
+    ```
+
 # tidyr
 
-Version: 0.7.0
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      > library(testthat)
-      > library(tidyr)
-      > 
-      > test_check("tidyr")
-      1. Failure: errors are raised (@test-drop_na.R#40) -----------------------------
-      tidyr::drop_na(df, NULL) did not throw an error.
-      
-      
-      testthat results ================================================================
-      OK: 215 SKIPPED: 0 FAILED: 1
-      1. Failure: errors are raised (@test-drop_na.R#40) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
+Version: 0.7.1
 
 ## In both
 
