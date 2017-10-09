@@ -1,5 +1,5 @@
 
-# tidyselect 0.2.0.9000
+# tidyselect 0.2.1
 
 * `-` now supports character vectors in addition to strings. This
   makes it easy to unquote column names to exclude from the set:

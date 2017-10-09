@@ -6,8 +6,8 @@
 "_PACKAGE"
 
 
-maybe_overtake_dplyr <- function(...) {
-  if (!is_installed("dplyr") || utils::packageVersion("dplyr") > "99.9.0") {
+maybe_hotpatch_dplyr <- function(...) {
+  if (!is_installed("dplyr") || env_has(ns_env("dplyr"), "peek_vars")) {
     return(FALSE)
   }
 
@@ -19,13 +19,12 @@ maybe_overtake_dplyr <- function(...) {
   nms <- names(fns)
 
   for (i in seq_along(fns)) {
-    overtake_binding(nms[[i]], fns[[i]], env)
+    hotpatch_binding(nms[[i]], fns[[i]], env)
   }
 
   TRUE
 }
-
-overtake_binding <- function(binding, fn, env) {
+hotpatch_binding <- function(binding, fn, env) {
   unlock <- env_get(base_env(), "unlockBinding")
   unlock(binding, env)
 
@@ -35,7 +34,11 @@ overtake_binding <- function(binding, fn, env) {
   lock(binding, env = env)
 }
 
+push_dplyr_hotpatch <- function(...) {
+  maybe_hotpatch_dplyr()
+  setHook(packageEvent("dplyr", "onLoad"), maybe_hotpatch_dplyr)
+}
+
 .onLoad <- function(...) {
-  maybe_overtake_dplyr()
-  setHook(packageEvent("dplyr", "onLoad"), maybe_overtake_dplyr)
+  setHook(packageEvent("tidyselect", "onLoad"), push_dplyr_hotpatch)
 }
