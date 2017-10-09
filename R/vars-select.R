@@ -8,7 +8,7 @@
 #' For consistency with dplyr, error messages refer to "columns" by
 #' default. This assumes that the variables being selected come from a
 #' data frame. If this is not appropriate for your DSL, you can add an
-#' attribute `vars_type` to the `.vars` vector to specify alternative
+#' attribute `type` to the `.vars` vector to specify alternative
 #' names. This must be a character vector of length 2 whose first
 #' component is the singular form and the second is the plural. For
 #' example, `c("variable", "variables")`.

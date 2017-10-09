@@ -49,7 +49,7 @@ enable dplyr selecting or renaming semantics in your own functions.
 For consistency with dplyr, error messages refer to "columns" by
 default. This assumes that the variables being selected come from a
 data frame. If this is not appropriate for your DSL, you can add an
-attribute \code{vars_type} to the \code{.vars} vector to specify alternative
+attribute \code{type} to the \code{.vars} vector to specify alternative
 names. This must be a character vector of length 2 whose first
 component is the singular form and the second is the plural. For
 example, \code{c("variable", "variables")}.
