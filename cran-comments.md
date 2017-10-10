@@ -1,6 +1,8 @@
 
-This release attempts to fix the R CMD check warnings that appeared on
-some platforms.
+This release includes dplyr in suggested package which should
+hopefully fix the R CMD check warnings that appeared on some
+CRAN platforms.
+
 
 ## Test environments
 
@@ -11,12 +13,9 @@ some platforms.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 notes
+0 errors | 0 warnings | 1 note
+
+NOTE: Days since last update: 1
 
 
 ## Reverse dependencies
-
-I have run R CMD check on the 4 downstream dependencies. (Summary at
-https://github.com/tidyverse/tidyselect/tree/master/revdep).
-
-There were no problems.

@@ -1,4 +1,9 @@
 
+# tidyselect 0.2.2
+
+* `dplyr` is now correctly mentioned as suggested package.
+
+
 # tidyselect 0.2.1
 
 * `-` now supports character vectors in addition to strings. This
