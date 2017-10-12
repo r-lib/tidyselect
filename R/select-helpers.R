@@ -14,8 +14,8 @@
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
 #' @param vars,.vars A character vector of variable names. When called
-#'   from inside [select()] these are automatically set to the names
-#'   of the table.
+#'   from inside selecting functions like [dplyr::select()] these are
+#'   automatically set to the names of the table.
 #' @name select_helpers
 #' @return An integer vector giving the position of the matched variables.
 #' @examples

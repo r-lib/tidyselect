@@ -35,8 +35,8 @@ last_col(offset = 0L, vars = peek_vars())
 names.}
 
 \item{vars, .vars}{A character vector of variable names. When called
-from inside \code{\link[=select]{select()}} these are automatically set to the names
-of the table.}
+from inside selecting functions like \code{\link[dplyr:select]{dplyr::select()}} these are
+automatically set to the names of the table.}
 
 \item{prefix}{A prefix that starts the numeric range.}
 
