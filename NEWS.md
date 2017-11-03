@@ -1,7 +1,9 @@
 
 # tidyselect 0.2.3
 
-* Fix in prevision of using `tidyselect` within `dplyr`.
+* Internal fixes in prevision of using `tidyselect` within `dplyr`.
+
+* `vars_select()` now supports unquoting of named character vectors.
 
 
 # tidyselect 0.2.2
