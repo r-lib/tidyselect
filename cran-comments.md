@@ -1,7 +1,6 @@
 
-This release includes dplyr in suggested package which should
-hopefully fix the R CMD check warnings that appeared on some
-CRAN platforms.
+This fixes the hotpatch hook in order to port dplyr to tidyselect.
+It may also fix the sporadic CRAN warnings.
 
 
 ## Test environments
@@ -19,3 +18,6 @@ NOTE: Days since last update: 1
 
 
 ## Reverse dependencies
+
+I have checked the 7 projects that depend on tidyselect. There were no
+problems.

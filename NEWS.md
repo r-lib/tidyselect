@@ -1,4 +1,9 @@
 
+# tidyselect 0.2.3
+
+* Fix in prevision of using `tidyselect` within `dplyr`.
+
+
 # tidyselect 0.2.2
 
 * `dplyr` is now correctly mentioned as suggested package.
