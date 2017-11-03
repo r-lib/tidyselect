@@ -51,3 +51,21 @@ is_language <- is_lang
 quo_is_language <- function(quo, name = NULL, n = NULL, ns = NULL) {
   is_language(f_rhs(quo), name = name, n = n, ns = ns)
 }
+
+quo_is_character <- function(quo, n = NULL) {
+  is_character(f_rhs(quo), n = n)
+}
+quo_as_list <- function(quo) {
+  as.list(f_rhs(quo))
+}
+
+is_character <- function(x, n = NULL) {
+  if (typeof(x) != "character") return(FALSE)
+
+  if (!is_null(n)) {
+    if (is_scalar_integerish(n) && length(x) != n) return(FALSE)
+    else if (is_function(n) && !n(length(x))) return(FALSE)
+  }
+
+  TRUE
+}

@@ -5,6 +5,9 @@
 vars_rename <- function(.vars, ..., .strict = TRUE) {
   quos <- quos(...)
 
+  unquoted_chrs <- map_lgl(quos, quo_is_character, n = function(n) n > 1)
+  quos <- purrr::lmap_if(quos, unquoted_chrs, function(x) quo_as_list(x[[1]]))
+
   if (any(names2(quos) == "")) {
     abort("All arguments must be named")
   }
