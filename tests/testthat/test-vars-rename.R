@@ -59,3 +59,9 @@ test_that("vars_rename() fails with vectors", {
 test_that("vars_rename() supports `.data` pronoun", {
   expect_identical(vars_rename(c("a", "b"), B = .data$b), c(a = "a", B = "b"))
 })
+
+test_that("vars_rename() unquotes named character vectors", {
+  vars <- c(foo = "a", bar = "z")
+  expect_identical(vars_rename(letters, !!! vars), vars_rename(letters, foo = a, bar = z))
+  expect_identical(vars_rename(letters, !! vars), vars_rename(letters, foo = a, bar = z))
+})

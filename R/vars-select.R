@@ -230,6 +230,9 @@ vars_select_eval <- function(vars, quos) {
   # They are always evaluated strictly
   ind_list <- map_if(ind_list, is_helper, eval_tidy)
 
+  # Handle unquoted character vectors
+  ind_list <- map_if(ind_list, is_character, match_strings, names = TRUE)
+
   ind_list
 }
 
@@ -258,7 +261,7 @@ vars_c <- function(...) {
   dots <- map_if(list(...), is_character, match_strings)
   do.call(`c`, dots)
 }
-match_strings <- function(x) {
+match_strings <- function(x, names = FALSE) {
   vars <- peek_vars()
   out <- match(x, vars)
 
@@ -267,7 +270,11 @@ match_strings <- function(x) {
     bad_unknown_vars(vars, unknown)
   }
 
-  out
+  if (names) {
+    set_names(out, names(x))
+  } else {
+    out
+  }
 }
 
 extract_expr <- function(expr) {

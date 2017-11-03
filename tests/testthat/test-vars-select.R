@@ -25,7 +25,7 @@ test_that("can select with character vectors", {
 })
 
 test_that("abort on unknown columns", {
-  expect_error(vars_select(letters, "foo"), "must match column names")
+  expect_error(vars_select(letters, "foo"), "Unknown column `foo`")
   expect_error(vars_select(letters, c("a", "bar", "foo", "d")), "`bar`")
 })
 
@@ -47,7 +47,7 @@ test_that("can select with unnamed elements", {
 test_that("can customise error messages", {
   vars <- set_attrs(letters, type = c("variable", "variables"))
 
-  expect_error(vars_select(vars, "foo"), "match variable names. Unknown variables:")
+  expect_error(vars_select(vars, "foo"), "Unknown variable `foo`")
   expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
   expect_error(vars_rename(vars, A = "foo"), "Unknown variable `foo`")
   expect_error(vars_pull(vars, !! c("a", "b")), "or a variable name")
@@ -95,4 +95,9 @@ test_that("`-` handles character vectors (#35)", {
 
 test_that("can select `c` despite overscoped c()", {
   expect_identical(vars_select(letters, c), c(c = "c"))
+})
+
+test_that("vars_select() handles named character vectors", {
+  expect_identical(vars_select(letters, c("A" = "y", "B" = "z")), vars_select(letters, A = y, B = z))
+  expect_identical(vars_select(letters, !! c("A" = "y", "B" = "z")), vars_select(letters, A = y, B = z))
 })
