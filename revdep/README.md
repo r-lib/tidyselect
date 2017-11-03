@@ -2,34 +2,37 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.4.1 (2017-06-30) |
+|version  |R version 3.4.2 (2017-09-28) |
 |os       |macOS Sierra 10.12.6         |
 |system   |x86_64, darwin15.6.0         |
 |ui       |X11                          |
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
 |tz       |Europe/Brussels              |
-|date     |2017-10-09                   |
+|date     |2017-11-03                   |
 
 # Dependencies
 
 |package    |old     |new     |Δ  |
 |:----------|:-------|:-------|:--|
-|tidyselect |0.2.0   |0.2.1   |*  |
-|glue       |1.1.1   |1.1.1   |   |
-|purrr      |0.2.3   |0.2.3   |   |
-|Rcpp       |0.12.13 |0.12.13 |   |
-|rlang      |0.1.2   |0.1.2   |   |
-|tibble     |1.3.4   |1.3.4   |   |
+|tidyselect |0.2.2   |0.2.2   |NA |
+|glue       |1.2.0   |1.2.0   |NA |
+|purrr      |0.2.4   |0.2.4   |NA |
+|Rcpp       |0.12.13 |0.12.13 |NA |
+|rlang      |0.1.2   |0.1.2   |NA |
+|tibble     |1.3.4   |1.3.4   |NA |
 
 # Revdeps
 
-## All (4)
+## All (7)
 
-|package                        |version |error |warning |note |
-|:------------------------------|:-------|:-----|:-------|:----|
-|[recipes](problems.md#recipes) |0.1.0   |      |1       |     |
-|[sjstats](problems.md#sjstats) |0.11.2  |      |        |1    |
-|tfruns                         |1.0     |      |        |     |
-|[tidyr](problems.md#tidyr)     |0.7.1   |      |        |1    |
+|package                              |version |error |warning |note |
+|:------------------------------------|:-------|:-----|:-------|:----|
+|[condformat](problems.md#condformat) |0.7.0   |1     |        |1    |
+|[heatmaply](problems.md#heatmaply)   |0.12.1  |      |        |1    |
+|recipes                              |0.1.0   |      |        |     |
+|[sjPlot](problems.md#sjplot)         |2.4.0   |      |        |2    |
+|[sjstats](problems.md#sjstats)       |0.12.0  |      |        |1    |
+|tfruns                               |1.0     |      |        |     |
+|[tidyr](problems.md#tidyr)           |0.7.2   |      |        |1    |
 
