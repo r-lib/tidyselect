@@ -7,7 +7,10 @@
 
 
 maybe_hotpatch_dplyr <- function(...) {
-  if (!is_installed("dplyr") || env_has(ns_env("dplyr"), "peek_vars")) {
+  if (!isNamespaceLoaded("dplyr")) {
+    return(FALSE)
+  }
+  if (utils::packageVersion("dplyr") > "0.7.4") {
     return(FALSE)
   }
 
@@ -34,11 +37,7 @@ hotpatch_binding <- function(binding, fn, env) {
   lock(binding, env = env)
 }
 
-push_dplyr_hotpatch <- function(...) {
+.onLoad <- function(...) {
   maybe_hotpatch_dplyr()
   setHook(packageEvent("dplyr", "onLoad"), maybe_hotpatch_dplyr)
-}
-
-.onLoad <- function(...) {
-  setHook(packageEvent("tidyselect", "onLoad"), push_dplyr_hotpatch)
 }
