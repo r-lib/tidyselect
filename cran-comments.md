@@ -1,6 +1,6 @@
 
-This fixes the hotpatch hook in order to port dplyr to tidyselect.
-It may also fix the sporadic CRAN warnings.
+This fixes some issues in prevision of the switch to tidyselect in the
+next dplyr version.
 
 
 ## Test environments
@@ -12,9 +12,7 @@ It may also fix the sporadic CRAN warnings.
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-NOTE: Days since last update: 1
+0 errors | 0 warnings | 0 notes
 
 
 ## Reverse dependencies
