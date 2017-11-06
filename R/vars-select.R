@@ -211,6 +211,9 @@ is_concat_lang <- function(quo) {
 vars_select_eval <- function(vars, quos) {
   scoped_vars(vars)
 
+  # Peek validated variables
+  vars <- peek_vars()
+
   # Overscope `c`, `:` and `-` with versions that handle strings
   data_helpers <- list(`:` = vars_colon, `-` = vars_minus, `c` = vars_c)
   overscope_top <- new_environment(data_helpers)
@@ -218,7 +221,6 @@ vars_select_eval <- function(vars, quos) {
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
   data <- set_names(as.list(seq_along(vars)), vars)
-  data <- data[!names(data) == ""]
   overscope <- env_bury(overscope_top, !!! data)
 
   overscope <- new_overscope(overscope, overscope_top)

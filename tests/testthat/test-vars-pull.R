@@ -34,3 +34,8 @@ test_that("errors for bad inputs", {
     fixed = TRUE
   )
 })
+
+test_that("can pull variables with missing elements", {
+  expect_identical(vars_pull(c("a", ""), a), "a")
+  expect_identical(vars_pull(c("a", NA), a), "a")
+})

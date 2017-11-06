@@ -69,3 +69,11 @@ is_character <- function(x, n = NULL) {
 
   TRUE
 }
+
+are_name <- function(nms) {
+  if (!is_character(nms)) {
+    abort("Expected a character vector")
+  }
+
+  nms == "" | is.na(nms)
+}

@@ -42,6 +42,7 @@ test_that("symbol overscope works with parenthesised expressions", {
 
 test_that("can select with unnamed elements", {
   expect_identical(vars_select(c("a", ""), a), c(a = "a"))
+  expect_identical(vars_select(c("a", NA), a), c(a = "a"))
 })
 
 test_that("can customise error messages", {

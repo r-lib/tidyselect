@@ -6,6 +6,8 @@
 * `vars_select()` and `vars_rename()` now correctly support unquoting
   character vectors that have names.
 
+* `vars_select()` now ignores missing variables.
+
 
 # tidyselect 0.2.2
 

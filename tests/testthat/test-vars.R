@@ -31,3 +31,11 @@ test_that("has_vars() detects variables", {
   scoped_vars(letters)
   expect_true(has_vars())
 })
+
+test_that("Missing names are ignored", {
+  scoped_vars(c("foo", NA))
+  expect_identical(peek_vars(), "foo")
+
+  scoped_vars(c("bar", ""))
+  expect_identical(peek_vars(), "bar")
+})

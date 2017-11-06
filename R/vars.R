@@ -69,7 +69,9 @@
 #' }
 #' fn(starts_with("r"))
 poke_vars <- function(vars) {
-  stopifnot(is_character(vars) || is_null(vars))
+  if (!is_null(vars)) {
+    vars <- vars_validate(vars)
+  }
 
   old <- vars_env$selected
   vars_env$selected <- vars
@@ -107,6 +109,23 @@ with_vars <- function(vars, expr) {
 #' @rdname poke_vars
 has_vars <- function() {
   !is_null(vars_env$selected)
+}
+
+vars_validate <- function(vars) {
+  if (!is_character(vars)) {
+    abort("`vars` must be a character vector")
+  }
+
+  are_name <- are_name(vars)
+  if (any(!are_name)) {
+    # Propagate `type` attribute when subsetting. A proper S3 class
+    # might be better.
+    type <- attr(vars, "type")
+    vars <- vars[!are_name]
+    attr(vars, "type") <- type
+  }
+
+  vars
 }
 
 vars_env <- new_environment()
