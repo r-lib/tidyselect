@@ -9,18 +9,18 @@
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
 |tz       |Europe/Brussels              |
-|date     |2017-11-03                   |
+|date     |2017-11-06                   |
 
 # Dependencies
 
 |package    |old     |new     |Δ  |
 |:----------|:-------|:-------|:--|
-|tidyselect |0.2.2   |0.2.2   |NA |
-|glue       |1.2.0   |1.2.0   |NA |
-|purrr      |0.2.4   |0.2.4   |NA |
-|Rcpp       |0.12.13 |0.12.13 |NA |
-|rlang      |0.1.2   |0.1.2   |NA |
-|tibble     |1.3.4   |1.3.4   |NA |
+|tidyselect |0.2.2   |0.2.3   |*  |
+|glue       |1.2.0   |1.2.0   |   |
+|purrr      |0.2.4   |0.2.4   |   |
+|Rcpp       |0.12.13 |0.12.13 |   |
+|rlang      |0.1.2   |0.1.2   |   |
+|tibble     |1.3.4   |1.3.4   |   |
 
 # Revdeps
 
