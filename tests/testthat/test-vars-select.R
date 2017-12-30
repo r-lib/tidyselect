@@ -102,3 +102,7 @@ test_that("vars_select() handles named character vectors", {
   expect_identical(vars_select(letters, c("A" = "y", "B" = "z")), vars_select(letters, A = y, B = z))
   expect_identical(vars_select(letters, !! c("A" = "y", "B" = "z")), vars_select(letters, A = y, B = z))
 })
+
+test_that("can select with length > 1 double vectors (#43)", {
+  expect_identical(vars_select(letters, !!c(1, 2)), c(a = "a", b = "b"))
+})
