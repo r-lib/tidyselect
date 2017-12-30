@@ -129,7 +129,7 @@ vars_select <- function(.vars, ...,
   }
 
   # if the first selector is exclusive (negative), start with all columns
-  first <- f_rhs(quos[[1]])
+  first <- quo_get_expr(quos[[1]])
   initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
 
   ind_list <- c(initial_case, ind_list)

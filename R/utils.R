@@ -49,14 +49,14 @@ c_sym <- quote(`c`)
 
 is_language <- is_lang
 quo_is_language <- function(quo, name = NULL, n = NULL, ns = NULL) {
-  is_language(f_rhs(quo), name = name, n = n, ns = ns)
+  is_language(quo_get_expr(quo), name = name, n = n, ns = ns)
 }
 
 quo_is_character <- function(quo, n = NULL) {
-  is_character(f_rhs(quo), n = n)
+  is_character(quo_get_expr(quo), n = n)
 }
 quo_as_list <- function(quo) {
-  as.list(f_rhs(quo))
+  as.list(quo_get_expr(quo))
 }
 
 is_character <- function(x, n = NULL) {
