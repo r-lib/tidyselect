@@ -77,3 +77,8 @@ are_name <- function(nms) {
 
   nms == "" | is.na(nms)
 }
+
+# Compatibility with R < 3.2
+isNamespaceLoaded <- function(name) {
+  name %in% loadedNamespaces()
+}
