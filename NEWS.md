@@ -1,6 +1,10 @@
 
 # tidyselect 0.2.3.9000
 
+* Fixed a warning that occurred when a vector of column positions was
+  supplied to `vars_select()` or functions depending on it such as
+  `tidyr::gather()` (#43 and tidyverse/tidyr#374).
+
 
 # tidyselect 0.2.3
 
