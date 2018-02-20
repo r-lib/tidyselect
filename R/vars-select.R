@@ -189,7 +189,7 @@ is_ignored <- function(quo, vars) {
 is_ignored_minus_lang <- function(quo, vars) {
   expr <- get_expr(quo)
 
-  if (!is_language(expr, quote(`-`), 1L)) {
+  if (!is_call(expr, quote(`-`), 1L)) {
     return(FALSE)
   }
 
@@ -205,7 +205,7 @@ is_unknown_symbol <- function(quo, vars) {
   !as_string(expr) %in% vars
 }
 is_concat_lang <- function(quo) {
-  quo_is_language(quo, quote(`c`))
+  quo_is_call(quo, quote(`c`))
 }
 
 vars_select_eval <- function(vars, quos) {

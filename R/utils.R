@@ -47,11 +47,6 @@ minus_sym <- quote(`-`)
 colon_sym <- quote(`:`)
 c_sym <- quote(`c`)
 
-is_language <- is_lang
-quo_is_language <- function(quo, name = NULL, n = NULL, ns = NULL) {
-  is_language(quo_get_expr(quo), name = name, n = n, ns = ns)
-}
-
 quo_is_character <- function(quo, n = NULL) {
   is_character(quo_get_expr(quo), n = n)
 }
