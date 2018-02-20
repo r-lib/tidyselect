@@ -281,7 +281,7 @@ match_strings <- function(x, names = FALSE) {
 
 extract_expr <- function(expr) {
   expr <- get_expr(expr)
-  while(is_lang(expr, paren_sym)) {
+  while(is_call(expr, paren_sym)) {
     expr <- get_expr(expr[[2]])
   }
   expr
@@ -290,7 +290,7 @@ extract_expr <- function(expr) {
 quo_is_helper <- function(quo) {
   expr <- extract_expr(quo)
 
-  if (!is_lang(expr)) {
+  if (!is_call(expr)) {
     return(FALSE)
   }
 
@@ -298,12 +298,12 @@ quo_is_helper <- function(quo) {
     return(FALSE)
   }
 
-  if (is_lang(expr, minus_sym, n = 1)) {
+  if (is_call(expr, minus_sym, n = 1)) {
     operand <- extract_expr(expr[[2]])
     return(quo_is_helper(operand))
   }
 
-  if (is_lang(expr, list(colon_sym, c_sym))) {
+  if (is_call(expr, list(colon_sym, c_sym))) {
     return(FALSE)
   }
 
