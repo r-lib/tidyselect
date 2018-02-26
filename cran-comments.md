@@ -1,11 +1,7 @@
 
-This fixes some issues in prevision of the switch to tidyselect in the
-next dplyr version.
-
-
 ## Test environments
 
-* local OS X install, R 3.4.1
+* local OS X install, R 3.4.3
 * ubuntu 12.04 (on travis-ci, R devel and R release)
 * Windows (on R-hub and Win-Builder)
 
@@ -17,5 +13,5 @@ next dplyr version.
 
 ## Reverse dependencies
 
-I have checked the 7 projects that depend on tidyselect. There were no
-problems.
+I have checked the 20 projects that depend on tidyselect. I couldn't
+install 1 package (sf). There were no problems for all other packages.
