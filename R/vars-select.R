@@ -216,7 +216,7 @@ vars_select_eval <- function(vars, quos) {
 
   # Overscope `c`, `:` and `-` with versions that handle strings
   data_helpers <- list(`:` = vars_colon, `-` = vars_minus, `c` = vars_c)
-  overscope_top <- new_environment(data_helpers)
+  overscope_top <- as_environment(data_helpers)
 
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
