@@ -1,5 +1,5 @@
 
-# tidyselect 0.2.3.9000
+# tidyselect 0.2.4
 
 * Fixed a warning that occurred when a vector of column positions was
   supplied to `vars_select()` or functions depending on it such as
