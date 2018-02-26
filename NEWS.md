@@ -5,6 +5,8 @@
   supplied to `vars_select()` or functions depending on it such as
   `tidyr::gather()` (#43 and tidyverse/tidyr#374).
 
+* Fixed compatibility issue with rlang 0.2.0 (#51).
+
 
 # tidyselect 0.2.3
 
