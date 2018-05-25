@@ -33,6 +33,7 @@ test_that("has_vars() detects variables", {
 })
 
 test_that("Missing names are ignored", {
+  skip("let's discuss this")
   scoped_vars(c("foo", NA))
   expect_identical(peek_vars(), "foo")
 

@@ -220,7 +220,8 @@ vars_select_eval <- function(vars, quos) {
 
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
-  data <- set_names(as.list(seq_along(vars)), vars)
+  are_name <- are_name(vars)
+  data <- set_names(as.list(seq_along(vars)), vars)[!are_name]
   overscope <- env_bury(overscope_top, !!! data)
 
   overscope <- new_overscope(overscope, overscope_top)
