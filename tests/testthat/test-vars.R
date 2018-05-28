@@ -32,11 +32,16 @@ test_that("has_vars() detects variables", {
   expect_true(has_vars())
 })
 
-test_that("Missing names are ignored", {
-  skip("let's discuss this")
+test_that("Missing names are kept", {
   scoped_vars(c("foo", NA))
-  expect_identical(peek_vars(), "foo")
+  expect_identical(peek_vars(), c("foo", NA))
+
+  scoped_vars(c(NA, "foo"))
+  expect_identical(peek_vars(), c(NA, "foo"))
 
   scoped_vars(c("bar", ""))
-  expect_identical(peek_vars(), "bar")
+  expect_identical(peek_vars(), c("bar", ""))
+
+  scoped_vars(c("", "bar"))
+  expect_identical(peek_vars(), c("", "bar"))
 })
