@@ -40,7 +40,7 @@ automatically set to the names of the table.}
 
 \item{prefix}{A prefix that starts the numeric range.}
 
-\item{range}{A sequence of integers, like \code{1:5}}
+\item{range}{A sequence of integers, like \code{1:5}.}
 
 \item{width}{Optionally, the "width" of the numeric range. For example,
 a range of 2 gives "01", a range of three "001", etc.}
@@ -55,14 +55,14 @@ An integer vector giving the position of the matched variables.
 \description{
 These functions allow you to select variables based on their names.
 \itemize{
-\item \code{starts_with()}: starts with a prefix
-\item \code{ends_with()}: ends with a prefix
-\item \code{contains()}: contains a literal string
-\item \code{matches()}: matches a regular expression
-\item \code{num_range()}: a numerical range like x01, x02, x03.
-\item \code{one_of()}: variables in character vector.
-\item \code{everything()}: all variables.
-\item \code{last_col()}: last variable, possibly with an offset.
+\item \code{starts_with()}: Starts with a prefix.
+\item \code{ends_with()}: Ends with a suffix.
+\item \code{contains()}: Contains a literal string.
+\item \code{matches()}: Matches a regular expression.
+\item \code{num_range()}: Matches a numerical range like x01, x02, x03.
+\item \code{one_of()}: Matches variable names in a character vector.
+\item \code{everything()}: Matches all variables.
+\item \code{last_col()}: Select last variable, possibly with an offset.
 }
 }
 \examples{

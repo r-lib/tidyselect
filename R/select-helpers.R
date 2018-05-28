@@ -1,14 +1,14 @@
 #' Select helpers
 #'
 #' These functions allow you to select variables based on their names.
-#' * `starts_with()`: starts with a prefix
-#' * `ends_with()`: ends with a prefix
-#' * `contains()`: contains a literal string
-#' * `matches()`: matches a regular expression
-#' * `num_range()`: a numerical range like x01, x02, x03.
-#' * `one_of()`: variables in character vector.
-#' * `everything()`: all variables.
-#' * `last_col()`: last variable, possibly with an offset.
+#' * `starts_with()`: Starts with a prefix.
+#' * `ends_with()`: Ends with a suffix.
+#' * `contains()`: Contains a literal string.
+#' * `matches()`: Matches a regular expression.
+#' * `num_range()`: Matches a numerical range like x01, x02, x03.
+#' * `one_of()`: Matches variable names in a character vector.
+#' * `everything()`: Matches all variables.
+#' * `last_col()`: Select last variable, possibly with an offset.
 #'
 #' @param match A string.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
@@ -82,7 +82,7 @@ matches <- function(match, ignore.case = TRUE, vars = peek_vars()) {
 #' @export
 #' @rdname select_helpers
 #' @param prefix A prefix that starts the numeric range.
-#' @param range A sequence of integers, like `1:5`
+#' @param range A sequence of integers, like `1:5`.
 #' @param width Optionally, the "width" of the numeric range. For example,
 #'   a range of 2 gives "01", a range of three "001", etc.
 num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
