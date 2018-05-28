@@ -3,3 +3,6 @@
 .RData
 revdep/checks
 revdep/library
+*.o
+*.so
+issues

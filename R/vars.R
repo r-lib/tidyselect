@@ -116,15 +116,6 @@ vars_validate <- function(vars) {
     abort("`vars` must be a character vector")
   }
 
-  are_name <- are_name(vars)
-  if (any(!are_name)) {
-    # Propagate `type` attribute when subsetting. A proper S3 class
-    # might be better.
-    type <- attr(vars, "type")
-    vars <- vars[!are_name]
-    attr(vars, "type") <- type
-  }
-
   vars
 }
 
