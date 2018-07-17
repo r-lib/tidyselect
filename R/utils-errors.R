@@ -123,7 +123,7 @@ fmt_comma <- function(...) {
     x[[MAX_ITEMS]] <- "..."
   }
 
-  glue::collapse(x, sep = ", ", last = " and ")
+  glue::glue_collapse(x, sep = ", ", last = " and ")
 }
 
 parse_args <- function(x) {
