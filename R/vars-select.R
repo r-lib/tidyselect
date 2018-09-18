@@ -158,7 +158,7 @@ vars_select <- function(.vars, ...,
 
   # Ensure all output .vars named
   if (is_empty(sel)) {
-    cnd_signal("tidyselect_empty", .mufflable = FALSE)
+    signal("", "tidyselect_empty", .mufflable = FALSE)
     names(sel) <- sel
   } else {
     unnamed <- names2(sel) == ""
@@ -176,17 +176,17 @@ ignore_unknown_symbols <- function(vars, quos) {
 lang_ignore_unknown_symbols <- function(quo, vars) {
   expr <- get_expr(quo)
 
-  args <- lang_args(expr)
+  args <- call_args(expr)
   args <- discard(args, is_unknown_symbol, vars)
-  expr <- lang(node_car(expr), !!! args)
+  expr <- call2(node_car(expr), !!! args)
 
   set_expr(quo, expr)
 }
 
 is_ignored <- function(quo, vars) {
-  is_unknown_symbol(quo, vars) || is_ignored_minus_lang(quo, vars)
+  is_unknown_symbol(quo, vars) || is_ignored_minus_call(quo, vars)
 }
-is_ignored_minus_lang <- function(quo, vars) {
+is_ignored_minus_call <- function(quo, vars) {
   expr <- get_expr(quo)
 
   if (!is_call(expr, quote(`-`), 1L)) {

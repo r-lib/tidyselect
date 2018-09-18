@@ -92,7 +92,7 @@ scoped_vars <- function(vars, frame = caller_env()) {
   old <- poke_vars(vars)
 
   # Inline everything so the call will succeed in any environment
-  expr <- lang(on.exit, lang(poke_vars, old), add = TRUE)
+  expr <- call2(on.exit, call2(poke_vars, old), add = TRUE)
   eval_bare(expr, frame)
 
   invisible(old)
