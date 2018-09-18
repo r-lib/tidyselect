@@ -4,11 +4,8 @@
 \name{reexports}
 \alias{reexports}
 \alias{quo}
-\alias{reexports}
 \alias{quos}
-\alias{reexports}
 \alias{enquo}
-\alias{reexports}
 \alias{quo_name}
 \title{Objects exported from other packages}
 \keyword{internal}
