@@ -215,19 +215,18 @@ vars_select_eval <- function(vars, quos) {
   vars <- peek_vars()
 
   # Overscope `c`, `:` and `-` with versions that handle strings
-  data_helpers <- list(`:` = vars_colon, `-` = vars_minus, `c` = vars_c)
-  overscope_top <- as_environment(data_helpers)
+  data_helpers_env <- env(`:` = vars_colon, `-` = vars_minus, `c` = vars_c)
 
   # Symbols and calls to `:` and `c()` are evaluated with data in scope
   is_helper <- map_lgl(quos, quo_is_helper)
   are_name <- are_name(vars)
   data <- set_names(as.list(seq_along(vars)), vars)[!are_name]
-  overscope <- env_bury(overscope_top, !!! data)
+  data_env <- env(data_helpers_env, !!!data)
 
-  overscope <- new_overscope(overscope, overscope_top)
-  overscope$.data <- data
+  mask <- new_data_mask(data_env, data_helpers_env)
+  mask$.data <- as_data_pronoun(data)
 
-  ind_list <- map_if(quos, !is_helper, overscope_eval_next, overscope = overscope)
+  ind_list <- map_if(quos, !is_helper, eval_tidy, mask)
 
   # All other calls are evaluated in the context only
   # They are always evaluated strictly
