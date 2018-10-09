@@ -48,7 +48,7 @@ test_that("can select with unnamed elements", {
 })
 
 test_that("can customise error messages", {
-  vars <- set_attrs(letters, type = c("variable", "variables"))
+  vars <- structure(letters, type = c("variable", "variables"))
 
   expect_error(vars_select(vars, "foo"), "Unknown variable `foo`")
   expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
