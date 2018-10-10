@@ -66,6 +66,11 @@ test_that("can supply empty inputs", {
   expect_identical(vars_select(letters, a, chr()), c(a = "a"))
 })
 
+test_that("empty selection signals a condition", {
+  expect_is(catch_cnd(vars_select(letters)), "tidyselect_empty")
+  expect_is(catch_cnd(vars_select(letters, starts_with("1"))), "tidyselect_empty")
+})
+
 test_that("unknown variables errors are ignored if `.strict` is FALSE", {
   expect_identical(vars_select(letters, `_foo`, .strict = FALSE), set_names(chr()))
   expect_identical(vars_select(letters, a, `_foo`, .strict = FALSE), c(a = "a"))

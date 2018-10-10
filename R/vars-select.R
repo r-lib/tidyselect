@@ -124,6 +124,7 @@ vars_select <- function(.vars, ...,
   quos <- discard(quos, is_empty)
 
   if (is_empty(ind_list)) {
+    signal("", "tidyselect_empty")
     .vars <- setdiff(.include, .exclude)
     return(set_names(.vars, .vars))
   }
