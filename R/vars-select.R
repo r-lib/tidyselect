@@ -111,6 +111,11 @@ vars_select <- function(.vars, ...,
                         .strict = TRUE) {
   quos <- quos(...)
 
+  if (!length(quos)) {
+    signal("", "tidyselect_empty_dots")
+    return(empty_sel(.vars, .include, .exclude))
+  }
+
   if (!.strict) {
     quos <- ignore_unknown_symbols(.vars, quos)
   }
@@ -125,8 +130,7 @@ vars_select <- function(.vars, ...,
 
   if (is_empty(ind_list)) {
     signal("", "tidyselect_empty")
-    .vars <- setdiff(.include, .exclude)
-    return(set_names(.vars, .vars))
+    return(empty_sel(.vars, .include, .exclude))
   }
 
   # if the first selector is exclusive (negative), start with all columns
@@ -167,6 +171,11 @@ vars_select <- function(.vars, ...,
   }
 
   sel
+}
+
+empty_sel <- function(vars, include, exclude) {
+  vars <- setdiff(include, exclude)
+  set_names(vars, vars)
 }
 
 ignore_unknown_symbols <- function(vars, quos) {

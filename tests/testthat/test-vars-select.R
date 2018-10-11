@@ -67,7 +67,7 @@ test_that("can supply empty inputs", {
 })
 
 test_that("empty selection signals a condition", {
-  expect_is(catch_cnd(vars_select(letters)), "tidyselect_empty")
+  expect_is(catch_cnd(vars_select(letters)), "tidyselect_empty_dots")
   expect_is(catch_cnd(vars_select(letters, starts_with("1"))), "tidyselect_empty")
 })
 
