@@ -73,17 +73,6 @@ Version: 0.7.6
       Note: found 4 marked UTF-8 strings
     ```
 
-# ggeffects
-
-Version: 0.5.0
-
-## In both
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘ordinal’
-    ```
-
 # heatmaply
 
 Version: 0.15.2
@@ -195,7 +184,7 @@ Version: 0.10.0
 
 # RSDA
 
-Version: 2.0.7
+Version: 2.0.8
 
 ## In both
 
@@ -355,14 +344,26 @@ Version: 1.0.1
 
 ## In both
 
-*   checking package dependencies ... NOTE
+*   checking tests ...
     ```
-    Package suggested but not available for checking: ‘rjags’
-    ```
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Package unavailable to check Rd xrefs: ‘rjags’
+     ERROR
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+             modules = modules, factories = factories, jags = jags, call.setup = TRUE, method = method, 
+             mutate = mutate)
+      10: setup.jags(model = outmodel, monitor = outmonitor, data = outdata, n.chains = n.chains, 
+             inits = outinits, modules = modules, factories = factories, response = response, 
+             fitted = fitted, residual = residual, jags = jags, method = method, mutate = mutate)
+      11: loadandcheckrjags()
+      12: stop("Loading the rjags package failed (diagnostics are given above this error message)", 
+             call. = FALSE)
+      
+      ══ testthat results  ═══════════════════════════════════════════════════════════
+      OK: 235 SKIPPED: 2 FAILED: 1
+      1. Error: tidy_draws works with runjags (@test.tidy_draws.R#83) 
+      
+      Error: testthat unit tests failed
+      Execution halted
     ```
 
 # tidyinftheo
@@ -379,11 +380,11 @@ Version: 0.2.1
       12: shannon_entropy(.)
       13: reduce_data(.data, !!enquo(X), numvars = 1, na.rm = na.rm) at /Users/lionel/Desktop/tidyselect/revdep/checks.noindex/tidyinftheo/new/tidyinftheo.Rcheck/00_pkg_src/tidyinftheo/R/inftheo.R:70
       14: tidyselect::vars_select(names(reduced_tab), !!!quos(...)) at /Users/lionel/Desktop/tidyselect/revdep/checks.noindex/tidyinftheo/new/tidyinftheo.Rcheck/00_pkg_src/tidyinftheo/R/inftheo.R:26
-      15: vars_select_eval(.vars, quos) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpYfYZ6E/R.INSTALL88695a0b73d2/tidyselect/R/vars-select.R:118
-      16: map_lgl(quos, quo_is_helper) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpYfYZ6E/R.INSTALL88695a0b73d2/tidyselect/R/vars-select.R:222
+      15: vars_select_eval(.vars, quos) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpqaQ1jd/R.INSTALL17d0f589ac2cd/tidyselect/R/vars-select.R:123
+      16: map_lgl(quos, quo_is_helper) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpqaQ1jd/R.INSTALL17d0f589ac2cd/tidyselect/R/vars-select.R:231
       17: .f(.x[[i]], ...)
-      18: extract_expr(quo) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpYfYZ6E/R.INSTALL88695a0b73d2/tidyselect/R/vars-select.R:292
-      19: is_call(expr, paren_sym) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpYfYZ6E/R.INSTALL88695a0b73d2/tidyselect/R/vars-select.R:285
+      18: extract_expr(quo) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpqaQ1jd/R.INSTALL17d0f589ac2cd/tidyselect/R/vars-select.R:301
+      19: is_call(expr, paren_sym) at /private/var/folders/b9/1vbq6rn93_1fk71sn95dqb8r0000gn/T/RtmpqaQ1jd/R.INSTALL17d0f589ac2cd/tidyselect/R/vars-select.R:294
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
       OK: 37 SKIPPED: 0 FAILED: 1
@@ -453,33 +454,5 @@ Version: 0.5.3
     Error: processing vignette 'intro-tsibble.Rmd' failed with diagnostics:
     pandoc document conversion failed with error 83
     Execution halted
-    ```
-
-# yardstick
-
-Version: 0.0.1
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-         {
-             rlang::abort("No variables or terms were selected.")
-         }, class = c("exiting", "handler")))
-      10: tryCatchList(expr, classes, parentenv, handlers)
-      11: tryCatchOne(expr, names, parentenv, handlers[[1L]])
-      12: value[[3L]](cond)
-      13: rlang::abort("No variables or terms were selected.") at /Users/lionel/Desktop/tidyselect/revdep/checks.noindex/yardstick/new/yardstick.Rcheck/00_pkg_src/yardstick/R/selectors.R:5
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      OK: 118 SKIPPED: 0 FAILED: 2
-      1. Error: correct metrics returned (@test_metrics.R#17) 
-      2. Error: correct results (@test_metrics.R#88) 
-      
-      Error: testthat unit tests failed
-      Execution halted
     ```
 
