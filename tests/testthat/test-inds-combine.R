@@ -40,12 +40,19 @@ test_that("if one name for multiple vars, use integer index", {
   expect_equal(inds_combine(letters[1:3], list(x = 1:3)), c(x1 = 1, x2 = 2, x3 = 3))
 })
 
-test_that("invalid inputs raise error", {
-  expect_error(
-    inds_combine(names(mtcars), list(0)),
-    "Each argument must yield either positive or negative integers",
-    fixed = TRUE
+test_that("select(0) corner case #82", {
+  expect_equal(inds_combine(names(mtcars), 0), set_names(integer(), character()))
+  expect_equal(
+    inds_combine(names(mtcars), list(0, 1:3)),
+    inds_combine(names(mtcars), list(1:3))
   )
+  expect_equal(
+    inds_combine(names(mtcars), list(0, -(1:3))),
+    inds_combine(names(mtcars), list(-(1:3)))
+  )
+})
+
+test_that("invalid inputs raise error", {
   expect_error(
     inds_combine(names(mtcars), list(c(-1, 1))),
     "Each argument must yield either positive or negative integers",

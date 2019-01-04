@@ -1,6 +1,7 @@
 
 # tidyselect 0.2.5.9000
 
+* `vars_select()` ignores vectors with only zeros (#82). 
 
 # tidyselect 0.2.5
 
