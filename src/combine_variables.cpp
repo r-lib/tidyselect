@@ -97,10 +97,14 @@ SEXP inds_combine(CharacterVector vars, ListOf<IntegerVector> xs) {
   // Find the first vector that is not all zero
   int first = 0;
   for (; first < xs.size(); first++) {
-    if (!all_zero(xs[first])) break;
+    if (!all_zero(xs[first])) {
+      break;
+    }
   }
   // If all vectors are all zero, nothing to do
-  if (first == xs.size()) return selected;
+  if (first == xs.size()) {
+    return selected;
+  }
 
   // If first component is negative, pre-fill with existing vars
   if (vector_sign(xs[first]) == -1) {
@@ -111,10 +115,10 @@ SEXP inds_combine(CharacterVector vars, ListOf<IntegerVector> xs) {
 
   for (int i = 0; i < xs.size(); ++i) {
     IntegerVector x = xs[i];
-    if (x.size() == 0) continue;
-    // skip if all zero
-    if (all_zero(x)) continue;
-
+    // skip if empty or all zero
+    if (x.size() == 0 || all_zero(x)) {
+      continue;
+    }
     int sign = vector_sign(x);
 
     if (sign == 0)
