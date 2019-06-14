@@ -113,3 +113,7 @@ test_that("vars_select() handles named character vectors", {
 test_that("can select with length > 1 double vectors (#43)", {
   expect_identical(vars_select(letters, !!c(1, 2)), c(a = "a", b = "b"))
 })
+
+test_that("selecting with `NA` fails", {
+  expect_error(vars_select("foo", NA), "must evaluate to")
+})
