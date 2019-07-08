@@ -18,7 +18,7 @@ ends_with(match, ignore.case = TRUE, vars = peek_vars())
 
 contains(match, ignore.case = TRUE, vars = peek_vars())
 
-matches(match, ignore.case = TRUE, vars = peek_vars())
+matches(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars())
 
 num_range(prefix, range, width = NULL, vars = peek_vars())
 
@@ -37,6 +37,8 @@ names.}
 \item{vars, .vars}{A character vector of variable names. When called
 from inside selecting functions like \code{\link[dplyr:select]{dplyr::select()}} these are
 automatically set to the names of the table.}
+
+\item{perl}{Should Perl-compatible regexps be used?}
 
 \item{prefix}{A prefix that starts the numeric range.}
 

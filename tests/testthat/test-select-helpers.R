@@ -22,6 +22,7 @@ test_that("matches return integer positions", {
   expect_equal(ends_with("d"),   c(2L, 4L))
   expect_equal(contains("eee"),  5L)
   expect_equal(matches(".b."),   c(1L, 3L, 4L))
+  expect_equal(matches("(?<!a)b", perl = TRUE), c(3L, 4L))
 })
 
 test_that("throws with empty pattern is provided", {
