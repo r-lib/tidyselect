@@ -9,6 +9,10 @@ test_that("no set variables throws error from the correct function", {
   expect_error(one_of(starts_with("z")), ".starts_with... must be used")
 })
 
+test_that("no set variables from peek_vars() directly will give the original message", {
+  expect_error(peek_vars(), "No tidyselect variables were registered.")
+})
+
 test_that("failed match removes all columns", {
   scoped_vars(c("x", "y"))
 

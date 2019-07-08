@@ -84,7 +84,11 @@ peek_vars <- function() {
   if (is.null(vars_env$selected)) {
     the_call <- sys.call(sys.parent()) 
     fun <- as.character(the_call)[1]
-    msg <- sprintf("`%s()` must be used within a *selecting* function", fun)
+    if (fun == "peek_vars") {
+      msg <- "No tidyselect variables were registered."
+    } else {
+      msg <- sprintf("`%s()` must be used within a *selecting* function", fun)
+    }
     abort(msg)
   } 
   vars_env$selected
