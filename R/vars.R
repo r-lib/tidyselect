@@ -80,8 +80,14 @@ poke_vars <- function(vars) {
 }
 #' @rdname poke_vars
 #' @export
-peek_vars <- function() {
-  vars_env$selected %||% abort("No tidyselect variables were registered")
+peek_vars <- function(generic_error = FALSE) {
+  if (is.null(vars_env$selected)) {
+    the_call <- sys.call(sys.parent()) 
+    fun <- as.character(the_call)[1]
+    msg <- sprintf("`%s()` must be used within a *selecting* function", fun)
+    abort(msg)
+  } 
+  vars_env$selected
 }
 
 #' @rdname poke_vars

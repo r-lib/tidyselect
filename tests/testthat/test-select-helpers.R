@@ -1,7 +1,12 @@
 context("select helpers")
 
-test_that("no set variables throws warning", {
-  expect_error(starts_with("z"), "No tidyselect variables were registered")
+test_that("no set variables throws error", {
+  expect_error(starts_with("z"), ".starts_with... must be used")
+  expect_error(one_of("z"), ".one_of... must be used")
+})
+
+test_that("no set variables throws error from the correct function", {
+  expect_error(one_of(starts_with("z")), ".starts_with... must be used")
 })
 
 test_that("failed match removes all columns", {
