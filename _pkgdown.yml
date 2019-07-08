@@ -27,13 +27,7 @@ reference:
 
 - title: Selection helpers
   contents:
-  - starts_with
-  - ends_with
-  - contains
-  - matches
-  - num_range
-  - one_of
-  - everything
+  - starts_with("starts")
   - last_col
 
 - title: Register tidyselect variables
