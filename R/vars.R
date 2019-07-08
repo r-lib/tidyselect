@@ -79,9 +79,26 @@ poke_vars <- function(vars) {
   invisible(old)
 }
 #' @rdname poke_vars
+#' @param fn the name of the function to use in the error message. Defaults to
+#'   `NULL`, which will use the first element of `sys.call(sys.parent())`.
 #' @export
-peek_vars <- function() {
-  vars_env$selected %||% abort("No tidyselect variables were registered")
+peek_vars <- function(fn = NULL) {
+  if (is.null(vars_env$selected)) {
+    if (is.null(fn)) {
+      the_call <- sys.call(sys.parent())
+      fn <- the_call[[1]]
+    } else {
+      fn <- as.symbol(fn)
+    }
+    if (is.symbol(fn)) {
+      fn  <- as.character(fn)
+      msg <- sprintf("`%s()` must be used within a *selecting* function", fn)
+    } else {
+      msg <- "No tidyselect variables were registered."
+    }
+    abort(msg)
+  } 
+  vars_env$selected
 }
 
 #' @rdname poke_vars
