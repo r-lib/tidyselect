@@ -78,6 +78,12 @@
 <li>
   <a href="../reference/news.html">News</a>
 </li>
+<li>
+  <a href="https://github.com/r-lib/tidyselect">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -95,7 +101,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
       <h1>Changelog <small></small></h1>
-      
+      <small>Source: <a href='https://github.com/r-lib/tidyselect/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="tidyselect-0-2-5-9000" class="section level1">
@@ -103,8 +109,8 @@
 <a href="#tidyselect-0-2-5-9000" class="anchor"></a>tidyselect 0.2.5.9000<small> Unreleased </small>
 </h1>
 <ul>
-<li><p><code><a href="../reference/vars_select.html">vars_select()</a></code> ignores vectors with only zeros (#82).</p></li>
-<li><p><code><a href="../reference/select_helpers.html">matches()</a></code> has new argument <code>perl</code> to allow for Perl-like regular expressions (<a href='https://github.com/fmichonneau'>@fmichonneau</a>, #71)</p></li>
+<li><p><code><a href="../reference/vars_select.html">vars_select()</a></code> ignores vectors with only zeros (<a href='https://github.com/r-lib/tidyselect/issues/82'>#82</a>).</p></li>
+<li><p><code><a href="../reference/select_helpers.html">matches()</a></code> has new argument <code>perl</code> to allow for Perl-like regular expressions (<a href='https://github.com/fmichonneau'>@fmichonneau</a>, <a href='https://github.com/r-lib/tidyselect/issues/71'>#71</a>)</p></li>
 </ul>
 </div>
     <div id="tidyselect-0-2-5" class="section level1">
@@ -118,8 +124,8 @@
 <a href="#tidyselect-0-2-4" class="anchor"></a>tidyselect 0.2.4<small> 2018-02-26 </small>
 </h1>
 <ul>
-<li><p>Fixed a warning that occurred when a vector of column positions was supplied to <code><a href="../reference/vars_select.html">vars_select()</a></code> or functions depending on it such as <code>tidyr::gather()</code> (#43 and tidyverse/tidyr#374).</p></li>
-<li><p>Fixed compatibility issue with rlang 0.2.0 (#51).</p></li>
+<li><p>Fixed a warning that occurred when a vector of column positions was supplied to <code><a href="../reference/vars_select.html">vars_select()</a></code> or functions depending on it such as <code>tidyr::gather()</code> (<a href='https://github.com/r-lib/tidyselect/issues/43'>#43</a> and tidyverse/tidyr<a href='https://github.com/r-lib/tidyselect/issues/374'>#374</a>).</p></li>
+<li><p>Fixed compatibility issue with rlang 0.2.0 (<a href='https://github.com/r-lib/tidyselect/issues/51'>#51</a>).</p></li>
 </ul>
 </div>
     <div id="tidyselect-0-2-3" class="section level1">
@@ -153,7 +159,7 @@ vars_select(names(mtcars), - !!vars)</code></pre>
 </li>
 <li><p><code><a href="../reference/select_helpers.html">last_col()</a></code> now issues an error when the variable vector is empty.</p></li>
 <li><p><code><a href="../reference/select_helpers.html">last_col()</a></code> now returns column positions rather than column names for consistency with other helpers. This also makes it compatible with functions like <code><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq()</a></code>.</p></li>
-<li><p><code><a href="https://www.rdocumentation.org/packages/base/topics/c">c()</a></code> now supports character vectors the same way as <code>-</code> and <code><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq()</a></code>. (#37 <a href='https://github.com/gergness'>@gergness</a>)</p></li>
+<li><p><code><a href="https://www.rdocumentation.org/packages/base/topics/c">c()</a></code> now supports character vectors the same way as <code>-</code> and <code><a href="https://www.rdocumentation.org/packages/base/topics/seq">seq()</a></code>. (<a href='https://github.com/r-lib/tidyselect/issues/37'>#37</a> <a href='https://github.com/gergness'>@gergness</a>)</p></li>
 </ul>
 </div>
     <div id="tidyselect-0-2-0" class="section level1">
@@ -184,9 +190,9 @@ vars_select(letters, 1:n)</code></pre>
 <li><p><code>:</code> and <code>-</code> now handle strings as well. This makes it easy to unquote a column name: <code>(!!name) : last_col()</code> or <code>- !!name</code>.</p></li>
 <li><p><code><a href="../reference/vars_select.html">vars_select()</a></code> gains a <code>.strict</code> argument similar to <code>rename_vars()</code>. If set to <code>FALSE</code>, errors about unknown variables are ignored.</p></li>
 <li><p><code><a href="../reference/vars_select.html">vars_select()</a></code> now treats <code>NULL</code> as empty inputs. This follows a trend in the tidyverse tools.</p></li>
-<li><p><code><a href="../reference/vars_select.html">vars_rename()</a></code> now handles variable positions (integers or round doubles) just like <code><a href="../reference/vars_select.html">vars_select()</a></code> (#20).</p></li>
+<li><p><code><a href="../reference/vars_select.html">vars_rename()</a></code> now handles variable positions (integers or round doubles) just like <code><a href="../reference/vars_select.html">vars_select()</a></code> (<a href='https://github.com/r-lib/tidyselect/issues/20'>#20</a>).</p></li>
 <li><p><code><a href="../reference/vars_select.html">vars_rename()</a></code> is now implemented with the tidy eval framework. Like <code><a href="../reference/vars_select.html">vars_select()</a></code>, expressions are evaluated without any user data in scope. In addition a variable context is now established so you can write rename helpers. Those should return a single round number or a string (variable position or variable name).</p></li>
-<li><p><code><a href="../reference/poke_vars.html">has_vars()</a></code> is a predicate that tests whether a variable context has been set (#21).</p></li>
+<li><p><code><a href="../reference/poke_vars.html">has_vars()</a></code> is a predicate that tests whether a variable context has been set (<a href='https://github.com/r-lib/tidyselect/issues/21'>#21</a>).</p></li>
 <li><p>The selection helpers are now exported in a list <code>vars_select_helpers</code>. This is intended for APIs that embed the helpers in the evaluation environment.</p></li>
 </ul>
 </div>
