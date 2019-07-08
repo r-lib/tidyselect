@@ -37,6 +37,3 @@ reference:
   - scoped_vars
   - with_vars
   - has_vars
-
-development:
-  mode: auto
