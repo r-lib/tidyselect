@@ -3,7 +3,7 @@
 
 * `vars_select()` ignores vectors with only zeros (#82). 
 
-* `matches()` has new argument `perl` to allow for Perl-like regular expressions (requested by @GegznaV, #71)
+* `matches()` has new argument `perl` to allow for Perl-like regular expressions (@fmichonneau, #71)
 
 # tidyselect 0.2.5
 
