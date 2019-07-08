@@ -3,6 +3,8 @@
 
 * `vars_select()` ignores vectors with only zeros (#82). 
 
+* `matches()` has new argument `perl` to allow for Perl-like regular expressions (requested by @GegznaV, #71)
+
 # tidyselect 0.2.5
 
 This is a maintenance release for compatibility with rlang 0.3.0.

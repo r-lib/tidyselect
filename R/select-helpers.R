@@ -13,6 +13,7 @@
 #' @param match A string.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
+#' @param perl Should Perl-compatible regexps be used?
 #' @param vars,.vars A character vector of variable names. When called
 #'   from inside selecting functions like [dplyr::select()] these are
 #'   automatically set to the names of the table.
@@ -73,10 +74,10 @@ contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
 
 #' @export
 #' @rdname select_helpers
-matches <- function(match, ignore.case = TRUE, vars = peek_vars()) {
+matches <- function(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars()) {
   stopifnot(is_string(match), nchar(match) > 0)
 
-  grep_vars(match, vars, ignore.case = ignore.case)
+  grep_vars(match, vars, ignore.case = ignore.case, perl = perl)
 }
 
 #' @export
