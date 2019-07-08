@@ -27,8 +27,9 @@ test_that("if the parent call is not a symbol, then return generic", {
 })
 
 test_that("if the fn is peek_vars, then return generic", {
-  expect_error(peek_vars('peek_vars'), "No tidyselect variables were registered.")
+  expect_error(peek_vars('peek_vars'), "`peek_vars()` must be used within a *selecting* function", fixed = TRUE)
 })
+
 
 test_that("peek_vars can take a custom function name", {
   expect_error(peek_vars("z"), "`z()` must be used", fixed = TRUE)  

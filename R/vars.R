@@ -90,7 +90,7 @@ peek_vars <- function(fn = NULL) {
     } else {
       fn <- as.symbol(fn)
     }
-    if (is.symbol(fn) && !identical(fn, as.symbol('peek_vars'))) {
+    if (is.symbol(fn)) {
       fn  <- as.character(fn)
       msg <- sprintf("`%s()` must be used within a *selecting* function", fn)
     } else {
