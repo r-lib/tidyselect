@@ -6,3 +6,4 @@ revdep/library
 *.o
 *.so
 issues
+docs/
