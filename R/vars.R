@@ -80,7 +80,7 @@ poke_vars <- function(vars) {
 }
 #' @rdname poke_vars
 #' @export
-peek_vars <- function(generic_error = FALSE) {
+peek_vars <- function() {
   if (is.null(vars_env$selected)) {
     the_call <- sys.call(sys.parent()) 
     fun <- as.character(the_call)[1]
