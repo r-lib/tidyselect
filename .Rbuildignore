@@ -6,3 +6,5 @@
 ^revdep$
 ^codecov\.yml$
 ^\.github$
+^_pkgdown\.yml$
+^docs$

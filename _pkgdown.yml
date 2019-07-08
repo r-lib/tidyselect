@@ -1,0 +1,26 @@
+url: https://tidyselect.r-lib.org
+
+home:
+  strip_header: true
+
+  links:
+  - text: Browse source code
+    href: https://github.com/tidyverse/tidyselect
+  - text: Report a bug
+    href: https://github.com/tidyverse/tidyselect/issues
+  - text: Learn more
+    href: https://r4ds.had.co.nz/transform.html#select
+
+navbar:
+  structure:
+    left:  [home, reference, news]
+    right:
+    - icon: fa-github fa-lg
+      href: https://github.com/tidyverse/tidyselect
+  components:
+    news:
+      text: News
+      href: reference/news.html
+
+development:
+  mode: auto
