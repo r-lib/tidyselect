@@ -21,5 +21,5 @@ from github with:
 
 ```r
 # install.packages("devtools")
-devtools::install_github("tidyverse/tidyselect")
+devtools::install_github("r-lib/tidyselect")
 ```
