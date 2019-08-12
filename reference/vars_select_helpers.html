@@ -131,13 +131,13 @@ having to track addition of new helpers in tidyselect.</p>
 <span class='co'># tidyselect is not attached:</span>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/eval'>local</a></span>(<span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/environment'>baseenv</a></span>(), {
   <span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>, <span class='st'>"baz"</span>)
-  <span class='no'>helpers</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tidyselect</span><span class='kw ns'>::</span><span class='no'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/vars_select_helpers'>vars_select_helpers</a></span>
+  <span class='no'>helpers</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tidyselect</span><span class='kw ns'>::</span><span class='no'><a href='https://tidyselect.r-lib.org/reference/vars_select_helpers.html'>vars_select_helpers</a></span>
 
   <span class='no'>my_select</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) {
     <span class='no'>quos</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/quotation.html'>quos</a></span>(<span class='no'>...</span>)
     <span class='no'>quos</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(<span class='no'>quos</span>, <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='no'><a href='https://rlang.r-lib.org/reference/env_bury.html'>env_bury</a></span>, !!! <span class='no'>helpers</span>)
 
-    <span class='kw pkg'>tidyselect</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/tidyselect/topics/vars_select'>vars_select</a></span>(<span class='no'>vars</span>, !!! <span class='no'>quos</span>)
+    <span class='kw pkg'>tidyselect</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/vars_select.html'>vars_select</a></span>(<span class='no'>vars</span>, !!! <span class='no'>quos</span>)
   }
 
   <span class='co'># The user can now call my_select() with helpers without having</span>
