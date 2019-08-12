@@ -29,5 +29,5 @@ LazyData: true
 ByteCompile: true
 RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
-URL: https://github.com/r-lib/tidyselect
+URL: https://tidyselect.r-lib.org, https://github.com/r-lib/tidyselect
 BugReports: https://github.com/r-lib/tidyselect/issues
