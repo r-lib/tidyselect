@@ -19,7 +19,7 @@ test_that("no set variables throws error from the correct function", {
 # These next two tests do two things to actually test the path of the code:
 #
 # 1. test if the first part of the call is not a symbol
-# 2. test if fn is equal to `peek_vars`, which would happen in a 
+# 2. test if fn is equal to `peek_vars`, which would happen in a
 #    global environment setting.
 test_that("if the parent call is not a symbol, then return generic", {
   pv <- function() function() peek_vars()
@@ -32,7 +32,7 @@ test_that("if the fn is peek_vars, then return generic", {
 
 
 test_that("peek_vars can take a custom function name", {
-  expect_error(peek_vars("z"), "`z()` must be used", fixed = TRUE)  
+  expect_error(peek_vars("z"), "`z()` must be used", fixed = TRUE)
 })
 
 test_that("failed match removes all columns", {

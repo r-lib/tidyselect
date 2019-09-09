@@ -11,6 +11,15 @@ A backend for the selecting functions of the 'tidyverse'.
     packages in a way that is consistent with other 'tidyverse'
     interfaces for selection.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://tidyselect.r-lib.org}
+  \item \url{https://github.com/r-lib/tidyselect}
+  \item Report bugs at \url{https://github.com/r-lib/tidyselect/issues}
+}
+
+}
 \author{
 \strong{Maintainer}: Lionel Henry \email{lionel@rstudio.com}
 
