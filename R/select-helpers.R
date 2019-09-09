@@ -97,11 +97,14 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 #' @rdname select_helpers
 #' @param ... One or more character vectors.
 one_of <- function(..., .vars = peek_vars()) {
-  keep <- c(...)
+  keep <- list(...)
 
-  if (!is_character(keep)) {
-    bad("All arguments must be character vectors, not {type_of(keep)}")
+  bad_input <- detect_index(keep, negate(is.character))
+  if (bad_input) {
+    type <- friendly_type_of(keep)
+    abort(glue::glue("Input { bad_input } must be a character vector, not { type }"))
   }
+  keep <- vctrs::vec_c(!!!keep, .ptype = character())
 
   if (!all(keep %in% .vars)) {
     bad <- setdiff(keep, .vars)

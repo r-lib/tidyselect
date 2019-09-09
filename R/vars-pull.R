@@ -32,7 +32,7 @@
 #' var <- 10
 #' vars_pull(letters, !! var)
 vars_pull <- function(vars, var = -1) {
-  var_env <- set_names(as_list(seq_along(vars)), vars)
+  var_env <- set_names(seq_along(vars), vars)
   var <- eval_tidy(enquo(var), var_env)
   n <- length(vars)
 
@@ -55,7 +55,7 @@ vars_pull <- function(vars, var = -1) {
       pos <- var
     }
   } else {
-    type <- friendly_type(type_of(var))
+    type <- friendly_type_of(var)
     abort(glue(
       "`var` must evaluate to a single number or a { singular(vars) } name, not {type}"
     ))

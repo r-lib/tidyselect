@@ -1,11 +1,3 @@
-check_pkg <- function(name, reason) {
-  if (is_installed(name))
-    return(invisible(TRUE))
-
-  glubort(NULL, 'The {name} package is required to {reason}.
-    Please install it with `install.packages("{name}")`'
-  )
-}
 
 # ngettext() does extra work, this function is a simpler version
 pluralise <- function(n, singular, plural) {

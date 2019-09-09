@@ -57,23 +57,23 @@ is_symbol_expr <- function(quo) {
 }
 
 validate_renamed_var <- function(expr, name, vars) {
-  switch_type(expr,
-    integer = ,
-    double =
-      if (!is_integerish(expr)) {
-        abort(glue("{ Singular(vars) } positions must be round numbers"))
-      } else if (length(expr) != 1) {
-        abort(glue("{ Singular(vars) } positions must be scalar"))
-      } else {
-        return(vars[[expr]])
-      },
-    string =
-      return(expr)
-  )
+  if (is_string(expr)) {
+    return(expr)
+  }
 
-  actual_type <- friendly_type(type_of(expr))
-  named_call <- ll(!! name := expr)
-  bad_named_calls(named_call,
-    "must be a { singular(vars) } name or position, not {actual_type}"
-  )
+  if (!typeof(expr) %in% c("integer", "double")) {
+    actual_type <- friendly_type_of(expr)
+    named_call <- ll(!! name := expr)
+    bad_named_calls(named_call,
+      "must be a { singular(vars) } name or position, not {actual_type}"
+    )
+  }
+
+  if (!is_integerish(expr)) {
+    abort(glue("{ Singular(vars) } positions must be round numbers"))
+  }
+  if (length(expr) != 1) {
+    abort(glue("{ Singular(vars) } positions must be scalar"))
+  }
+  vars[[expr]]
 }

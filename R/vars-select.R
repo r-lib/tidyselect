@@ -147,7 +147,7 @@ vars_select <- function(.vars, ...,
   if (any(!is_integerish)) {
     bad <- quos[!is_integerish]
     first <- ind_list[!is_integerish][[1]]
-    first_type <- friendly_type(type_of(first))
+    first_type <- friendly_type_of(first)
     bad_calls(bad,
       "must evaluate to { singular(.vars) } positions or names, \\
        not { first_type }"
