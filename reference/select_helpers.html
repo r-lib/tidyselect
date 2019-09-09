@@ -203,6 +203,15 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
 
     <p>An integer vector giving the position of the matched variables.</p>
     
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>The order of selected columns is determined by the inputs.</p><ul>
+<li><p><code>one_of(c("foo", "bar"))</code> selects <code>"foo"</code> first.</p></li>
+<li><p><code><a href='https://rdrr.io/r/base/c.html'>c(starts_with("c"), starts_with("d"))</a></code> selects all columns
+starting with <code>"c"</code> first, then all columns starting with <code>"d"</code>.</p></li>
+</ul>
+
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>nms</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>iris</span>)
@@ -217,7 +226,11 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
 #&gt; "Petal.Length" </div><div class='input'>
 <span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal.Length"</span>, <span class='st'>"Petal.Width"</span>)
 <span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>one_of</span>(<span class='no'>vars</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
-#&gt; "Petal.Length"  "Petal.Width" </div></pre>
+#&gt; "Petal.Length"  "Petal.Width" </div><div class='input'>
+<span class='co'># The order of selected columns is determined from the inputs</span>
+<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), <span class='fu'>starts_with</span>(<span class='st'>"c"</span>), <span class='fu'>starts_with</span>(<span class='st'>"d"</span>))</div><div class='output co'>#&gt;    cyl   carb   disp   drat 
+#&gt;  "cyl" "carb" "disp" "drat" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), <span class='fu'>one_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"carb"</span>, <span class='st'>"mpg"</span>)))</div><div class='output co'>#&gt;   carb    mpg 
+#&gt; "carb"  "mpg" </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -225,6 +238,8 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#details">Details</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
