@@ -178,7 +178,6 @@ vars_select <- function(.vars, ...,
 
 inds_combine <- function(vars, inds) {
   walk(inds, ind_check)
-
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
 
   inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = "{outer}{inner}")
@@ -188,25 +187,8 @@ inds_combine <- function(vars, inds) {
     incl <- seq_along(vars)
   } else {
     incl <- inds[inds > 0]
+    incl <- inds_unique(incl)
   }
-
-  # If only negative values, implicitly assumes all variables to be removed.
-  if (length(incl) && sum(inds > 0) == 0 && sum(inds < 0) > 0) {
-    incl <- seq_along(vars)
-  }
-
-  # Remove duplicates
-  incl_unique <- vctrs::vec_unique(incl)
-
-  # Keep last name of duplicates
-  if (length(incl_unique) < length(incl)) {
-    rev_incl <- rev(incl)
-    rev_unique_locs <- vctrs::vec_unique_loc(rev_incl)
-    unique_nms <- rev(names2(rev_incl)[rev_unique_locs])
-    names(incl_unique) <- unique_nms
-  }
-
-  incl <- incl_unique
 
   # Remove variables to be excluded (setdiff loses names)
   excl <- abs(inds[inds < 0])
@@ -227,6 +209,21 @@ inds_combine <- function(vars, inds) {
   names(incl)[unnamed] <- vars[incl[unnamed]]
 
   incl
+}
+
+inds_unique <- function(x) {
+  # Remove duplicates
+  out <- vctrs::vec_unique(x)
+
+  # Keep last name of duplicates
+  if (length(out) < length(x)) {
+    reversed <- rev(x)
+    rev_unique_locs <- vctrs::vec_unique_loc(reversed)
+    unique_nms <- rev(names2(reversed)[rev_unique_locs])
+    names(out) <- unique_nms
+  }
+
+  out
 }
 
 ind_check <- function(x) {
