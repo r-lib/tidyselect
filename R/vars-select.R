@@ -177,6 +177,8 @@ vars_select <- function(.vars, ...,
 }
 
 inds_combine <- function(vars, inds) {
+  walk(inds, ind_check)
+
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
 
   inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = "{outer}{inner}")
@@ -210,10 +212,14 @@ inds_combine <- function(vars, inds) {
   excl <- abs(inds[inds < 0])
   incl <- incl[is.na(match(incl, excl))]
 
-  bad_idx <- incl < 0 | incl > length(vars)
+  bad_idx <- incl > length(vars)
   if (any(bad_idx)) {
-    where <- paste0(which(bad_idx), collapse = ", ")
-    abort(glue::glue("Bad indices: { where }"))
+    where <- incl[which(bad_idx)]
+    where <- glue::glue_collapse(where, sep = ", ", last = " and ")
+    abort(glue::glue(
+      "Can't select column because the data frame is too small.
+       These indices are too large: { where }"
+    ))
   }
 
   names(incl) <- names2(incl)
@@ -221,6 +227,18 @@ inds_combine <- function(vars, inds) {
   names(incl)[unnamed] <- vars[incl[unnamed]]
 
   incl
+}
+
+ind_check <- function(x) {
+  if (!length(x)) {
+    return(NULL)
+  }
+
+  positive <- x > 0
+
+  if (any(positive != positive[[1]])) {
+    abort("Each argument must yield either positive or negative integers.")
+  }
 }
 
 empty_sel <- function(vars, include, exclude) {
