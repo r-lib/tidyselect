@@ -1,9 +1,7 @@
 #' @import rlang
 #' @importFrom glue glue
 #' @importFrom purrr discard map map_chr map_if map_lgl map2 map2_chr
-#'   detect_index negate
-#' @importFrom Rcpp cppFunction
-#' @useDynLib tidyselect, .registration = TRUE
+#'   detect_index negate walk
 "_PACKAGE"
 
 

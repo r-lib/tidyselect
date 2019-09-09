@@ -7,7 +7,6 @@ test_that("vars_select can rename variables", {
 
 test_that("last rename wins", {
   vars <- c("a", "b")
-
   expect_equal(vars_select(vars, b = a, c = a), c("c" = "a"))
 })
 

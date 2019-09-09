@@ -133,7 +133,10 @@ vars_select <- function(.vars, ...,
     return(empty_sel(.vars, .include, .exclude))
   }
 
-  # if the first selector is exclusive (negative), start with all columns
+  # If the first selector is exclusive (negative), start with all
+  # columns. We need to check for symbolic `-` here because if the
+  # selection is empty, `inds_combine()` cannot detect a negative
+  # indice in first position.
   first <- quo_get_expr(quos[[1]])
   initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
 
@@ -171,6 +174,68 @@ vars_select <- function(.vars, ...,
   }
 
   sel
+}
+
+inds_combine <- function(vars, inds) {
+  walk(inds, ind_check)
+  first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
+
+  inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = "{outer}{inner}")
+  inds <- inds[inds != 0]
+
+  if (first_negative) {
+    incl <- seq_along(vars)
+  } else {
+    incl <- inds[inds > 0]
+    incl <- inds_unique(incl)
+  }
+
+  # Remove variables to be excluded (setdiff loses names)
+  excl <- abs(inds[inds < 0])
+  incl <- incl[is.na(match(incl, excl))]
+
+  bad_idx <- incl > length(vars)
+  if (any(bad_idx)) {
+    where <- incl[which(bad_idx)]
+    where <- glue::glue_collapse(where, sep = ", ", last = " and ")
+    abort(glue::glue(
+      "Can't select column because the data frame is too small.
+       These indices are too large: { where }"
+    ))
+  }
+
+  names(incl) <- names2(incl)
+  unnamed <- names(incl) == ""
+  names(incl)[unnamed] <- vars[incl[unnamed]]
+
+  incl
+}
+
+inds_unique <- function(x) {
+  # Remove duplicates
+  out <- vctrs::vec_unique(x)
+
+  # Keep last name of duplicates
+  if (length(out) < length(x)) {
+    reversed <- rev(x)
+    rev_unique_locs <- vctrs::vec_unique_loc(reversed)
+    unique_nms <- rev(names2(reversed)[rev_unique_locs])
+    names(out) <- unique_nms
+  }
+
+  out
+}
+
+ind_check <- function(x) {
+  if (!length(x)) {
+    return(NULL)
+  }
+
+  positive <- x > 0
+
+  if (any(positive != positive[[1]])) {
+    abort("Each argument must yield either positive or negative integers.")
+  }
 }
 
 empty_sel <- function(vars, include, exclude) {

@@ -22,8 +22,7 @@ test_that("indexes returned in order they appear", {
 
 
 test_that("negative index in first position includes all others", {
-  vars <- inds_combine(letters[1:3], list(-1))
-  expect_equal(vars, c(b = 2, c = 3))
+  expect_equal(inds_combine(letters[1:3], list(-1)), c(b = 2, c = 3))
 })
 
 test_that("named inputs rename outputs", {
@@ -48,7 +47,7 @@ test_that("select(0) corner case #82", {
   )
   expect_equal(
     inds_combine(names(mtcars), list(0, -(1:3))),
-    inds_combine(names(mtcars), list(-(1:3)))
+    inds_combine(names(mtcars), list(integer(), -(1:3)))
   )
 })
 
@@ -59,8 +58,8 @@ test_that("invalid inputs raise error", {
     fixed = TRUE
   )
   expect_error(
-    inds_combine(names(mtcars), list(12)),
-    "Position must be between 0 and n",
+    inds_combine(names(mtcars), list(12, 30, 50)),
+    "These indices are too large: 12, 30 and 50",
     fixed = TRUE
   )
 })
