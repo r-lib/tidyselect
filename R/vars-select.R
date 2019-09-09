@@ -173,6 +173,45 @@ vars_select <- function(.vars, ...,
   sel
 }
 
+inds_combine <- function(vars, inds) {
+  inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = "{outer}{inner}")
+  incl <- inds[inds > 0]
+
+  # If only negative values, implicitly assumes all variables to be removed.
+  if (length(incl) && sum(inds > 0) == 0 && sum(inds < 0) > 0) {
+    incl <- seq_along(vars)
+  }
+
+  # Remove duplicates
+  incl_unique <- vctrs::vec_unique(incl)
+
+  # Keep last name of duplicates
+  if (length(incl_unique) < length(incl)) {
+    rev_incl <- rev(incl)
+    rev_unique_locs <- vctrs::vec_unique_loc(rev_incl)
+    unique_nms <- rev(names2(rev_incl)[rev_unique_locs])
+    names(incl_unique) <- unique_nms
+  }
+
+  incl <- incl_unique
+
+  # Remove variables to be excluded (setdiff loses names)
+  excl <- abs(inds[inds < 0])
+  incl <- incl[is.na(match(incl, excl))]
+
+  bad_idx <- incl < 0 | incl > length(vars)
+  if (any(bad_idx)) {
+    where <- paste0(which(bad_idx), collapse = ", ")
+    abort(glue::glue("Bad indices: { where }"))
+  }
+
+  names(incl) <- names2(incl)
+  unnamed <- names(incl) == ""
+  names(incl)[unnamed] <- vars[incl[unnamed]]
+
+  incl
+}
+
 empty_sel <- function(vars, include, exclude) {
   vars <- setdiff(include, exclude)
   set_names(vars, vars)
