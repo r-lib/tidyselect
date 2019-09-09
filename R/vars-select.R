@@ -133,7 +133,10 @@ vars_select <- function(.vars, ...,
     return(empty_sel(.vars, .include, .exclude))
   }
 
-  # if the first selector is exclusive (negative), start with all columns
+  # If the first selector is exclusive (negative), start with all
+  # columns. We need to check for symbolic `-` here because if the
+  # selection is empty, `inds_combine()` cannot detect a negative
+  # indice in first position.
   first <- quo_get_expr(quos[[1]])
   initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
 
@@ -174,8 +177,16 @@ vars_select <- function(.vars, ...,
 }
 
 inds_combine <- function(vars, inds) {
+  first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
+
   inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = "{outer}{inner}")
-  incl <- inds[inds > 0]
+  inds <- inds[inds != 0]
+
+  if (first_negative) {
+    incl <- seq_along(vars)
+  } else {
+    incl <- inds[inds > 0]
+  }
 
   # If only negative values, implicitly assumes all variables to be removed.
   if (length(incl) && sum(inds > 0) == 0 && sum(inds < 0) > 0) {
