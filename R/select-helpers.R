@@ -19,6 +19,16 @@
 #'   automatically set to the names of the table.
 #' @name select_helpers
 #' @return An integer vector giving the position of the matched variables.
+#'
+#' @details
+#'
+#' The order of selected columns is determined by the inputs.
+#'
+#' * `one_of(c("foo", "bar"))` selects `"foo"` first.
+#'
+#' * `c(starts_with("c"), starts_with("d"))` selects all columns
+#'   starting with `"c"` first, then all columns starting with `"d"`.
+#'
 #' @examples
 #' nms <- names(iris)
 #' vars_select(nms, starts_with("Petal"))
@@ -32,6 +42,10 @@
 #'
 #' vars <- c("Petal.Length", "Petal.Width")
 #' vars_select(nms, one_of(vars))
+#'
+#' # The order of selected columns is determined from the inputs
+#' vars_select(names(mtcars), starts_with("c"), starts_with("d"))
+#' vars_select(names(mtcars), one_of(c("carb", "mpg")))
 NULL
 
 #' @export

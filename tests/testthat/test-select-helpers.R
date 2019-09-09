@@ -105,6 +105,18 @@ test_that("position must resolve to numeric variables throws error", {
   )
 })
 
+test_that("order is determined from inputs (#53)", {
+  expect_identical(
+    vars_select(names(mtcars), starts_with("c"), starts_with("d")),
+    c(cyl = "cyl", carb = "carb", disp = "disp", drat = "drat")
+  )
+  expect_identical(
+    vars_select(names(mtcars), one_of(c("carb", "mpg"))),
+    c(carb = "carb", mpg = "mpg")
+  )
+})
+
+
 
 # one_of ------------------------------------------------------------------
 

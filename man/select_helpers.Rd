@@ -67,6 +67,14 @@ These functions allow you to select variables based on their names.
 \item \code{last_col()}: Select last variable, possibly with an offset.
 }
 }
+\details{
+The order of selected columns is determined by the inputs.
+\itemize{
+\item \code{one_of(c("foo", "bar"))} selects \code{"foo"} first.
+\item \code{c(starts_with("c"), starts_with("d"))} selects all columns
+starting with \code{"c"} first, then all columns starting with \code{"d"}.
+}
+}
 \examples{
 nms <- names(iris)
 vars_select(nms, starts_with("Petal"))
@@ -80,4 +88,8 @@ vars_select(nms, last_col(offset = 2))
 
 vars <- c("Petal.Length", "Petal.Width")
 vars_select(nms, one_of(vars))
+
+# The order of selected columns is determined from the inputs
+vars_select(names(mtcars), starts_with("c"), starts_with("d"))
+vars_select(names(mtcars), one_of(c("carb", "mpg")))
 }
