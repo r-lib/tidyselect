@@ -299,7 +299,7 @@ vars_select_eval <- function(vars, quos) {
   data_env <- env(data_helpers_env, !!!data)
 
   mask <- new_data_mask(data_env, data_helpers_env)
-  mask$.data <- as_data_pronoun(data)
+  mask$.data <- as_data_pronoun(mask)
 
   ind_list <- map_if(quos, !is_helper, eval_tidy, mask)
 

@@ -1,7 +1,10 @@
 
 # tidyselect 0.2.5.9000
 
-* `vars_select()` ignores vectors with only zeros (#82). 
+* tidyselect is now much faster, thanks to a performance fix in
+  `rlang::env_bind()` as well as internal fixes.
+
+* `vars_select()` ignores vectors with only zeros (#82).
 
 * `matches()` has new argument `perl` to allow for Perl-like regular expressions (@fmichonneau, #71)
 
