@@ -147,16 +147,7 @@ vars_select <- function(.vars, ...,
   # Match strings to variable positions
   ind_list <- map_if(ind_list, is_character, match_var, table = .vars)
 
-  is_integerish <- map_lgl(ind_list, is_integerish)
-  if (any(!is_integerish)) {
-    bad <- quos[!is_integerish]
-    first <- ind_list[!is_integerish][[1]]
-    first_type <- friendly_type_of(first)
-    bad_calls(bad,
-      "must evaluate to { singular(.vars) } positions or names, \\
-       not { first_type }"
-    )
-  }
+  check_integerish(ind_list, quos, .vars)
 
   incl <- inds_combine(.vars, ind_list)
 
@@ -186,6 +177,19 @@ check_missing <- function(x, exprs) {
       "Selections can't have missing values. We detected missing elements in:
        { bad }"
     ))
+  }
+}
+
+check_integerish <- function(x, exprs, vars) {
+  if (!every(x, is_integerish)) {
+    is_integerish <- map_lgl(x, is_integerish)
+    bad <- exprs[!is_integerish]
+    first <- x[!is_integerish][[1]]
+    first_type <- friendly_type_of(first)
+    bad_calls(bad,
+      "must evaluate to { singular(vars) } positions or names, \\
+       not { first_type }"
+    )
   }
 }
 
