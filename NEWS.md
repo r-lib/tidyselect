@@ -1,6 +1,9 @@
 
 # tidyselect 0.2.5.9000
 
+* `vars_select()`, `vars_rename()` and `vars_pull()` now detect
+  missing values uniformly (#72).
+
 * `vars_pull()` now includes the faulty expression in error messages.
 
 * The performance issues of `vars_rename()` with many arguments have
