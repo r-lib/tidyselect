@@ -296,7 +296,7 @@ vars_select_eval <- function(vars, quos) {
   is_helper <- map_lgl(quos, quo_is_helper)
   are_name <- are_name(vars)
   data <- set_names(as.list(seq_along(vars)), vars)[!are_name]
-  data_env <- child_env(data_helpers_env, !!!data)
+  data_env <- env(data_helpers_env, !!!data)
 
   mask <- new_data_mask(data_env, data_helpers_env)
   mask$.data <- as_data_pronoun(data)
