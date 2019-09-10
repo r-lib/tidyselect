@@ -43,7 +43,8 @@ vars_rename_eval <- function(quos, vars) {
   # Only symbols have data in scope
   is_symbol <- map_lgl(quos, is_symbol_expr)
   data <- set_names(as.list(seq_along(vars)), vars)
-  renamed <- map_if(quos, is_symbol, eval_tidy, data)
+  mask <- as_data_mask(data)
+  renamed <- map_if(quos, is_symbol, eval_tidy, mask)
 
   # All expressions are evaluated in the context only
   renamed <- map_if(renamed, !is_symbol, eval_tidy)
