@@ -113,6 +113,7 @@
 <a href="#tidyselect-0-2-5-9000" class="anchor"></a>tidyselect 0.2.5.9000<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><code><a href="../reference/vars_select.html">vars_select()</a></code>, <code><a href="../reference/vars_select.html">vars_rename()</a></code> and <code><a href="../reference/vars_pull.html">vars_pull()</a></code> now detect missing values uniformly (<a href='https://github.com/r-lib/tidyselect/issues/72'>#72</a>).</p></li>
 <li><p><code><a href="../reference/vars_pull.html">vars_pull()</a></code> now includes the faulty expression in error messages.</p></li>
 <li><p>The performance issues of <code><a href="../reference/vars_select.html">vars_rename()</a></code> with many arguments have been fixed. This make <code><a href="https://dplyr.tidyverse.org/reference/select_all.html">dplyr::rename_all()</a></code> with many columns much faster (<a href='https://github.com/zkamvar'>@zkamvar</a>, <a href='https://github.com/r-lib/tidyselect/issues/92'>#92</a>).</p></li>
 <li><p>tidyselect is now much faster, thanks to a performance fix in <code><a href="https://rlang.r-lib.org/reference/env_bind.html">rlang::env_bind()</a></code> as well as internal fixes.</p></li>
