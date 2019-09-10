@@ -1,12 +1,17 @@
 
 # tidyselect 0.2.5.9000
 
+* The performance issues of `vars_rename()` with many arguments have
+  been fixed. This make `dplyr::rename_all()` with many columns much
+  faster (@zkamvar, #92).
+
 * tidyselect is now much faster, thanks to a performance fix in
   `rlang::env_bind()` as well as internal fixes.
 
 * `vars_select()` ignores vectors with only zeros (#82).
 
-* `matches()` has new argument `perl` to allow for Perl-like regular expressions (@fmichonneau, #71)
+* `matches()` has new argument `perl` to allow for Perl-like regular
+  expressions (@fmichonneau, #71)
 
 # tidyselect 0.2.5
 
