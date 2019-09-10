@@ -177,6 +177,18 @@ vars_select <- function(.vars, ...,
   sel
 }
 
+check_missing <- function(x, exprs) {
+  any_missing <- anyNA(x, recursive = TRUE)
+  if (any_missing) {
+    is_missing <- map_lgl(x, anyNA)
+    bad <- collapse_labels(exprs[is_missing])
+    abort(glue(
+      "Selections can't have missing values. We detected missing elements in:
+       { bad }"
+    ))
+  }
+}
+
 inds_combine <- function(vars, inds) {
   walk(inds, ind_check)
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
@@ -307,6 +319,9 @@ vars_select_eval <- function(vars, quos) {
   # All other calls are evaluated in the context only
   # They are always evaluated strictly
   ind_list <- map_if(ind_list, is_helper, eval_tidy)
+
+  # Check for missing indices before matching strings to improve error message
+  check_missing(ind_list, quos)
 
   # Handle unquoted character vectors
   ind_list <- map_if(ind_list, is_character, match_strings, names = TRUE)

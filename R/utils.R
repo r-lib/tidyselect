@@ -77,3 +77,11 @@ are_name <- function(nms) {
 isNamespaceLoaded <- function(name) {
   name %in% loadedNamespaces()
 }
+
+collapse_labels <- function(x) {
+  bullets <- map_chr(x, ~ paste0("* ", as_label(.)))
+  paste_line(!!!bullets)
+}
+paste_line <- function (...) {
+  paste(chr(...), collapse = "\n")
+}

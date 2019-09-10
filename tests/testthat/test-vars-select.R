@@ -113,6 +113,18 @@ test_that("can select with length > 1 double vectors (#43)", {
   expect_identical(vars_select(letters, !!c(1, 2)), c(a = "a", b = "b"))
 })
 
-test_that("selecting with `NA` fails", {
-  expect_error(vars_select("foo", NA), "must evaluate to")
+test_that("missing values are detected in vars_select() (#72)", {
+  expect_error(vars_select("foo", NA), "detected missing elements")
+
+  expect_error(
+    vars_select(letters, c(1, NA), na_chr, na_int, na_dbl, na_cpl),
+    glue(
+      "* c(1, NA)
+       * na_chr
+       * na_int
+       * na_dbl
+       * na_cpl"
+    ),
+    fixed = TRUE
+  )
 })
