@@ -37,6 +37,11 @@ vars_pull <- function(vars, var = -1) {
   var <- eval_tidy(var_expr, var_env)
   n <- length(vars)
 
+  if (length(var) == 1 && is.na(var)) {
+    what <- as_label(var_expr)
+    abort(glue("`{what}` can't be a missing value"))
+  }
+
   # Fall degenerate values like `Inf` through integerish branch
   if (is_double(var, 1) && !is.finite(var)) {
     var <- na_int

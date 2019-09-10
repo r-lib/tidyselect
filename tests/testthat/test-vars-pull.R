@@ -28,14 +28,15 @@ test_that("errors for bad inputs", {
     "`-Inf` must be a value between -26 and 26 (excluding zero), not NA",
     fixed = TRUE
   )
-  expect_error(
-    vars_pull(letters, NA_integer_),
-    "`NA_integer_` must be a value between -26 and 26 (excluding zero), not NA",
-    fixed = TRUE
-  )
 })
 
 test_that("can pull variables with missing elements", {
   expect_identical(vars_pull(c("a", ""), a), "a")
   expect_identical(vars_pull(c("a", NA), a), "a")
+})
+
+test_that("missing values are detected in vars_pull() (#72)", {
+  lapply(list(NA_character_, NA_integer_, NA_real_, NA, NA_complex_), function(x) {
+    expect_error(vars_pull(c("a", "b"), NA_character_), "can't be a missing value")
+  })
 })
