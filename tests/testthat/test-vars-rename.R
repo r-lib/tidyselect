@@ -65,3 +65,17 @@ test_that("vars_rename() unquotes named character vectors", {
   expect_identical(vars_rename(letters, !!! vars), vars_rename(letters, foo = a, bar = z))
   expect_identical(vars_rename(letters, !! vars), vars_rename(letters, foo = a, bar = z))
 })
+
+test_that("missing values are detected in vars_rename() (#72)", {
+  expect_error(
+    vars_rename(letters, A = NA, B = na_chr, C = na_int, D = na_dbl, E = na_cpl),
+    glue(
+      "* NA
+       * na_chr
+       * na_int
+       * na_dbl
+       * na_cpl"
+    ),
+    fixed = TRUE
+  )
+})

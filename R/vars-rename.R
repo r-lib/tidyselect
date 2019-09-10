@@ -15,6 +15,7 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
 
   new_vars <- names(quos)
   old_vars <- vars_rename_eval(quos, .vars)
+  check_missing(old_vars, quos)
 
   known <- old_vars %in% .vars
 
@@ -58,6 +59,11 @@ is_symbol_expr <- function(quo) {
 validate_renamed_var <- function(expr, name, vars) {
   if (is_string(expr)) {
     return(expr)
+  }
+
+  # We deal with missing values later
+  if (anyNA(expr)) {
+    return(NA)
   }
 
   if (!typeof(expr) %in% c("integer", "double")) {
