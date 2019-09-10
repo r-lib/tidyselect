@@ -32,8 +32,9 @@
 #' var <- 10
 #' vars_pull(letters, !! var)
 vars_pull <- function(vars, var = -1) {
+  var_expr <- enquo(var)
   var_env <- set_names(seq_along(vars), vars)
-  var <- eval_tidy(enquo(var), var_env)
+  var <- eval_tidy(var_expr, var_env)
   n <- length(vars)
 
   # Fall degenerate values like `Inf` through integerish branch
@@ -45,8 +46,9 @@ vars_pull <- function(vars, var = -1) {
     pos <- match_var(var, vars)
   } else if (is_integerish(var, 1)) {
     if (is_na(var) || abs(var) > n || var == 0L) {
+      what <- as_label(var_expr)
       abort(glue(
-        "`var` must be a value between {-n} and {n} (excluding zero), not {var}"
+        "`{what}` must be a value between {-n} and {n} (excluding zero), not {var}"
       ))
     }
     if (var < 0) {
@@ -56,8 +58,9 @@ vars_pull <- function(vars, var = -1) {
     }
   } else {
     type <- friendly_type_of(var)
+    what <- as_label(var_expr)
     abort(glue(
-      "`var` must evaluate to a single number or a { singular(vars) } name, not {type}"
+      "`{what}` must evaluate to a single number or a { singular(vars) } name, not {type}"
     ))
   }
 

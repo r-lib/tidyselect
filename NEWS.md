@@ -1,6 +1,8 @@
 
 # tidyselect 0.2.5.9000
 
+* `vars_pull()` now includes the faulty expression in error messages.
+
 * The performance issues of `vars_rename()` with many arguments have
   been fixed. This make `dplyr::rename_all()` with many columns much
   faster (@zkamvar, #92).
