@@ -27,13 +27,11 @@ are evaluated outside that context. This is to prevent accidental
 matching to \code{vars} elements when you refer to variables from the
 calling context.}
 
-\item{.strict}{If \code{TRUE}, will throw an error if you attempt to rename a
-variable that doesn't exist.}
+\item{.strict}{If \code{TRUE}, will throw an error if you attempt to select or
+rename a variable that doesn't exist.}
 
 \item{.include, .exclude}{Character vector of column names to always
 include/exclude.}
-
-\item{.strict}{If \code{FALSE}, errors about unknown columns are ignored.}
 }
 \value{
 A named character vector. Values are existing column names,

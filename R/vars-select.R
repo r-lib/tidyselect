@@ -29,7 +29,8 @@
 #'   calling context.
 #' @param .include,.exclude Character vector of column names to always
 #'   include/exclude.
-#' @param .strict If `FALSE`, errors about unknown columns are ignored.
+#' @param .strict If `TRUE`, will throw an error if you attempt to select or
+#'   rename a variable that doesn't exist.
 #' @seealso [vars_pull()]
 #' @export
 #' @keywords internal

@@ -1,7 +1,5 @@
 #' @export
 #' @rdname vars_select
-#' @param .strict If `TRUE`, will throw an error if you attempt to rename a
-#'   variable that doesn't exist.
 vars_rename <- function(.vars, ..., .strict = TRUE) {
   quos <- quos(...)
 
