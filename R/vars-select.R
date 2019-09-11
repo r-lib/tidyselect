@@ -14,7 +14,10 @@
 #' example, `c("variable", "variables")`.
 #'
 #' @param .vars A character vector of existing column names.
-#' @param ...,args Expressions to compute
+#' @param ...,args Selection inputs. See the help for [selection
+#'   helpers][select_helpers].
+#'
+#'   If you supply named inputs, the selected variables are renamed.
 #'
 #'   These arguments are automatically [quoted][rlang::quo] and
 #'   [evaluated][rlang::eval_tidy] in a context where elements of
@@ -31,11 +34,22 @@
 #'   include/exclude.
 #' @param .strict If `TRUE`, will throw an error if you attempt to select or
 #'   rename a variable that doesn't exist.
+#'
+#' @return A named character vector. Values are existing column names,
+#'   names are new names.
+#'
+#' @section Conditions:
+#'
+#' `vars_select()` signals the following warning.
+#'
+#' * `tidyselect_warning_duplicate_renaming`: Supplying named inputs
+#'   in `...` causes the variables to be renamed. For technical
+#'   reasons there can only be one target name. If the same variable
+#'   is renamed to different names, tidyselect issues this warning.
+#'
 #' @seealso [vars_pull()]
 #' @export
 #' @keywords internal
-#' @return A named character vector. Values are existing column names,
-#'   names are new names.
 #' @examples
 #' # Keep variables
 #' vars_select(names(iris), everything())

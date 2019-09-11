@@ -2,7 +2,8 @@
 # tidyselect (development)
 
 * `vars_select()` now warns when multiple renamings are detected, as
-  only the last one is taken into account (#52).
+  only the last one is taken into account (#52). The warning inherits
+  from `tidyselect_warning_duplicate_renaming`.
 
 * `one_of()` now always coerces its input to a character, or fails. Similary,
   `vars_select()` now supports unquoting S3 vectors.
