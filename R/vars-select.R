@@ -236,7 +236,7 @@ inds_combine <- function(vars, inds) {
     incl <- seq_along(vars)
   } else {
     incl <- inds[inds > 0]
-    incl <- inds_unique(incl)
+    incl <- inds_unique(incl, vars)
   }
 
   # Remove variables to be excluded (setdiff loses names)
@@ -260,20 +260,20 @@ inds_combine <- function(vars, inds) {
   incl
 }
 
-inds_unique <- function(x) {
+inds_unique <- function(x, vars) {
   # Remove duplicates but keep last name of duplicates
   split <- vctrs::vec_split(x, x)
   out <- split$key
 
   # Keep last name of duplicates
   if (length(out) < length(x)) {
-    names(out) <- map_chr(split$val, ind_last_name)
+    names(out) <- map_chr(split$val, ind_last_name, vars = vars)
   }
 
   out
 }
 
-ind_last_name <- function(x) {
+ind_last_name <- function(x, vars) {
   names <- names(x)
   names <- names[names != ""]
 
@@ -286,11 +286,12 @@ ind_last_name <- function(x) {
 
   if (!all(vctrs::vec_duplicate_detect(names))) {
     dups <- encodeString(names, quote = "`")
-    dest <- last(dups)
+    var <- encodeString(vars[[x[[1]]]], quote = "`")
+    kept <- last(dups)
     dups <- glue::glue_collapse(dups, ", ", last = " and ")
     msg <- glue::glue(
-      "Can't rename the same variable to different names ({dups}).
-       The variable will be renamed to the last one ({dest})."
+      "Can't rename variables to multiple choices: {var} is being renamed to {dups}.
+       Renaming to {kept}."
     )
     warn(msg, "tidyselect_warning_duplicate_renaming", var = x)
   }

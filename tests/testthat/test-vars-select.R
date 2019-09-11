@@ -10,7 +10,7 @@ test_that("last rename wins", {
   expect_equal(
     expect_warning(
       vars_select(vars, b = a, c = a),
-      "different names (\`b\` and \`c\`)",
+      "being renamed to \`b\` and \`c\`",
       fixed = TRUE
     ),
     c("c" = "a")

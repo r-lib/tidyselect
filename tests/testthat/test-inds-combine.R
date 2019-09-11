@@ -34,14 +34,14 @@ test_that("if multiple names, last kept", {
   expect_equal(
     expect_warning(
       inds_combine(letters[1:3], list(d = 1, e = 1)),
-      "different names"
+      "multiple choices"
     ),
     c(e = 1)
   )
   expect_equal(
     expect_warning(
       inds_combine(letters[1:3], list(c(d = 1, e = 1))),
-      "different names"
+      "multiple choices"
     ),
     c(e = 1)
   )
