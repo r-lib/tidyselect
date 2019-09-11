@@ -278,7 +278,7 @@ ind_last_name <- function(x) {
   last <- last(names)
 
   if (!all(vctrs::vec_duplicate_detect(names) | names == "")) {
-    dups <- encodeString(names, quote = "\"")
+    dups <- encodeString(names, quote = "`")
     dest <- last(dups)
     dups <- glue::glue_collapse(dups, ", ", last = " and ")
     msg <- glue::glue(
