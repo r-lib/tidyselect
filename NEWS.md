@@ -1,5 +1,8 @@
 
-# tidyselect 0.2.5.9000
+# tidyselect (development)
+
+* `vars_select()` now warns when multiple renamings are detected, as
+  only the last one is taken into account (#52).
 
 * `one_of()` now always coerces its input to a character, or fails. Similary,
   `vars_select()` now supports unquoting S3 vectors.
@@ -23,6 +26,7 @@
 
 * `matches()` has new argument `perl` to allow for Perl-like regular
   expressions (@fmichonneau, #71)
+
 
 # tidyselect 0.2.5
 

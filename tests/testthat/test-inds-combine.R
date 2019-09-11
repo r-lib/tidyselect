@@ -31,8 +31,24 @@ test_that("named inputs rename outputs", {
 })
 
 test_that("if multiple names, last kept", {
-  expect_equal(inds_combine(letters[1:3], list(d = 1, e = 1)), c(e = 1))
-  expect_equal(inds_combine(letters[1:3], list(c(d = 1, e = 1))), c(e = 1))
+  expect_equal(
+    expect_warning(
+      inds_combine(letters[1:3], list(d = 1, e = 1)),
+      "different names"
+    ),
+    c(e = 1)
+  )
+  expect_equal(
+    expect_warning(
+      inds_combine(letters[1:3], list(c(d = 1, e = 1))),
+      "different names"
+    ),
+    c(e = 1)
+  )
+
+  wrn <- catch_cnd(inds_combine(letters[1:3], list(d = 1, e = 1)))
+  expect_is(wrn, "tidyselect_warning_duplicate_renaming")
+  expect_identical(wrn$var, c(d = 1L, e = 1L))
 })
 
 test_that("if one name for multiple vars, use integer index", {

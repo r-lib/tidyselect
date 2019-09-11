@@ -253,11 +253,28 @@ inds_unique <- function(x) {
 
   # Keep last name of duplicates
   if (length(out) < length(x)) {
-    names <- map(split$val, names)
-    names(out) <- map_chr(names, last)
+    names(out) <- map_chr(split$val, ind_last_name)
   }
 
   out
+}
+
+ind_last_name <- function(x) {
+  names <- names(x)
+  last <- last(names)
+
+  if (!all(vctrs::vec_duplicate_detect(names) | names == "")) {
+    dups <- encodeString(names, quote = "\"")
+    dest <- last(dups)
+    dups <- glue::glue_collapse(dups, ", ", last = " and ")
+    msg <- glue::glue(
+      "Can't rename the same variable to different names ({dups}).
+       The variable will be renamed to the last one ({dest})."
+    )
+    warn(msg, "tidyselect_warning_duplicate_renaming", var = x)
+  }
+
+  last
 }
 
 ind_check <- function(x) {
