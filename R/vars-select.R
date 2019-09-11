@@ -262,10 +262,10 @@ empty_sel <- function(vars, include, exclude) {
 
 ignore_unknown_symbols <- function(vars, quos) {
   quos <- discard(quos, is_ignored, vars)
-  quos <- map_if(quos, is_concat_lang, lang_ignore_unknown_symbols, vars)
+  quos <- map_if(quos, quo_is_concat_call, call_ignore_unknown_symbols, vars)
   quos
 }
-lang_ignore_unknown_symbols <- function(quo, vars) {
+call_ignore_unknown_symbols <- function(quo, vars) {
   expr <- quo_get_expr(quo)
 
   args <- call_args(expr)
@@ -296,7 +296,7 @@ is_unknown_symbol <- function(quo, vars) {
 
   !as_string(expr) %in% vars
 }
-is_concat_lang <- function(quo) {
+quo_is_concat_call <- function(quo) {
   quo_is_call(quo, quote(`c`))
 }
 
