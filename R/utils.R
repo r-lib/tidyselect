@@ -90,3 +90,13 @@ maybe_unwrap_quosure <- function(x) {
     x
   }
 }
+
+vec_is_coercible <- function(x, to, ..., x_arg = "x", to_arg = "to") {
+  tryCatch(
+    vctrs_error_incompatible_type = function(...) FALSE,
+    {
+      vctrs::vec_ptype2(x, to, ..., x_arg = x_arg, y_arg = to_arg)
+      TRUE
+    }
+  )
+}

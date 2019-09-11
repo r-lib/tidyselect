@@ -1,6 +1,8 @@
 
 # tidyselect 0.2.5.9000
 
+* `vars_select()` now supports unquoting factors and other S3 vectors.
+
 * `vars_rename()` no longer ignore the names of unquoted character
   vectors of length 1 (#79).
 

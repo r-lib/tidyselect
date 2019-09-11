@@ -135,3 +135,12 @@ test_that("can use helper within c() (#91)", {
     vars_select(letters, b = z, everything())
   )
 })
+
+test_that("vars_select() supports S3 vectors (#109)", {
+  expect_identical(vars_select(letters, !!factor(c("a", "c"))), c(a = "a", c = "c"))
+
+  expect_error(
+    vars_select(letters, structure(1:3, class = "tidysel_foobar")),
+    class = "tidyselect_error_incompatible_index_type"
+  )
+})
