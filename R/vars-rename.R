@@ -29,6 +29,14 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
     }
   }
 
+  # Remove existing variables
+  if (length(old_vars)) {
+    dups_idx <- match(names(old_vars), .vars, nomatch = 0L)
+    if (!vec_index_is_empty(dups_idx)) {
+      .vars <- .vars[-dups_idx]
+    }
+  }
+
   select <- set_names(.vars, .vars)
   renamed_idx <- match(old_vars, .vars)
   names(select)[renamed_idx] <- new_vars
