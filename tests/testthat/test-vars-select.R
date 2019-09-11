@@ -128,3 +128,10 @@ test_that("missing values are detected in vars_select() (#72)", {
     fixed = TRUE
   )
 })
+
+test_that("can use helper within c() (#91)", {
+  expect_identical(
+    vars_select(letters, c(b = z, everything())),
+    vars_select(letters, b = z, everything())
+  )
+})
