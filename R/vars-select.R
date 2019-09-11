@@ -275,9 +275,16 @@ inds_unique <- function(x) {
 
 ind_last_name <- function(x) {
   names <- names(x)
-  last <- last(names)
+  names <- names[names != ""]
 
-  if (!all(vctrs::vec_duplicate_detect(names) | names == "")) {
+  if (length(names) == 0) {
+    return("")
+  }
+  if (length(names) == 1) {
+    return(names)
+  }
+
+  if (!all(vctrs::vec_duplicate_detect(names))) {
     dups <- encodeString(names, quote = "`")
     dest <- last(dups)
     dups <- glue::glue_collapse(dups, ", ", last = " and ")
@@ -288,7 +295,7 @@ ind_last_name <- function(x) {
     warn(msg, "tidyselect_warning_duplicate_renaming", var = x)
   }
 
-  last
+  last(names)
 }
 
 ind_check <- function(x) {

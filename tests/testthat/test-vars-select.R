@@ -10,7 +10,7 @@ test_that("last rename wins", {
   expect_equal(
     expect_warning(
       vars_select(vars, b = a, c = a),
-      "different names (\"b\" and \"c\")",
+      "different names (\`b\` and \`c\`)",
       fixed = TRUE
     ),
     c("c" = "a")
@@ -150,4 +150,8 @@ test_that("vars_select() supports S3 vectors (#109)", {
     vars_select(letters, structure(1:3, class = "tidysel_foobar")),
     class = "tidyselect_error_incompatible_index_type"
   )
+})
+
+test_that("can rename and select at the same time", {
+  expect_identical(vars_select(letters, c(1, a = 1, 1)), c(a = "a"))
 })
