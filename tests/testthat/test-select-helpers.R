@@ -123,8 +123,9 @@ test_that("order is determined from inputs (#53)", {
 test_that("one_of gives useful errors", {
   expect_error(
     one_of(1L, .vars = c("x", "y")),
-    "Input 1 must be a character vector, not a list",
-    fixed = TRUE
+    "Input 1 must be a vector of column names, not an integer vector",
+    fixed = TRUE,
+    class = "tidyselect_error_incompatible_index_type"
   )
 })
 
@@ -272,4 +273,8 @@ test_that("last_col() selects last argument with offset", {
 
   expect_error(last_col(3, vars), "`offset` must be smaller than the number of columns")
   expect_error(last_col(vars = chr()), "Can't select last column when input is empty")
+})
+
+test_that("one_of() supports S3 vectors", {
+  expect_identical(vars_select(letters, one_of(factor(c("a", "c")))), c(a = "a", c = "c"))
 })

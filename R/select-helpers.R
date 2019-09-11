@@ -113,11 +113,13 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 one_of <- function(..., .vars = peek_vars()) {
   keep <- list(...)
 
-  bad_input <- detect_index(keep, negate(is.character))
+  bad_input <- detect_index(keep, ~ !vec_is_coercible(., chr()))
   if (bad_input) {
-    type <- friendly_type_of(keep)
-    abort(glue::glue("Input { bad_input } must be a character vector, not { type }"))
+    type <- friendly_type_of(keep[[bad_input]])
+    msg <- glue::glue("Input { bad_input } must be a vector of column names, not {type}.")
+    abort(msg, "tidyselect_error_incompatible_index_type")
   }
+
   keep <- vctrs::vec_c(!!!keep, .ptype = character())
 
   if (!all(keep %in% .vars)) {
