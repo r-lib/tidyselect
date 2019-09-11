@@ -1,6 +1,9 @@
 
 # tidyselect 0.2.5.9000
 
+* `vars_rename()` no longer ignore the names of unquoted character
+  vectors of length 1 (#79).
+
 * `vars_select()`, `vars_rename()` and `vars_pull()` now detect
   missing values uniformly (#72).
 

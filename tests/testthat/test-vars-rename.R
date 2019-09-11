@@ -79,3 +79,7 @@ test_that("missing values are detected in vars_rename() (#72)", {
     fixed = TRUE
   )
 })
+
+test_that("vars_rename() supports named character vectors of length 1 (#77)", {
+  expect_identical(vars_rename(letters[1:3], !!c(B = "b")), c(a = "a", B = "b", c = "c"))
+})

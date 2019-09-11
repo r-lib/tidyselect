@@ -1,7 +1,7 @@
 #' @export
 #' @rdname vars_select
 vars_rename <- function(.vars, ..., .strict = TRUE) {
-  quos <- quos(...)
+  quos <- enquos(...)
 
   unquoted_chrs <- map_lgl(quos, quo_is_character, n = function(n) n > 1)
   quos <- purrr::lmap_if(quos, unquoted_chrs, function(x) quo_as_list(x[[1]]))
@@ -34,6 +34,16 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
   names(select)[renamed_idx] <- new_vars
 
   select
+}
+
+quo_is_character <- function(quo, n = NULL) {
+  expr <- quo_get_expr(quo)
+
+  if (!is_character(expr)) {
+    return(FALSE)
+  }
+
+  length(expr) > 1 || !is_null(names(expr))
 }
 
 vars_rename_eval <- function(quos, vars) {

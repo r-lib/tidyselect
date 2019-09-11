@@ -47,9 +47,6 @@ minus_sym <- quote(`-`)
 colon_sym <- quote(`:`)
 c_sym <- quote(`c`)
 
-quo_is_character <- function(quo, n = NULL) {
-  is_character(quo_get_expr(quo), n = n)
-}
 quo_as_list <- function(quo) {
   as.list(quo_get_expr(quo))
 }
