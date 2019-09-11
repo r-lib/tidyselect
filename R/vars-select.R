@@ -247,15 +247,14 @@ inds_combine <- function(vars, inds) {
 }
 
 inds_unique <- function(x) {
-  # Remove duplicates
-  out <- vctrs::vec_unique(x)
+  # Remove duplicates but keep last name of duplicates
+  split <- vctrs::vec_split(x, x)
+  out <- split$key
 
   # Keep last name of duplicates
   if (length(out) < length(x)) {
-    reversed <- rev(x)
-    rev_unique_locs <- vctrs::vec_unique_loc(reversed)
-    unique_nms <- rev(names2(reversed)[rev_unique_locs])
-    names(out) <- unique_nms
+    names <- map(split$val, names)
+    names(out) <- map_chr(names, last)
   }
 
   out

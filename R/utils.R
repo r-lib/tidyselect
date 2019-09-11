@@ -101,3 +101,7 @@ vec_is_coercible <- function(x, to, ..., x_arg = "x", to_arg = "to") {
     }
   )
 }
+
+last <- function(x) {
+  x[[length(x)]]
+}
