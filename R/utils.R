@@ -85,3 +85,11 @@ collapse_labels <- function(x) {
 paste_line <- function (...) {
   paste(chr(...), collapse = "\n")
 }
+
+maybe_unwrap_quosure <- function(x) {
+  if (is_quosure(x)) {
+    quo_get_expr(x)
+  } else {
+    x
+  }
+}

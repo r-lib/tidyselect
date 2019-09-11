@@ -266,20 +266,20 @@ ignore_unknown_symbols <- function(vars, quos) {
   quos
 }
 lang_ignore_unknown_symbols <- function(quo, vars) {
-  expr <- get_expr(quo)
+  expr <- quo_get_expr(quo)
 
   args <- call_args(expr)
   args <- discard(args, is_unknown_symbol, vars)
   expr <- call2(node_car(expr), !!! args)
 
-  set_expr(quo, expr)
+  quo_set_expr(quo, expr)
 }
 
 is_ignored <- function(quo, vars) {
   is_unknown_symbol(quo, vars) || is_ignored_minus_call(quo, vars)
 }
 is_ignored_minus_call <- function(quo, vars) {
-  expr <- get_expr(quo)
+  expr <- maybe_unwrap_quosure(quo)
 
   if (!is_call(expr, quote(`-`), 1L)) {
     return(FALSE)
@@ -288,7 +288,7 @@ is_ignored_minus_call <- function(quo, vars) {
   is_unknown_symbol(node_cadr(expr), vars)
 }
 is_unknown_symbol <- function(quo, vars) {
-  expr <- get_expr(quo)
+  expr <- maybe_unwrap_quosure(quo)
 
   if (!is_symbol(expr) && !is_string(expr)) {
     return(FALSE)
