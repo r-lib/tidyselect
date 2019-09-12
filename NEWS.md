@@ -1,7 +1,7 @@
 
 # tidyselect 0.2.5.9000
 
-* `one_of()` now supports factors and other S3 vectors. Similary,
+* `one_of()` now always coerces its input to a character, or fails. Similary,
   `vars_select()` now supports unquoting S3 vectors.
 
 * `vars_rename()` no longer ignore the names of unquoted character
