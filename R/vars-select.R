@@ -144,6 +144,8 @@ vars_select <- function(.vars, ...,
   ind_list <- c(initial_case, ind_list)
   names(ind_list) <- c(names2(initial_case), names2(quos))
 
+  ind_list <- map_if(ind_list, is.object, ind_coerce)
+
   # Match strings to variable positions
   ind_list <- map_if(ind_list, is_character, match_var, table = .vars)
 
@@ -166,6 +168,22 @@ vars_select <- function(.vars, ...,
   }
 
   sel
+}
+
+ind_coerce <- function(ind) {
+  if (vec_is_coercible(ind, int())) {
+    return(vctrs::vec_cast(ind, int()))
+  }
+
+  if (vec_is_coercible(ind, chr())) {
+    return(vctrs::vec_cast(ind, chr()))
+  }
+
+  type <- friendly_type_of(ind)
+  abort(
+    "Must select with column names or positions, not {type}.",
+    "tidyselect_error_incompatible_index_type"
+  )
 }
 
 check_missing <- function(x, exprs) {
