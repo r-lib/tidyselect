@@ -111,7 +111,7 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 #' @rdname select_helpers
 #' @param ... One or more character vectors.
 one_of <- function(..., .vars = peek_vars()) {
-  keep <- list(...)
+  keep <- compact(list(...))
 
   bad_input <- detect_index(keep, ~ !vec_is_coercible(., chr()))
   if (bad_input) {

@@ -163,6 +163,22 @@ test_that("one_of works when passed variable name matches the column name (#2266
   expect_equal(vars_select(vars, one_of(y)), expected_result)
 })
 
+test_that("one_of() supports S3 vectors", {
+  expect_identical(vars_select(letters, one_of(factor(c("a", "c")))), c(a = "a", c = "c"))
+})
+
+test_that("one_of() compacts inputs (#110)", {
+  expect_identical(
+    vars_select(letters, -one_of()),
+    set_names(letters)
+  )
+  expect_identical(
+    vars_select(letters, -one_of(NULL)),
+    set_names(letters)
+  )
+})
+
+
 # first-selector ----------------------------------------------------------
 
 test_that("initial (single) selector defaults correctly (issue #2275)", {
@@ -273,8 +289,4 @@ test_that("last_col() selects last argument with offset", {
 
   expect_error(last_col(3, vars), "`offset` must be smaller than the number of columns")
   expect_error(last_col(vars = chr()), "Can't select last column when input is empty")
-})
-
-test_that("one_of() supports S3 vectors", {
-  expect_identical(vars_select(letters, one_of(factor(c("a", "c")))), c(a = "a", c = "c"))
 })
