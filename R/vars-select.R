@@ -357,12 +357,13 @@ vars_select_eval <- function(vars, quos) {
   # Peek validated variables
   vars <- peek_vars()
 
-  # Create data mask
-  empty_names <- are_empty_name(vars)
-  bottom_data <- set_names(seq_along(vars), vars)[!empty_names]
+  vars_split <- vctrs::vec_split(seq_along(vars), vars)
+
+  # We are intentionally lenient towards partially named inputs
+  vars_split <- vctrs::vec_slice(vars_split, !are_empty_name(vars_split$key))
 
   top <- env()
-  bottom <- env(top, !!!bottom_data)
+  bottom <- env(top, !!!set_names(vars_split$val, vars_split$key))
   data_mask <- new_data_mask(bottom, top)
   data_mask$.data <- as_data_pronoun(data_mask)
 

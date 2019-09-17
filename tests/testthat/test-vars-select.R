@@ -155,3 +155,20 @@ test_that("vars_select() supports S3 vectors (#109)", {
 test_that("can rename and select at the same time", {
   expect_identical(vars_select(letters, c(1, a = 1, 1)), c(a = "a"))
 })
+
+test_that("vars_select() supports redundantly named vectors", {
+  expect_identical(vars_select(c("a", "b", "a"), b), c(b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), a), c(a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), a, b), c(a = "a", a = "a", b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), b, a), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), c(b, a)), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), c(b = "b", a = "a", a = "a"))
+})
+
+test_that("select helpers support redundantly named vectors", {
+  expect_identical(vars_select(c("a", "b", "a"), everything()), c(a = "a", b = "b", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), starts_with("a")), c(a = "a", a = "a"))
+
+  skip("FIXME")
+  expect_identical(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), c(b = "b", a = "a", a = "a"))
+})
