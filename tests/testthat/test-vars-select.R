@@ -168,7 +168,6 @@ test_that("vars_select() supports redundantly named vectors", {
 test_that("select helpers support redundantly named vectors", {
   expect_identical(vars_select(c("a", "b", "a"), everything()), c(a = "a", b = "b", a = "a"))
   expect_identical(vars_select(c("a", "b", "a"), starts_with("a")), c(a = "a", a = "a"))
-
-  skip("FIXME")
   expect_identical(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), c(b = "b", a1 = "a1", a1 = "a1", a2 = "a2"))
 })
