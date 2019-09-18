@@ -171,3 +171,9 @@ test_that("select helpers support redundantly named vectors", {
   expect_identical(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), c(b = "b", a...2 = "a", a...3 = "a"))
   expect_identical(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), c(b = "b", a1...2 = "a1", a1...3 = "a1", a2 = "a2"))
 })
+
+test_that("vars_select() can drop duplicate names by position (#94)", {
+  expect_identical(vars_select(c("a", "b", "a"), 2), c(b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), -3), c(a = "a", b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), -1), c(b = "b", a = "a"))
+})
