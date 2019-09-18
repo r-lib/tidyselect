@@ -162,8 +162,11 @@ vars_select <- function(.vars, ...,
 
   incl <- inds_combine(.vars, ind_list)
 
+  # Returned names must be unique
+  nms <- vctrs::vec_as_names(names(incl), repair = "unique")
+  sel <- set_names(.vars[incl], nms)
+
   # Include/.exclude specified variables
-  sel <- set_names(.vars[incl], names(incl))
   sel <- c(setdiff2(.include, sel), sel)
   sel <- setdiff2(sel, .exclude)
 
