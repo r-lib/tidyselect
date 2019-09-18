@@ -227,7 +227,7 @@ inds_combine <- function(vars, inds) {
   walk(inds, ind_check)
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
 
-  inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = "{outer}{inner}")
+  inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = inds_name_spec)
   inds <- inds[inds != 0]
 
   if (first_negative) {
@@ -256,6 +256,14 @@ inds_combine <- function(vars, inds) {
   names(incl)[unnamed] <- vars[incl[unnamed]]
 
   incl
+}
+
+# The caller should deal with duplicates if `outer` is length > 1
+inds_name_spec <- function(outer, inner) {
+  if (!is_integer(inner)) {
+    abort("Internal error: Unexpected inner names in `inds_combine()`.")
+  }
+  outer
 }
 
 inds_unique <- function(x, vars) {

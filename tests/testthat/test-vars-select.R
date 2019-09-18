@@ -177,3 +177,8 @@ test_that("vars_select() can drop duplicate names by position (#94)", {
   expect_identical(vars_select(c("a", "b", "a"), -3), c(a = "a", b = "b"))
   expect_identical(vars_select(c("a", "b", "a"), -1), c(b = "b", a = "a"))
 })
+
+test_that("vars_select() can rename redundantly named vectors", {
+  expect_identical(vars_select(c("a", "b", "a"), b = a, a = b), c(b...1 = "a", b...2 = "a", a = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b...2 = "a", b...3 = "a"))
+})

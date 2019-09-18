@@ -51,8 +51,8 @@ test_that("if multiple names, last kept", {
   expect_identical(wrn$var, c(d = 1L, e = 1L))
 })
 
-test_that("if one name for multiple vars, use integer index", {
-  expect_equal(inds_combine(letters[1:3], list(x = 1:3)), c(x1 = 1, x2 = 2, x3 = 3))
+test_that("if one name for multiple vars, let caller disambiguate", {
+  expect_equal(inds_combine(letters[1:3], list(x = 1:3)), c(x = 1, x = 2, x = 3))
 })
 
 test_that("select(0) corner case #82", {
