@@ -362,43 +362,97 @@ vars_select_eval <- function(vars, quos) {
   # Peek validated variables
   vars <- peek_vars()
 
-  # Overscope `c`, `:` and `-` with versions that handle strings
-  data_helpers_env <- env(`:` = vars_colon, `-` = vars_minus, `c` = vars_c)
-
-  # Symbols and calls to `:` and `c()` are evaluated with data in scope
-  is_helper <- map_lgl(quos, quo_is_helper)
+  # Create data mask
   empty_names <- are_empty_name(vars)
-  data <- set_names(as.list(seq_along(vars)), vars)[!empty_names]
-  data_env <- env(data_helpers_env, !!!data)
+  bottom_data <- set_names(seq_along(vars), vars)[!empty_names]
 
-  mask <- new_data_mask(data_env, data_helpers_env)
-  mask$.data <- as_data_pronoun(mask)
+  top <- env()
+  bottom <- env(top, !!!bottom_data)
+  data_mask <- new_data_mask(bottom, top)
+  data_mask$.data <- as_data_pronoun(data_mask)
 
-  ind_list <- map_if(quos, !is_helper, eval_tidy, mask)
+  context_mask <- new_data_mask(env())
+  context_mask$.data <- data_mask$.data
 
-  # All other calls are evaluated in the context only
-  # They are always evaluated strictly
-  ind_list <- map_if(ind_list, is_helper, eval_tidy)
+  # TODO: make_helpers() then !!!
+  top$`:` <- make_colon(data_mask, context_mask)
+  top$`-` <- vars_minus
+  top$`c` <- vars_c
+
+  inds <- map(quos, function(quo) {
+    context_mask$.__current__. <- quo_get_env(quo)
+
+    switch(quo_kind(quo),
+      symbol = sym_get(as_name(quo), data_mask, context_mask),
+      data = eval_tidy(quo, data_mask),
+      context = eval_tidy(quo, context_mask)
+    )
+  })
 
   # Check for missing indices before matching strings to improve error message
-  check_missing(ind_list, quos)
+  check_missing(inds, quos)
 
   # Handle unquoted character vectors
-  ind_list <- map_if(ind_list, is_character, match_strings, names = TRUE)
-
-  ind_list
+  map_if(inds, is_character, match_strings, names = TRUE)
 }
 
-vars_colon <- function(x, y) {
-  if (is_string(x)) {
-    x <- match_strings(x)
+quo_kind <- function(quo) {
+  if (quo_is_symbol(quo)) {
+    "symbol"
+  } else if (quo_is_helper(quo)) {
+    "context"
+  } else {
+    "data"
   }
-  if (is_string(y)) {
-    y <- match_strings(y)
+}
+
+make_colon <- function(data_mask, context_mask) {
+  function(x, y) {
+    x <- var_eval(enexpr(x), data_mask, context_mask, colon_msg)
+    y <- var_eval(enexpr(y), data_mask, context_mask, colon_msg)
+
+    x:y
+  }
+}
+colon_msg <- "Use `seq(.data[[col1]], .data[[col2]])`."
+
+var_eval <- function(expr, data_mask, context_mask, deprecation_msg = NULL) {
+  # Could be a quosure via quasiquotation
+  bare <- maybe_unwrap_quosure(expr)
+
+  if (is_symbol(bare)) {
+    out <- sym_get(as_string(bare), data_mask, context_mask, deprecation_msg)
+  } else {
+    expr <- as_quosure(expr, env = context_mask$.__current__.)
+    out <- eval_tidy(expr, context_mask)
   }
 
-  x:y
+  if (is_string(out)) {
+    out <- match_strings(out)
+  }
+
+  out
 }
+sym_get <- function(name, data_mask, context_mask, deprecation_msg = NULL) {
+  # FIXME: Search needs to be limited to data mask for robustness
+  value <- env_get(data_mask, name, default = missing_arg(), inherit = TRUE)
+
+  if (!missing(value)) {
+    return(value)
+  }
+
+  value <- env_get(context_mask, name, default = missing_arg(), inherit = TRUE)
+
+  if (!is_missing(value)) {
+    deprecation_msg <- deprecation_msg %||% "Use `one_of()`."
+    warn(deprecation_msg)
+
+    return(value)
+  }
+
+  abort("Can't find variable")
+}
+
 vars_minus <- function(x, y) {
   if (!missing(y)) {
     return(x - y)
