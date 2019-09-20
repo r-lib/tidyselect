@@ -376,13 +376,13 @@ vars_select_eval <- function(vars, quos) {
 
   # TODO: make_helpers() then !!!
   top$`:` <- make_colon(data_mask, context_mask)
-  top$`-` <- vars_minus
+  top$`-` <- make_minus(data_mask, context_mask)
   top$`c` <- vars_c
 
   inds <- map(quos, function(quo) {
     context_mask$.__current__. <- quo_get_env(quo)
 
-    switch(quo_kind(quo),
+    switch(expr_kind(quo),
       symbol = sym_get(as_name(quo), data_mask, context_mask),
       data = eval_tidy(quo, data_mask),
       context = eval_tidy(quo, context_mask)
@@ -396,10 +396,12 @@ vars_select_eval <- function(vars, quos) {
   map_if(inds, is_character, match_strings, names = TRUE)
 }
 
-quo_kind <- function(quo) {
-  if (quo_is_symbol(quo)) {
+expr_kind <- function(expr) {
+  expr <- maybe_unwrap_quosure(expr)
+
+  if (is_symbol(expr)) {
     "symbol"
-  } else if (quo_is_helper(quo)) {
+  } else if (quo_is_helper(expr)) {
     "context"
   } else {
     "data"
@@ -408,26 +410,36 @@ quo_kind <- function(quo) {
 
 make_colon <- function(data_mask, context_mask) {
   function(x, y) {
-    x <- var_eval(enexpr(x), data_mask, context_mask, colon_msg)
-    y <- var_eval(enexpr(y), data_mask, context_mask, colon_msg)
+    x <- var_eval(substitute(x), data_mask, context_mask, colon_msg)
+    y <- var_eval(substitute(y), data_mask, context_mask, colon_msg)
 
     x:y
   }
 }
 colon_msg <- "Use `seq(.data[[col1]], .data[[col2]])`."
 
-var_eval <- function(expr, data_mask, context_mask, deprecation_msg = NULL) {
-  # Could be a quosure via quasiquotation
-  bare <- maybe_unwrap_quosure(expr)
+make_minus <- function(data_mask, context_mask) {
+  function(x, y) {
+    if (!missing(y)) {
+      return(x - y)
+    }
 
-  if (is_symbol(bare)) {
-    out <- sym_get(as_string(bare), data_mask, context_mask, deprecation_msg)
-  } else {
-    expr <- as_quosure(expr, env = context_mask$.__current__.)
-    out <- eval_tidy(expr, context_mask)
+    x <- var_eval(substitute(x), data_mask, context_mask)
+    -x
   }
+}
 
-  if (is_string(out)) {
+var_eval <- function(expr, data_mask, context_mask, deprecation_msg = NULL) {
+  out <- switch(expr_kind(expr),
+    symbol = sym_get(as_name(expr), data_mask, context_mask, deprecation_msg),
+    data = eval_tidy(expr, data_mask),
+    context = {
+      expr <- as_quosure(expr, env = context_mask$.__current__.)
+      out <- eval_tidy(expr, context_mask)
+    }
+  )
+
+  if (is_character(out)) {
     out <- match_strings(out)
   }
 
@@ -453,17 +465,6 @@ sym_get <- function(name, data_mask, context_mask, deprecation_msg = NULL) {
   abort("Can't find variable")
 }
 
-vars_minus <- function(x, y) {
-  if (!missing(y)) {
-    return(x - y)
-  }
-
-  if (is_character(x)) {
-    x <- match_strings(x)
-  }
-
-  -x
-}
 vars_c <- function(...) {
   dots <- map_if(list(...), is_character, match_strings)
   do.call(`c`, dots)
