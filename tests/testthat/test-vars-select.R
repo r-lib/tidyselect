@@ -187,6 +187,6 @@ test_that("vars_select() can rename redundantly named vectors", {
   expect_error(vars_select(letters[1:3], a = b, a = c), "rename different columns to the same column name")
   expect_error(vars_select(letters[1:2], A = a, A = b), "to the same")
 
-  expect_error(vars_select(c("a", "b", "a"), b = a, a = b), "to the same")
-  expect_error(vars_select(c("a", "b", "a"), a = b, b = a), "to the same")
+  expect_identical(vars_select(c("a", "b", "a"), b = a, a = b), c(b1 = "a", b2 = "a", a = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b1 = "a", b2 = "a"))
 })
