@@ -9,11 +9,11 @@ test_that("last rename wins", {
   vars <- c("a", "b")
   expect_equal(
     expect_warning(
-      vars_select(vars, b = a, c = a),
-      "being renamed to \`b\` and \`c\`",
+      vars_select(vars, c = a, d = a),
+      "being renamed to \`c\` and \`d\`",
       fixed = TRUE
     ),
-    c("c" = "a")
+    c("d" = "a")
   )
 })
 
@@ -138,8 +138,8 @@ test_that("missing values are detected in vars_select() (#72)", {
 
 test_that("can use helper within c() (#91)", {
   expect_identical(
-    vars_select(letters, c(b = z, everything())),
-    vars_select(letters, b = z, everything())
+    vars_select(letters, c(B = z, everything())),
+    vars_select(letters, B = z, everything())
   )
 })
 
@@ -179,15 +179,14 @@ test_that("vars_select() can drop duplicate names by position (#94)", {
 })
 
 test_that("vars_select() can rename redundantly named vectors", {
-  skip("Will fix after #115 has been merged")
+  expect_identical(vars_select(letters[1:2], a = b), c(a = "b"))
+  expect_identical(vars_select(letters[1:2], a = b, b = a), c(a = "b", b = "a"))
+  expect_identical(vars_select(letters[1:2], a = b, a = b), c(a = "b"))
 
-  # Should be an error:
-  vars_select(c("a", "b"), a, a = b)
+  expect_error(vars_select(letters[1:2], a, a = b), "rename column to an existing column name")
+  expect_error(vars_select(letters[1:3], a = b, a = c), "rename different columns to the same column name")
+  expect_error(vars_select(letters[1:2], A = a, A = b), "to the same")
 
-  # Should work:
-  vars_select(c("a", "b"), b = a, a = b)
-
-  # Do we tolerate this?
-  expect_identical(vars_select(c("a", "b", "a"), b = a, a = b), c(b...1 = "a", b...2 = "a", a = "b"))
-  expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b...2 = "a", b...3 = "a"))
+  expect_error(vars_select(c("a", "b", "a"), b = a, a = b), "to the same")
+  expect_error(vars_select(c("a", "b", "a"), a = b, b = a), "to the same")
 })

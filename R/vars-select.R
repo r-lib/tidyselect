@@ -252,8 +252,18 @@ inds_combine <- function(vars, inds) {
 
   names(incl) <- names2(incl)
   unnamed <- names(incl) == ""
-  names(incl)[unnamed] <- vars[incl[unnamed]]
 
+  renamers <- names(incl)[!unnamed]
+  if (vctrs::vec_duplicate_any(renamers)) {
+    abort("Can't rename different columns to the same column name.")
+  }
+
+  unnamed_vars <- vars[incl[unnamed]]
+  if (any(vctrs::vec_in(renamers, unnamed_vars))) {
+    abort("Can't rename column to an existing column name.")
+  }
+
+  names(incl)[unnamed] <- unnamed_vars
   incl
 }
 
@@ -279,8 +289,7 @@ inds_unique <- function(x, vars) {
 }
 
 ind_last_name <- function(x, vars) {
-  names <- names(x)
-  names <- names[names != ""]
+  names <- str_compact(names(x))
 
   if (length(names) == 0) {
     return("")
