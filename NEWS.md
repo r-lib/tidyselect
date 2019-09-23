@@ -43,9 +43,7 @@
   only the last one is taken into account (#52). The warning inherits
   from `tidyselect_warning_duplicate_renaming`.
 
-* `vars_select()` now supports duplicate variables (#94). They are
-  ignored if not part of the selection. Otherwise, they are repaired
-  to make them unique.
+* `vars_select()` now ignores existing duplicate variables (#94).
 
 * `one_of()` now always coerces its input to a character, or fails. Similary,
   `vars_select()` now supports unquoting S3 vectors.

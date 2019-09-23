@@ -158,18 +158,18 @@ test_that("can rename and select at the same time", {
 
 test_that("vars_select() supports redundantly named vectors", {
   expect_identical(vars_select(c("a", "b", "a"), b), c(b = "b"))
-  expect_identical(vars_select(c("a", "b", "a"), a), c(a...1 = "a", a...2 = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), a, b), c(a...1 = "a", a...2 = "a", b = "b"))
-  expect_identical(vars_select(c("a", "b", "a"), b, a), c(b = "b", a...2 = "a", a...3 = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), c(b, a)), c(b = "b", a...2 = "a", a...3 = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), c(b = "b", a...2 = "a", a...3 = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), a), c(a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), a, b), c(a = "a", a = "a", b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), b, a), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), c(b, a)), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), c(b = "b", a = "a", a = "a"))
 })
 
 test_that("select helpers support redundantly named vectors", {
-  expect_identical(vars_select(c("a", "b", "a"), everything()), c(a...1 = "a", b = "b", a...3 = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), starts_with("a")), c(a...1 = "a", a...2 = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), c(b = "b", a...2 = "a", a...3 = "a"))
-  expect_identical(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), c(b = "b", a1...2 = "a1", a1...3 = "a1", a2 = "a2"))
+  expect_identical(vars_select(c("a", "b", "a"), everything()), c(a = "a", b = "b", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), starts_with("a")), c(a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), c(b = "b", a1 = "a1", a1 = "a1", a2 = "a2"))
 })
 
 test_that("vars_select() can drop duplicate names by position (#94)", {
@@ -179,6 +179,15 @@ test_that("vars_select() can drop duplicate names by position (#94)", {
 })
 
 test_that("vars_select() can rename redundantly named vectors", {
+  skip("Will fix after #115 has been merged")
+
+  # Should be an error:
+  vars_select(c("a", "b"), a, a = b)
+
+  # Should work:
+  vars_select(c("a", "b"), b = a, a = b)
+
+  # Do we tolerate this?
   expect_identical(vars_select(c("a", "b", "a"), b = a, a = b), c(b...1 = "a", b...2 = "a", a = "b"))
   expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b...2 = "a", b...3 = "a"))
 })
