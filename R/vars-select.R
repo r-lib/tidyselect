@@ -290,8 +290,8 @@ ind_last_name <- function(x, vars) {
     kept <- last(dups)
     dups <- glue::glue_collapse(dups, ", ", last = " and ")
     msg <- glue::glue(
-      "Can't rename variables to multiple choices: {var} is being renamed to {dups}.
-       Renaming to {kept}."
+      "Must rename variables to a single choice: {var} is being renamed to {dups}.
+       Renaming {var} to {kept} instead."
     )
     warn(msg, "tidyselect_warning_duplicate_renaming", var = x)
   }
