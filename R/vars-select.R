@@ -47,6 +47,14 @@
 #'   reasons there can only be one target name. If the same variable
 #'   is renamed to different names, tidyselect issues this warning.
 #'
+#' `vars_select()` signals the following conditions.
+#'
+#' * `tidyselect_error_rename_to_same`: Renaming multiple variables to
+#'   the same name is an error.
+#'
+#' * `tidyselect_error_rename_to_existing`: Renaming a variable to an
+#'   existing name is an error.
+#'
 #' @seealso [vars_pull()]
 #' @export
 #' @keywords internal
@@ -274,12 +282,18 @@ inds_combine <- function(vars, inds) {
   }
 
   if (vctrs::vec_duplicate_any(renamers)) {
-    abort("Can't rename different columns to the same column name.")
+    abort(
+      "Can't rename different columns to the same column name.",
+      "tidyselect_error_rename_to_same"
+    )
   }
 
   unnamed_vars <- vars[incl[unnamed]]
   if (any(vctrs::vec_in(renamers, unnamed_vars))) {
-    abort("Can't rename column to an existing column name.")
+    abort(
+      "Can't rename column to an existing column name.",
+      "tidyselect_error_rename_to_existing"
+    )
   }
 
   names(incl)[unnamed] <- unnamed_vars

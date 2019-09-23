@@ -189,8 +189,11 @@ test_that("vars_select() can rename existing duplicates", {
   expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b = "a", b = "a"))
 })
 
-test_that("vars_select() fails when renaming to existing names", {
-  expect_error(vars_select(letters[1:2], a, a = b), "rename column to an existing column name")
-  expect_error(vars_select(letters[1:3], a = b, a = c), "rename different columns to the same column name")
-  expect_error(vars_select(letters[1:2], A = a, A = b), "to the same")
+test_that("vars_select() fails when renaming to existing name", {
+  expect_error(vars_select(letters[1:2], a, a = b), class = "tidyselect_error_rename_to_existing")
+})
+
+test_that("vars_select() fails when renaming to same name", {
+  expect_error(vars_select(letters[1:3], a = b, a = c), class = "tidyselect_error_rename_to_same")
+  expect_error(vars_select(letters[1:2], A = a, A = b), class = "tidyselect_error_rename_to_same")
 })

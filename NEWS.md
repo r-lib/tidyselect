@@ -45,7 +45,9 @@
 
 * `vars_select()` now ignores existing duplicate variables (#94). It
   fails if user attempts to rename to an existing variable, or if
-  different variables are renamed to the same name.
+  different variables are renamed to the same name. The errors inherit
+  from `tidyselect_error_rename_to_existing` or
+  `tidyselect_error_rename_to_same` respectively.
 
 * `one_of()` now always coerces its input to a character, or fails. Similary,
   `vars_select()` now supports unquoting S3 vectors.
