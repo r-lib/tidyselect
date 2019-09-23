@@ -226,7 +226,17 @@ inds_combine <- function(vars, inds) {
   walk(inds, ind_check)
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
 
-  inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = "{outer}{inner}")
+  # Don't suffix existing duplicate with a sequential suffix
+  dups <- purrr::map_lgl(inds, is_data_dups)
+  spec <- function(outer, inner) {
+    if (dups[[outer[[1]]]]) {
+      outer
+    } else {
+      paste0(outer, inner)
+    }
+  }
+
+  inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = spec)
   inds <- inds[inds != 0]
 
   if (first_negative) {
@@ -254,6 +264,15 @@ inds_combine <- function(vars, inds) {
   unnamed <- names(incl) == ""
 
   renamers <- names(incl)[!unnamed]
+
+  # Below we check that variables are renamed to a unique name. But we
+  # also want to allow renaming existing duplicates, which we remove
+  # from the checking set here.
+  if (any(dups)) {
+    ok <- names(dups)[dups]
+    renamers <- renamers[!renamers %in% ok]
+  }
+
   if (vctrs::vec_duplicate_any(renamers)) {
     abort("Can't rename different columns to the same column name.")
   }
@@ -369,6 +388,9 @@ vars_select_eval <- function(vars, quos) {
   vars <- peek_vars()
 
   vars_split <- vctrs::vec_split(seq_along(vars), vars)
+
+  # Mark data duplicates to differentiate them from overlapping selections
+  vars_split$val <- map(vars_split$val, mark_data_dups)
 
   # We are intentionally lenient towards partially named inputs
   vars_split <- vctrs::vec_slice(vars_split, !are_empty_name(vars_split$key))
@@ -554,4 +576,15 @@ match_strings <- function(x, vars = peek_vars()) {
 
 setdiff2 <- function(x, y) {
   x[match(x, y, 0L) == 0L]
+}
+
+mark_data_dups <- function(x) {
+  if (length(x) > 1L) {
+    structure(x, tidyselect_data_dups = TRUE)
+  } else {
+    x
+  }
+}
+is_data_dups <- function(x) {
+  is_true(attr(x, "tidyselect_data_dups"))
 }

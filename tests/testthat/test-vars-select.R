@@ -178,15 +178,19 @@ test_that("vars_select() can drop duplicate names by position (#94)", {
   expect_identical(vars_select(c("a", "b", "a"), -1), c(b = "b", a = "a"))
 })
 
-test_that("vars_select() can rename redundantly named vectors", {
+test_that("vars_select() can rename variables", {
   expect_identical(vars_select(letters[1:2], a = b), c(a = "b"))
   expect_identical(vars_select(letters[1:2], a = b, b = a), c(a = "b", b = "a"))
   expect_identical(vars_select(letters[1:2], a = b, a = b), c(a = "b"))
+})
 
+test_that("vars_select() can rename existing duplicates", {
+  expect_identical(vars_select(c("a", "b", "a"), b = a, a = b), c(b = "a", b = "a", a = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b = "a", b = "a"))
+})
+
+test_that("vars_select() fails when renaming to existing names", {
   expect_error(vars_select(letters[1:2], a, a = b), "rename column to an existing column name")
   expect_error(vars_select(letters[1:3], a = b, a = c), "rename different columns to the same column name")
   expect_error(vars_select(letters[1:2], A = a, A = b), "to the same")
-
-  expect_identical(vars_select(c("a", "b", "a"), b = a, a = b), c(b1 = "a", b2 = "a", a = "b"))
-  expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b1 = "a", b2 = "a"))
 })
