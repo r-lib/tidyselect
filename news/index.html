@@ -108,21 +108,6 @@
       <small>Source: <a href='https://github.com/r-lib/tidyselect/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="tidyselect-0-2-5-9000" class="section level1">
-<h1 class="page-header">
-<a href="#tidyselect-0-2-5-9000" class="anchor"></a>tidyselect 0.2.5.9000<small> Unreleased </small>
-</h1>
-<ul>
-<li><p><code><a href="../reference/select_helpers.html">one_of()</a></code> now always coerces its input to a character, or fails. Similary, <code><a href="../reference/vars_select.html">vars_select()</a></code> now supports unquoting S3 vectors.</p></li>
-<li><p><code><a href="../reference/vars_select.html">vars_rename()</a></code> no longer ignore the names of unquoted character vectors of length 1 (<a href='https://github.com/r-lib/tidyselect/issues/79'>#79</a>).</p></li>
-<li><p><code><a href="../reference/vars_select.html">vars_select()</a></code>, <code><a href="../reference/vars_select.html">vars_rename()</a></code> and <code><a href="../reference/vars_pull.html">vars_pull()</a></code> now detect missing values uniformly (<a href='https://github.com/r-lib/tidyselect/issues/72'>#72</a>).</p></li>
-<li><p><code><a href="../reference/vars_pull.html">vars_pull()</a></code> now includes the faulty expression in error messages.</p></li>
-<li><p>The performance issues of <code><a href="../reference/vars_select.html">vars_rename()</a></code> with many arguments have been fixed. This make <code><a href="https://dplyr.tidyverse.org/reference/select_all.html">dplyr::rename_all()</a></code> with many columns much faster (<a href='https://github.com/zkamvar'>@zkamvar</a>, <a href='https://github.com/r-lib/tidyselect/issues/92'>#92</a>).</p></li>
-<li><p>tidyselect is now much faster, thanks to a performance fix in <code><a href="https://rlang.r-lib.org/reference/env_bind.html">rlang::env_bind()</a></code> as well as internal fixes.</p></li>
-<li><p><code><a href="../reference/vars_select.html">vars_select()</a></code> ignores vectors with only zeros (<a href='https://github.com/r-lib/tidyselect/issues/82'>#82</a>).</p></li>
-<li><p><code><a href="../reference/select_helpers.html">matches()</a></code> has new argument <code>perl</code> to allow for Perl-like regular expressions (<a href='https://github.com/fmichonneau'>@fmichonneau</a>, <a href='https://github.com/r-lib/tidyselect/issues/71'>#71</a>)</p></li>
-</ul>
-</div>
     <div id="tidyselect-0-2-5" class="section level1">
 <h1 class="page-header">
 <a href="#tidyselect-0-2-5" class="anchor"></a>tidyselect 0.2.5<small> 2018-10-11 </small>
@@ -261,7 +246,6 @@ vars_select(letters, 1:n)</code></pre>
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#tidyselect-0-2-5-9000">0.2.5.9000</a></li>
         <li><a href="#tidyselect-0-2-5">0.2.5</a></li>
         <li><a href="#tidyselect-0-2-4">0.2.4</a></li>
         <li><a href="#tidyselect-0-2-3">0.2.3</a></li>
