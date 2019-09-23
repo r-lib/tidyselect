@@ -13,7 +13,9 @@ vars_select(.vars, ..., .include = character(), .exclude = character(),
 \arguments{
 \item{.vars}{A character vector of existing column names.}
 
-\item{..., args}{Expressions to compute
+\item{..., args}{Selection inputs. See the help for \link[=select_helpers]{selection helpers}.
+
+If you supply named inputs, the selected variables are renamed.
 
 These arguments are automatically \link[rlang:quo]{quoted} and
 \link[rlang:eval_tidy]{evaluated} in a context where elements of
@@ -51,6 +53,18 @@ attribute \code{type} to the \code{.vars} vector to specify alternative
 names. This must be a character vector of length 2 whose first
 component is the singular form and the second is the plural. For
 example, \code{c("variable", "variables")}.
+}
+
+\section{Conditions}{
+
+
+\code{vars_select()} signals the following warning.
+\itemize{
+\item \code{tidyselect_warning_duplicate_renaming}: Supplying named inputs
+in \code{...} causes the variables to be renamed. For technical
+reasons there can only be one target name. If the same variable
+is renamed to different names, tidyselect issues this warning.
+}
 }
 
 \examples{

@@ -14,7 +14,10 @@
 #' example, `c("variable", "variables")`.
 #'
 #' @param .vars A character vector of existing column names.
-#' @param ...,args Expressions to compute
+#' @param ...,args Selection inputs. See the help for [selection
+#'   helpers][select_helpers].
+#'
+#'   If you supply named inputs, the selected variables are renamed.
 #'
 #'   These arguments are automatically [quoted][rlang::quo] and
 #'   [evaluated][rlang::eval_tidy] in a context where elements of
@@ -31,11 +34,22 @@
 #'   include/exclude.
 #' @param .strict If `TRUE`, will throw an error if you attempt to select or
 #'   rename a variable that doesn't exist.
+#'
+#' @return A named character vector. Values are existing column names,
+#'   names are new names.
+#'
+#' @section Conditions:
+#'
+#' `vars_select()` signals the following warning.
+#'
+#' * `tidyselect_warning_duplicate_renaming`: Supplying named inputs
+#'   in `...` causes the variables to be renamed. For technical
+#'   reasons there can only be one target name. If the same variable
+#'   is renamed to different names, tidyselect issues this warning.
+#'
 #' @seealso [vars_pull()]
 #' @export
 #' @keywords internal
-#' @return A named character vector. Values are existing column names,
-#'   names are new names.
 #' @examples
 #' # Keep variables
 #' vars_select(names(iris), everything())
@@ -222,7 +236,7 @@ inds_combine <- function(vars, inds) {
     incl <- seq_along(vars)
   } else {
     incl <- inds[inds > 0]
-    incl <- inds_unique(incl)
+    incl <- inds_unique(incl, vars)
   }
 
   # Remove variables to be excluded (setdiff loses names)
@@ -246,19 +260,43 @@ inds_combine <- function(vars, inds) {
   incl
 }
 
-inds_unique <- function(x) {
-  # Remove duplicates
-  out <- vctrs::vec_unique(x)
+inds_unique <- function(x, vars) {
+  # Remove duplicates but keep last name of duplicates
+  split <- vctrs::vec_split(x, x)
+  out <- split$key
 
   # Keep last name of duplicates
   if (length(out) < length(x)) {
-    reversed <- rev(x)
-    rev_unique_locs <- vctrs::vec_unique_loc(reversed)
-    unique_nms <- rev(names2(reversed)[rev_unique_locs])
-    names(out) <- unique_nms
+    names(out) <- map_chr(split$val, ind_last_name, vars = vars)
   }
 
   out
+}
+
+ind_last_name <- function(x, vars) {
+  names <- names(x)
+  names <- names[names != ""]
+
+  if (length(names) == 0) {
+    return("")
+  }
+  if (length(names) == 1) {
+    return(names)
+  }
+
+  if (!all(vctrs::vec_duplicate_detect(names))) {
+    dups <- encodeString(names, quote = "`")
+    var <- encodeString(vars[[x[[1]]]], quote = "`")
+    kept <- last(dups)
+    dups <- glue::glue_collapse(dups, ", ", last = " and ")
+    msg <- glue::glue(
+      "Must rename variables to a single choice: {var} is being renamed to {dups}.
+       Renaming {var} to {kept} instead."
+    )
+    warn(msg, "tidyselect_warning_duplicate_renaming", var = x)
+  }
+
+  last(names)
 }
 
 ind_check <- function(x) {
