@@ -269,34 +269,12 @@ inds_combine <- function(vars, inds) {
   }
 
   names(incl) <- names2(incl)
-  unnamed <- names(incl) == ""
+  unrenamed <- names(incl) == ""
+  unrenamed_vars <- vars[incl[unrenamed]]
 
-  renamers <- names(incl)[!unnamed]
+  inds_check(inds, vars, incl, dups, unrenamed, unrenamed_vars)
 
-  # Below we check that variables are renamed to a unique name. But we
-  # also want to allow renaming existing duplicates, which we remove
-  # from the checking set here.
-  if (any(dups)) {
-    ok <- names(dups)[dups]
-    renamers <- renamers[!renamers %in% ok]
-  }
-
-  if (vctrs::vec_duplicate_any(renamers)) {
-    abort(
-      "Can't rename different columns to the same column name.",
-      "tidyselect_error_rename_to_same"
-    )
-  }
-
-  unnamed_vars <- vars[incl[unnamed]]
-  if (any(vctrs::vec_in(renamers, unnamed_vars))) {
-    abort(
-      "Can't rename column to an existing column name.",
-      "tidyselect_error_rename_to_existing"
-    )
-  }
-
-  names(incl)[unnamed] <- unnamed_vars
+  names(incl)[unrenamed] <- unrenamed_vars
   incl
 }
 
@@ -347,6 +325,51 @@ ind_check <- function(x) {
 
   if (any(positive != positive[[1]])) {
     abort("Each argument must yield either positive or negative integers.")
+  }
+}
+
+inds_check <- function(x, vars, incl, dups, unrenamed, unrenamed_vars) {
+  renamers <- names(incl)[!unrenamed]
+
+  # Below we check that variables are renamed to a unique name. But we
+  # also want to allow renaming existing duplicates, which we remove
+  # from the checking set here.
+  if (any(dups)) {
+    ok <- names(dups)[dups]
+    renamers <- renamers[!renamers %in% ok]
+  }
+
+  if (vctrs::vec_duplicate_any(renamers)) {
+    dups <- vctrs::vec_duplicate_detect(renamers)
+    dups <- vctrs::vec_unique(renamers[dups])
+
+    probs <- map_chr(dups, function(dup) {
+      cols <- vars[incl[names(incl) == dup]]
+      cols <- glue::backtick(cols)
+      cols <- glue::glue_collapse(cols, sep = ", ", last = " and ")
+      glue::glue("* Columns {cols} are being renamed to `{dup}`.")
+    })
+    msg <- paste_line(
+      "Can't rename different columns to the same column name.",
+      !!!probs
+    )
+
+    abort(msg, "tidyselect_error_rename_to_same")
+  }
+
+  if (any(vctrs::vec_in(renamers, unrenamed_vars))) {
+    dups <- unrenamed_vars[match(renamers, unrenamed_vars, 0L)]
+
+    probs <- map_chr(dups, function(dup) {
+      col <- vars[[incl[[dup]]]]
+      glue::glue("* Column `{col}` is being renamed to existing column `{dup}`.")
+    })
+    msg <- paste_line(
+      "Can't rename column to an existing column name.",
+      !!!probs
+    )
+
+    abort(msg, "tidyselect_error_rename_to_existing")
   }
 }
 

@@ -1,0 +1,12 @@
+> # Renaming to same: 
+> vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e) 
+Error: Can't rename different columns to the same column name.
+* Columns `a` and `c` are being renamed to `foo`.
+* Columns `b` and `e` are being renamed to `bar`. 
+
+> # Renaming to existing: 
+> vars_select(letters, a = b, ok = c, d = e, everything()) 
+Error: Can't rename column to an existing column name.
+* Column `b` is being renamed to existing column `a`.
+* Column `e` is being renamed to existing column `d`. 
+

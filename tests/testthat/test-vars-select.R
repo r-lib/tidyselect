@@ -197,3 +197,17 @@ test_that("vars_select() fails when renaming to same name", {
   expect_error(vars_select(letters[1:3], a = b, a = c), class = "tidyselect_error_rename_to_same")
   expect_error(vars_select(letters[1:2], A = a, A = b), class = "tidyselect_error_rename_to_same")
 })
+
+test_that("vars_select() fails informatively", {
+  expect_known_output(file = test_path("outputs", "vars-select-renaming-to-same.txt"), {
+    try2(
+      "Renaming to same:",
+      vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e)
+    )
+
+    try2(
+      "Renaming to existing:",
+      vars_select(letters, a = b, ok = c, d = e, everything())
+    )
+  })
+})
