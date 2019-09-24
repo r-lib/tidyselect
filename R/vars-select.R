@@ -429,13 +429,14 @@ make_minus <- function(data_mask, context_mask) {
 }
 
 var_eval <- function(expr, data_mask, context_mask, colon = FALSE) {
+  if (is_quosure(expr)) {
+    scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
+  }
+
   out <- switch(expr_kind(expr),
     symbol = sym_get(as_name(expr), data_mask, context_mask, colon = colon),
     data = eval_tidy(expr, data_mask),
-    context = {
-      expr <- as_quosure(expr, env = context_mask$.__current__.)
-      out <- eval_tidy(expr, context_mask)
-    }
+    context = eval_tidy(expr, context_mask, context_mask$.__current__.)
   )
 
   if (is_character(out)) {
