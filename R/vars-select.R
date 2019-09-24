@@ -350,7 +350,7 @@ inds_check <- function(x, vars, incl, dups, unrenamed, unrenamed_vars) {
       glue::glue("* Columns {cols} are being renamed to `{dup}`.")
     })
     msg <- paste_line(
-      "Can't rename different columns to the same column name.",
+      "Must use different names when renaming columns.",
       !!!probs
     )
 
@@ -365,7 +365,7 @@ inds_check <- function(x, vars, incl, dups, unrenamed, unrenamed_vars) {
       glue::glue("* Column `{col}` is being renamed to existing column `{dup}`.")
     })
     msg <- paste_line(
-      "Can't rename column to an existing column name.",
+      "Must use new name when renaming columns.",
       !!!probs
     )
 
