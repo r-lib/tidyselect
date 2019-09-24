@@ -374,20 +374,7 @@ vars_select_eval <- function(vars, quos) {
   context_mask <- new_data_mask(env())
   context_mask$.data <- data_mask$.data
 
-  # TODO: make_helpers() then !!!
-  top$`:` <- make_colon(data_mask, context_mask)
-  top$`-` <- make_minus(data_mask, context_mask)
-  top$`c` <- vars_c
-
-  inds <- map(quos, function(quo) {
-    context_mask$.__current__. <- quo_get_env(quo)
-
-    switch(expr_kind(quo),
-      symbol = sym_get(as_name(quo), data_mask, context_mask),
-      data = eval_tidy(quo, data_mask),
-      context = eval_tidy(quo, context_mask)
-    )
-  })
+  inds <- map(quos, walk_data_tree, data_mask, context_mask)
 
   # Check for missing indices before matching strings to improve error message
   check_missing(inds, quos)
@@ -396,16 +383,64 @@ vars_select_eval <- function(vars, quos) {
   map_if(inds, is_character, match_strings, names = TRUE)
 }
 
-expr_kind <- function(expr) {
-  expr <- maybe_unwrap_quosure(expr)
-
-  if (is_symbol(expr)) {
-    "symbol"
-  } else if (quo_is_helper(expr)) {
-    "context"
-  } else {
-    "data"
+walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
+  if (is_quosure(expr)) {
+    scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
+    expr <- quo_get_expr(expr)
   }
+
+  switch(expr_kind(expr),
+    symbol = sym_get(as_string(expr), data_mask, context_mask, colon = colon),
+    `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
+    `-` = eval_minus(expr, data_mask, context_mask),
+    `:` = eval_colon(expr, data_mask, context_mask),
+    `c` = stop("TODO"),
+    eval_context(expr, context_mask)
+  )
+}
+
+expr_kind <- function(expr) {
+  if (is_symbol(expr)) {
+    return("symbol")
+  }
+  if (!is_call(expr)) {
+    return("none")
+  }
+
+  head <- node_car(expr)
+  if (!is_symbol(head)) {
+    return("none")
+  }
+
+  fn <- as_string(head)
+  switch(fn,
+    `(` = ,
+    `-` = ,
+    `:` = ,
+    `c` = fn,
+    "none"
+  )
+}
+
+eval_colon <- function(expr, data_mask, context_mask) {
+  x <- walk_data_tree(expr[[2]], data_mask, context_mask, colon = TRUE)
+  y <- walk_data_tree(expr[[3]], data_mask, context_mask, colon = TRUE)
+
+  x:y
+}
+
+eval_minus <- function(expr, data_mask, context_mask) {
+  if (length(expr) != 2) {
+    return(eval_context(expr, context_mask))
+  }
+
+  x <- walk_data_tree(expr[[2]], data_mask, context_mask)
+  -x
+}
+
+eval_context <- function(expr, context_mask) {
+  expr <- as_quosure(expr, context_mask$.__current__.)
+  eval_tidy(expr, context_mask)
 }
 
 make_colon <- function(data_mask, context_mask) {
@@ -436,7 +471,7 @@ var_eval <- function(expr, data_mask, context_mask, colon = FALSE) {
   out <- switch(expr_kind(expr),
     symbol = sym_get(as_name(expr), data_mask, context_mask, colon = colon),
     data = eval_tidy(expr, data_mask),
-    context = eval_tidy(expr, context_mask, context_mask$.__current__.)
+    context = eval_context(expr, context_mask)
   )
 
   if (is_character(out)) {
