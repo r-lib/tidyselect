@@ -476,43 +476,6 @@ eval_context <- function(expr, context_mask) {
   eval_tidy(expr, context_mask)
 }
 
-make_colon <- function(data_mask, context_mask) {
-  function(x, y) {
-    x <- var_eval(substitute(x), data_mask, context_mask, colon = TRUE)
-    y <- var_eval(substitute(y), data_mask, context_mask, colon = TRUE)
-
-    x:y
-  }
-}
-
-make_minus <- function(data_mask, context_mask) {
-  function(x, y) {
-    if (!missing(y)) {
-      return(x - y)
-    }
-
-    x <- var_eval(substitute(x), data_mask, context_mask)
-    -x
-  }
-}
-
-var_eval <- function(expr, data_mask, context_mask, colon = FALSE) {
-  if (is_quosure(expr)) {
-    scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
-  }
-
-  out <- switch(expr_kind(expr),
-    symbol = sym_get(as_name(expr), data_mask, context_mask, colon = colon),
-    data = eval_tidy(expr, data_mask),
-    context = eval_context(expr, context_mask)
-  )
-
-  if (is_character(out)) {
-    out <- match_strings(out)
-  }
-
-  out
-}
 sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
   top <- data_mask$.top_env
   cur <- data_mask
@@ -575,11 +538,6 @@ deprecate_ctxt_vars_warn <- function(colon) {
   deprecate_warn(msg)
 }
 
-vars_c <- function(...) {
-  dots <- map_if(list(...), is_character, match_strings)
-  do.call(`c`, dots)
-}
-
 # This feature is in the "regret" lifecycle stage
 match_strings <- function(x) {
   if (!is_character(x)) {
@@ -595,48 +553,6 @@ match_strings <- function(x) {
   }
 
   set_names(out, names(x))
-}
-
-extract_expr <- function(expr) {
-  expr <- get_expr(expr)
-  while(is_call(expr, paren_sym)) {
-    expr <- get_expr(expr[[2]])
-  }
-  expr
-}
-
-quo_is_helper <- function(quo) {
-  expr <- extract_expr(quo)
-
-  if (!is_call(expr)) {
-    return(FALSE)
-  }
-
-  if (is_data_pronoun(expr)) {
-    return(FALSE)
-  }
-
-  if (is_call(expr, minus_sym, n = 1)) {
-    operand <- extract_expr(expr[[2]])
-    return(quo_is_helper(operand))
-  }
-
-  if (is_call(expr, list(colon_sym, c_sym))) {
-    return(FALSE)
-  }
-
-  TRUE
-}
-match_var <- function(chr, table) {
-  pos <- match(chr, table)
-  if (any(are_na(pos))) {
-    chr <- glue::glue_collapse(chr[are_na(pos)], ", ")
-    abort(glue(
-      "Strings must match { singular(table) } names. \\
-       Unknown { plural(table) }: { chr }"
-    ))
-  }
-  pos
 }
 
 setdiff2 <- function(x, y) {
