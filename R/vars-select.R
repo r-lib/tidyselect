@@ -158,11 +158,6 @@ vars_select <- function(.vars, ...,
   ind_list <- c(initial_case, ind_list)
   names(ind_list) <- c(names2(initial_case), names2(quos))
 
-  ind_list <- map_if(ind_list, is.object, ind_coerce)
-
-  # Match strings to variable positions
-  ind_list <- map_if(ind_list, is_character, match_var, table = .vars)
-
   check_integerish(ind_list, quos, .vars)
 
   incl <- inds_combine(.vars, ind_list)
@@ -386,20 +381,28 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     expr <- quo_get_expr(expr)
   }
 
-  switch(expr_kind(expr),
+  out <- switch(expr_kind(expr),
+    literal = expr,
     symbol = sym_get(as_string(expr), data_mask, context_mask, colon = colon),
-    character = match_strings(expr),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `-` = eval_minus(expr, data_mask, context_mask),
     `:` = eval_colon(expr, data_mask, context_mask),
     `c` = eval_c(expr, data_mask, context_mask),
     eval_context(expr, context_mask)
   )
+
+  if (is.object(out)) {
+    out <- ind_coerce(out)
+  }
+  if (is_character(out)) {
+    match_strings(out)
+  } else {
+    out
+  }
 }
 
 expr_kind <- function(expr) {
   switch(typeof(expr),
-    character = "character",
     symbol = "symbol",
     language = call_kind(expr),
     "literal"
@@ -489,7 +492,7 @@ sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
   }
 
   if (!missing(value)) {
-    return(match_strings(value))
+    return(value)
   }
 
   value <- env_get(
@@ -501,7 +504,7 @@ sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
 
   if (!is_missing(value)) {
     deprecate_ctxt_vars_warn(colon)
-    return(match_strings(value))
+    return(value)
   }
 
   abort(glue::glue("object '{name}' not found"))

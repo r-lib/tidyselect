@@ -48,3 +48,10 @@ test_that("quosures update the current context", {
   })
   expect_identical(vars_select(letters, !!quo(c(-(!!quo)))), vars_select(letters, -(a:24)))
 })
+
+test_that("data expressions support character vectors (#78)", {
+  expect_identical(vars_select(letters, -identity(letters[2:5])), vars_select(letters, -(2:5)))
+  expect_identical(vars_select(letters, identity("a"):identity("c")), vars_select(letters, a:c))
+  expect_identical(vars_select(letters, (identity(letters[[1]]))), vars_select(letters, a))
+  expect_identical(vars_select(letters, c(identity(letters[[1]]))), vars_select(letters, a))
+})
