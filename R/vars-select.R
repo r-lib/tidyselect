@@ -445,14 +445,27 @@ var_eval <- function(expr, data_mask, context_mask, colon = FALSE) {
   out
 }
 sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
-  # FIXME: Search needs to be limited to data mask for robustness
-  value <- env_get(data_mask, name, default = missing_arg(), inherit = TRUE)
+  top <- data_mask$.top_env
+  cur <- data_mask
+  value <- missing_arg()
+  while (!is_reference(cur, top)) {
+    if (env_has(cur, name)) {
+      value <- env_get(cur, name)
+      break
+    }
+    cur <- env_parent(cur)
+  }
 
   if (!missing(value)) {
     return(value)
   }
 
-  value <- env_get(context_mask, name, default = missing_arg(), inherit = TRUE)
+  value <- env_get(
+    context_mask$.__current__.,
+    name,
+    default = missing_arg(),
+    inherit = TRUE
+  )
 
   if (!is_missing(value)) {
     deprecate_ctxt_vars_warn(colon)
