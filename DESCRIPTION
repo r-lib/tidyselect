@@ -20,7 +20,8 @@ Imports:
 Suggests:
     covr,
     dplyr,
-    testthat
+    testthat,
+    withr
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

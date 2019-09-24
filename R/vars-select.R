@@ -410,13 +410,12 @@ expr_kind <- function(expr) {
 
 make_colon <- function(data_mask, context_mask) {
   function(x, y) {
-    x <- var_eval(substitute(x), data_mask, context_mask, colon_msg)
-    y <- var_eval(substitute(y), data_mask, context_mask, colon_msg)
+    x <- var_eval(substitute(x), data_mask, context_mask, colon = TRUE)
+    y <- var_eval(substitute(y), data_mask, context_mask, colon = TRUE)
 
     x:y
   }
 }
-colon_msg <- "Use `seq(.data[[col1]], .data[[col2]])`."
 
 make_minus <- function(data_mask, context_mask) {
   function(x, y) {
@@ -429,9 +428,9 @@ make_minus <- function(data_mask, context_mask) {
   }
 }
 
-var_eval <- function(expr, data_mask, context_mask, deprecation_msg = NULL) {
+var_eval <- function(expr, data_mask, context_mask, colon = FALSE) {
   out <- switch(expr_kind(expr),
-    symbol = sym_get(as_name(expr), data_mask, context_mask, deprecation_msg),
+    symbol = sym_get(as_name(expr), data_mask, context_mask, colon = colon),
     data = eval_tidy(expr, data_mask),
     context = {
       expr <- as_quosure(expr, env = context_mask$.__current__.)
@@ -445,7 +444,7 @@ var_eval <- function(expr, data_mask, context_mask, deprecation_msg = NULL) {
 
   out
 }
-sym_get <- function(name, data_mask, context_mask, deprecation_msg = NULL) {
+sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
   # FIXME: Search needs to be limited to data mask for robustness
   value <- env_get(data_mask, name, default = missing_arg(), inherit = TRUE)
 
@@ -456,13 +455,42 @@ sym_get <- function(name, data_mask, context_mask, deprecation_msg = NULL) {
   value <- env_get(context_mask, name, default = missing_arg(), inherit = TRUE)
 
   if (!is_missing(value)) {
-    deprecation_msg <- deprecation_msg %||% "Use `one_of()`."
-    warn(deprecation_msg)
-
+    deprecate_ctxt_vars_warn(colon)
     return(value)
   }
 
-  abort("Can't find variable")
+  abort(glue::glue("object '{name}' not found"))
+}
+
+deprecate_ctxt_vars_warn <- function(colon) {
+  if (colon) {
+    msg <- paste_line(
+      "Passing objects from outside the data to `:` is deprecated as of tidyselect 0.3.0.",
+      "Please use `seq()` instead.",
+      "",
+      "  # Good:",
+      "  col1 <- \"cyl\"",
+      "  col2 <- \"am\"",
+      "  mtcars %>% select(seq(col1, col2))",
+      "",
+      "  # Bad:",
+      "  mtcars %>% select(col1:col2)"
+    )
+  } else {
+    msg <- paste_line(
+      "Passing objects from outside the data is deprecated as of tidyselect 0.3.0.",
+      "Please use `one_of()` instead.",
+      "",
+      "  # Good:",
+      "  vars <- c(\"cyl\", \"am\")",
+      "  mtcars %>% select(one_of(vars))",
+      "",
+      "  # Bad:",
+      "  mtcars %>% select(vars)"
+    )
+  }
+
+  deprecate_warn(msg)
 }
 
 vars_c <- function(...) {
