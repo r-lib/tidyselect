@@ -182,6 +182,8 @@ test_that("one_of() compacts inputs (#110)", {
 # first-selector ----------------------------------------------------------
 
 test_that("initial (single) selector defaults correctly (issue #2275)", {
+  withr::local_options(c(lifecycle_verbosity = FALSE))
+
   cn <- setNames(nm = c("x", "y", "z"))
 
   ### Single Column Selected

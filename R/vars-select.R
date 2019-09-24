@@ -394,7 +394,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `-` = eval_minus(expr, data_mask, context_mask),
     `:` = eval_colon(expr, data_mask, context_mask),
-    `c` = stop("TODO"),
+    `c` = eval_c(expr, data_mask, context_mask),
     eval_context(expr, context_mask)
   )
 }
@@ -436,6 +436,46 @@ eval_minus <- function(expr, data_mask, context_mask) {
 
   x <- walk_data_tree(expr[[2]], data_mask, context_mask)
   -x
+}
+
+eval_c <- function(expr, data_mask, context_mask) {
+  expr <- duplicate(expr, shallow = TRUE)
+
+  node <- node_cdr(expr)
+  while (!is_null(node)) {
+    arg <- eval_c_arg(node_car(node), data_mask, context_mask)
+
+    node_poke_car(node, arg)
+    node <- node_cdr(node)
+  }
+
+  eval(expr, base_env())
+}
+
+eval_c_arg <- function(expr, data_mask, context_mask) {
+  if (is_quosure(expr)) {
+    scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
+    expr <- quo_get_expr(expr)
+  }
+
+  if (is_symbol(expr, "...")) {
+    # Capture arguments in dots as quosures
+    dots_mask <- env(context_mask$.__current__., enquos = enquos)
+    dots <- eval_bare(quote(enquos(...)), dots_mask)
+    call <- call2(quote(c), !!!dots)
+
+    # Evaluate dots separately by recursing into `c()`. The result is
+    # automatically spliced by the upstack `c()`.
+    eval_c(call, data_mask, context_mask)
+  } else {
+    out <- walk_data_tree(expr, data_mask, context_mask)
+
+    if (is_character(out)) {
+      match_strings(out)
+    } else {
+      out
+    }
+  }
 }
 
 eval_context <- function(expr, context_mask) {
