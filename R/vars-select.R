@@ -376,11 +376,8 @@ vars_select_eval <- function(vars, quos) {
 
   inds <- map(quos, walk_data_tree, data_mask, context_mask)
 
-  # Check for missing indices before matching strings to improve error message
   check_missing(inds, quos)
-
-  # Handle unquoted character vectors
-  map_if(inds, is_character, match_strings, names = TRUE)
+  inds
 }
 
 walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
@@ -391,6 +388,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   switch(expr_kind(expr),
     symbol = sym_get(as_string(expr), data_mask, context_mask, colon = colon),
+    character = match_strings(expr),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `-` = eval_minus(expr, data_mask, context_mask),
     `:` = eval_colon(expr, data_mask, context_mask),
@@ -400,16 +398,17 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 }
 
 expr_kind <- function(expr) {
-  if (is_symbol(expr)) {
-    return("symbol")
-  }
-  if (!is_call(expr)) {
-    return("none")
-  }
-
+  switch(typeof(expr),
+    character = "character",
+    symbol = "symbol",
+    language = call_kind(expr),
+    "literal"
+  )
+}
+call_kind <- function(expr) {
   head <- node_car(expr)
   if (!is_symbol(head)) {
-    return("none")
+    return("call")
   }
 
   fn <- as_string(head)
@@ -418,7 +417,7 @@ expr_kind <- function(expr) {
     `-` = ,
     `:` = ,
     `c` = fn,
-    "none"
+    "call"
   )
 }
 
@@ -468,13 +467,7 @@ eval_c_arg <- function(expr, data_mask, context_mask) {
     # automatically spliced by the upstack `c()`.
     eval_c(call, data_mask, context_mask)
   } else {
-    out <- walk_data_tree(expr, data_mask, context_mask)
-
-    if (is_character(out)) {
-      match_strings(out)
-    } else {
-      out
-    }
+    walk_data_tree(expr, data_mask, context_mask)
   }
 }
 
@@ -533,7 +526,7 @@ sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
   }
 
   if (!missing(value)) {
-    return(value)
+    return(match_strings(value))
   }
 
   value <- env_get(
@@ -545,7 +538,7 @@ sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
 
   if (!is_missing(value)) {
     deprecate_ctxt_vars_warn(colon)
-    return(value)
+    return(match_strings(value))
   }
 
   abort(glue::glue("object '{name}' not found"))
@@ -586,20 +579,22 @@ vars_c <- function(...) {
   dots <- map_if(list(...), is_character, match_strings)
   do.call(`c`, dots)
 }
-match_strings <- function(x, names = FALSE) {
+
+# This feature is in the "regret" lifecycle stage
+match_strings <- function(x) {
+  if (!is_character(x)) {
+    return(x)
+  }
+
   vars <- peek_vars()
   out <- match(x, vars)
 
-  if (any(are_na(out))) {
+  if (any(are_na(out) & !is.na(x))) {
     unknown <- x[are_na(out)]
     bad_unknown_vars(vars, unknown)
   }
 
-  if (names) {
-    set_names(out, names(x))
-  } else {
-    out
-  }
+  set_names(out, names(x))
 }
 
 extract_expr <- function(expr) {
