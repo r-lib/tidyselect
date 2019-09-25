@@ -105,26 +105,3 @@ vec_is_coercible <- function(x, to, ..., x_arg = "x", to_arg = "to") {
 last <- function(x) {
   x[[length(x)]]
 }
-
-# Until lifecycle supports deprecating features other than functions
-# and arguments. This doesn't feature the subtle soft-deprecation
-# rules of the lifecycle package but it would be hard to support these
-# anyway because tidyselect is meant to be wrapped.
-deprecate_warn <- function(msg) {
-  verbosity <- peek_option("lifecycle_verbosity") %||% "warn"
-  signaller <- switch(verbosity,
-    warning = warn,
-    error = abort,
-    quiet = function(...) NULL,
-    maybe_warn
-  )
-  signaller(msg, "lifecycle_warning_deprecated")
-}
-
-deprecation_env <- env()
-maybe_warn <- function(msg, class) {
-  if (is_null(deprecation_env[[msg]])) {
-    deprecation_env[[msg]] <- TRUE
-    warn(msg, class)
-  }
-}

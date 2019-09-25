@@ -36,7 +36,6 @@ test_that("abort on unknown columns", {
 })
 
 test_that("data mask is not isolated from context (for now)", {
-  withr::local_options(c(lifecycle_verbosity = "quiet"))
   foo <- 10
   expect_identical(vars_select(letters, foo), c(j = "j"))
   expect_identical(vars_select(letters, ((foo))), c(j = "j"))

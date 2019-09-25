@@ -26,15 +26,6 @@ test_that("dots passed to `c()` are evaluated in their context", {
   expect_identical(f(letters, e, 10), vars_select(letters, x, 26, e, 10, 13, 15))
 })
 
-test_that("non-data variables in data context are deprecated", {
-  withr::local_options(c(lifecycle_verbosity = TRUE))
-  deprecated <- 3
-  expect_warning(vars_select(letters, deprecated), "deprecated")
-  expect_warning(vars_select(letters, -deprecated), "deprecated")
-  expect_warning(vars_select(letters, 1:deprecated), "deprecated")
-  expect_warning(vars_select(letters, c(deprecated)), "deprecated")
-})
-
 test_that("quosures can be used in data expressions", {
   expect_identical(vars_select(letters, !!quo(a)), vars_select(letters, a))
   expect_identical(vars_select(letters, !!quo(a:!!quo(c))), vars_select(letters, a:c))

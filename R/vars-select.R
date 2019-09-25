@@ -503,42 +503,10 @@ sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
   )
 
   if (!is_missing(value)) {
-    deprecate_ctxt_vars_warn(colon)
     return(value)
   }
 
   abort(glue::glue("object '{name}' not found"))
-}
-
-deprecate_ctxt_vars_warn <- function(colon) {
-  if (colon) {
-    msg <- paste_line(
-      "Passing objects from outside the data to `:` is deprecated as of tidyselect 0.3.0.",
-      "Please use `seq()` instead.",
-      "",
-      "  # Good:",
-      "  col1 <- \"cyl\"",
-      "  col2 <- \"am\"",
-      "  mtcars %>% select(seq(col1, col2))",
-      "",
-      "  # Bad:",
-      "  mtcars %>% select(col1:col2)"
-    )
-  } else {
-    msg <- paste_line(
-      "Passing objects from outside the data is deprecated as of tidyselect 0.3.0.",
-      "Please use `one_of()` instead.",
-      "",
-      "  # Good:",
-      "  vars <- c(\"cyl\", \"am\")",
-      "  mtcars %>% select(one_of(vars))",
-      "",
-      "  # Bad:",
-      "  mtcars %>% select(vars)"
-    )
-  }
-
-  deprecate_warn(msg)
 }
 
 # This feature is in the "regret" lifecycle stage
