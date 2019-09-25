@@ -48,7 +48,7 @@ vars_pull <- function(vars, var = -1) {
   }
 
   if (is_string(var)) {
-    pos <- match_var(var, vars)
+    pos <- match_strings(var, vars)
   } else if (is_integerish(var, 1)) {
     if (is_na(var) || abs(var) > n || var == 0L) {
       what <- as_label(var_expr)
@@ -70,16 +70,4 @@ vars_pull <- function(vars, var = -1) {
   }
 
   vars[[pos]]
-}
-
-match_var <- function(chr, table) {
-  pos <- match(chr, table)
-  if (any(are_na(pos))) {
-    chr <- glue::glue_collapse(chr[are_na(pos)], ", ")
-    abort(glue(
-      "Strings must match { singular(table) } names. \\
-       Unknown { plural(table) }: { chr }"
-    ))
-  }
-  pos
 }

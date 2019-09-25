@@ -510,12 +510,11 @@ sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
 }
 
 # This feature is in the "regret" lifecycle stage
-match_strings <- function(x) {
+match_strings <- function(x, vars = peek_vars()) {
   if (!is_character(x)) {
     return(x)
   }
 
-  vars <- peek_vars()
   out <- match(x, vars)
 
   if (any(are_na(out) & !is.na(x))) {

@@ -40,3 +40,8 @@ test_that("missing values are detected in vars_pull() (#72)", {
     expect_error(vars_pull(c("a", "b"), NA_character_), "can't be a missing value")
   })
 })
+
+test_that("can pull with strings", {
+  expect_identical(vars_pull(letters, "b"), vars_pull(letters, b))
+  expect_error(vars_pull(letters, "foo"), "Unknown column")
+})
