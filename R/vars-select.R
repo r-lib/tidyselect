@@ -366,6 +366,9 @@ vars_select_eval <- function(vars, quos) {
   data_mask <- new_data_mask(bottom, top)
   data_mask$.data <- as_data_pronoun(data_mask)
 
+  # Add `.data` pronoun in the context mask even though it doesn't
+  # contain data. This way the pronoun can be used in any parts of the
+  # expression.
   context_mask <- new_data_mask(env())
   context_mask$.data <- data_mask$.data
 
@@ -375,7 +378,19 @@ vars_select_eval <- function(vars, quos) {
   inds
 }
 
+# `walk_data_tree()` is a recursive interpreter that implements a
+# clear separation between data expressions (calls to `-`, `:`, `c`,
+# and `(`) and context expressions (selection helpers and any other
+# calls). It recursively traverses the AST across data expressions.
+# The leaves of the data expression tree are either symbols (evaluated
+# with `eval_sym()`) or context expressions (evaluated with
+# `eval_context()`).
+
 walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
+  # Unwrap quosures to make it easier to inspect expressions. We save
+  # a reference to the current quosure environment in the context
+  # mask, so we can evaluate the expression in the correct context
+  # later on.
   if (is_quosure(expr)) {
     scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
     expr <- quo_get_expr(expr)
@@ -383,7 +398,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   out <- switch(expr_kind(expr),
     literal = expr,
-    symbol = sym_get(as_string(expr), data_mask, context_mask, colon = colon),
+    symbol = eval_sym(as_string(expr), data_mask, context_mask, colon = colon),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `-` = eval_minus(expr, data_mask, context_mask),
     `:` = eval_colon(expr, data_mask, context_mask),
@@ -479,7 +494,7 @@ eval_context <- function(expr, context_mask) {
   eval_tidy(expr, context_mask)
 }
 
-sym_get <- function(name, data_mask, context_mask, colon = FALSE) {
+eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
   top <- data_mask$.top_env
   cur <- data_mask
   value <- missing_arg()

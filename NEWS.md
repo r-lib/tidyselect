@@ -1,6 +1,44 @@
 
 # tidyselect (development)
 
+* `vars_select()` has been rewritten to support a clearer separation
+  between data expressions (calls to `:`, `-`, and `c`) and context
+  expressions (anything else). This means you can now safely use
+  expressions of the type:
+
+  ```r
+  data %>% select(1:ncol(data))
+  data %>% pivot_longer(1:ncol(data))
+  ```
+
+  Even if the data frame `data` contains a column also named `data`,
+  the subexpression `ncol(data)` is still correctly evaluated.
+  The `data:ncol(data)` expression is equivalent to `2:3` because
+  `data` is looked up in the relevant context without ambiguity:
+
+  ```r
+  data <- tibble(foo = 1, data = 2, bar = 3)
+  data %>% dplyr::select(data:ncol(data))
+  #> # A tibble: 1 x 2
+  #>    data   bar
+  #>   <dbl> <dbl>
+  #> 1     2     3
+  ```
+
+  While this example above is a bit contrived, there are many realistic
+  cases where these changes make it easier to write safe code:
+
+  ```{r}
+  select_from <- function(data, var) {
+    data %>% dplyr::select({{ var }} : ncol(data))
+  }
+  data %>% select_from(data)
+  #> # A tibble: 1 x 2
+  #>    data   bar
+  #>   <dbl> <dbl>
+  #> 1     2     3
+  ```
+
 * `vars_select()` now warns when multiple renamings are detected, as
   only the last one is taken into account (#52). The warning inherits
   from `tidyselect_warning_duplicate_renaming`.
