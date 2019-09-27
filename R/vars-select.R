@@ -158,11 +158,6 @@ vars_select <- function(.vars, ...,
   ind_list <- c(initial_case, ind_list)
   names(ind_list) <- c(names2(initial_case), names2(quos))
 
-  ind_list <- map_if(ind_list, is.object, ind_coerce)
-
-  # Match strings to variable positions
-  ind_list <- map_if(ind_list, is_character, match_var, table = .vars)
-
   check_integerish(ind_list, quos, .vars)
 
   incl <- inds_combine(.vars, ind_list)
@@ -362,114 +357,187 @@ vars_select_eval <- function(vars, quos) {
   # Peek validated variables
   vars <- peek_vars()
 
-  # Overscope `c`, `:` and `-` with versions that handle strings
-  data_helpers_env <- env(`:` = vars_colon, `-` = vars_minus, `c` = vars_c)
-
-  # Symbols and calls to `:` and `c()` are evaluated with data in scope
-  is_helper <- map_lgl(quos, quo_is_helper)
+  # Create data mask
   empty_names <- are_empty_name(vars)
-  data <- set_names(as.list(seq_along(vars)), vars)[!empty_names]
-  data_env <- env(data_helpers_env, !!!data)
+  bottom_data <- set_names(seq_along(vars), vars)[!empty_names]
 
-  mask <- new_data_mask(data_env, data_helpers_env)
-  mask$.data <- as_data_pronoun(mask)
+  top <- env()
+  bottom <- env(top, !!!bottom_data)
+  data_mask <- new_data_mask(bottom, top)
+  data_mask$.data <- as_data_pronoun(data_mask)
 
-  ind_list <- map_if(quos, !is_helper, eval_tidy, mask)
+  # Add `.data` pronoun in the context mask even though it doesn't
+  # contain data. This way the pronoun can be used in any parts of the
+  # expression.
+  context_mask <- new_data_mask(env())
+  context_mask$.data <- data_mask$.data
 
-  # All other calls are evaluated in the context only
-  # They are always evaluated strictly
-  ind_list <- map_if(ind_list, is_helper, eval_tidy)
+  inds <- map(quos, walk_data_tree, data_mask, context_mask)
 
-  # Check for missing indices before matching strings to improve error message
-  check_missing(ind_list, quos)
-
-  # Handle unquoted character vectors
-  ind_list <- map_if(ind_list, is_character, match_strings, names = TRUE)
-
-  ind_list
+  check_missing(inds, quos)
+  inds
 }
 
-vars_colon <- function(x, y) {
-  if (is_string(x)) {
-    x <- match_strings(x)
-  }
-  if (is_string(y)) {
-    y <- match_strings(y)
-  }
+# `walk_data_tree()` is a recursive interpreter that implements a
+# clear separation between data expressions (calls to `-`, `:`, `c`,
+# and `(`) and context expressions (selection helpers and any other
+# calls). It recursively traverses the AST across data expressions.
+# The leaves of the data expression tree are either symbols (evaluated
+# with `eval_sym()`) or context expressions (evaluated with
+# `eval_context()`).
 
-  x:y
-}
-vars_minus <- function(x, y) {
-  if (!missing(y)) {
-    return(x - y)
-  }
-
-  if (is_character(x)) {
-    x <- match_strings(x)
-  }
-
-  -x
-}
-vars_c <- function(...) {
-  dots <- map_if(list(...), is_character, match_strings)
-  do.call(`c`, dots)
-}
-match_strings <- function(x, names = FALSE) {
-  vars <- peek_vars()
-  out <- match(x, vars)
-
-  if (any(are_na(out))) {
-    unknown <- x[are_na(out)]
-    bad_unknown_vars(vars, unknown)
+walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
+  # Unwrap quosures to make it easier to inspect expressions. We save
+  # a reference to the current quosure environment in the context
+  # mask, so we can evaluate the expression in the correct context
+  # later on.
+  if (is_quosure(expr)) {
+    scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
+    expr <- quo_get_expr(expr)
   }
 
-  if (names) {
-    set_names(out, names(x))
+  out <- switch(expr_kind(expr),
+    literal = expr,
+    symbol = eval_sym(as_string(expr), data_mask, context_mask, colon = colon),
+    `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
+    `-` = eval_minus(expr, data_mask, context_mask),
+    `:` = eval_colon(expr, data_mask, context_mask),
+    `c` = eval_c(expr, data_mask, context_mask),
+    eval_context(expr, context_mask)
+  )
+
+  if (is.object(out)) {
+    out <- ind_coerce(out)
+  }
+  if (is_character(out)) {
+    match_strings(out)
   } else {
     out
   }
 }
 
-extract_expr <- function(expr) {
-  expr <- get_expr(expr)
-  while(is_call(expr, paren_sym)) {
-    expr <- get_expr(expr[[2]])
+expr_kind <- function(expr) {
+  switch(typeof(expr),
+    symbol = "symbol",
+    language = call_kind(expr),
+    "literal"
+  )
+}
+call_kind <- function(expr) {
+  head <- node_car(expr)
+  if (!is_symbol(head)) {
+    return("call")
   }
-  expr
+
+  fn <- as_string(head)
+  switch(fn,
+    `(` = ,
+    `-` = ,
+    `:` = ,
+    `c` = fn,
+    "call"
+  )
 }
 
-quo_is_helper <- function(quo) {
-  expr <- extract_expr(quo)
+eval_colon <- function(expr, data_mask, context_mask) {
+  x <- walk_data_tree(expr[[2]], data_mask, context_mask, colon = TRUE)
+  y <- walk_data_tree(expr[[3]], data_mask, context_mask, colon = TRUE)
 
-  if (!is_call(expr)) {
-    return(FALSE)
-  }
-
-  if (is_data_pronoun(expr)) {
-    return(FALSE)
-  }
-
-  if (is_call(expr, minus_sym, n = 1)) {
-    operand <- extract_expr(expr[[2]])
-    return(quo_is_helper(operand))
-  }
-
-  if (is_call(expr, list(colon_sym, c_sym))) {
-    return(FALSE)
-  }
-
-  TRUE
+  x:y
 }
-match_var <- function(chr, table) {
-  pos <- match(chr, table)
-  if (any(are_na(pos))) {
-    chr <- glue::glue_collapse(chr[are_na(pos)], ", ")
-    abort(glue(
-      "Strings must match { singular(table) } names. \\
-       Unknown { plural(table) }: { chr }"
-    ))
+
+eval_minus <- function(expr, data_mask, context_mask) {
+  if (length(expr) != 2) {
+    return(eval_context(expr, context_mask))
   }
-  pos
+
+  x <- walk_data_tree(expr[[2]], data_mask, context_mask)
+  -x
+}
+
+eval_c <- function(expr, data_mask, context_mask) {
+  expr <- duplicate(expr, shallow = TRUE)
+
+  node <- node_cdr(expr)
+  while (!is_null(node)) {
+    arg <- eval_c_arg(node_car(node), data_mask, context_mask)
+
+    node_poke_car(node, arg)
+    node <- node_cdr(node)
+  }
+
+  eval(expr, base_env())
+}
+
+eval_c_arg <- function(expr, data_mask, context_mask) {
+  if (is_quosure(expr)) {
+    scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
+    expr <- quo_get_expr(expr)
+  }
+
+  if (is_symbol(expr, "...")) {
+    # Capture arguments in dots as quosures
+    dots_mask <- env(context_mask$.__current__., enquos = enquos)
+    dots <- eval_bare(quote(enquos(...)), dots_mask)
+    call <- call2(quote(c), !!!dots)
+
+    # Evaluate dots separately by recursing into `c()`. The result is
+    # automatically spliced by the upstack `c()`.
+    eval_c(call, data_mask, context_mask)
+  } else {
+    walk_data_tree(expr, data_mask, context_mask)
+  }
+}
+
+eval_context <- function(expr, context_mask) {
+  expr <- as_quosure(expr, context_mask$.__current__.)
+  eval_tidy(expr, context_mask)
+}
+
+eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
+  top <- data_mask$.top_env
+  cur <- data_mask
+  value <- missing_arg()
+  while (!is_reference(cur, top)) {
+    if (env_has(cur, name)) {
+      value <- env_get(cur, name)
+      break
+    }
+    cur <- env_parent(cur)
+  }
+
+  if (!missing(value)) {
+    return(value)
+  }
+
+  value <- env_get(
+    context_mask$.__current__.,
+    name,
+    default = missing_arg(),
+    inherit = TRUE
+  )
+
+  if (!is_missing(value)) {
+    return(value)
+  }
+
+  abort(glue::glue("object '{name}' not found"))
+}
+
+# This feature is in the "regret" lifecycle stage
+match_strings <- function(x, vars = peek_vars()) {
+  if (!is_character(x)) {
+    return(x)
+  }
+
+  out <- match(x, vars)
+
+  if (any(are_na(out) & !is.na(x))) {
+    unknown <- x[are_na(out)]
+    bad_unknown_vars(vars, unknown)
+  }
+
+  set_names(out, names(x))
 }
 
 setdiff2 <- function(x, y) {

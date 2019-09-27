@@ -35,7 +35,7 @@ test_that("abort on unknown columns", {
   expect_error(vars_select(letters, c("a", "bar", "foo", "d")), "`bar`")
 })
 
-test_that("symbol overscope is not isolated from context", {
+test_that("data mask is not isolated from context (for now)", {
   foo <- 10
   expect_identical(vars_select(letters, foo), c(j = "j"))
   expect_identical(vars_select(letters, ((foo))), c(j = "j"))
@@ -124,13 +124,13 @@ test_that("missing values are detected in vars_select() (#72)", {
   expect_error(vars_select("foo", NA), "detected missing elements")
 
   expect_error(
-    vars_select(letters, c(1, NA), na_chr, na_int, na_dbl, na_cpl),
+    vars_select(letters, c(1, NA), !!na_chr, !!na_int, !!na_dbl, !!na_cpl),
     glue(
       "* c(1, NA)
-       * na_chr
-       * na_int
-       * na_dbl
-       * na_cpl"
+       * NA_character_
+       * NA_integer_
+       * NA_real_
+       * NA_complex_"
     ),
     fixed = TRUE
   )

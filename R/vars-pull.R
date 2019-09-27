@@ -48,7 +48,7 @@ vars_pull <- function(vars, var = -1) {
   }
 
   if (is_string(var)) {
-    pos <- match_var(var, vars)
+    pos <- match_strings(var, vars)
   } else if (is_integerish(var, 1)) {
     if (is_na(var) || abs(var) > n || var == 0L) {
       what <- as_label(var_expr)
