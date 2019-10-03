@@ -21,6 +21,8 @@ Suggests:
     covr,
     dplyr,
     testthat
+remotes:
+    r-lib/testthat
 License: GPL-3
 Encoding: UTF-8
 LazyData: true

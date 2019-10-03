@@ -154,8 +154,13 @@ last_col <- function(offset = 0L, vars = peek_vars()) {
 }
 
 match_vars <- function(needle, haystack) {
-  x <- match(needle, haystack)
-  x[!is.na(x)]
+  if (vctrs::vec_duplicate_any(haystack)) {
+    x <- map(needle, ~ which(. == haystack))
+    x <- vctrs::vec_c(!!!x)
+  } else {
+    x <- vctrs::vec_match(needle, haystack)
+    x[!is.na(x)]
+  }
 }
 
 grep_vars <- function(needle, haystack, ...) {

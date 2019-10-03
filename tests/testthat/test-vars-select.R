@@ -9,11 +9,11 @@ test_that("last rename wins", {
   vars <- c("a", "b")
   expect_equal(
     expect_warning(
-      vars_select(vars, b = a, c = a),
-      "being renamed to \`b\` and \`c\`",
+      vars_select(vars, c = a, d = a),
+      "being renamed to \`c\` and \`d\`",
       fixed = TRUE
     ),
-    c("c" = "a")
+    c("d" = "a")
   )
 })
 
@@ -138,8 +138,8 @@ test_that("missing values are detected in vars_select() (#72)", {
 
 test_that("can use helper within c() (#91)", {
   expect_identical(
-    vars_select(letters, c(b = z, everything())),
-    vars_select(letters, b = z, everything())
+    vars_select(letters, c(B = z, everything())),
+    vars_select(letters, B = z, everything())
   )
 })
 
@@ -154,4 +154,56 @@ test_that("vars_select() supports S3 vectors (#109)", {
 
 test_that("can rename and select at the same time", {
   expect_identical(vars_select(letters, c(1, a = 1, 1)), c(a = "a"))
+})
+
+test_that("vars_select() supports redundantly named vectors", {
+  expect_identical(vars_select(c("a", "b", "a"), b), c(b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), a), c(a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), a, b), c(a = "a", a = "a", b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), b, a), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), c(b, a)), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), c(b = "b", a = "a", a = "a"))
+})
+
+test_that("select helpers support redundantly named vectors", {
+  expect_identical(vars_select(c("a", "b", "a"), everything()), c(a = "a", b = "b", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), starts_with("a")), c(a = "a", a = "a"))
+  expect_identical(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), c(b = "b", a = "a", a = "a"))
+  expect_identical(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), c(b = "b", a1 = "a1", a1 = "a1", a2 = "a2"))
+})
+
+test_that("vars_select() can drop duplicate names by position (#94)", {
+  expect_identical(vars_select(c("a", "b", "a"), 2), c(b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), -3), c(a = "a", b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), -1), c(b = "b", a = "a"))
+})
+
+test_that("vars_select() can rename variables", {
+  expect_identical(vars_select(letters[1:2], a = b), c(a = "b"))
+  expect_identical(vars_select(letters[1:2], a = b, b = a), c(a = "b", b = "a"))
+  expect_identical(vars_select(letters[1:2], a = b, a = b), c(a = "b"))
+})
+
+test_that("vars_select() can rename existing duplicates", {
+  expect_identical(vars_select(c("a", "b", "a"), b = a, a = b), c(b = "a", b = "a", a = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b = "a", b = "a"))
+})
+
+test_that("vars_select() fails when renaming to existing name", {
+  expect_error(vars_select(letters[1:2], a, a = b), class = "tidyselect_error_rename_to_existing")
+})
+
+test_that("vars_select() fails when renaming to same name", {
+  expect_error(vars_select(letters[1:3], a = b, a = c), class = "tidyselect_error_rename_to_same")
+  expect_error(vars_select(letters[1:2], A = a, A = b), class = "tidyselect_error_rename_to_same")
+})
+
+test_that("vars_select() fails informatively", {
+  verify_output(test_path("outputs", "vars-select-renaming-to-same.txt"), {
+    "Renaming to same:"
+    vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e)
+
+    "Renaming to existing:"
+    vars_select(letters, a = b, ok = c, d = e, everything())
+  })
 })

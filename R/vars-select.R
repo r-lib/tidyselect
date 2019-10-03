@@ -47,6 +47,14 @@
 #'   reasons there can only be one target name. If the same variable
 #'   is renamed to different names, tidyselect issues this warning.
 #'
+#' `vars_select()` signals the following conditions.
+#'
+#' * `tidyselect_error_rename_to_same`: Renaming multiple variables to
+#'   the same name is an error.
+#'
+#' * `tidyselect_error_rename_to_existing`: Renaming a variable to an
+#'   existing name is an error.
+#'
 #' @seealso [vars_pull()]
 #' @export
 #' @keywords internal
@@ -162,8 +170,10 @@ vars_select <- function(.vars, ...,
 
   incl <- inds_combine(.vars, ind_list)
 
-  # Include/.exclude specified variables
+  # Returned names must be unique
   sel <- set_names(.vars[incl], names(incl))
+
+  # Include/.exclude specified variables
   sel <- c(setdiff2(.include, sel), sel)
   sel <- setdiff2(sel, .exclude)
 
@@ -224,7 +234,17 @@ inds_combine <- function(vars, inds) {
   walk(inds, ind_check)
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
 
-  inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = "{outer}{inner}")
+  # Don't suffix existing duplicate with a sequential suffix
+  dups <- purrr::map_lgl(inds, is_data_dups)
+  spec <- function(outer, inner) {
+    if (dups[[outer[[1]]]]) {
+      outer
+    } else {
+      paste0(outer, inner)
+    }
+  }
+
+  inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = spec)
   inds <- inds[inds != 0]
 
   if (first_negative) {
@@ -249,9 +269,12 @@ inds_combine <- function(vars, inds) {
   }
 
   names(incl) <- names2(incl)
-  unnamed <- names(incl) == ""
-  names(incl)[unnamed] <- vars[incl[unnamed]]
+  unrenamed <- names(incl) == ""
+  unrenamed_vars <- vars[incl[unrenamed]]
 
+  inds_check(inds, vars, incl, dups, unrenamed, unrenamed_vars)
+
+  names(incl)[unrenamed] <- unrenamed_vars
   incl
 }
 
@@ -269,8 +292,7 @@ inds_unique <- function(x, vars) {
 }
 
 ind_last_name <- function(x, vars) {
-  names <- names(x)
-  names <- names[names != ""]
+  names <- str_compact(names(x))
 
   if (length(names) == 0) {
     return("")
@@ -303,6 +325,51 @@ ind_check <- function(x) {
 
   if (any(positive != positive[[1]])) {
     abort("Each argument must yield either positive or negative integers.")
+  }
+}
+
+inds_check <- function(x, vars, incl, dups, unrenamed, unrenamed_vars) {
+  renamers <- names(incl)[!unrenamed]
+
+  # Below we check that variables are renamed to a unique name. But we
+  # also want to allow renaming existing duplicates, which we remove
+  # from the checking set here.
+  if (any(dups)) {
+    ok <- names(dups)[dups]
+    renamers <- renamers[!renamers %in% ok]
+  }
+
+  if (vctrs::vec_duplicate_any(renamers)) {
+    dups <- vctrs::vec_duplicate_detect(renamers)
+    dups <- vctrs::vec_unique(renamers[dups])
+
+    probs <- map_chr(dups, function(dup) {
+      cols <- vars[incl[names(incl) == dup]]
+      cols <- glue::backtick(cols)
+      cols <- glue::glue_collapse(cols, sep = ", ", last = " and ")
+      glue::glue("* Columns {cols} are being renamed to `{dup}`.")
+    })
+    msg <- paste_line(
+      "Must use unique names when renaming columns.",
+      !!!probs
+    )
+
+    abort(msg, "tidyselect_error_rename_to_same")
+  }
+
+  if (any(vctrs::vec_in(renamers, unrenamed_vars))) {
+    dups <- unrenamed_vars[match(renamers, unrenamed_vars, 0L)]
+
+    probs <- map_chr(dups, function(dup) {
+      col <- vars[[incl[[dup]]]]
+      glue::glue("* Column `{col}` is being renamed to existing column `{dup}`.")
+    })
+    msg <- paste_line(
+      "Must use unique name when renaming columns.",
+      !!!probs
+    )
+
+    abort(msg, "tidyselect_error_rename_to_existing")
   }
 }
 
@@ -357,12 +424,16 @@ vars_select_eval <- function(vars, quos) {
   # Peek validated variables
   vars <- peek_vars()
 
-  # Create data mask
-  empty_names <- are_empty_name(vars)
-  bottom_data <- set_names(seq_along(vars), vars)[!empty_names]
+  vars_split <- vctrs::vec_split(seq_along(vars), vars)
+
+  # Mark data duplicates to differentiate them from overlapping selections
+  vars_split$val <- map(vars_split$val, mark_data_dups)
+
+  # We are intentionally lenient towards partially named inputs
+  vars_split <- vctrs::vec_slice(vars_split, !are_empty_name(vars_split$key))
 
   top <- env()
-  bottom <- env(top, !!!bottom_data)
+  bottom <- env(top, !!!set_names(vars_split$val, vars_split$key))
   data_mask <- new_data_mask(bottom, top)
   data_mask$.data <- as_data_pronoun(data_mask)
 
@@ -542,4 +613,15 @@ match_strings <- function(x, vars = peek_vars()) {
 
 setdiff2 <- function(x, y) {
   x[match(x, y, 0L) == 0L]
+}
+
+mark_data_dups <- function(x) {
+  if (length(x) > 1L) {
+    structure(x, tidyselect_data_dups = TRUE)
+  } else {
+    x
+  }
+}
+is_data_dups <- function(x) {
+  is_true(attr(x, "tidyselect_data_dups"))
 }
