@@ -272,7 +272,19 @@ inds_combine <- function(vars, inds) {
   unrenamed <- names(incl) == ""
   unrenamed_vars <- vars[incl[unrenamed]]
 
-  inds_check(inds, vars, incl, dups, unrenamed, unrenamed_vars)
+  # Below we check that variables are renamed to a unique name. But we
+  # also want to allow renaming existing duplicates, which we remove
+  # from the checking set here.
+  to <- names(incl)[!unrenamed]
+  if (any(dups)) {
+    to <- to[!to %in% names(dups)[dups]]
+  }
+  rename_check(
+    to = to,
+    vars = unrenamed_vars,
+    orig = vars,
+    incl = incl
+  )
 
   names(incl)[unrenamed] <- unrenamed_vars
   incl
@@ -328,23 +340,13 @@ ind_check <- function(x) {
   }
 }
 
-inds_check <- function(x, vars, incl, dups, unrenamed, unrenamed_vars) {
-  renamers <- names(incl)[!unrenamed]
-
-  # Below we check that variables are renamed to a unique name. But we
-  # also want to allow renaming existing duplicates, which we remove
-  # from the checking set here.
-  if (any(dups)) {
-    ok <- names(dups)[dups]
-    renamers <- renamers[!renamers %in% ok]
-  }
-
-  if (vctrs::vec_duplicate_any(renamers)) {
-    dups <- vctrs::vec_duplicate_detect(renamers)
-    dups <- vctrs::vec_unique(renamers[dups])
+rename_check <- function(to, vars, orig, incl) {
+  if (vctrs::vec_duplicate_any(to)) {
+    dups <- vctrs::vec_duplicate_detect(to)
+    dups <- vctrs::vec_unique(to[dups])
 
     probs <- map_chr(dups, function(dup) {
-      cols <- vars[incl[names(incl) == dup]]
+      cols <- orig[incl[names(incl) == dup]]
       cols <- glue::backtick(cols)
       cols <- glue::glue_collapse(cols, sep = ", ", last = " and ")
       glue::glue("* Columns {cols} are being renamed to `{dup}`.")
@@ -357,11 +359,11 @@ inds_check <- function(x, vars, incl, dups, unrenamed, unrenamed_vars) {
     abort(msg, "tidyselect_error_rename_to_same")
   }
 
-  if (any(vctrs::vec_in(renamers, unrenamed_vars))) {
-    dups <- unrenamed_vars[match(renamers, unrenamed_vars, 0L)]
+  if (any(vctrs::vec_in(to, vars))) {
+    dups <- vars[match(to, vars, 0L)]
 
     probs <- map_chr(dups, function(dup) {
-      col <- vars[[incl[[dup]]]]
+      col <- orig[[incl[[dup]]]]
       glue::glue("* Column `{col}` is being renamed to existing column `{dup}`.")
     })
     msg <- paste_line(
