@@ -55,8 +55,8 @@
 * `vars_rename()` no longer ignore the names of unquoted character
   vectors of length 1 (#79).
 
-* `vars_rename()` no longer creates duplicates when a variable is
-  renamed to an existing name (#70).
+* `vars_rename()` now fails when a variable is renamed to an existing
+  name (#70).
 
 * `vars_select()`, `vars_rename()` and `vars_pull()` now detect
   missing values uniformly (#72).

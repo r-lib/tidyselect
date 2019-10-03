@@ -84,6 +84,54 @@ test_that("vars_rename() supports named character vectors of length 1 (#77)", {
   expect_identical(vars_rename(letters[1:3], !!c(B = "b")), c(a = "a", B = "b", c = "c"))
 })
 
-test_that("vars_rename() does not return duplicates (#70)", {
-  expect_identical(vars_rename(c("a", "b", "c"), b = c), c(a = "a", b = "c"))
+test_that("vars_rename() allows consecutive renames", {
+  expect_identical(vars_rename(c("a", "b", "c"), foo = a, bar = a), c(bar = "a", b = "b", c = "c"))
+})
+
+test_that("vars_rename() disallows renaming to same column", {
+  expect_error(
+    vars_rename(c("a", "b", "c"), foo = a, foo = b),
+    class = "tidyselect_error_rename_to_same"
+  )
+  expect_error(
+    vars_rename(c("a", "b", "c"), c = a, c = b),
+    class = "tidyselect_error_rename_to_same"
+  )
+
+  verify_output(test_path("outputs", "vars-rename-error-rename-to-same.txt"), {
+    "New column"
+    vars_rename(c("a", "b", "c"), foo = a, foo = b)
+
+    "Existing column"
+    vars_rename(c("a", "b", "c"), c = a, c = b)
+  })
+})
+
+test_that("vars_rename() allows overlapping renames", {
+  expect_identical(vars_rename(c("a", "b", "c"), b = c, c = b), c(a = "a", c = "b", b = "c"))
+})
+
+test_that("vars_rename() disallows renaming to existing columns (#70)", {
+  expect_error(
+    vars_rename(c("a", "b", "c"), b = a),
+    class = "tidyselect_error_rename_to_existing"
+  )
+  expect_error(
+    vars_rename(c("a", "b", "c", "d"), c = a, d = b),
+    class = "tidyselect_error_rename_to_existing"
+  )
+  expect_error(
+    vars_rename(c("a", "b", "c"), b = a, c = b),
+    class = "tidyselect_error_rename_to_existing"
+  )
+  verify_output(test_path("outputs", "vars-rename-error-rename-to-existing.txt"), {
+    "One column"
+    vars_rename(c("a", "b", "c"), b = a)
+
+    "Multiple columns"
+    vars_rename(c("a", "b", "c", "d"), c = a, d = b)
+
+    "Overlapping rename with one duplicate column"
+    vars_rename(c("a", "b", "c"), b = a, c = b)
+  })
 })
