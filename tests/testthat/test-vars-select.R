@@ -199,15 +199,11 @@ test_that("vars_select() fails when renaming to same name", {
 })
 
 test_that("vars_select() fails informatively", {
-  expect_known_output(file = test_path("outputs", "vars-select-renaming-to-same.txt"), {
-    try2(
-      "Renaming to same:",
-      vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e)
-    )
+  verify_output(test_path("outputs", "vars-select-renaming-to-same.txt"), {
+    "Renaming to same:"
+    vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e)
 
-    try2(
-      "Renaming to existing:",
-      vars_select(letters, a = b, ok = c, d = e, everything())
-    )
+    "Renaming to existing:"
+    vars_select(letters, a = b, ok = c, d = e, everything())
   })
 })
