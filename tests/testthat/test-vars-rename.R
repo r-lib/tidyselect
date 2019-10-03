@@ -135,3 +135,7 @@ test_that("vars_rename() disallows renaming to existing columns (#70)", {
     vars_rename(c("a", "b", "c"), b = a, c = b)
   })
 })
+
+test_that("vars_rename() ignores existing duplicates", {
+  expect_identical(vars_rename(c("a", "b", "a"), foo = b), c(a = "a", foo = "b", a = "a"))
+})

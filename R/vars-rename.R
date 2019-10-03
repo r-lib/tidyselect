@@ -56,10 +56,15 @@ quo_is_character <- function(quo, n = NULL) {
 vars_rename_eval <- function(quos, vars) {
   scoped_vars(vars)
 
+  # Mark data duplicates to differentiate them from overlapping selections
+  vars_split <- vctrs::vec_split(seq_along(vars), vars)
+  vars_split$val <- map(vars_split$val, mark_data_dups)
+  data <- set_names(vars_split$val, vars_split$key)
+
+  mask <- as_data_mask(data)
+
   # Only symbols have data in scope
   is_symbol <- map_lgl(quos, is_symbol_expr)
-  data <- set_names(as.list(seq_along(vars)), vars)
-  mask <- as_data_mask(data)
   renamed <- map_if(quos, is_symbol, eval_tidy, mask)
 
   # All expressions are evaluated in the context only
