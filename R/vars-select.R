@@ -144,6 +144,7 @@ vars_select <- function(.vars, ...,
   }
 
   ind_list <- vars_select_eval(.vars, quos)
+  check_missing(ind_list, quos)
 
   # This takes care of NULL inputs and of ignored errors when
   # `.strict` is FALSE
@@ -445,10 +446,7 @@ vars_select_eval <- function(vars, quos) {
   context_mask <- new_data_mask(env())
   context_mask$.data <- data_mask$.data
 
-  inds <- map(quos, walk_data_tree, data_mask, context_mask)
-
-  check_missing(inds, quos)
-  inds
+  map(quos, walk_data_tree, data_mask, context_mask)
 }
 
 # `walk_data_tree()` is a recursive interpreter that implements a
