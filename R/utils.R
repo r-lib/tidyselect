@@ -109,7 +109,3 @@ last <- function(x) {
 str_compact <- function(x) {
   x[x != ""]
 }
-
-vec_index_is_empty <- function(x) {
-  !length(x) || all(x == 0L)
-}

@@ -1,6 +1,7 @@
 context("rename vars")
 
 test_that("when .strict = FALSE, vars_rename always succeeds", {
+  skip("FIXME")
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
     "object 'e' not found",
@@ -37,23 +38,19 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
 
 test_that("vars_rename() works with positions", {
   expect_identical(vars_rename(letters[1:4], new1 = 2, new2 = 4), c(a = "a", new1 = "b", c = "c", new2 = "d"))
-  expect_error(vars_rename(letters, new = 1.5), "Column positions must be round numbers")
+  expect_error(vars_rename(letters, new = 1.5), "must evaluate to column positions or names")
 })
 
+# FIXME: Improve error message
 test_that("vars_rename() expects symbol or string", {
   expect_error(
     vars_rename(letters, d = !! list()),
-    '`d` = list() must be a column name or position, not a list',
-    fixed = TRUE
+    "must evaluate to"
   )
 })
 
 test_that("vars_rename() sets variable context", {
   expect_identical(vars_rename(c("a", "b"), B = one_of("b")), c(a = "a", B = "b"))
-})
-
-test_that("vars_rename() fails with vectors", {
-  expect_error(vars_rename(letters, A = 1:2), "Column positions must be scalar")
 })
 
 test_that("vars_rename() supports `.data` pronoun", {
@@ -62,8 +59,9 @@ test_that("vars_rename() supports `.data` pronoun", {
 
 test_that("vars_rename() unquotes named character vectors", {
   vars <- c(foo = "a", bar = "z")
-  expect_identical(vars_rename(letters, !!! vars), vars_rename(letters, foo = a, bar = z))
-  expect_identical(vars_rename(letters, !! vars), vars_rename(letters, foo = a, bar = z))
+  expect_identical(vars_rename(letters, !!!vars), vars_rename(letters, foo = a, bar = z))
+  expect_identical(vars_rename(letters, !!vars), vars_rename(letters, foo = a, bar = z))
+  expect_error(vars_rename(letters, foo = !!vars), class = "tidyselect_error_rename_to_same")
 })
 
 test_that("missing values are detected in vars_rename() (#72)", {
@@ -89,6 +87,10 @@ test_that("vars_rename() allows consecutive renames", {
 })
 
 test_that("vars_rename() disallows renaming to same column", {
+  expect_error(
+    vars_rename(letters, A = 1:2),
+    class = "tidyselect_error_rename_to_same"
+  )
   expect_error(
     vars_rename(c("a", "b", "c"), foo = a, foo = b),
     class = "tidyselect_error_rename_to_same"
@@ -138,4 +140,13 @@ test_that("vars_rename() disallows renaming to existing columns (#70)", {
 
 test_that("vars_rename() ignores existing duplicates", {
   expect_identical(vars_rename(c("a", "b", "a"), foo = b), c(a = "a", foo = "b", a = "a"))
+})
+
+test_that("vars_rename() renames existing duplicates", {
+  expect_identical(vars_rename(c("a", "b", "a"), a = b, b = a), c(b = "a", a = "b", b = "a"))
+})
+
+test_that("vars_rename() can fix duplicates by supplying positions", {
+  # Will be useful when we return indices
+  expect_identical(vars_rename(c("a", "b", "a"), c = 3), c(a = "a", b = "b", c = "a"))
 })

@@ -58,6 +58,9 @@
 * `vars_rename()` now fails when a variable is renamed to an existing
   name (#70).
 
+* `vars_rename()` has better support for existing duplicates (but
+  creating new duplicates is an error).
+
 * `vars_select()`, `vars_rename()` and `vars_pull()` now detect
   missing values uniformly (#72).
 
