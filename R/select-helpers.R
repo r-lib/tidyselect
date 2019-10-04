@@ -158,7 +158,7 @@ match_vars <- function(needle, haystack) {
     x <- map(needle, ~ which(. == haystack))
     x <- vctrs::vec_c(!!!x)
   } else {
-    x <- vctrs::vec_match(needle, haystack)
+    x <- match(needle, haystack)
     x[!is.na(x)]
   }
 }
