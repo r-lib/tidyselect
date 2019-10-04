@@ -37,23 +37,34 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
 }
 
 vars_rename_eval <- function(quos, vars) {
-  scoped_vars(vars)
+  is_symbolic <- map_lgl(quos, quo_is_symbolic)
 
-  # Mark data duplicates to differentiate them from overlapping selections
-  vars_split <- vctrs::vec_split(seq_along(vars), vars)
-  vars_split$val <- map(vars_split$val, mark_data_dups)
-  data <- set_names(vars_split$val, vars_split$key)
+  if (any(is_symbolic)) {
+    scoped_vars(vars)
 
-  mask <- as_data_mask(data)
+    # Mark data duplicates to differentiate them from overlapping selections
+    vars_split <- vctrs::vec_split(seq_along(vars), vars)
+    vars_split$val <- map(vars_split$val, mark_data_dups)
+    data <- set_names(vars_split$val, vars_split$key)
 
-  # Only symbols have data in scope
-  is_symbol <- map_lgl(quos, is_symbol_expr)
-  renamed <- map_if(quos, is_symbol, eval_tidy, mask)
+    mask <- as_data_mask(data)
+  } else {
+    mask <- NULL
+  }
 
-  # All expressions are evaluated in the context only
-  renamed <- map_if(renamed, !is_symbol, eval_tidy)
+  map(quos, expr_rename_eval, mask)
+}
 
-  renamed
+expr_rename_eval <- function(quo, mask) {
+  # Only symbols have data in scope. All expressions are evaluated in
+  # the context only.
+  if (is_symbol_expr(quo)) {
+    eval_tidy(quo, mask)
+  } else if (quo_is_call(quo)) {
+    eval_tidy(quo)
+  } else {
+    quo_get_expr(quo)
+  }
 }
 is_symbol_expr <- function(quo) {
   expr <- get_expr(quo)
