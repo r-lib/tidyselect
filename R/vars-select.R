@@ -277,18 +277,12 @@ inds_combine <- function(vars, inds) {
   unrenamed <- names(incl) == ""
   unrenamed_vars <- vars[incl[unrenamed]]
 
-  # Below we check that variables are renamed to a unique name. But we
-  # also want to allow renaming existing duplicates, which we remove
-  # from the checking set here.
-  to <- names(incl)[!unrenamed]
-  if (any(dups)) {
-    to <- to[!to %in% names(dups)[dups]]
-  }
   rename_check(
-    to = to,
+    to = names(incl)[!unrenamed],
     vars = unrenamed_vars,
     orig = vars,
-    incl = incl
+    incl = incl,
+    dups = dups
   )
 
   names(incl)[unrenamed] <- unrenamed_vars
@@ -345,7 +339,14 @@ ind_check <- function(x) {
   }
 }
 
-rename_check <- function(to, vars, orig, incl) {
+rename_check <- function(to, vars, orig, incl, dups) {
+  # We check that variables are renamed to a unique name but we also
+  # want to allow renaming existing duplicates. We remove those from
+  # the checking set here.
+  if (any(dups)) {
+    to <- to[!to %in% names(dups)[dups]]
+  }
+
   if (vctrs::vec_duplicate_any(to)) {
     dups <- vctrs::vec_duplicate_detect(to)
     dups <- vctrs::vec_unique(to[dups])

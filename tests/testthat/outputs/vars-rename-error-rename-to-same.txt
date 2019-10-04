@@ -1,0 +1,8 @@
+> # New column
+> vars_rename(c("a", "b", "c"), foo = a, foo = b)
+Error: Must use unique names when renaming columns.
+* Columns `a` and `b` are being renamed to `foo`.
+> # Existing column
+> vars_rename(c("a", "b", "c"), c = a, c = b)
+Error: Must use unique names when renaming columns.
+* Columns `a` and `b` are being renamed to `c`.
