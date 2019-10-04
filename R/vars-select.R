@@ -427,31 +427,40 @@ quo_is_concat_call <- function(quo) {
 }
 
 vars_select_eval <- function(vars, quos) {
-  scoped_vars(vars)
+  is_symbolic <- map_lgl(quos, quo_is_symbolic)
 
-  # Peek validated variables
-  vars <- peek_vars()
+  if (any(is_symbolic)) {
+    scoped_vars(vars)
 
-  vars_split <- vctrs::vec_split(seq_along(vars), vars)
+    # Peek validated variables
+    vars <- peek_vars()
 
-  # Mark data duplicates to differentiate them from overlapping selections
-  vars_split$val <- map(vars_split$val, mark_data_dups)
+    vars_split <- vctrs::vec_split(seq_along(vars), vars)
 
-  # We are intentionally lenient towards partially named inputs
-  vars_split <- vctrs::vec_slice(vars_split, !are_empty_name(vars_split$key))
+    # Mark data duplicates to differentiate them from overlapping selections
+    vars_split$val <- map(vars_split$val, mark_data_dups)
 
-  top <- env()
-  bottom <- env(top, !!!set_names(vars_split$val, vars_split$key))
-  data_mask <- new_data_mask(bottom, top)
-  data_mask$.data <- as_data_pronoun(data_mask)
+    # We are intentionally lenient towards partially named inputs
+    vars_split <- vctrs::vec_slice(vars_split, !are_empty_name(vars_split$key))
 
-  # Add `.data` pronoun in the context mask even though it doesn't
-  # contain data. This way the pronoun can be used in any parts of the
-  # expression.
-  context_mask <- new_data_mask(env())
-  context_mask$.data <- data_mask$.data
+    top <- env()
+    bottom <- env(top, !!!set_names(vars_split$val, vars_split$key))
+    data_mask <- new_data_mask(bottom, top)
+    data_mask$.data <- as_data_pronoun(data_mask)
 
-  map(quos, walk_data_tree, data_mask, context_mask)
+    # Add `.data` pronoun in the context mask even though it doesn't
+    # contain data. This way the pronoun can be used in any parts of the
+    # expression.
+    context_mask <- new_data_mask(env())
+    context_mask$.data <- data_mask$.data
+  }
+
+  map_if(
+    quos,
+    is_symbolic,
+    ~ walk_data_tree(., data_mask, context_mask),
+    .else = ~ as_indices(quo_get_expr(.), vars = vars)
+  )
 }
 
 # `walk_data_tree()` is a recursive interpreter that implements a
@@ -482,13 +491,17 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     eval_context(expr, context_mask)
   )
 
-  if (is.object(out)) {
-    out <- ind_coerce(out)
+  as_indices(out)
+}
+
+as_indices <- function(x, vars = peek_vars()) {
+  if (is.object(x)) {
+    x <- ind_coerce(x)
   }
-  if (is_character(out)) {
-    match_strings(out)
+  if (is_character(x)) {
+    match_strings(x, vars = vars)
   } else {
-    out
+    x
   }
 }
 
