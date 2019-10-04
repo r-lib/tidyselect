@@ -447,6 +447,7 @@ vars_select_eval <- function(vars, quos) {
     bottom <- env(top, !!!set_names(vars_split$val, vars_split$key))
     data_mask <- new_data_mask(bottom, top)
     data_mask$.data <- as_data_pronoun(data_mask)
+    data_mask$.vars <- vars
 
     # Add `.data` pronoun in the context mask even though it doesn't
     # contain data. This way the pronoun can be used in any parts of the
@@ -491,10 +492,10 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     eval_context(expr, context_mask)
   )
 
-  as_indices(out)
+  as_indices(out, vars = data_mask$.vars)
 }
 
-as_indices <- function(x, vars = peek_vars()) {
+as_indices <- function(x, vars) {
   if (is.object(x)) {
     x <- ind_coerce(x)
   }
