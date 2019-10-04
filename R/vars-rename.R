@@ -45,15 +45,17 @@ vars_rename_eval <- function(quos, vars) {
   data <- set_names(vars_split$val, vars_split$key)
 
   mask <- as_data_mask(data)
+  map(quos, expr_rename_eval, mask)
+}
 
-  # Only symbols have data in scope
-  is_symbol <- map_lgl(quos, is_symbol_expr)
-  renamed <- map_if(quos, is_symbol, eval_tidy, mask)
-
-  # All expressions are evaluated in the context only
-  renamed <- map_if(renamed, !is_symbol, eval_tidy)
-
-  renamed
+expr_rename_eval <- function(quo, mask) {
+  # Only symbols have data in scope. All expressions are evaluated in
+  # the context only.
+  if (is_symbol_expr(quo)) {
+    eval_tidy(quo, mask)
+  } else {
+    eval_tidy(quo)
+  }
 }
 is_symbol_expr <- function(quo) {
   expr <- get_expr(quo)
