@@ -21,15 +21,12 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
     abort("All arguments must be named")
   }
 
-  to <- names(inds)
-  if (any(dups)) {
-    to <- to[!to %in% names(dups)[dups]]
-  }
   rename_check(
-    to = to,
+    to = names(inds),
     vars = .vars[-inds],
     orig = .vars,
-    incl = inds
+    incl = inds,
+    dups = dups
   )
 
   # Ideally we'd just return `inds` instead of the full vector of
