@@ -23,7 +23,7 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
 
   rename_check(
     to = names(inds),
-    vars = .vars[-inds],
+    vars = .vars[vec_index_invert(inds)],
     orig = .vars,
     incl = inds,
     dups = dups

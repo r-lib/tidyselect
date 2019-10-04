@@ -150,3 +150,9 @@ test_that("vars_rename() can fix duplicates by supplying positions", {
   # Will be useful when we return indices
   expect_identical(vars_rename(c("a", "b", "a"), c = 3), c(a = "a", b = "b", c = "a"))
 })
+
+test_that("vars_rename() handles empty inputs", {
+  expect_identical(vars_rename(letters), set_names(letters))
+  expect_identical(vars_rename(letters, int()), set_names(letters))
+  expect_identical(vars_rename(letters, chr()), set_names(letters))
+})
