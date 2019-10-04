@@ -175,8 +175,12 @@ vars_select <- function(.vars, ...,
   sel <- set_names(.vars[incl], names(incl))
 
   # Include/.exclude specified variables
-  sel <- c(setdiff2(.include, sel), sel)
-  sel <- setdiff2(sel, .exclude)
+  if (length(.include)) {
+    sel <- c(setdiff2(.include, sel), sel)
+  }
+  if (length(.exclude)) {
+    sel <- setdiff2(sel, .exclude)
+  }
 
   # Ensure all output .vars named
   if (is_empty(sel)) {
