@@ -1,0 +1,7 @@
+> # Bare names
+> vars_select(letters, foo)
+Error: Must index existing elements.
+* Can't subset element with unknown name `foo`.
+> vars_select(letters, -foo)
+Error: Must index existing elements.
+* Can't subset element with unknown name `foo`.

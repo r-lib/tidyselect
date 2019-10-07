@@ -609,7 +609,8 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
     return(value)
   }
 
-  abort(glue::glue("object '{name}' not found"))
+  # FIXME: export `stop_bad_position()`?
+  vctrs::vec_as_position(name, 0L, names = character())
 }
 
 # This feature is in the "regret" lifecycle stage

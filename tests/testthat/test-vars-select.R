@@ -207,3 +207,14 @@ test_that("vars_select() fails informatively when renaming to same", {
     vars_select(letters, a = b, ok = c, d = e, everything())
   })
 })
+
+test_that("vars_select() has consistent position errors", {
+  expect_error(vars_select(letters, foo), class = "vctrs_error_index_oob_names")
+  expect_error(vars_select(letters, -foo), class = "vctrs_error_index_oob_names")
+
+  verify_output(test_path("outputs", "vars-select-oob-errors.txt"), {
+    "Bare names"
+    vars_select(letters, foo)
+    vars_select(letters, -foo)
+  })
+})
