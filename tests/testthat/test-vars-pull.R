@@ -43,5 +43,5 @@ test_that("missing values are detected in vars_pull() (#72)", {
 
 test_that("can pull with strings", {
   expect_identical(vars_pull(letters, "b"), vars_pull(letters, b))
-  expect_error(vars_pull(letters, "foo"), "Unknown column")
+  expect_error(vars_pull(letters, "foo"), class = "vctrs_error_index_oob_names")
 })

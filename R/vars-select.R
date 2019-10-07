@@ -611,13 +611,7 @@ match_strings <- function(x, vars = peek_vars()) {
     return(x)
   }
 
-  out <- match(x, vars)
-
-  if (any(are_na(out) & !is.na(x))) {
-    unknown <- x[are_na(out)]
-    bad_unknown_vars(vars, unknown)
-  }
-
+  out <- vctrs::vec_as_index(x, length(vars), names = vars)
   set_names(out, names(x))
 }
 
