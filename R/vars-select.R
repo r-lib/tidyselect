@@ -261,15 +261,7 @@ inds_combine <- function(vars, inds) {
   excl <- abs(inds[inds < 0])
   incl <- incl[is.na(match(incl, excl))]
 
-  bad_idx <- incl > length(vars)
-  if (any(bad_idx)) {
-    where <- incl[which(bad_idx)]
-    where <- glue::glue_collapse(where, sep = ", ", last = " and ")
-    abort(glue::glue(
-      "Can't select column because the data frame is too small.
-       These indices are too large: { where }"
-    ))
-  }
+  incl <- vctrs::vec_as_index(incl, length(vars))
 
   names(incl) <- names2(incl)
   unrenamed <- names(incl) == ""

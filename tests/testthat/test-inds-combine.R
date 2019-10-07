@@ -78,7 +78,6 @@ test_that("invalid inputs raise error", {
   )
   expect_error(
     inds_combine(names(mtcars), list(12, 30, 50)),
-    "These indices are too large: 12, 30 and 50",
-    fixed = TRUE
+    class = "vctrs_error_index_oob_positions"
   )
 })

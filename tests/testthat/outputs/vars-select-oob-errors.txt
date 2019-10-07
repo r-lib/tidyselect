@@ -5,3 +5,8 @@ Error: Must index existing elements.
 > vars_select(letters, -foo)
 Error: Must index existing elements.
 * Can't subset element with unknown name `foo`.
+> # Positions
+> vars_select(letters, 30, 50, 100)
+Error: Must index existing elements.
+* There are only 26 elements.
+* Can't subset positions 30, 50 and 100.
