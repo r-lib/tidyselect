@@ -198,7 +198,7 @@ test_that("vars_select() fails when renaming to same name", {
   expect_error(vars_select(letters[1:2], A = a, A = b), class = "tidyselect_error_rename_to_same")
 })
 
-test_that("vars_select() fails informatively", {
+test_that("vars_select() fails informatively when renaming to same", {
   verify_output(test_path("outputs", "vars-select-renaming-to-same.txt"), {
     "Renaming to same:"
     vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e)
