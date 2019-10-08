@@ -17,3 +17,7 @@ Error: Must index existing elements.
 Error: Must index existing elements.
 * There are only 26 elements.
 * Can't subset positions 30, 50 and 100.
+> vars_select(letters, -100)
+Error: Must index existing elements.
+* There are only 26 elements.
+* Can't subset position 100.

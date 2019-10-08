@@ -120,3 +120,8 @@ vec_index_invert <- function(x) {
 vec_index_is_empty <- function(x) {
   !length(x) || all(x == 0L)
 }
+
+# https://github.com/r-lib/vctrs/issues/548
+set_diff <- function(x, y) {
+  vctrs::vec_slice(x, !vctrs::vec_in(x, y))
+}

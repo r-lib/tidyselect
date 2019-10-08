@@ -234,7 +234,6 @@ check_integerish <- function(x, exprs, vars) {
 }
 
 inds_combine <- function(vars, inds) {
-  walk(inds, ind_check)
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
 
   # Don't suffix existing duplicate with a sequential suffix
@@ -248,20 +247,26 @@ inds_combine <- function(vars, inds) {
   }
 
   inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = spec)
-  inds <- inds[inds != 0]
+
+  dir <- vec_split_id_direction(inds)
+  pos <- match("pos", dir$key)
+  neg <- match("neg", dir$key)
 
   if (first_negative) {
     incl <- seq_along(vars)
-  } else {
-    incl <- inds[inds > 0]
+  } else if (!is.na(pos)) {
+    incl <- inds[dir$id[[pos]]]
+    incl <- vctrs::vec_as_index(incl, length(vars))
     incl <- inds_unique(incl, vars)
+  } else {
+    incl <- integer()
   }
 
-  # Remove variables to be excluded (setdiff loses names)
-  excl <- abs(inds[inds < 0])
-  incl <- incl[is.na(match(incl, excl))]
-
-  incl <- vctrs::vec_as_index(incl, length(vars))
+  if (!is.na(neg)) {
+    excl <- -inds[dir$id[[neg]]]
+    excl <- vctrs::vec_as_index(excl, length(vars))
+    incl <- set_diff(incl, excl)
+  }
 
   names(incl) <- names2(incl)
   unrenamed <- names(incl) == ""
@@ -277,6 +282,12 @@ inds_combine <- function(vars, inds) {
 
   names(incl)[unrenamed] <- unrenamed_vars
   incl
+}
+
+vec_split_id_direction <- function(x) {
+  direction <- ifelse(x < 0L, 1L, 2L)
+  direction <- factor(direction, 1:2, c("neg", "pos"))
+  vctrs::vec_split_id(direction)
 }
 
 inds_unique <- function(x, vars) {
@@ -315,18 +326,6 @@ ind_last_name <- function(x, vars) {
   }
 
   last(names)
-}
-
-ind_check <- function(x) {
-  if (!length(x)) {
-    return(NULL)
-  }
-
-  positive <- x > 0
-
-  if (any(positive != positive[[1]])) {
-    abort("Each argument must yield either positive or negative integers.")
-  }
 }
 
 rename_check <- function(to, vars, orig, incl, dups) {
@@ -489,6 +488,9 @@ as_indices <- function(x, vars) {
   if (is.object(x)) {
     x <- ind_coerce(x)
   }
+
+  # Type-check strings early because it's easier. Numeric indices are
+  # checked later to get better error messages.
   if (is_character(x)) {
     match_strings(x, vars = vars)
   } else {
