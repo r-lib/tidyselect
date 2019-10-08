@@ -603,8 +603,8 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
     return(value)
   }
 
-  # FIXME: export `stop_bad_position()`?
-  vctrs::vec_as_position(name, 0L, names = character())
+  # FIXME: export `stop_bad_index()`?
+  vctrs::vec_as_index(name, 0L, names = character())
 }
 
 # This feature is in the "regret" lifecycle stage
