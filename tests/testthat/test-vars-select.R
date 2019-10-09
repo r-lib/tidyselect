@@ -121,16 +121,16 @@ test_that("can select with length > 1 double vectors (#43)", {
 })
 
 test_that("missing values are detected in vars_select() (#72)", {
-  expect_error(vars_select("foo", NA), "detected missing elements")
+  expect_error(vars_select("foo", na_cpl), class = "tidyselect_error_index_bad_type")
 
   expect_error(
-    vars_select(letters, c(1, NA), !!na_chr, !!na_int, !!na_dbl, !!na_cpl),
+    vars_select(letters, NA, c(1, NA), !!na_chr, !!na_int, !!na_dbl),
     glue(
-      "* c(1, NA)
+      "* NA
+       * c(1, NA)
        * NA_character_
        * NA_integer_
-       * NA_real_
-       * NA_complex_"
+       * NA_real_"
     ),
     fixed = TRUE
   )
@@ -145,11 +145,22 @@ test_that("can use helper within c() (#91)", {
 
 test_that("vars_select() supports S3 vectors (#109)", {
   expect_identical(vars_select(letters, !!factor(c("a", "c"))), c(a = "a", c = "c"))
+})
 
+test_that("vars_select() type-checks inputs", {
+  expect_error(
+    vars_select(letters, 2.5),
+    class = "tidyselect_error_index_bad_type"
+  )
   expect_error(
     vars_select(letters, structure(1:3, class = "tidysel_foobar")),
-    class = "tidyselect_error_incompatible_index_type"
+    class = "tidyselect_error_index_bad_type"
   )
+
+  verify_output(test_path("outputs", "vars-select-index-type.txt"), {
+    vars_select(letters, 2.5)
+    vars_select(letters, structure(1:3, class = "tidysel_foobar"))
+  })
 })
 
 test_that("can rename and select at the same time", {

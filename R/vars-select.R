@@ -165,8 +165,6 @@ vars_select <- function(.vars, ...,
     ind_list <- c(list(seq_along(.vars)), ind_list)
   }
 
-  check_integerish(ind_list, quos, .vars)
-
   incl <- inds_combine(.vars, ind_list)
 
   # Returned names must be unique
@@ -485,17 +483,37 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 }
 
 as_indices <- function(x, vars) {
-  if (is.object(x)) {
-    x <- ind_coerce(x)
+  if (is.null(x)) {
+    return(int())
   }
 
-  # Type-check strings early because it's easier. Numeric indices are
-  # checked later to get better error messages.
-  if (is_character(x)) {
-    match_strings(x, vars = vars)
-  } else {
-    x
-  }
+  x <- tryCatch(
+    vctrs::vec_coerce_position(x),
+    vctrs_error_index = function(cnd) {
+      # We type-check missing values later on
+      if (identical(cnd$i, NA)) {
+        return(NA)
+      }
+      abort("", "tidyselect_error_index_bad_type", parent = cnd)
+    }
+  )
+
+  switch(typeof(x),
+    character = match_strings(x, vars = vars),
+    logical = ,
+    double = ,
+    integer = x,
+    abort("Internal error: Unexpected type in `as_indices()`.")
+  )
+}
+
+#' @export
+cnd_issue.tidyselect_error_index_bad_type <- function(c) {
+  "Must select with column names or positions."
+}
+#' @export
+cnd_bullets.tidyselect_error_index_bad_type <- function(c) {
+  cnd_bullets(c$parent)
 }
 
 expr_kind <- function(expr) {

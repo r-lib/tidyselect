@@ -99,9 +99,12 @@ test_that("num_range selects numeric ranges", {
 
 test_that("position must resolve to numeric variables throws error", {
   expect_error(
-    vars_select(letters, !! list()),
-    'must evaluate to column positions or names',
-    fixed = TRUE
+    vars_select(letters, !!list()),
+    class = "tidyselect_error_index_bad_type"
+  )
+  expect_error(
+    vars_select(letters, !!function() NULL),
+    class = "tidyselect_error_index_bad_type"
   )
 })
 
