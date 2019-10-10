@@ -38,15 +38,7 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
 
 test_that("vars_rename() works with positions", {
   expect_identical(vars_rename(letters[1:4], new1 = 2, new2 = 4), c(a = "a", new1 = "b", c = "c", new2 = "d"))
-  expect_error(vars_rename(letters, new = 1.5), "must evaluate to column positions or names")
-})
-
-# FIXME: Improve error message
-test_that("vars_rename() expects symbol or string", {
-  expect_error(
-    vars_rename(letters, d = !! list()),
-    "must evaluate to"
-  )
+  expect_error(vars_rename(letters, new = 1.5), class = "tidyselect_error_index_bad_type")
 })
 
 test_that("vars_rename() sets variable context", {
@@ -65,14 +57,14 @@ test_that("vars_rename() unquotes named character vectors", {
 })
 
 test_that("missing values are detected in vars_rename() (#72)", {
+  expect_error(vars_rename(letters, A = na_cpl), class = "tidyselect_error_index_bad_type")
   expect_error(
-    vars_rename(letters, A = NA, B = na_chr, C = na_int, D = na_dbl, E = na_cpl),
+    vars_rename(letters, A = NA, B = na_chr, C = na_int, D = na_dbl),
     glue(
       "* NA
        * na_chr
        * na_int
-       * na_dbl
-       * na_cpl"
+       * na_dbl"
     ),
     fixed = TRUE
   )
@@ -155,4 +147,16 @@ test_that("vars_rename() handles empty inputs", {
   expect_identical(vars_rename(letters), set_names(letters))
   expect_identical(vars_rename(letters, int()), set_names(letters))
   expect_identical(vars_rename(letters, chr()), set_names(letters))
+})
+
+test_that("vars_rename() type-checks arguments", {
+  expect_error(vars_rename(letters, A = TRUE), class = "tidyselect_error_index_bad_type")
+  expect_error(vars_rename(letters, A = 1.5), class = "tidyselect_error_index_bad_type")
+  expect_error(vars_rename(letters, A = !!list()), class = "tidyselect_error_index_bad_type")
+
+  verify_output(test_path("outputs", "vars-rename-type-checking.txt"), {
+    vars_rename(letters, A = TRUE)
+    vars_rename(letters, A = 1.5)
+    vars_rename(letters, A = list())
+  })
 })

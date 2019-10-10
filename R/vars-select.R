@@ -218,19 +218,6 @@ check_missing <- function(x, exprs) {
   }
 }
 
-check_integerish <- function(x, exprs, vars) {
-  if (!every(x, is_integerish)) {
-    is_integerish <- map_lgl(x, is_integerish)
-    bad <- exprs[!is_integerish]
-    first <- x[!is_integerish][[1]]
-    first_type <- friendly_type_of(first)
-    bad_calls(bad,
-      "must evaluate to { singular(vars) } positions or names, \\
-       not { first_type }"
-    )
-  }
-}
-
 inds_combine <- function(vars, inds) {
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
 
@@ -627,10 +614,6 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
 
 # This feature is in the "regret" lifecycle stage
 match_strings <- function(x, vars = peek_vars()) {
-  if (!is_character(x)) {
-    return(x)
-  }
-
   out <- vctrs::vec_as_index(x, length(vars), names = vars)
   set_names(out, names(x))
 }
