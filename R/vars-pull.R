@@ -32,41 +32,27 @@
 #' var <- 10
 #' vars_pull(letters, !! var)
 vars_pull <- function(vars, var = -1) {
-  var_expr <- enquo(var)
-  var_env <- set_names(seq_along(vars), vars)
-  var <- eval_tidy(var_expr, var_env)
+  pos <- eval_tidy(enquo(var), set_names(seq_along(vars), vars))
+
+  # First coerce to standardise the type, and only then convert. This
+  # way we can inspect negative values of numeric positions.
+  # FIXME: Better add parameter to allow negative positions?
+  # Would produce better errors (can't subset position -100).
+  pos <- subclass_index_errors(
+    vctrs::vec_coerce_position(pos, arg = "var")
+  )
+
+  neg <- is.numeric(pos) && !is.na(pos) && pos < 0L
+  if (neg) {
+    pos <- -pos
+  }
+
   n <- length(vars)
-
-  if (length(var) == 1 && is.na(var)) {
-    what <- as_label(var_expr)
-    abort(glue("`{what}` can't be a missing value"))
-  }
-
-  # Fall degenerate values like `Inf` through integerish branch
-  if (is_double(var, 1) && !is.finite(var)) {
-    var <- na_int
-  }
-
-  if (is_string(var)) {
-    pos <- match_strings(var, vars)
-  } else if (is_integerish(var, 1)) {
-    if (is_na(var) || abs(var) > n || var == 0L) {
-      what <- as_label(var_expr)
-      abort(glue(
-        "`{what}` must be a value between {-n} and {n} (excluding zero), not {var}"
-      ))
-    }
-    if (var < 0) {
-      pos <- var + n + 1
-    } else {
-      pos <- var
-    }
-  } else {
-    type <- friendly_type_of(var)
-    what <- as_label(var_expr)
-    abort(glue(
-      "`{what}` must evaluate to a single number or a { singular(vars) } name, not {type}"
-    ))
+  pos <- subclass_index_errors(
+    vctrs::vec_as_position(pos, n, names = vars, arg = "var")
+  )
+  if (neg) {
+    pos <- n + 1L - pos
   }
 
   vars[[pos]]

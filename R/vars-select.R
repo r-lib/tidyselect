@@ -474,15 +474,9 @@ as_indices <- function(x, vars) {
     return(int())
   }
 
-  x <- tryCatch(
+  x <- subclass_index_errors(
     vctrs::vec_coerce_position(x),
-    vctrs_error_index = function(cnd) {
-      # We type-check missing values later on
-      if (identical(cnd$i, NA)) {
-        return(NA)
-      }
-      abort("", "tidyselect_error_index_bad_type", parent = cnd)
-    }
+    allow_na = TRUE
   )
 
   switch(typeof(x),
@@ -492,15 +486,6 @@ as_indices <- function(x, vars) {
     integer = x,
     abort("Internal error: Unexpected type in `as_indices()`.")
   )
-}
-
-#' @export
-cnd_issue.tidyselect_error_index_bad_type <- function(c) {
-  "Must select with column names or positions."
-}
-#' @export
-cnd_bullets.tidyselect_error_index_bad_type <- function(c) {
-  cnd_bullets(c$parent)
 }
 
 expr_kind <- function(expr) {

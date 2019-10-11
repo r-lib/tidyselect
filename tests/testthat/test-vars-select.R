@@ -59,7 +59,6 @@ test_that("can customise error messages", {
   expect_error(vars_select(vars, "foo"), class = "vctrs_error_index_oob_names")
   expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
   expect_error(vars_rename(vars, A = "foo"), class = "vctrs_error_index_oob_names")
-  expect_error(vars_pull(vars, !! c("a", "b")), "or a variable name")
 })
 
 test_that("can supply empty inputs", {
