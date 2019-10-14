@@ -146,12 +146,6 @@ vars_select <- function(.vars, ...,
   ind_list <- subclass_index_errors(vars_select_eval(.vars, quos))
   check_missing(ind_list, quos)
 
-  # This takes care of NULL inputs and of ignored errors when
-  # `.strict` is FALSE
-  is_empty <- map_lgl(ind_list, is_null)
-  ind_list <- discard(ind_list, is_empty)
-  quos <- discard(quos, is_empty)
-
   if (is_empty(ind_list)) {
     signal("", "tidyselect_empty")
     return(empty_sel(.vars, .include, .exclude))
@@ -188,22 +182,6 @@ vars_select <- function(.vars, ...,
   }
 
   sel
-}
-
-ind_coerce <- function(ind) {
-  if (vec_is_coercible(ind, int())) {
-    return(vctrs::vec_cast(ind, int()))
-  }
-
-  if (vec_is_coercible(ind, chr())) {
-    return(vctrs::vec_cast(ind, chr()))
-  }
-
-  type <- friendly_type_of(ind)
-  abort(
-    "Must select with column names or positions, not {type}.",
-    "tidyselect_error_incompatible_index_type"
-  )
 }
 
 check_missing <- function(x, exprs) {
