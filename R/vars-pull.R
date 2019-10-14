@@ -32,27 +32,21 @@
 #' var <- 10
 #' vars_pull(letters, !! var)
 vars_pull <- function(vars, var = -1) {
+  n <- length(vars)
   pos <- eval_tidy(enquo(var), set_names(seq_along(vars), vars))
 
-  # First coerce to standardise the type, and only then convert. This
-  # way we can inspect negative values of numeric positions.
-  # FIXME: Better add parameter to allow negative positions?
-  # Would produce better errors (can't subset position -100).
   pos <- subclass_index_errors(
-    vctrs::vec_coerce_position(pos, arg = "var")
+    vctrs::vec_as_position(
+      pos,
+      n = n,
+      names = vars,
+      allow_negative = TRUE,
+      arg = "var"
+    )
   )
 
-  neg <- is.numeric(pos) && !is.na(pos) && pos < 0L
-  if (neg) {
-    pos <- -pos
-  }
-
-  n <- length(vars)
-  pos <- subclass_index_errors(
-    vctrs::vec_as_position(pos, n, names = vars, arg = "var")
-  )
-  if (neg) {
-    pos <- n + 1L - pos
+  if (pos < 0L) {
+    pos <- n + 1L + pos
   }
 
   vars[[pos]]

@@ -1,6 +1,5 @@
 
-# Use inheritance for OOB errors, but composition for type errors, since
-subclass_index_errors <- function(expr, allow_na = FALSE) {
+subclass_index_errors <- function(expr) {
   tryCatch(
     expr,
     vctrs_error_index_oob = function(cnd) {
@@ -12,10 +11,6 @@ subclass_index_errors <- function(expr, allow_na = FALSE) {
       stop_index_oob(parent = cnd, .subclass = subclass)
     },
     vctrs_error_index = function(cnd) {
-      # In case missing values are type-checked later on
-      if (allow_na && identical(cnd$i, NA)) {
-        return(NA)
-      }
       stop_index_bad_type(parent = cnd)
     }
   )

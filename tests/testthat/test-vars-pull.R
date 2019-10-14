@@ -63,7 +63,7 @@ test_that("errors for bad inputs", {
     vars_pull(c("a", "b"), NA)
     vars_pull(c("a", "b"), na_int)
     vars_pull(letters, "foo")
-    vars_pull(vars, !!c("a", "b"))
+    vars_pull(letters, !!c("a", "b"))
   })
 })
 

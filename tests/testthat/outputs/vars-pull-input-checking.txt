@@ -18,15 +18,15 @@ x Can't subset position 100.
 i There are only 26 elements.
 > vars_pull(letters, -Inf)
 Error: Must select with column names or positions.
-x Lossy cast from `i` <double> to <integer>.
+x Lossy cast from `var` <double> to <integer>.
 > vars_pull(c("a", "b"), TRUE)
 Error: Must select with column names or positions.
 x `var` has the wrong type `logical`.
 i Positions and names must be integer or character.
 > vars_pull(c("a", "b"), NA)
 Error: Must select with column names or positions.
-x `var` has the wrong type `logical`.
-i Positions and names must be integer or character.
+x `var` can't be `NA`.
+i Positions and names can't be missing.
 > vars_pull(c("a", "b"), na_int)
 Error: Must select with column names or positions.
 x `var` can't be `NA`.
@@ -34,5 +34,7 @@ i Positions and names can't be missing.
 > vars_pull(letters, "foo")
 Error: Must select existing columns.
 x Can't subset element with unknown name `foo`.
-> vars_pull(vars, !!c("a", "b"))
-Error in is_vector(x): object 'vars' not found
+> vars_pull(letters, !!c("a", "b"))
+Error: Must select with column names or positions.
+x `var` has the wrong size 2.
+i Positions and names must be size 1.
