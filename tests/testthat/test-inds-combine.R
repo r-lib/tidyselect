@@ -73,7 +73,7 @@ test_that("select(0) corner case #82", {
 test_that("invalid inputs raise error", {
   expect_error(
     inds_combine(names(mtcars), list(12, 30, 50)),
-    class = "vctrs_error_index_oob_positions"
+    class = "tidyselect_error_index_oob_positions"
   )
 })
 

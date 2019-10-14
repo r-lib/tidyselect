@@ -232,6 +232,9 @@ inds_combine <- function(vars, inds) {
   }
 
   inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = spec)
+  inds <- subclass_index_errors(
+    vctrs::vec_as_index(inds, length(vars), vars, convert_negative = FALSE)
+  )
 
   dir <- vec_split_id_direction(inds)
   pos <- match("pos", dir$key)
@@ -466,7 +469,9 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     eval_context(expr, context_mask)
   )
 
-  as_indices_impl(out, vars = data_mask$.vars)
+  vars <- data_mask$.vars
+  out <- as_indices_impl(out, vars = vars)
+  vctrs::vec_as_index(out, length(vars), vars, convert_negative = FALSE)
 }
 
 as_indices_impl <- function(x, vars) {
@@ -474,19 +479,19 @@ as_indices_impl <- function(x, vars) {
     return(int())
   }
 
-  x <- vctrs:::vec_coerce_position(x)
-  out <- vctrs::vec_as_index(x, length(vars), vars, convert_negative = FALSE)
+  x <- vctrs::vec_coerce_position(x)
 
   switch(typeof(x),
-    character = set_names(out, names(x)),
+    character = set_names(vctrs::vec_as_index(x, length(vars), vars), names(x)),
     double = ,
-    integer = out,
+    integer = x,
     abort("Internal error: Unexpected type in `as_indices()`.")
   )
 }
 
 as_indices <- function(x, vars) {
-  subclass_index_errors(as_indices_impl(x, vars))
+  inds <- subclass_index_errors(as_indices_impl(x, vars))
+  vctrs::vec_as_index(inds, length(vars), vars, convert_negative = FALSE)
 }
 
 expr_kind <- function(expr) {
