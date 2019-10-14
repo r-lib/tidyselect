@@ -162,9 +162,7 @@ vars_select <- function(.vars, ...,
   # selection is empty, `inds_combine()` cannot detect a negative
   # indice in first position.
   if (is_negated(quo_get_expr(quos[[1]]))) {
-    initial_case <- list(seq_along(.vars))
-    ind_list <- c(initial_case, ind_list)
-    names(ind_list) <- c(names2(initial_case), names2(quos))
+    ind_list <- c(list(seq_along(.vars)), ind_list)
   }
 
   check_integerish(ind_list, quos, .vars)
