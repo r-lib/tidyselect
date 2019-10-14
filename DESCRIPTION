@@ -16,14 +16,14 @@ Imports:
     glue (>= 1.3.0),
     purrr (>= 0.3.2),
     rlang (>= 0.4.0),
-    vctrs (>= 0.2.0.9004)
+    vctrs (>= 0.2.0.9007)
 Suggests:
     covr,
     dplyr,
     testthat (>= 2.2.1.9002)
 remotes:
     r-lib/testthat,
-    r-lib/vctrs
+    lionel-/vctrs@add-force-constraints
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
