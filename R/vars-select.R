@@ -161,11 +161,11 @@ vars_select <- function(.vars, ...,
   # columns. We need to check for symbolic `-` here because if the
   # selection is empty, `inds_combine()` cannot detect a negative
   # indice in first position.
-  first <- quo_get_expr(quos[[1]])
-  initial_case <- if (is_negated(first)) list(seq_along(.vars)) else integer(0)
-
-  ind_list <- c(initial_case, ind_list)
-  names(ind_list) <- c(names2(initial_case), names2(quos))
+  if (is_negated(quo_get_expr(quos[[1]]))) {
+    initial_case <- list(seq_along(.vars))
+    ind_list <- c(initial_case, ind_list)
+    names(ind_list) <- c(names2(initial_case), names2(quos))
+  }
 
   check_integerish(ind_list, quos, .vars)
 
