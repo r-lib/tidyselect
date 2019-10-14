@@ -198,8 +198,8 @@ test_that("initial (single) selector defaults correctly (issue #2275)", {
   expect_equal(vars_select(cn, -contains("x")), cn[c("y", "z")])
 
   # single columns (not present), explicit
-  expect_error(vars_select(cn, foo), class = "vctrs_error_index_oob_names")
-  expect_error(vars_select(cn, -foo), class = "vctrs_error_index_oob_names")
+  expect_error(vars_select(cn, foo), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(cn, -foo), class = "tidyselect_error_index_oob_names")
 
   # single columns (not present), matched
   expect_equal(vars_select(cn, contains("foo")), cn[integer()])
@@ -230,10 +230,10 @@ test_that("initial (of multiple) selectors default correctly (issue #2275)", {
   expect_equal(vars_select(cn, -contains("x"), -y), cn["z"])
 
   # matched(not present) + explicit(not present)
-  expect_error(vars_select(cn, contains("foo"), bar), class = "vctrs_error_index_oob_names")
-  expect_error(vars_select(cn, contains("foo"), -bar), class = "vctrs_error_index_oob_names")
-  expect_error(vars_select(cn, -contains("foo"), bar), class = "vctrs_error_index_oob_names")
-  expect_error(vars_select(cn, -contains("foo"), -bar), class = "vctrs_error_index_oob_names")
+  expect_error(vars_select(cn, contains("foo"), bar), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(cn, contains("foo"), -bar), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(cn, -contains("foo"), bar), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(cn, -contains("foo"), -bar), class = "tidyselect_error_index_oob_names")
 
   # matched(present) + matched(present)
   expect_equal(vars_select(cn, contains("x"), contains("y")), cn[c("x", "y")])

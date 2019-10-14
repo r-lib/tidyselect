@@ -1,9 +1,9 @@
 > # Bare names
 > vars_select(letters, foo)
-Error: Must index existing elements.
+Error: Must select existing columns.
 x Can't subset element with unknown name `foo`.
 > vars_select(letters, -foo)
-Error: Must index existing elements.
+Error: Must select existing columns.
 x Can't subset element with unknown name `foo`.
 > # Names
 > vars_select(letters, "foo")

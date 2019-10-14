@@ -223,8 +223,8 @@ test_that("vars_select() fails informatively when renaming to same", {
 })
 
 test_that("vars_select() has consistent position errors", {
-  expect_error(vars_select(letters, foo), class = "vctrs_error_index_oob_names")
-  expect_error(vars_select(letters, -foo), class = "vctrs_error_index_oob_names")
+  expect_error(vars_select(letters, foo), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(letters, -foo), class = "tidyselect_error_index_oob_names")
   expect_error(vars_select(letters, 100), class = "tidyselect_error_index_oob_positions")
   expect_error(vars_select(letters, -100), class = "tidyselect_error_index_oob_positions")
 

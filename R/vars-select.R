@@ -143,7 +143,7 @@ vars_select <- function(.vars, ...,
     quos <- ignore_unknown_symbols(.vars, quos)
   }
 
-  ind_list <- vars_select_eval(.vars, quos)
+  ind_list <- subclass_index_errors(vars_select_eval(.vars, quos))
   check_missing(ind_list, quos)
 
   # This takes care of NULL inputs and of ignored errors when
@@ -434,7 +434,7 @@ vars_select_eval <- function(vars, quos) {
     quos,
     is_symbolic,
     ~ walk_data_tree(., data_mask, context_mask),
-    .else = ~ as_indices(quo_get_expr(.), vars = vars)
+    .else = ~ as_indices_impl(quo_get_expr(.), vars = vars)
   )
 }
 
@@ -466,18 +466,16 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     eval_context(expr, context_mask)
   )
 
-  as_indices(out, vars = data_mask$.vars)
+  as_indices_impl(out, vars = data_mask$.vars)
 }
 
-as_indices <- function(x, vars) {
+as_indices_impl <- function(x, vars) {
   if (is_null(x)) {
     return(int())
   }
 
-  subclass_index_errors({
-    x <- vctrs:::vec_coerce_position(x)
-    out <- vctrs::vec_as_index(x, length(vars), vars, convert_negative = FALSE)
-  })
+  x <- vctrs:::vec_coerce_position(x)
+  out <- vctrs::vec_as_index(x, length(vars), vars, convert_negative = FALSE)
 
   switch(typeof(x),
     character = set_names(out, names(x)),
@@ -485,6 +483,10 @@ as_indices <- function(x, vars) {
     integer = out,
     abort("Internal error: Unexpected type in `as_indices()`.")
   )
+}
+
+as_indices <- function(x, vars) {
+  subclass_index_errors(as_indices_impl(x, vars))
 }
 
 expr_kind <- function(expr) {
