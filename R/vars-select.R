@@ -470,20 +470,19 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 }
 
 as_indices <- function(x, vars) {
-  if (is.null(x)) {
+  if (is_null(x)) {
     return(int())
   }
 
-  x <- subclass_index_errors(
-    vctrs::vec_coerce_position(x),
-    allow_na = TRUE
-  )
+  subclass_index_errors({
+    x <- vctrs:::vec_coerce_position(x)
+    out <- vctrs::vec_as_index(x, length(vars), vars, convert_negative = FALSE)
+  })
 
   switch(typeof(x),
-    character = match_strings(x, vars = vars),
-    logical = ,
+    character = set_names(out, names(x)),
     double = ,
-    integer = x,
+    integer = out,
     abort("Internal error: Unexpected type in `as_indices()`.")
   )
 }
@@ -595,12 +594,6 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
 
   # FIXME: export `stop_bad_index()`?
   vctrs::vec_as_index(name, 0L, names = character())
-}
-
-# This feature is in the "regret" lifecycle stage
-match_strings <- function(x, vars = peek_vars()) {
-  out <- vctrs::vec_as_index(x, length(vars), names = vars)
-  set_names(out, names(x))
 }
 
 setdiff2 <- function(x, y) {

@@ -1,3 +1,7 @@
+> vars_select(letters, TRUE)
+Error: Must select with column names or positions.
+x `i` has the wrong type `logical`.
+i Positions and names must be integer or character.
 > vars_select(letters, 2.5)
 Error: Must select with column names or positions.
 x Lossy cast from `i` <double> to <integer>.

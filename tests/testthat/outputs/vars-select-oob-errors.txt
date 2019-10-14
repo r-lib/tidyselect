@@ -7,17 +7,17 @@ Error: Must index existing elements.
 x Can't subset element with unknown name `foo`.
 > # Names
 > vars_select(letters, "foo")
-Error: Must index existing elements.
+Error: Must select existing columns.
 x Can't subset element with unknown name `foo`.
 > vars_select(letters, a:"foo")
-Error: Must index existing elements.
+Error: Must select existing columns.
 x Can't subset element with unknown name `foo`.
 > # Positions
 > vars_select(letters, 30, 50, 100)
-Error: Must index existing elements.
-x Can't subset positions 30, 50 and 100.
+Error: Must select existing columns.
+x Can't subset position 30.
 i There are only 26 elements.
 > vars_select(letters, -100)
-Error: Must index existing elements.
+Error: Must select existing columns.
 x Can't subset position 100.
 i There are only 26 elements.

@@ -31,8 +31,8 @@ test_that("can select with character vectors", {
 })
 
 test_that("abort on unknown columns", {
-  expect_error(vars_select(letters, "foo"), class = "vctrs_error_index_oob_names")
-  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), class = "vctrs_error_index_oob_names")
+  expect_error(vars_select(letters, "foo"), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), class = "tidyselect_error_index_oob_names")
 })
 
 test_that("data mask is not isolated from context (for now)", {
@@ -55,10 +55,9 @@ test_that("can select with unnamed elements", {
 
 test_that("can customise error messages", {
   vars <- structure(letters, type = c("variable", "variables"))
-
-  expect_error(vars_select(vars, "foo"), class = "vctrs_error_index_oob_names")
+  expect_error(vars_select(vars, "foo"), class = "tidyselect_error_index_oob_names")
   expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
-  expect_error(vars_rename(vars, A = "foo"), class = "vctrs_error_index_oob_names")
+  expect_error(vars_rename(vars, A = "foo"), class = "tidyselect_error_index_oob_names")
 })
 
 test_that("can supply empty inputs", {
@@ -90,7 +89,7 @@ test_that("unknown variables errors are ignored if `.strict` is FALSE", {
 
 test_that("`:` handles strings", {
   expect_identical(vars_select(letters, "b":"d"), vars_select(letters, b:d))
-  expect_error(vars_select(letters, "b":"Z"), class = "vctrs_error_index_oob_names")
+  expect_error(vars_select(letters, "b":"Z"), class = "tidyselect_error_index_oob_names")
 })
 
 test_that("`-` handles strings", {
@@ -103,7 +102,7 @@ test_that("`-` handles positions", {
 
 test_that("`-` handles character vectors (#35)", {
   expect_identical(vars_select(letters, - (!! letters[1:20])), vars_select(letters, -(1:20)))
-  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "vctrs_error_index_oob_names")
+  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "tidyselect_error_index_oob_names")
 })
 
 test_that("can select `c` despite overscoped c()", {
@@ -148,6 +147,10 @@ test_that("vars_select() supports S3 vectors (#109)", {
 
 test_that("vars_select() type-checks inputs", {
   expect_error(
+    vars_select(letters, TRUE),
+    class = "tidyselect_error_index_bad_type"
+  )
+  expect_error(
     vars_select(letters, 2.5),
     class = "tidyselect_error_index_bad_type"
   )
@@ -157,6 +160,7 @@ test_that("vars_select() type-checks inputs", {
   )
 
   verify_output(test_path("outputs", "vars-select-index-type.txt"), {
+    vars_select(letters, TRUE)
     vars_select(letters, 2.5)
     vars_select(letters, structure(1:3, class = "tidysel_foobar"))
   })
@@ -221,8 +225,8 @@ test_that("vars_select() fails informatively when renaming to same", {
 test_that("vars_select() has consistent position errors", {
   expect_error(vars_select(letters, foo), class = "vctrs_error_index_oob_names")
   expect_error(vars_select(letters, -foo), class = "vctrs_error_index_oob_names")
-  expect_error(vars_select(letters, 100), class = "vctrs_error_index_oob_positions")
-  expect_error(vars_select(letters, -100), class = "vctrs_error_index_oob_positions")
+  expect_error(vars_select(letters, 100), class = "tidyselect_error_index_oob_positions")
+  expect_error(vars_select(letters, -100), class = "tidyselect_error_index_oob_positions")
 
   verify_output(test_path("outputs", "vars-select-oob-errors.txt"), {
     "Bare names"

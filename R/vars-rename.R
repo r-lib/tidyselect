@@ -9,12 +9,7 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
   }
 
   inds <- vars_rename_eval(quos, .vars)
-  inds <- map_if(
-    inds,
-    is_character,
-    ~ match_strings(., .vars),
-    .else = ~ as_indices(., .vars)
-  )
+  inds <- map(inds, as_indices, .vars)
 
   check_missing(inds, quos)
 
