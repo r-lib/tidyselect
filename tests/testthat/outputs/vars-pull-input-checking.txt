@@ -2,39 +2,50 @@
 Error: Must select with column names or positions.
 x `var` has the wrong size 26.
 i Positions and names must be size 1.
+
 > vars_pull(letters, aa)
 Error in eval_tidy(enquo(var), set_names(seq_along(vars), vars)): object 'aa' not found
+
 > vars_pull(letters, 0)
 Error: Must select with column names or positions.
 x `var` can't be zero.
 i Positions must be positive integers.
+
 > vars_pull(letters, 100)
 Error: Must select existing columns.
 x Can't subset position 100.
 i There are only 26 elements.
+
 > vars_pull(letters, -100)
 Error: Must select existing columns.
 x Can't subset position 100.
 i There are only 26 elements.
+
 > vars_pull(letters, -Inf)
 Error: Must select with column names or positions.
 x Lossy cast from `var` <double> to <integer>.
+
 > vars_pull(letters, TRUE)
 Error: Must select with column names or positions.
 x `var` has the wrong type `logical`.
 i Positions and names must be integer or character.
+
 > vars_pull(letters, NA)
 Error: Must select with column names or positions.
 x `var` can't be `NA`.
 i Positions and names can't be missing.
+
 > vars_pull(letters, na_int)
 Error: Must select with column names or positions.
 x `var` can't be `NA`.
 i Positions and names can't be missing.
+
 > vars_pull(letters, "foo")
 Error: Must select existing columns.
 x Can't subset element with unknown name `foo`.
+
 > vars_pull(letters, !!c("a", "b"))
 Error: Must select with column names or positions.
 x `var` has the wrong size 2.
 i Positions and names must be size 1.
+

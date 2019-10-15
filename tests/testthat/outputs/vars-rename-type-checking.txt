@@ -2,10 +2,13 @@
 Error: Must select with column names or positions.
 x `i` has the wrong type `logical`.
 i Positions and names must be integer or character.
+
 > vars_rename(letters, A = 1.5)
 Error: Must select with column names or positions.
 x Lossy cast from `i` <double> to <integer>.
+
 > vars_rename(letters, A = list())
 Error: Must select with column names or positions.
 x `i` has the wrong type `list`.
 i Positions and names must be integer or character.
+
