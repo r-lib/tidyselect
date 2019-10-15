@@ -17,15 +17,21 @@ subclass_index_errors <- function(expr) {
 }
 
 stop_index_bad_type <- function(..., .subclass = NULL) {
-  abort(
+  stop_index(
     ...,
     .subclass = c(.subclass, "tidyselect_error_index_bad_type")
   )
 }
 stop_index_oob <- function(..., .subclass = NULL) {
-  abort(
+  stop_index(
     ...,
     .subclass = c(.subclass, "tidyselect_error_index_oob")
+  )
+}
+stop_index <- function(..., .subclass = NULL) {
+  abort(
+    ...,
+    .subclass = c(.subclass, "tidyselect_error_index")
   )
 }
 
