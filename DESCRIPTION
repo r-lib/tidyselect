@@ -20,7 +20,7 @@ Imports:
 Suggests:
     covr,
     dplyr,
-    testthat
+    testthat (>= 2.2.1.9002)
 remotes:
     r-lib/testthat
 License: GPL-3
