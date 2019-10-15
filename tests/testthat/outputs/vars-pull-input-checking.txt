@@ -19,15 +19,15 @@ i There are only 26 elements.
 > vars_pull(letters, -Inf)
 Error: Must select with column names or positions.
 x Lossy cast from `var` <double> to <integer>.
-> vars_pull(c("a", "b"), TRUE)
+> vars_pull(letters, TRUE)
 Error: Must select with column names or positions.
 x `var` has the wrong type `logical`.
 i Positions and names must be integer or character.
-> vars_pull(c("a", "b"), NA)
+> vars_pull(letters, NA)
 Error: Must select with column names or positions.
 x `var` can't be `NA`.
 i Positions and names can't be missing.
-> vars_pull(c("a", "b"), na_int)
+> vars_pull(letters, na_int)
 Error: Must select with column names or positions.
 x `var` can't be `NA`.
 i Positions and names can't be missing.
