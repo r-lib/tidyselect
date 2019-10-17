@@ -1,5 +1,5 @@
 
-subclass_index_errors <- function(expr) {
+subclass_index_errors <- function(expr, allow_positions = TRUE) {
   tryCatch(
     expr,
     vctrs_error_index_oob = function(cnd) {
@@ -11,13 +11,14 @@ subclass_index_errors <- function(expr) {
       stop_index_oob(parent = cnd, .subclass = subclass)
     },
     vctrs_error_index = function(cnd) {
-      stop_index_bad_type(parent = cnd)
+      stop_index_bad_type(parent = cnd, allow_positions = allow_positions)
     }
   )
 }
 
-stop_index_bad_type <- function(..., .subclass = NULL) {
+stop_index_bad_type <- function(..., allow_positions = TRUE, .subclass = NULL) {
   stop_index(
+    allow_positions = allow_positions,
     ...,
     .subclass = c(.subclass, "tidyselect_error_index_bad_type")
   )
@@ -36,8 +37,12 @@ stop_index <- function(..., .subclass = NULL) {
 }
 
 #' @export
-cnd_issue.tidyselect_error_index_bad_type <- function(c) {
-  "Must select with column names or positions."
+cnd_issue.tidyselect_error_index_bad_type <- function(cnd, ...) {
+  if (cnd$allow_positions) {
+    "Must select with column names or positions."
+  } else {
+    "Must select with column names."
+  }
 }
 #' @export
 cnd_bullets.tidyselect_error_index_bad_type <- function(c) {

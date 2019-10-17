@@ -1,6 +1,18 @@
 
 # tidyselect (development)
 
+* The new selection helpers `all_of()` and `any_of()` are strict
+  variants of `one_of()`. The former always fails if some variables
+  are unknown, while the latter does not. `all_of()` is safer to use
+  when you expect all selected variables to exist. `any_of()` is
+  useful in other cases, for instance to ensure variables are selected
+  out:
+
+  ```
+  vars <- c("Species", "Genus")
+  iris %>% dplyr::select(-any_of(vars))
+  ```
+
 * `vars_select()` has been rewritten to support a clearer separation
   between data expressions (calls to `:`, `-`, and `c`) and context
   expressions (anything else). This means you can now safely use

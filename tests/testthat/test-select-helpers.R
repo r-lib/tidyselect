@@ -293,3 +293,32 @@ test_that("last_col() selects last argument with offset", {
   expect_error(last_col(3, vars), "`offset` must be smaller than the number of columns")
   expect_error(last_col(vars = chr()), "Can't select last column when input is empty")
 })
+
+test_that("all_of() and any_of() handle named vectors", {
+  expect_identical(vars_select(letters, all_of(c("a", foo = "b"))), c(a = "a", foo = "b"))
+  expect_identical(vars_select(letters, any_of(c("a", foo = "b", "bar"))), c(a = "a", foo = "b"))
+})
+
+test_that("all_of() is strict", {
+  expect_error(vars_select(letters, all_of(c("a", "foo"))), class = "tidyselect_error_index_oob_names")
+})
+
+test_that("any_of() is lax", {
+  expect_identical(
+    vars_select(letters, any_of(c("a", "foo"))),
+    vars_select(letters, a)
+  )
+  expect_identical(
+    vars_select(letters, -any_of(c("a", "foo"))),
+    vars_select(letters, -a)
+  )
+})
+
+test_that("all_of() and any_of() check their inputs", {
+  expect_error(vars_select(letters, all_of(1L)), class = "tidyselect_error_index_bad_type")
+  expect_error(vars_select(letters, any_of(1L)), class = "tidyselect_error_index_bad_type")
+  expect_error(vars_select(letters, all_of(NA)), "missing")
+  expect_error(vars_select(letters, any_of(NA)), "missing")
+  expect_error(vars_select(letters, all_of(na_chr)), "missing")
+  expect_error(vars_select(letters, any_of(na_chr)), "missing")
+})

@@ -7,7 +7,8 @@
 \alias{contains}
 \alias{matches}
 \alias{num_range}
-\alias{one_of}
+\alias{all_of}
+\alias{any_of}
 \alias{everything}
 \alias{last_col}
 \title{Select helpers}
@@ -22,7 +23,9 @@ matches(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars())
 
 num_range(prefix, range, width = NULL, vars = peek_vars())
 
-one_of(..., .vars = peek_vars())
+all_of(x, ..., vars = peek_vars())
+
+any_of(x, ..., vars = peek_vars())
 
 everything(vars = peek_vars())
 
@@ -34,7 +37,7 @@ last_col(offset = 0L, vars = peek_vars())
 \item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}
 
-\item{vars, .vars}{A character vector of variable names. When called
+\item{vars}{A character vector of variable names. When called
 from inside selecting functions like \code{\link[dplyr:select]{dplyr::select()}} these are
 automatically set to the names of the table.}
 
@@ -47,7 +50,9 @@ automatically set to the names of the table.}
 \item{width}{Optionally, the "width" of the numeric range. For example,
 a range of 2 gives "01", a range of three "001", etc.}
 
-\item{...}{One or more character vectors.}
+\item{x}{A character vector.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{offset}{Set it to \code{n} to select the nth var from the end.}
 }
@@ -62,7 +67,11 @@ These functions allow you to select variables based on their names.
 \item \code{contains()}: Contains a literal string.
 \item \code{matches()}: Matches a regular expression.
 \item \code{num_range()}: Matches a numerical range like x01, x02, x03.
-\item \code{one_of()}: Matches variable names in a character vector.
+\item \code{all_of()}: Matches variable names in a character vector. All
+names must be present, otherwise an out-of-bounds error is
+thrown.
+\item \code{any_of()}: Same as \code{all_of()}, except that no error is thrown
+for names that don't exist.
 \item \code{everything()}: Matches all variables.
 \item \code{last_col()}: Select last variable, possibly with an offset.
 }
@@ -87,7 +96,16 @@ vars_select(nms, last_col())
 vars_select(nms, last_col(offset = 2))
 
 vars <- c("Petal.Length", "Petal.Width")
-vars_select(nms, one_of(vars))
+vars_select(nms, all_of(vars))
+
+# Whereas `all_of()` is strict, `any_of()` allows missing
+# variables.
+try(vars_select(nms, all_of(c("Species", "Genres"))))
+vars_select(nms, any_of(c("Species", "Genres")))
+
+# The lax variant is especially useful to make sure a variable is
+# selected out:
+vars_select(nms, -any_of(c("Species", "Genres")))
 
 # The order of selected columns is determined from the inputs
 vars_select(names(mtcars), starts_with("c"), starts_with("d"))
