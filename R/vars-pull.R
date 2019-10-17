@@ -40,7 +40,7 @@ vars_pull <- function(vars, var = -1) {
       pos,
       n = n,
       names = vars,
-      allow_negative = TRUE,
+      allow_values = "negative",
       arg = "var"
     )
   )

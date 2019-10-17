@@ -211,7 +211,7 @@ inds_combine <- function(vars, inds) {
 
   inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = spec)
   inds <- subclass_index_errors(
-    vctrs::vec_as_index(inds, length(vars), vars, convert_negative = FALSE)
+    vctrs::vec_as_index(inds, length(vars), vars, convert_values = NULL)
   )
 
   dir <- vec_split_id_direction(inds)
@@ -449,7 +449,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   vars <- data_mask$.vars
   out <- as_indices_impl(out, vars = vars)
-  vctrs::vec_as_index(out, length(vars), vars, convert_negative = FALSE)
+  vctrs::vec_as_index(out, length(vars), vars, convert_values = NULL)
 }
 
 as_indices_impl <- function(x, vars) {
@@ -457,7 +457,7 @@ as_indices_impl <- function(x, vars) {
     return(int())
   }
 
-  x <- vctrs::vec_coerce_position(x)
+  x <- vctrs::vec_coerce_index(x, allow_types = c("position", "name"))
 
   switch(typeof(x),
     character = set_names(vctrs::vec_as_index(x, length(vars), vars), names(x)),
@@ -469,7 +469,7 @@ as_indices_impl <- function(x, vars) {
 
 as_indices <- function(x, vars) {
   inds <- subclass_index_errors(as_indices_impl(x, vars))
-  vctrs::vec_as_index(inds, length(vars), vars, convert_negative = FALSE)
+  vctrs::vec_as_index(inds, length(vars), vars, convert_values = NULL)
 }
 
 expr_kind <- function(expr) {
