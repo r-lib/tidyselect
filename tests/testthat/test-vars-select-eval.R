@@ -46,3 +46,53 @@ test_that("data expressions support character vectors (#78)", {
   expect_identical(vars_select(letters, (identity(letters[[1]]))), vars_select(letters, a))
   expect_identical(vars_select(letters, c(identity(letters[[1]]))), vars_select(letters, a))
 })
+
+test_that("boolean operators are overloaded", {
+  expect_identical(
+    vars_select(letters, starts_with("a") & ends_with("a")),
+    vars_select(letters, intersect(starts_with("a"), ends_with("a"))),
+  )
+
+  expect_identical(
+    vars_select(letters, starts_with("a") | ends_with("c")),
+    vars_select(letters, c(starts_with("a"), ends_with("c")))
+  )
+
+  expect_identical(
+    vars_select(letters, starts_with("a") | ends_with("c") | contains("z")),
+    vars_select(letters, starts_with("a"), ends_with("c"), contains("z"))
+  )
+
+  expect_identical(
+    vars_select(letters, (starts_with("a") | ends_with("c")) & contains("a")),
+    vars_select(letters, intersect(c(starts_with("a"), ends_with("c")), contains("a")))
+  )
+
+  expect_identical(
+    vars_select(letters, !(starts_with("a") | ends_with("c"))),
+    vars_select(letters, -(starts_with("a") | ends_with("c"))),
+  )
+
+  # This does not necessarily make sense but working around this is
+  # not worth it
+  expect_identical(
+    vars_select(letters, starts_with("a") | c),
+    vars_select(letters, starts_with("a"), c)
+  )
+
+  # This pattern is not possible with `intersect()` because its
+  # arguments are evaluated in non-data context
+  expect_error(
+    vars_select(letters, intersect(c(starts_with("a"), ends_with("c")), b:d)),
+    "not found"
+  )
+  expect_identical(
+    vars_select(letters, (starts_with("a") | ends_with("c")) & b:d),
+    vars_select(letters, c)
+  )
+
+  expect_identical(
+    vars_select(letters, (starts_with("a") | ends_with("c")) | i:k),
+    vars_select(letters, c(starts_with("a"), ends_with("c")), i:k),
+  )
+})

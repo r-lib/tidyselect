@@ -441,8 +441,11 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     literal = expr,
     symbol = eval_sym(as_string(expr), data_mask, context_mask, colon = colon),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
+    `!` = ,
     `-` = eval_minus(expr, data_mask, context_mask),
     `:` = eval_colon(expr, data_mask, context_mask),
+    `|` = eval_or(expr, data_mask, context_mask),
+    `&` = eval_and(expr, data_mask, context_mask),
     `c` = eval_c(expr, data_mask, context_mask),
     eval_context(expr, context_mask)
   )
@@ -490,6 +493,9 @@ call_kind <- function(expr) {
     `(` = ,
     `-` = ,
     `:` = ,
+    `|` = ,
+    `&` = ,
+    `!` = ,
     `c` = fn,
     "call"
   )
@@ -509,6 +515,18 @@ eval_minus <- function(expr, data_mask, context_mask) {
 
   x <- walk_data_tree(expr[[2]], data_mask, context_mask)
   -x
+}
+
+eval_or <- function(expr, data_mask, context_mask) {
+  x <- walk_data_tree(expr[[2]], data_mask, context_mask)
+  y <- walk_data_tree(expr[[3]], data_mask, context_mask)
+  c(x, y)
+}
+
+eval_and <- function(expr, data_mask, context_mask) {
+  x <- walk_data_tree(expr[[2]], data_mask, context_mask)
+  y <- walk_data_tree(expr[[3]], data_mask, context_mask)
+  set_intersect(x, y)
 }
 
 eval_c <- function(expr, data_mask, context_mask) {

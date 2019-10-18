@@ -77,6 +77,21 @@ for names that don't exist.
 }
 }
 \details{
+In selection context you can also use these operators:
+\itemize{
+\item \code{-} for selecting a selection.
+\item \code{:} for selecting a range of consecutive variables.
+\item \code{c} for selecting the union of sets of variables.
+}
+
+The boolean operators were more recently overloaded to operate on
+selections:
+\itemize{
+\item \code{!} for negating a selection.
+\item \code{&} and \code{|} for selecting the intersection or the union of two
+sets of variables.
+}
+
 The order of selected columns is determined by the inputs.
 \itemize{
 \item \code{one_of(c("foo", "bar"))} selects \code{"foo"} first.
@@ -94,6 +109,13 @@ vars_select(nms, Petal.Length, Petal.Width)
 vars_select(nms, everything())
 vars_select(nms, last_col())
 vars_select(nms, last_col(offset = 2))
+
+# `!` negates a selection
+vars_select(nms, !ends_with("Width"))
+
+# `&` and `|` take the intersection or the union of two selections:
+vars_select(nms, starts_with("Petal") & ends_with("Width"))
+vars_select(nms, starts_with("Petal") | ends_with("Width"))
 
 vars <- c("Petal.Length", "Petal.Width")
 vars_select(nms, all_of(vars))
