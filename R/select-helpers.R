@@ -84,10 +84,7 @@ NULL
 #' @export
 #' @rdname select_helpers
 starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(
-    is_character(match),
-    all(nzchar(match))
-  )
+  check_match(match)
 
   if (ignore.case) {
      vars <- tolower(vars)
@@ -104,10 +101,7 @@ starts_with_impl <- function(x, vars) {
 #' @export
 #' @rdname select_helpers
 ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(
-    is_character(match),
-    all(nzchar(match))
-  )
+  check_match(match)
 
   if (ignore.case) {
     vars <- tolower(vars)
@@ -125,10 +119,7 @@ ends_with_impl <- function(x, vars, length) {
 #' @export
 #' @rdname select_helpers
 contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(
-    is_character(match),
-    all(nzchar(match))
-  )
+  check_match(match)
 
   if (ignore.case) {
     vars <- tolower(vars)
@@ -141,12 +132,14 @@ contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
 #' @export
 #' @rdname select_helpers
 matches <- function(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars()) {
-  stopifnot(
-    is_character(match),
-    all(nzchar(match))
-  )
-
+  check_match(match)
   flat_map_int(match, grep_vars, vars, ignore.case = ignore.case, perl = perl)
+}
+
+check_match <- function(match) {
+  if (!is_character(match) || !all(nzchar(match))) {
+    abort("`match` must be a character vector of non empty strings.")
+  }
 }
 
 #' @export
