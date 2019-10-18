@@ -11,6 +11,8 @@
   `intersect()` respectively. The boolean operators should be more
   intuitive to use.
 
+  Many thanks to Irene Steves (@isteves) for suggesting this UI.
+
 * The new selection helpers `all_of()` and `any_of()` are strict
   variants of `one_of()`. The former always fails if some variables
   are unknown, while the latter does not. `all_of()` is safer to use
