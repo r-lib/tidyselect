@@ -27,7 +27,8 @@
 #' - `&` and `|` for selecting the intersection or the union of two
 #'   sets of variables.
 #'
-#' @param match A string.
+#' @param match A character vector. If length > 1, the union of the
+#'   matches is taken.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
 #' @param perl Should Perl-compatible regexps be used?
@@ -57,13 +58,17 @@
 #' vars_select(nms, last_col())
 #' vars_select(nms, last_col(offset = 2))
 #'
-#' # `!` negates a selection
+#' # With multiple matchers, the union of the matches is selected:
+#' vars_select(nms, starts_with(c("Petal", "Sepal")))
+#'
+#' # `!` negates a selection:
 #' vars_select(nms, !ends_with("Width"))
 #'
 #' # `&` and `|` take the intersection or the union of two selections:
 #' vars_select(nms, starts_with("Petal") & ends_with("Width"))
 #' vars_select(nms, starts_with("Petal") | ends_with("Width"))
 #'
+#' # `all_of()` selects the variables in a character vector:
 #' vars <- c("Petal.Length", "Petal.Width")
 #' vars_select(nms, all_of(vars))
 #'

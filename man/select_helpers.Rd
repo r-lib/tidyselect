@@ -32,7 +32,8 @@ everything(vars = peek_vars())
 last_col(offset = 0L, vars = peek_vars())
 }
 \arguments{
-\item{match}{A string.}
+\item{match}{A character vector. If length > 1, the union of the
+matches is taken.}
 
 \item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}
@@ -110,13 +111,17 @@ vars_select(nms, everything())
 vars_select(nms, last_col())
 vars_select(nms, last_col(offset = 2))
 
-# `!` negates a selection
+# With multiple matchers, the union of the matches is selected:
+vars_select(nms, starts_with(c("Petal", "Sepal")))
+
+# `!` negates a selection:
 vars_select(nms, !ends_with("Width"))
 
 # `&` and `|` take the intersection or the union of two selections:
 vars_select(nms, starts_with("Petal") & ends_with("Width"))
 vars_select(nms, starts_with("Petal") | ends_with("Width"))
 
+# `all_of()` selects the variables in a character vector:
 vars <- c("Petal.Length", "Petal.Width")
 vars_select(nms, all_of(vars))
 
