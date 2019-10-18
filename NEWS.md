@@ -1,6 +1,18 @@
 
 # tidyselect (development)
 
+* Selection contexts now interpret the boolean operators specially (#106).
+
+  - `!` negates a selection.
+  - `|` takes the union of two selections.
+  - `&` takes the intersection of two selections.
+
+  These patterns can currently be achieved using `-`, `c()` and
+  `intersect()` respectively. The boolean operators should be more
+  intuitive to use.
+
+  Many thanks to Irene Steves (@isteves) for suggesting this UI.
+
 * The new selection helpers `all_of()` and `any_of()` are strict
   variants of `one_of()`. The former always fails if some variables
   are unknown, while the latter does not. `all_of()` is safer to use

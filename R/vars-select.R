@@ -441,8 +441,13 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     literal = expr,
     symbol = eval_sym(as_string(expr), data_mask, context_mask, colon = colon),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
+    `!` = ,
     `-` = eval_minus(expr, data_mask, context_mask),
     `:` = eval_colon(expr, data_mask, context_mask),
+    `|` = eval_or(expr, data_mask, context_mask),
+    `&` = eval_and(expr, data_mask, context_mask),
+    `||` = stop_bad_op("||", "|"),
+    `&&` = stop_bad_op("&&", "&"),
     `c` = eval_c(expr, data_mask, context_mask),
     eval_context(expr, context_mask)
   )
@@ -490,6 +495,11 @@ call_kind <- function(expr) {
     `(` = ,
     `-` = ,
     `:` = ,
+    `|` = ,
+    `&` = ,
+    `||` = ,
+    `&&` = ,
+    `!` = ,
     `c` = fn,
     "call"
   )
@@ -509,6 +519,36 @@ eval_minus <- function(expr, data_mask, context_mask) {
 
   x <- walk_data_tree(expr[[2]], data_mask, context_mask)
   -x
+}
+
+eval_or <- function(expr, data_mask, context_mask) {
+  x <- walk_non_symbol(expr[[2]], data_mask, context_mask)
+  y <- walk_non_symbol(expr[[3]], data_mask, context_mask)
+  c(x, y)
+}
+
+eval_and <- function(expr, data_mask, context_mask) {
+  x <- walk_non_symbol(expr[[2]], data_mask, context_mask)
+  y <- walk_non_symbol(expr[[3]], data_mask, context_mask)
+  set_intersect(x, y)
+}
+
+walk_non_symbol <- function(expr, data_mask, context_mask) {
+  if (is_symbol(expr)) {
+    abort(glue_c(
+      "Can't use boolean operators with bare variables.",
+      x = "`{expr}` is a bare variable.",
+      i = "Do you need `all_of({expr})`?"
+    ))
+  }
+  walk_data_tree(expr, data_mask, context_mask)
+}
+
+stop_bad_op <- function(bad, ok) {
+  abort(glue_c(
+    "Can't use scalar `{bad}` in selections.",
+    i = "Do you need `{ok}` instead?"
+  ))
 }
 
 eval_c <- function(expr, data_mask, context_mask) {

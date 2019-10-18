@@ -14,6 +14,19 @@
 #' * `everything()`: Matches all variables.
 #' * `last_col()`: Select last variable, possibly with an offset.
 #'
+#' In selection context you can also use these operators:
+#'
+#' - `-` for selecting a selection.
+#' - `:` for selecting a range of consecutive variables.
+#' - `c` for selecting the union of sets of variables.
+#'
+#' The boolean operators were more recently overloaded to operate on
+#' selections:
+#'
+#' - `!` for negating a selection.
+#' - `&` and `|` for selecting the intersection or the union of two
+#'   sets of variables.
+#'
 #' @param match A string.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
@@ -43,6 +56,13 @@
 #' vars_select(nms, everything())
 #' vars_select(nms, last_col())
 #' vars_select(nms, last_col(offset = 2))
+#'
+#' # `!` negates a selection
+#' vars_select(nms, !ends_with("Width"))
+#'
+#' # `&` and `|` take the intersection or the union of two selections:
+#' vars_select(nms, starts_with("Petal") & ends_with("Width"))
+#' vars_select(nms, starts_with("Petal") | ends_with("Width"))
 #'
 #' vars <- c("Petal.Length", "Petal.Width")
 #' vars_select(nms, all_of(vars))
