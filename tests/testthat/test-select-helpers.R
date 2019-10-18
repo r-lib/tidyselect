@@ -322,3 +322,22 @@ test_that("all_of() and any_of() check their inputs", {
   expect_error(vars_select(letters, all_of(na_chr)), "missing")
   expect_error(vars_select(letters, any_of(na_chr)), "missing")
 })
+
+test_that("matchers accept length > 1 vectors (#50)", {
+  expect_identical(
+    vars_select(names(iris), starts_with(c("Sep", "Petal"))),
+    vars_select(names(iris), starts_with("Sep") | starts_with("Petal"))
+  )
+  expect_identical(
+    vars_select(names(iris), ends_with(c("gth", "Width"))),
+    vars_select(names(iris), ends_with("gth") | ends_with("Width"))
+  )
+  expect_identical(
+    vars_select(names(iris), contains(c("epal", "eta"))),
+    vars_select(names(iris), contains("epal") | contains("eta")),
+  )
+  expect_identical(
+    vars_select(names(iris), matches(c("epal", "eta"))),
+    vars_select(names(iris), matches("epal") | contains("eta")),
+  )
+})

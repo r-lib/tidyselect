@@ -133,7 +133,8 @@ vars_validate <- function(vars) {
     abort("`vars` must be a character vector")
   }
 
-  vars
+  # Named `vars` makes it harder to implement select helpers
+  unname(vars)
 }
 
 vars_env <- new_environment()

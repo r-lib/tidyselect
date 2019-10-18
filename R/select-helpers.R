@@ -84,47 +84,62 @@ NULL
 #' @export
 #' @rdname select_helpers
 starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(is_string(match), !is.na(match), nchar(match) > 0)
+  check_match(match)
 
-  if (ignore.case) match <- tolower(match)
-  n <- nchar(match)
+  if (ignore.case) {
+     vars <- tolower(vars)
+     match <- tolower(match)
+  }
 
-  if (ignore.case) vars <- tolower(vars)
-  which_vars(match, substr(vars, 1, n))
+  flat_map_int(match, starts_with_impl, vars)
+}
+starts_with_impl <- function(x, vars) {
+  n <- nchar(x)
+  which_vars(x, substr(vars, 1, n))
 }
 
 #' @export
 #' @rdname select_helpers
 ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(is_string(match), !is.na(match), nchar(match) > 0)
-
-  if (ignore.case) match <- tolower(match)
-  n <- nchar(match)
-
-  if (ignore.case) vars <- tolower(vars)
-  length <- nchar(vars)
-
-  which_vars(match, substr(vars, pmax(1, length - n + 1), length))
-}
-
-#' @export
-#' @rdname select_helpers
-contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(is_string(match), nchar(match) > 0)
+  check_match(match)
 
   if (ignore.case) {
     vars <- tolower(vars)
     match <- tolower(match)
   }
-  grep_vars(match, vars, fixed = TRUE)
+
+  length <- nchar(vars)
+  flat_map_int(match, ends_with_impl, vars, length)
+}
+ends_with_impl <- function(x, vars, length) {
+  n <- nchar(x)
+  which_vars(x, substr(vars, pmax(1, length - n + 1), length))
+}
+
+#' @export
+#' @rdname select_helpers
+contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
+  check_match(match)
+
+  if (ignore.case) {
+    vars <- tolower(vars)
+    match <- tolower(match)
+  }
+
+  flat_map_int(match, grep_vars, vars, fixed = TRUE)
 }
 
 #' @export
 #' @rdname select_helpers
 matches <- function(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars()) {
-  stopifnot(is_string(match), nchar(match) > 0)
+  check_match(match)
+  flat_map_int(match, grep_vars, vars, ignore.case = ignore.case, perl = perl)
+}
 
-  grep_vars(match, vars, ignore.case = ignore.case, perl = perl)
+check_match <- function(match) {
+  if (!is_character(match) || !all(nzchar(match))) {
+    abort("`match` must be a character vector of non empty strings.")
+  }
 }
 
 #' @export
