@@ -4,7 +4,7 @@
 \name{vars_select_helpers}
 \alias{vars_select_helpers}
 \title{List of selection helpers}
-\format{An object of class \code{list} of length 8.}
+\format{An object of class \code{list} of length 10.}
 \usage{
 vars_select_helpers
 }

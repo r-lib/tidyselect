@@ -6,7 +6,11 @@
 #' * `contains()`: Contains a literal string.
 #' * `matches()`: Matches a regular expression.
 #' * `num_range()`: Matches a numerical range like x01, x02, x03.
-#' * `one_of()`: Matches variable names in a character vector.
+#' * `all_of()`: Matches variable names in a character vector. All
+#'   names must be present, otherwise an out-of-bounds error is
+#'   thrown.
+#' * `any_of()`: Same as `all_of()`, except that no error is thrown
+#'   for names that don't exist.
 #' * `everything()`: Matches all variables.
 #' * `last_col()`: Select last variable, possibly with an offset.
 #'
@@ -14,7 +18,7 @@
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
 #' @param perl Should Perl-compatible regexps be used?
-#' @param vars,.vars A character vector of variable names. When called
+#' @param vars A character vector of variable names. When called
 #'   from inside selecting functions like [dplyr::select()] these are
 #'   automatically set to the names of the table.
 #' @name select_helpers
@@ -41,7 +45,16 @@
 #' vars_select(nms, last_col(offset = 2))
 #'
 #' vars <- c("Petal.Length", "Petal.Width")
-#' vars_select(nms, one_of(vars))
+#' vars_select(nms, all_of(vars))
+#'
+#' # Whereas `all_of()` is strict, `any_of()` allows missing
+#' # variables.
+#' try(vars_select(nms, all_of(c("Species", "Genres"))))
+#' vars_select(nms, any_of(c("Species", "Genres")))
+#'
+#' # The lax variant is especially useful to make sure a variable is
+#' # selected out:
+#' vars_select(nms, -any_of(c("Species", "Genres")))
 #'
 #' # The order of selected columns is determined from the inputs
 #' vars_select(names(mtcars), starts_with("c"), starts_with("d"))
@@ -107,27 +120,34 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
   match_vars(paste0(prefix, range), vars)
 }
 
-#' @export
 #' @rdname select_helpers
-#' @param ... One or more character vectors.
-one_of <- function(..., .vars = peek_vars()) {
-  keep <- compact(list(...))
+#' @param x A character vector.
+#' @inheritParams ellipsis::dots_empty
+#' @export
+all_of <- function(x, ..., vars = peek_vars()) {
+  ellipsis::check_dots_empty()
 
-  bad_input <- detect_index(keep, ~ !vec_is_coercible(., chr()))
-  if (bad_input) {
-    type <- friendly_type_of(keep[[bad_input]])
-    msg <- glue::glue("Input { bad_input } must be a vector of column names, not {type}.")
-    abort(msg, "tidyselect_error_incompatible_index_type")
-  }
+  n <- length(vars)
+  subclass_index_errors(
+    vctrs::vec_as_index(x, n, names = vars, allow_types = "name"),
+    allow_positions = FALSE
+  )
+}
 
-  keep <- vctrs::vec_c(!!!keep, .ptype = character())
+#' @rdname select_helpers
+#' @export
+any_of <- function(x, ..., vars = peek_vars()) {
+  ellipsis::check_dots_empty()
 
-  if (!all(keep %in% .vars)) {
-    bad <- setdiff(keep, .vars)
-    warn(glue("Unknown { plural(.vars) }: ", paste0("`", bad, "`", collapse = ", ")))
-  }
+  x <- subclass_index_errors(
+    vctrs::vec_coerce_index(x, allow_types = "name"),
+    allow_positions = FALSE
+  )
 
-  match_vars(keep, .vars)
+  # Ensure missing values slip through (they cause an error later on)
+  vars <- c(vars, na_chr)
+
+  set_intersect(vars, x)
 }
 
 #' @export
@@ -171,6 +191,35 @@ which_vars <- function(needle, haystack) {
   which(needle == haystack)
 }
 
+#' Retired selection helpers
+#'
+#' `one_of()` is retired in favour of the more precise [any_of()] and
+#' [all_of()] selectors.
+#'
+#' @param ... One or more character vectors.
+#' @param .vars A character vector of variable names. When called
+#'   from inside selecting functions like [dplyr::select()] these are
+#'   automatically set to the names of the table.
+#' @export
+one_of <- function(..., .vars = peek_vars()) {
+  keep <- compact(list(...))
+
+  bad_input <- detect_index(keep, ~ !vec_is_coercible(., chr()))
+  if (bad_input) {
+    type <- friendly_type_of(keep[[bad_input]])
+    msg <- glue::glue("Input { bad_input } must be a vector of column names, not {type}.")
+    abort(msg, "tidyselect_error_incompatible_index_type")
+  }
+
+  keep <- vctrs::vec_c(!!!keep, .ptype = character())
+
+  if (!all(keep %in% .vars)) {
+    bad <- setdiff(keep, .vars)
+    warn(glue("Unknown { plural(.vars) }: ", paste0("`", bad, "`", collapse = ", ")))
+  }
+
+  match_vars(keep, .vars)
+}
 
 #' List of selection helpers
 #'
@@ -206,5 +255,7 @@ vars_select_helpers <- list(
   num_range = num_range,
   one_of = one_of,
   everything = everything,
-  last_col = last_col
+  last_col = last_col,
+  all_of = all_of,
+  any_of = any_of
 )

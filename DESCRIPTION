@@ -13,6 +13,7 @@ Description: A backend for the selecting functions of the 'tidyverse'.
 Depends:
     R (>= 3.2)
 Imports:
+    ellipsis,
     glue (>= 1.3.0),
     purrr (>= 0.3.2),
     rlang (>= 0.4.0),
