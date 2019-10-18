@@ -23,7 +23,7 @@ Suggests:
     testthat (>= 2.2.1.9002)
 remotes:
     r-lib/testthat,
-    lionel-/vctrs@add-force-constraints
+    r-lib/vctrs
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
