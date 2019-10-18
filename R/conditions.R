@@ -2,13 +2,11 @@
 subclass_index_errors <- function(expr) {
   tryCatch(
     expr,
-    vctrs_error_index_oob = function(cnd) {
-      if (inherits(cnd, "vctrs_error_index_oob_names")) {
-        subclass <- "tidyselect_error_index_oob_names"
-      } else {
-        subclass <- "tidyselect_error_index_oob_positions"
-      }
-      stop_index_oob(parent = cnd, .subclass = subclass)
+    vctrs_error_index_oob_names = function(cnd) {
+      stop_index_oob(parent = cnd, .subclass = "tidyselect_error_index_oob_names")
+    },
+    vctrs_error_index_oob_positions = function(cnd) {
+      stop_index_oob(parent = cnd, .subclass = "tidyselect_error_index_oob_positions")
     },
     vctrs_error_index = function(cnd) {
       stop_index_bad_type(parent = cnd)
