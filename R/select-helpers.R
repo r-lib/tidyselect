@@ -84,7 +84,7 @@ NULL
 #' @export
 #' @rdname select_helpers
 starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(is_string(match), !is.na(match), nchar(match) > 0)
+  stopifnot(is_string(match), nchar(match) > 0)
 
   if (ignore.case) match <- tolower(match)
   n <- nchar(match)
@@ -96,7 +96,7 @@ starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
 #' @export
 #' @rdname select_helpers
 ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(is_string(match), !is.na(match), nchar(match) > 0)
+  stopifnot(is_string(match), nchar(match) > 0)
 
   if (ignore.case) match <- tolower(match)
   n <- nchar(match)
