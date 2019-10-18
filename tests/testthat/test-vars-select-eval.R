@@ -136,3 +136,10 @@ test_that("symbol lookup outside data informs caller about better practice", {
     vars_select(letters, vars)
   })
 })
+
+test_that("selection helpers are in the context mask", {
+  out <- local(envir = baseenv(), {
+    tidyselect::vars_select(letters, all_of("a"))
+  })
+  expect_identical(out, c(a = "a"))
+})

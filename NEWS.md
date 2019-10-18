@@ -1,6 +1,23 @@
 
 # tidyselect (development)
 
+* Selection helpers like `all_of()` and `starts_with()` are now
+  available in all selection contexts, even when they haven't been
+  attached to the search path. The most visible consequence of this
+  change is that it is now easier to use selection functions without
+  attaching the host package:
+
+  ```r
+  # Before
+  dplyr::select(mtcars, dplyr::starts_with("c"))
+
+  # After
+  dplyr::select(mtcars, starts_with("c"))
+  ```
+
+  It is still recommended to export the helpers from your package so
+  that users can easily look up the documentation with `?`.
+
 * Selecting non-column variables with bare names now triggers an
   informative message suggesting to use `all_of()` instead. Referring
   to contextual objects with a bare name is brittle because it might
