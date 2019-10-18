@@ -13,6 +13,10 @@
   iris %>% dplyr::select(-any_of(vars))
   ```
 
+  Note that `all_of()` and `any_of()` are a bit more conservative in
+  their function signature than `one_of()`: they do not accept dots.
+  The equivalent of `one_of("a", "b")` is `all_of(c("a", "b"))`.
+
 * `vars_select()` has been rewritten to support a clearer separation
   between data expressions (calls to `:`, `-`, and `c`) and context
   expressions (anything else). This means you can now safely use
