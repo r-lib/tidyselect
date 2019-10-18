@@ -143,14 +143,8 @@ vars_select <- function(.vars, ...,
     quos <- ignore_unknown_symbols(.vars, quos)
   }
 
-  ind_list <- vars_select_eval(.vars, quos)
+  ind_list <- subclass_index_errors(vars_select_eval(.vars, quos))
   check_missing(ind_list, quos)
-
-  # This takes care of NULL inputs and of ignored errors when
-  # `.strict` is FALSE
-  is_empty <- map_lgl(ind_list, is_null)
-  ind_list <- discard(ind_list, is_empty)
-  quos <- discard(quos, is_empty)
 
   if (is_empty(ind_list)) {
     signal("", "tidyselect_empty")
@@ -164,8 +158,6 @@ vars_select <- function(.vars, ...,
   if (is_negated(quo_get_expr(quos[[1]]))) {
     ind_list <- c(list(seq_along(.vars)), ind_list)
   }
-
-  check_integerish(ind_list, quos, .vars)
 
   incl <- inds_combine(.vars, ind_list)
 
@@ -192,22 +184,6 @@ vars_select <- function(.vars, ...,
   sel
 }
 
-ind_coerce <- function(ind) {
-  if (vec_is_coercible(ind, int())) {
-    return(vctrs::vec_cast(ind, int()))
-  }
-
-  if (vec_is_coercible(ind, chr())) {
-    return(vctrs::vec_cast(ind, chr()))
-  }
-
-  type <- friendly_type_of(ind)
-  abort(
-    "Must select with column names or positions, not {type}.",
-    "tidyselect_error_incompatible_index_type"
-  )
-}
-
 check_missing <- function(x, exprs) {
   any_missing <- anyNA(x, recursive = TRUE)
   if (any_missing) {
@@ -220,21 +196,7 @@ check_missing <- function(x, exprs) {
   }
 }
 
-check_integerish <- function(x, exprs, vars) {
-  if (!every(x, is_integerish)) {
-    is_integerish <- map_lgl(x, is_integerish)
-    bad <- exprs[!is_integerish]
-    first <- x[!is_integerish][[1]]
-    first_type <- friendly_type_of(first)
-    bad_calls(bad,
-      "must evaluate to { singular(vars) } positions or names, \\
-       not { first_type }"
-    )
-  }
-}
-
 inds_combine <- function(vars, inds) {
-  walk(inds, ind_check)
   first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
 
   # Don't suffix existing duplicate with a sequential suffix
@@ -248,27 +210,28 @@ inds_combine <- function(vars, inds) {
   }
 
   inds <- vctrs::vec_c(!!!inds, .ptype = integer(), .name_spec = spec)
-  inds <- inds[inds != 0]
+  inds <- subclass_index_errors(
+    vctrs::vec_as_index(inds, length(vars), vars, convert_values = NULL)
+  )
+
+  dir <- vec_split_id_direction(inds)
+  pos <- match("pos", dir$key)
+  neg <- match("neg", dir$key)
 
   if (first_negative) {
     incl <- seq_along(vars)
-  } else {
-    incl <- inds[inds > 0]
+  } else if (!is.na(pos)) {
+    incl <- inds[dir$id[[pos]]]
+    incl <- vctrs::vec_as_index(incl, length(vars))
     incl <- inds_unique(incl, vars)
+  } else {
+    incl <- integer()
   }
 
-  # Remove variables to be excluded (setdiff loses names)
-  excl <- abs(inds[inds < 0])
-  incl <- incl[is.na(match(incl, excl))]
-
-  bad_idx <- incl > length(vars)
-  if (any(bad_idx)) {
-    where <- incl[which(bad_idx)]
-    where <- glue::glue_collapse(where, sep = ", ", last = " and ")
-    abort(glue::glue(
-      "Can't select column because the data frame is too small.
-       These indices are too large: { where }"
-    ))
+  if (!is.na(neg)) {
+    excl <- -inds[dir$id[[neg]]]
+    excl <- vctrs::vec_as_index(excl, length(vars))
+    incl <- set_diff(incl, excl)
   }
 
   names(incl) <- names2(incl)
@@ -285,6 +248,12 @@ inds_combine <- function(vars, inds) {
 
   names(incl)[unrenamed] <- unrenamed_vars
   incl
+}
+
+vec_split_id_direction <- function(x) {
+  direction <- ifelse(x < 0L, 1L, 2L)
+  direction <- factor(direction, 1:2, c("neg", "pos"))
+  vctrs::vec_split_id(direction)
 }
 
 inds_unique <- function(x, vars) {
@@ -323,18 +292,6 @@ ind_last_name <- function(x, vars) {
   }
 
   last(names)
-}
-
-ind_check <- function(x) {
-  if (!length(x)) {
-    return(NULL)
-  }
-
-  positive <- x > 0
-
-  if (any(positive != positive[[1]])) {
-    abort("Each argument must yield either positive or negative integers.")
-  }
 }
 
 rename_check <- function(to, vars, orig, incl, dups) {
@@ -458,7 +415,7 @@ vars_select_eval <- function(vars, quos) {
     quos,
     is_symbolic,
     ~ walk_data_tree(., data_mask, context_mask),
-    .else = ~ as_indices(quo_get_expr(.), vars = vars)
+    .else = ~ as_indices_impl(quo_get_expr(.), vars = vars)
   )
 }
 
@@ -490,18 +447,29 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     eval_context(expr, context_mask)
   )
 
-  as_indices(out, vars = data_mask$.vars)
+  vars <- data_mask$.vars
+  out <- as_indices_impl(out, vars = vars)
+  vctrs::vec_as_index(out, length(vars), vars, convert_values = NULL)
+}
+
+as_indices_impl <- function(x, vars) {
+  if (is_null(x)) {
+    return(int())
+  }
+
+  x <- vctrs::vec_coerce_index(x, allow_types = c("position", "name"))
+
+  switch(typeof(x),
+    character = set_names(vctrs::vec_as_index(x, length(vars), vars), names(x)),
+    double = ,
+    integer = x,
+    abort("Internal error: Unexpected type in `as_indices()`.")
+  )
 }
 
 as_indices <- function(x, vars) {
-  if (is.object(x)) {
-    x <- ind_coerce(x)
-  }
-  if (is_character(x)) {
-    match_strings(x, vars = vars)
-  } else {
-    x
-  }
+  inds <- subclass_index_errors(as_indices_impl(x, vars))
+  vctrs::vec_as_index(inds, length(vars), vars, convert_values = NULL)
 }
 
 expr_kind <- function(expr) {
@@ -609,23 +577,8 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
     return(value)
   }
 
-  abort(glue::glue("object '{name}' not found"))
-}
-
-# This feature is in the "regret" lifecycle stage
-match_strings <- function(x, vars = peek_vars()) {
-  if (!is_character(x)) {
-    return(x)
-  }
-
-  out <- match(x, vars)
-
-  if (any(are_na(out) & !is.na(x))) {
-    unknown <- x[are_na(out)]
-    bad_unknown_vars(vars, unknown)
-  }
-
-  set_names(out, names(x))
+  # FIXME: export `stop_bad_index()`?
+  vctrs::vec_as_index(name, 0L, names = character())
 }
 
 setdiff2 <- function(x, y) {

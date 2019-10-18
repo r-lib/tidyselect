@@ -120,3 +120,18 @@ vec_index_invert <- function(x) {
 vec_index_is_empty <- function(x) {
   !length(x) || all(x == 0L)
 }
+
+# https://github.com/r-lib/vctrs/issues/548
+set_diff <- function(x, y) {
+  vctrs::vec_slice(x, !vctrs::vec_in(x, y))
+}
+
+vec_is_subtype <- function(x, super, ..., x_arg = "x", super_arg = "super") {
+  tryCatch(
+    vctrs_error_incompatible_type = function(...) FALSE,
+    {
+      common <- vctrs::vec_ptype2(x, super, ..., x_arg = x_arg, y_arg = super_arg)
+      vctrs::vec_is(common, super)
+    }
+  )
+}

@@ -9,10 +9,9 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
   }
 
   inds <- vars_rename_eval(quos, .vars)
-  inds <- map(inds, match_strings, .vars)
+  inds <- map(inds, as_indices, .vars)
 
   check_missing(inds, quos)
-  check_integerish(inds, quos, .vars)
 
   dups <- purrr::map_lgl(inds, is_data_dups)
   inds <- vctrs::vec_c(!!!inds, .name_spec = "{outer}")

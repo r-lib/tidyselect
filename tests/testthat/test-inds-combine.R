@@ -72,13 +72,20 @@ test_that("select(0) corner case #82", {
 
 test_that("invalid inputs raise error", {
   expect_error(
-    inds_combine(names(mtcars), list(c(-1, 1))),
-    "Each argument must yield either positive or negative integers",
-    fixed = TRUE
-  )
-  expect_error(
     inds_combine(names(mtcars), list(12, 30, 50)),
-    "These indices are too large: 12, 30 and 50",
-    fixed = TRUE
+    class = "tidyselect_error_index_oob_positions"
+  )
+})
+
+test_that("can mix negative and positive indices", {
+  # Start with negative
+  expect_identical(
+    inds_combine(letters[1:3], list(c(-1, 1))),
+    c(b = 2L, c = 3L)
+  )
+  # Start with positive
+  expect_identical(
+    inds_combine(letters[1:3], list(c(1, -1))),
+    set_names(integer(), character())
   )
 })
