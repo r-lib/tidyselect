@@ -1,0 +1,8 @@
+> vars_select(letters, vars)
+Message: Note: Selecting non-column variables is brittle.
+i If the data contains `vars` it will be selected instead.
+i Use `all_of(vars)` to silence this message.
+
+  a   b 
+"a" "b" 
+

@@ -407,7 +407,7 @@ vars_select_eval <- function(vars, quos) {
     # Add `.data` pronoun in the context mask even though it doesn't
     # contain data. This way the pronoun can be used in any parts of the
     # expression.
-    context_mask <- new_data_mask(env())
+    context_mask <- new_data_mask(env(!!!vars_select_helpers))
     context_mask$.data <- data_mask$.data
   }
 
@@ -628,6 +628,11 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
   )
 
   if (!is_missing(value)) {
+    inform(glue_c(
+      "Note: Selecting non-column variables is brittle.",
+      i = "If the data contains `{name}` it will be selected instead.",
+      i = "Use `all_of({name})` to silence this message."
+    ))
     return(value)
   }
 

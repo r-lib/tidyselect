@@ -124,3 +124,22 @@ test_that("can't use arithmetic operators in data context", {
 test_that("can use arithmetic operators in non-data context", {
   expect_identical(vars_select(letters, identity(2 * 2 + 2 ^ 2 / 2)), c(f = "f"))
 })
+
+test_that("symbol lookup outside data informs caller about better practice", {
+  vars <- c("a", "b")
+  expect_message(
+    vars_select(letters, vars),
+    "Use `all_of(vars)` to silence",
+    fixed = TRUE
+  )
+  verify_output(test_path("outputs", "vars-select-context-lookup.txt"), {
+    vars_select(letters, vars)
+  })
+})
+
+test_that("selection helpers are in the context mask", {
+  out <- local(envir = baseenv(), {
+    tidyselect::vars_select(letters, all_of("a"))
+  })
+  expect_identical(out, c(a = "a"))
+})
