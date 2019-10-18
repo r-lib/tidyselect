@@ -535,10 +535,13 @@ eval_and <- function(expr, data_mask, context_mask) {
 
 walk_non_symbol <- function(expr, data_mask, context_mask) {
   if (is_symbol(expr)) {
-    eval_context(expr, context_mask)
-  } else {
-    walk_data_tree(expr, data_mask, context_mask)
+    abort(glue_c(
+      "Can't use boolean operators with bare variables.",
+      x = "`{expr}` is a bare variable.",
+      i = "Do you need `all_of({expr})`?"
+    ))
   }
+  walk_data_tree(expr, data_mask, context_mask)
 }
 
 stop_bad_op <- function(bad, ok) {

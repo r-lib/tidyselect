@@ -73,16 +73,6 @@ test_that("boolean operators are overloaded", {
     vars_select(letters, -(starts_with("a") | ends_with("c"))),
   )
 
-  expect_error(
-    vars_select(letters, starts_with("a") & z),
-    "not found"
-  )
-
-  expect_error(
-    vars_select(letters, starts_with("a") | z),
-    "not found"
-  )
-
   # This pattern is not possible with `intersect()` because its
   # arguments are evaluated in non-data context
   expect_error(
@@ -104,5 +94,12 @@ test_that("scalar boolean operators fail informatively", {
   verify_output(test_path("outputs", "vars-select-bool-scalar-ops.txt"), {
     vars_select(letters, starts_with("a") || ends_with("b"))
     vars_select(letters, starts_with("a") && ends_with("b"))
+  })
+})
+
+test_that("can't use boolean operators with symbols", {
+  verify_output(test_path("outputs", "vars-select-bool-symbols.txt"), {
+    vars_select(letters, starts_with("a") & z)
+    vars_select(letters, starts_with("a") | z)
   })
 })
