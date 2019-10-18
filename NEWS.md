@@ -1,6 +1,14 @@
 
 # tidyselect (development)
 
+* `starts_with()` and `ends_with()` now accept vector inputs (#50).
+  These are now equivalent:
+
+  ```{r}
+  starts_with(c("a", "b"))
+  starts_with("a") | starts_with("b")
+  ```
+
 * Selection helpers like `all_of()` and `starts_with()` are now
   available in all selection contexts, even when they haven't been
   attached to the search path. The most visible consequence of this

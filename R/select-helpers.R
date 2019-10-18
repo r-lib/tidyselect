@@ -84,32 +84,43 @@ NULL
 #' @export
 #' @rdname select_helpers
 starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(is_string(match), nchar(match) > 0)
+  stopifnot(
+    is_character(match),
+    all(nzchar(match))
+  )
 
   if (ignore.case) {
      vars <- tolower(vars)
      match <- tolower(match)
   }
 
-  n <- nchar(match)
-
-  which_vars(match, substr(vars, 1, n))
+  inds <- map(match, function(x) {
+    n <- nchar(x)
+    which_vars(x, substr(vars, 1, n))
+  })
+  vctrs::vec_c(!!!inds, .ptype = int())
 }
 
 #' @export
 #' @rdname select_helpers
 ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(is_string(match), nchar(match) > 0)
+  stopifnot(
+    is_character(match),
+    all(nzchar(match))
+  )
 
   if (ignore.case) {
     vars <- tolower(vars)
     match <- tolower(match)
   }
 
-  n <- nchar(match)
   length <- nchar(vars)
 
-  which_vars(match, substr(vars, pmax(1, length - n + 1), length))
+  inds <- map(match, function(x) {
+    n <- nchar(x)
+    which_vars(x, substr(vars, pmax(1, length - n + 1), length))
+  })
+  vctrs::vec_c(!!!inds, .ptype = int())
 }
 
 #' @export
