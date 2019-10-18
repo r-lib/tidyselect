@@ -169,7 +169,8 @@ for names that don't exist.</p></li>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>match</th>
-      <td><p>A string.</p></td>
+      <td><p>A character vector. If length &gt; 1, the union of the
+matches is taken.</p></td>
     </tr>
     <tr>
       <th>ignore.case</th>
@@ -251,13 +252,17 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 #&gt; "Sepal.Length"  "Sepal.Width" "Petal.Length"  "Petal.Width"      "Species" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>last_col</span>())</div><div class='output co'>#&gt;   Species 
 #&gt; "Species" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>last_col</span>(<span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt;   Petal.Length 
 #&gt; "Petal.Length" </div><div class='input'>
-<span class='co'># `!` negates a selection</span>
+<span class='co'># With multiple matchers, the union of the matches is selected:</span>
+<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal"</span>, <span class='st'>"Sepal"</span>)))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width   Sepal.Length    Sepal.Width 
+#&gt; "Petal.Length"  "Petal.Width" "Sepal.Length"  "Sepal.Width" </div><div class='input'>
+<span class='co'># `!` negates a selection:</span>
 <span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, !<span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Sepal.Length   Petal.Length        Species 
 #&gt; "Sepal.Length" "Petal.Length"      "Species" </div><div class='input'>
 <span class='co'># `&amp;` and `|` take the intersection or the union of two selections:</span>
 <span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) <span class='kw'>&amp;</span> <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Width 
 #&gt; "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) <span class='kw'>|</span> <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width    Sepal.Width 
 #&gt; "Petal.Length"  "Petal.Width"  "Sepal.Width" </div><div class='input'>
+<span class='co'># `all_of()` selects the variables in a character vector:</span>
 <span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal.Length"</span>, <span class='st'>"Petal.Width"</span>)
 <span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='no'>vars</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
 #&gt; "Petal.Length"  "Petal.Width" </div><div class='input'>
