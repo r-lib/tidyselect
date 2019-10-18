@@ -1,8 +1,8 @@
 
 # tidyselect (development)
 
-* `starts_with()` and `ends_with()` now accept vector inputs (#50).
-  These are now equivalent:
+* `starts_with()`, `ends_with()`, `contains()`, and `matches()` now
+  accept vector inputs (#50). For instance these are now equivalent:
 
   ```{r}
   starts_with(c("a", "b"))

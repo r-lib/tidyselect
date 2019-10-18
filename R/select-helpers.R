@@ -125,21 +125,28 @@ ends_with_impl <- function(x, vars, length) {
 #' @export
 #' @rdname select_helpers
 contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
-  stopifnot(is_string(match), nchar(match) > 0)
+  stopifnot(
+    is_character(match),
+    all(nzchar(match))
+  )
 
   if (ignore.case) {
     vars <- tolower(vars)
     match <- tolower(match)
   }
-  grep_vars(match, vars, fixed = TRUE)
+
+  flat_map_int(match, grep_vars, vars, fixed = TRUE)
 }
 
 #' @export
 #' @rdname select_helpers
 matches <- function(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars()) {
-  stopifnot(is_string(match), nchar(match) > 0)
+  stopifnot(
+    is_character(match),
+    all(nzchar(match))
+  )
 
-  grep_vars(match, vars, ignore.case = ignore.case, perl = perl)
+  flat_map_int(match, grep_vars, vars, ignore.case = ignore.case, perl = perl)
 }
 
 #' @export
