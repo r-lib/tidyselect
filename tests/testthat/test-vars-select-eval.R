@@ -98,6 +98,9 @@ test_that("scalar boolean operators fail informatively", {
 })
 
 test_that("can't use boolean operators with symbols", {
+  expect_error(vars_select(letters, starts_with("a") & z), "bare variables")
+  expect_error(vars_select(letters, starts_with("a") | z), "bare variables")
+
   verify_output(test_path("outputs", "vars-select-bool-symbols.txt"), {
     vars_select(letters, starts_with("a") & z)
     vars_select(letters, starts_with("a") | z)
