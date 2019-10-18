@@ -40,7 +40,11 @@ ends_with(): Ends with a suffix.
 contains(): Contains a literal string.
 matches(): Matches a regular expression.
 num_range(): Matches a numerical range like x01, x02, x03.
-one_of(): Matches variable names in a character vector.
+all_of(): Matches variable names in a character vector. All
+names must be present, otherwise an out-of-bounds error is
+thrown.
+any_of(): Same as all_of(), except that no error is thrown
+for names that don't exist.
 everything(): Matches all variables.
 last_col(): Select last variable, possibly with an offset.
 
@@ -130,7 +134,11 @@ last_col(): Select last variable, possibly with an offset.
 <li><p><code>contains()</code>: Contains a literal string.</p></li>
 <li><p><code>matches()</code>: Matches a regular expression.</p></li>
 <li><p><code>num_range()</code>: Matches a numerical range like x01, x02, x03.</p></li>
-<li><p><code>one_of()</code>: Matches variable names in a character vector.</p></li>
+<li><p><code>all_of()</code>: Matches variable names in a character vector. All
+names must be present, otherwise an out-of-bounds error is
+thrown.</p></li>
+<li><p><code>any_of()</code>: Same as <code>all_of()</code>, except that no error is thrown
+for names that don't exist.</p></li>
 <li><p><code>everything()</code>: Matches all variables.</p></li>
 <li><p><code>last_col()</code>: Select last variable, possibly with an offset.</p></li>
 </ul>
@@ -148,7 +156,9 @@ last_col(): Select last variable, possibly with an offset.
 
 <span class='fu'>num_range</span>(<span class='no'>prefix</span>, <span class='no'>range</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>())
 
-<span class='fu'>one_of</span>(<span class='no'>...</span>, <span class='kw'>.vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>())
+<span class='fu'>all_of</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>())
+
+<span class='fu'>any_of</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>())
 
 <span class='fu'>everything</span>(<span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>())
 
@@ -167,7 +177,7 @@ last_col(): Select last variable, possibly with an offset.
 names.</p></td>
     </tr>
     <tr>
-      <th>vars, .vars</th>
+      <th>vars</th>
       <td><p>A character vector of variable names. When called
 from inside selecting functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> these are
 automatically set to the names of the table.</p></td>
@@ -190,8 +200,12 @@ automatically set to the names of the table.</p></td>
 a range of 2 gives "01", a range of three "001", etc.</p></td>
     </tr>
     <tr>
+      <th>x</th>
+      <td><p>A character vector.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>One or more character vectors.</p></td>
+      <td><p>These dots are for future extensions and must be empty.</p></td>
     </tr>
     <tr>
       <th>offset</th>
@@ -206,7 +220,7 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The order of selected columns is determined by the inputs.</p><ul>
-<li><p><code>one_of(c("foo", "bar"))</code> selects <code>"foo"</code> first.</p></li>
+<li><p><code><a href='one_of.html'>one_of(c("foo", "bar"))</a></code> selects <code>"foo"</code> first.</p></li>
 <li><p><code><a href='https://rdrr.io/r/base/c.html'>c(starts_with("c"), starts_with("d"))</a></code> selects all columns
 starting with <code>"c"</code> first, then all columns starting with <code>"d"</code>.</p></li>
 </ul>
@@ -225,12 +239,21 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 #&gt; "Species" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>last_col</span>(<span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt;   Petal.Length 
 #&gt; "Petal.Length" </div><div class='input'>
 <span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal.Length"</span>, <span class='st'>"Petal.Width"</span>)
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>one_of</span>(<span class='no'>vars</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
+<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='no'>vars</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
 #&gt; "Petal.Length"  "Petal.Width" </div><div class='input'>
+<span class='co'># Whereas `all_of()` is strict, `any_of()` allows missing</span>
+<span class='co'># variables.</span>
+<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>))))</div><div class='output co'>#&gt; Error : Must select existing columns.
+#&gt; <span style='color: #BB0000;'>x</span><span> Can't subset element with unknown name `Genres`.</div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>any_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>)))</div><div class='output co'>#&gt;   Species 
+#&gt; "Species" </div><div class='input'>
+<span class='co'># The lax variant is especially useful to make sure a variable is</span>
+<span class='co'># selected out:</span>
+<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, -<span class='fu'>any_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>)))</div><div class='output co'>#&gt;   Sepal.Length    Sepal.Width   Petal.Length    Petal.Width 
+#&gt; "Sepal.Length"  "Sepal.Width" "Petal.Length"  "Petal.Width" </div><div class='input'>
 <span class='co'># The order of selected columns is determined from the inputs</span>
 <span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), <span class='fu'>starts_with</span>(<span class='st'>"c"</span>), <span class='fu'>starts_with</span>(<span class='st'>"d"</span>))</div><div class='output co'>#&gt;    cyl   carb   disp   drat 
-#&gt;  "cyl" "carb" "disp" "drat" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), <span class='fu'>one_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"carb"</span>, <span class='st'>"mpg"</span>)))</div><div class='output co'>#&gt;   carb    mpg 
-#&gt; "carb"  "mpg" </div></pre>
+#&gt;  "cyl" "carb" "disp" "drat" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), <span class='fu'><a href='one_of.html'>one_of</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"carb"</span>, <span class='st'>"mpg"</span>)))</div><div class='output co'>#&gt;   carb    mpg 
+#&gt; "carb"  "mpg" </div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

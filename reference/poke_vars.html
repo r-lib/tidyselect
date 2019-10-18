@@ -195,14 +195,14 @@ registered.</p>
 #&gt; [20] "t" "u" "v" "w" "x" "y" "z"</div><div class='input'>
 <span class='co'># Now that the variables are registered, the helpers can figure out</span>
 <span class='co'># the positions of elements within the variable vector:</span>
-<span class='fu'><a href='select_helpers.html'>one_of</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"d"</span>, <span class='st'>"z"</span>))</div><div class='output co'>#&gt; [1]  4 26</div><div class='input'>
+<span class='fu'><a href='one_of.html'>one_of</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"d"</span>, <span class='st'>"z"</span>))</div><div class='output co'>#&gt; [1]  4 26</div><div class='input'>
 <span class='co'># In a function be sure to restore the previous variables. An exit</span>
 <span class='co'># hook is the best way to do it:</span>
 <span class='no'>fn</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>vars</span>) {
   <span class='no'>old</span> <span class='kw'>&lt;-</span> <span class='fu'>poke_vars</span>(<span class='no'>vars</span>)
   <span class='fu'><a href='https://rdrr.io/r/base/on.exit.html'>on.exit</a></span>(<span class='fu'>poke_vars</span>(<span class='no'>old</span>))
 
-  <span class='fu'><a href='select_helpers.html'>one_of</a></span>(<span class='st'>"d"</span>)
+  <span class='fu'><a href='one_of.html'>one_of</a></span>(<span class='st'>"d"</span>)
 }
 <span class='fu'>fn</span>(<span class='no'>letters</span>)</div><div class='output co'>#&gt; [1] 4</div><div class='input'><span class='fu'>fn</span>(<span class='no'>letters</span>[<span class='fl'>3</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; [1] 2</div><div class='input'>
 <span class='co'># The previous variables are still registered after fn() was</span>
