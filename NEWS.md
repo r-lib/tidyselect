@@ -2,7 +2,8 @@
 # tidyselect (development)
 
 * `starts_with()`, `ends_with()`, `contains()`, and `matches()` now
-  accept vector inputs (#50). For instance these are now equivalent:
+  accept vector inputs (#50). For instance these are now equivalent
+  ways of selecting all variables that start with either `"a"` or `"b"`:
 
   ```{r}
   starts_with(c("a", "b"))
