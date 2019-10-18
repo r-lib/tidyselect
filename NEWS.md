@@ -1,6 +1,11 @@
 
 # tidyselect (development)
 
+* Selecting non-column variables with bare names now triggers an
+  informative message suggesting to use `all_of()` instead. Referring
+  to contextual objects with a bare name is brittle because it might
+  be masked by a data frame column. Using `all_of()` is safe (#76).
+
 * Using arithmetic operators in selection context now fails more
   informatively (#84).
 
