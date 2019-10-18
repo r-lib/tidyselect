@@ -219,7 +219,20 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>The order of selected columns is determined by the inputs.</p><ul>
+    <p>In selection context you can also use these operators:</p><ul>
+<li><p><code>-</code> for selecting a selection.</p></li>
+<li><p><code>:</code> for selecting a range of consecutive variables.</p></li>
+<li><p><code>c</code> for selecting the union of sets of variables.</p></li>
+</ul>
+
+<p>The boolean operators were more recently overloaded to operate on
+selections:</p><ul>
+<li><p><code>!</code> for negating a selection.</p></li>
+<li><p><code>&amp;</code> and <code>|</code> for selecting the intersection or the union of two
+sets of variables.</p></li>
+</ul>
+
+<p>The order of selected columns is determined by the inputs.</p><ul>
 <li><p><code><a href='one_of.html'>one_of(c("foo", "bar"))</a></code> selects <code>"foo"</code> first.</p></li>
 <li><p><code><a href='https://rdrr.io/r/base/c.html'>c(starts_with("c"), starts_with("d"))</a></code> selects all columns
 starting with <code>"c"</code> first, then all columns starting with <code>"d"</code>.</p></li>
@@ -238,6 +251,13 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 #&gt; "Sepal.Length"  "Sepal.Width" "Petal.Length"  "Petal.Width"      "Species" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>last_col</span>())</div><div class='output co'>#&gt;   Species 
 #&gt; "Species" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>last_col</span>(<span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt;   Petal.Length 
 #&gt; "Petal.Length" </div><div class='input'>
+<span class='co'># `!` negates a selection</span>
+<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, !<span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Sepal.Length   Petal.Length        Species 
+#&gt; "Sepal.Length" "Petal.Length"      "Species" </div><div class='input'>
+<span class='co'># `&amp;` and `|` take the intersection or the union of two selections:</span>
+<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) <span class='kw'>&amp;</span> <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Width 
+#&gt; "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) <span class='kw'>|</span> <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width    Sepal.Width 
+#&gt; "Petal.Length"  "Petal.Width"  "Sepal.Width" </div><div class='input'>
 <span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal.Length"</span>, <span class='st'>"Petal.Width"</span>)
 <span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='no'>vars</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
 #&gt; "Petal.Length"  "Petal.Width" </div><div class='input'>
