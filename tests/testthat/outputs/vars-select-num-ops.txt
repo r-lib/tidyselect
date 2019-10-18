@@ -1,0 +1,12 @@
+> vars_select(letters, a + 2)
+Error: Can't use arithmetic operator `+` in selection context.
+
+> vars_select(letters, a * 2)
+Error: Can't use arithmetic operator `*` in selection context.
+
+> vars_select(letters, a / 2)
+Error: Can't use arithmetic operator `/` in selection context.
+
+> vars_select(letters, a^2)
+Error: Can't use arithmetic operator `^` in selection context.
+

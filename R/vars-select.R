@@ -446,9 +446,13 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `:` = eval_colon(expr, data_mask, context_mask),
     `|` = eval_or(expr, data_mask, context_mask),
     `&` = eval_and(expr, data_mask, context_mask),
+    `c` = eval_c(expr, data_mask, context_mask),
     `||` = stop_bad_bool_op("||", "|"),
     `&&` = stop_bad_bool_op("&&", "&"),
-    `c` = eval_c(expr, data_mask, context_mask),
+    `+` = stop_bad_arith_op("+"),
+    `*` = stop_bad_arith_op("*"),
+    `/` = stop_bad_arith_op("/"),
+    `^` = stop_bad_arith_op("^"),
     eval_context(expr, context_mask)
   )
 
@@ -500,6 +504,10 @@ call_kind <- function(expr) {
     `||` = ,
     `&&` = ,
     `!` = ,
+    `+` = ,
+    `*` = ,
+    `/` = ,
+    `^` = ,
     `c` = fn,
     "call"
   )
@@ -548,6 +556,12 @@ stop_bad_bool_op <- function(bad, ok) {
   abort(glue_c(
     "Can't use scalar `{bad}` in selections.",
     i = "Do you need `{ok}` instead?"
+  ))
+}
+
+stop_bad_arith_op <- function(op) {
+  abort(glue_c(
+    "Can't use arithmetic operator `{op}` in selection context."
   ))
 }
 

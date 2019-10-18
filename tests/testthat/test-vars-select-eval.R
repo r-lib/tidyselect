@@ -106,3 +106,21 @@ test_that("can't use boolean operators with symbols", {
     vars_select(letters, starts_with("a") | z)
   })
 })
+
+test_that("can't use arithmetic operators in data context", {
+  expect_error(vars_select(letters, a + 2), "arithmetic")
+  expect_error(vars_select(letters, a * 2), "arithmetic")
+  expect_error(vars_select(letters, a / 2), "arithmetic")
+  expect_error(vars_select(letters, a^2), "arithmetic")
+
+  verify_output(test_path("outputs", "vars-select-num-ops.txt"), {
+    vars_select(letters, a + 2)
+    vars_select(letters, a * 2)
+    vars_select(letters, a / 2)
+    vars_select(letters, a^2)
+  })
+})
+
+test_that("can use arithmetic operators in non-data context", {
+  expect_identical(vars_select(letters, identity(2 * 2 + 2 ^ 2 / 2)), c(f = "f"))
+})

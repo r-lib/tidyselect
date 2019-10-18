@@ -1,6 +1,9 @@
 
 # tidyselect (development)
 
+* Using arithmetic operators in selection context now fails more
+  informatively (#84).
+
 * Selection contexts now interpret the boolean operators specially (#106).
 
   - `!` negates a selection.
