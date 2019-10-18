@@ -518,15 +518,23 @@ eval_minus <- function(expr, data_mask, context_mask) {
 }
 
 eval_or <- function(expr, data_mask, context_mask) {
-  x <- walk_data_tree(expr[[2]], data_mask, context_mask)
-  y <- walk_data_tree(expr[[3]], data_mask, context_mask)
+  x <- walk_non_symbol(expr[[2]], data_mask, context_mask)
+  y <- walk_non_symbol(expr[[3]], data_mask, context_mask)
   c(x, y)
 }
 
 eval_and <- function(expr, data_mask, context_mask) {
-  x <- walk_data_tree(expr[[2]], data_mask, context_mask)
-  y <- walk_data_tree(expr[[3]], data_mask, context_mask)
+  x <- walk_non_symbol(expr[[2]], data_mask, context_mask)
+  y <- walk_non_symbol(expr[[3]], data_mask, context_mask)
   set_intersect(x, y)
+}
+
+walk_non_symbol <- function(expr, data_mask, context_mask) {
+  if (is_symbol(expr)) {
+    eval_context(expr, context_mask)
+  } else {
+    walk_data_tree(expr, data_mask, context_mask)
+  }
 }
 
 eval_c <- function(expr, data_mask, context_mask) {

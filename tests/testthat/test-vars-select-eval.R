@@ -73,11 +73,14 @@ test_that("boolean operators are overloaded", {
     vars_select(letters, -(starts_with("a") | ends_with("c"))),
   )
 
-  # This does not necessarily make sense but working around this is
-  # not worth it
-  expect_identical(
-    vars_select(letters, starts_with("a") | c),
-    vars_select(letters, starts_with("a"), c)
+  expect_error(
+    vars_select(letters, starts_with("a") & z),
+    "not found"
+  )
+
+  expect_error(
+    vars_select(letters, starts_with("a") | z),
+    "not found"
   )
 
   # This pattern is not possible with `intersect()` because its
