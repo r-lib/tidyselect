@@ -264,7 +264,7 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 <span class='co'># Whereas `all_of()` is strict, `any_of()` allows missing</span>
 <span class='co'># variables.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>))))</div><div class='output co'>#&gt; Error : Must select existing columns.
-#&gt; <span style='color: #BB0000;'>x</span><span> Can't subset element with unknown name `Genres`.</div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>any_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>)))</div><div class='output co'>#&gt;   Species 
+#&gt; <span style='color: #BB0000;'>✖</span><span> Can't subset element with unknown name `Genres`.</div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>any_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>)))</div><div class='output co'>#&gt;   Species 
 #&gt; "Species" </div><div class='input'>
 <span class='co'># The lax variant is especially useful to make sure a variable is</span>
 <span class='co'># selected out:</span>
