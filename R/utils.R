@@ -140,3 +140,10 @@ vec_is_subtype <- function(x, super, ..., x_arg = "x", super_arg = "super") {
     }
   )
 }
+
+glue_c <- function(..., env = caller_env()) {
+  map_chr(chr(...), glue::glue, .envir = env)
+}
+glue_line <- function(..., env = caller_env()) {
+  paste(glue_c(..., env = env), collapse = "\n")
+}

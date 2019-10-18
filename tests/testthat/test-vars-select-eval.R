@@ -99,3 +99,10 @@ test_that("boolean operators are overloaded", {
     vars_select(letters, c(starts_with("a"), ends_with("c")), i:k),
   )
 })
+
+test_that("scalar boolean operators fail informatively", {
+  verify_output(test_path("outputs", "vars-select-bool-scalar-ops.txt"), {
+    vars_select(letters, starts_with("a") || ends_with("b"))
+    vars_select(letters, starts_with("a") && ends_with("b"))
+  })
+})

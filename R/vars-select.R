@@ -446,6 +446,8 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `:` = eval_colon(expr, data_mask, context_mask),
     `|` = eval_or(expr, data_mask, context_mask),
     `&` = eval_and(expr, data_mask, context_mask),
+    `||` = stop_bad_op("||", "|"),
+    `&&` = stop_bad_op("&&", "&"),
     `c` = eval_c(expr, data_mask, context_mask),
     eval_context(expr, context_mask)
   )
@@ -495,6 +497,8 @@ call_kind <- function(expr) {
     `:` = ,
     `|` = ,
     `&` = ,
+    `||` = ,
+    `&&` = ,
     `!` = ,
     `c` = fn,
     "call"
@@ -535,6 +539,13 @@ walk_non_symbol <- function(expr, data_mask, context_mask) {
   } else {
     walk_data_tree(expr, data_mask, context_mask)
   }
+}
+
+stop_bad_op <- function(bad, ok) {
+  abort(glue_c(
+    "Can't use scalar `{bad}` in selections.",
+    i = "Do you need `{ok}` instead?"
+  ))
 }
 
 eval_c <- function(expr, data_mask, context_mask) {
