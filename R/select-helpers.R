@@ -86,10 +86,13 @@ NULL
 starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
   stopifnot(is_string(match), nchar(match) > 0)
 
-  if (ignore.case) match <- tolower(match)
+  if (ignore.case) {
+     vars <- tolower(vars)
+     match <- tolower(match)
+  }
+
   n <- nchar(match)
 
-  if (ignore.case) vars <- tolower(vars)
   which_vars(match, substr(vars, 1, n))
 }
 
@@ -98,10 +101,12 @@ starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
 ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
   stopifnot(is_string(match), nchar(match) > 0)
 
-  if (ignore.case) match <- tolower(match)
-  n <- nchar(match)
+  if (ignore.case) {
+    vars <- tolower(vars)
+    match <- tolower(match)
+  }
 
-  if (ignore.case) vars <- tolower(vars)
+  n <- nchar(match)
   length <- nchar(vars)
 
   which_vars(match, substr(vars, pmax(1, length - n + 1), length))
