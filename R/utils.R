@@ -147,3 +147,8 @@ glue_c <- function(..., env = caller_env()) {
 glue_line <- function(..., env = caller_env()) {
   paste(glue_c(..., env = env), collapse = "\n")
 }
+
+flat_map_int <- function(.x, .fn, ...) {
+  out <- map(.x, .fn, ...)
+  vctrs::vec_c(!!!out, .ptype = int())
+}

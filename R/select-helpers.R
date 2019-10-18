@@ -94,11 +94,11 @@ starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
      match <- tolower(match)
   }
 
-  inds <- map(match, function(x) {
-    n <- nchar(x)
-    which_vars(x, substr(vars, 1, n))
-  })
-  vctrs::vec_c(!!!inds, .ptype = int())
+  flat_map_int(match, starts_with_impl, vars)
+}
+starts_with_impl <- function(x, vars) {
+  n <- nchar(x)
+  which_vars(x, substr(vars, 1, n))
 }
 
 #' @export
@@ -115,12 +115,11 @@ ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
   }
 
   length <- nchar(vars)
-
-  inds <- map(match, function(x) {
-    n <- nchar(x)
-    which_vars(x, substr(vars, pmax(1, length - n + 1), length))
-  })
-  vctrs::vec_c(!!!inds, .ptype = int())
+  flat_map_int(match, ends_with_impl, vars, length)
+}
+ends_with_impl <- function(x, vars, length) {
+  n <- nchar(x)
+  which_vars(x, substr(vars, pmax(1, length - n + 1), length))
 }
 
 #' @export
