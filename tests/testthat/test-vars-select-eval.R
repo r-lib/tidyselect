@@ -129,7 +129,7 @@ test_that("symbol lookup outside data informs caller about better practice", {
   vars <- c("a", "b")
   expect_message(
     vars_select(letters, vars),
-    "Use `all_of(vars)` to silence",
+    "Use `all_of(vars)` instead of just `vars` to silence",
     fixed = TRUE
   )
   verify_output(test_path("outputs", "vars-select-context-lookup.txt"), {
