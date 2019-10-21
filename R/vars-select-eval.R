@@ -32,12 +32,15 @@ vars_select_eval <- function(vars, quos, strict) {
     data_mask$.__tidyselect__.$internal$strict <- strict
   }
 
-  map_if(
+  inds <- map_if(
     quos,
     is_symbolic,
     ~ walk_data_tree(., data_mask, context_mask),
     .else = ~ as_indices_impl(quo_get_expr(.), vars = vars, strict = strict)
   )
+
+  check_missing(inds, quos)
+  inds
 }
 
 # `walk_data_tree()` is a recursive interpreter that implements a

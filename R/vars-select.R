@@ -140,7 +140,6 @@ vars_select <- function(.vars, ...,
   }
 
   ind_list <- subclass_index_errors(vars_select_eval(.vars, quos, .strict))
-  check_missing(ind_list, quos)
 
   if (is_empty(ind_list)) {
     signal("", "tidyselect_empty")
