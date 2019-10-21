@@ -20,13 +20,15 @@ vars_select_eval <- function(vars, quos) {
     bottom <- env(top, !!!set_names(vars_split$val, vars_split$key))
     data_mask <- new_data_mask(bottom, top)
     data_mask$.data <- as_data_pronoun(data_mask)
-    data_mask$.vars <- vars
 
     # Add `.data` pronoun in the context mask even though it doesn't
     # contain data. This way the pronoun can be used in any parts of the
     # expression.
     context_mask <- new_data_mask(env(!!!vars_select_helpers))
     context_mask$.data <- data_mask$.data
+
+    # Save metadata in masks
+    data_mask$.__tidyselect__.$internal$vars <- vars
   }
 
   map_if(
@@ -74,7 +76,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     eval_context(expr, context_mask)
   )
 
-  vars <- data_mask$.vars
+  vars <- data_mask$.__tidyselect__.$internal$vars
   out <- as_indices_impl(out, vars = vars)
   vctrs::vec_as_index(out, length(vars), vars, convert_values = NULL)
 }
