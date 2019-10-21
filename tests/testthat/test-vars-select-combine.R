@@ -1,4 +1,4 @@
-context("combine indices")
+context("vars-select-combine")
 
 # This is the low C++ function which works on integer indices
 

@@ -152,3 +152,19 @@ flat_map_int <- function(.x, .fn, ...) {
   out <- map(.x, .fn, ...)
   vctrs::vec_c(!!!out, .ptype = int())
 }
+
+setdiff2 <- function(x, y) {
+  x[match(x, y, 0L) == 0L]
+}
+
+check_missing <- function(x, exprs) {
+  any_missing <- anyNA(x, recursive = TRUE)
+  if (any_missing) {
+    is_missing <- map_lgl(x, anyNA)
+    bad <- collapse_labels(exprs[is_missing])
+    abort(glue(
+      "Selections can't have missing values. We detected missing elements in:
+       { bad }"
+    ))
+  }
+}
