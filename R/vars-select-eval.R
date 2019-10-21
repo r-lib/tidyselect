@@ -1,11 +1,8 @@
 
-vars_select_eval <- function(vars, quos, strict) {
+vars_select_eval <- function(vars, quos, strict, data = NULL) {
   is_symbolic <- map_lgl(quos, quo_is_symbolic)
 
   if (any(is_symbolic)) {
-    scoped_vars(vars)
-
-    # Peek validated variables
     vars <- peek_vars()
 
     vars_split <- vctrs::vec_split(seq_along(vars), vars)
@@ -27,8 +24,9 @@ vars_select_eval <- function(vars, quos, strict) {
     context_mask <- new_data_mask(env(!!!vars_select_helpers))
     context_mask$.data <- data_mask$.data
 
-    # Save metadata in masks
+    # Save metadata in mask
     data_mask$.__tidyselect__.$internal$vars <- vars
+    data_mask$.__tidyselect__.$internal$data <- data
     data_mask$.__tidyselect__.$internal$strict <- strict
   }
 
@@ -263,11 +261,11 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
   )
 
   if (!is_missing(value)) {
-    inform(glue_c(
-      "Note: Using an external vector in selections is brittle.",
-      i = "If the data contains `{name}` it will be selected instead.",
-      i = "Use `all_of({name})` instead of just `{name}` to silence this message."
-    ))
+      inform(glue_c(
+        "Note: Using an external vector in selections is brittle.",
+        i = "If the data contains `{name}` it will be selected instead.",
+        i = "Use `all_of({name})` instead of just `{name}` to silence this message."
+      ))
     return(value)
   }
 
