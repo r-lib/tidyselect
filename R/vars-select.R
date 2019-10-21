@@ -150,7 +150,7 @@ vars_select <- function(.vars, ...,
   # columns. We need to check for symbolic `-` here because if the
   # selection is empty, `inds_combine()` cannot detect a negative
   # indice in first position.
-  if (is_negated(quo_get_expr(quos[[1]]))) {
+  if (is_negated(quos[[1]])) {
     ind_list <- c(list(seq_along(.vars)), ind_list)
   }
 
@@ -182,4 +182,17 @@ vars_select <- function(.vars, ...,
 empty_sel <- function(vars, include, exclude) {
   vars <- setdiff(include, exclude)
   set_names(vars, vars)
+}
+
+is_negated <- function(x) {
+  repeat {
+    x <- quo_get_expr2(x, x)
+
+    if (!is_call(x, c("c", "&", "|"))) {
+      break
+    }
+    x <- node_cadr(x)
+  }
+
+  is_call(x, c("-", "!"), n = 1)
 }

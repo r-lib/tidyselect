@@ -242,3 +242,14 @@ test_that("vars_select() has consistent position errors", {
     vars_select(letters, -100)
   })
 })
+
+test_that("vars_select() consistently handles nested negated arguments", {
+  expect_identical(
+    vars_select(letters, -all_of(chr())),
+    set_names(letters)
+  )
+  expect_identical(
+    vars_select(letters, c(-all_of(chr()))),
+    set_names(letters)
+  )
+})

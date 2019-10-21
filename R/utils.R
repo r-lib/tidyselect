@@ -1,8 +1,4 @@
 
-is_negated <- function(x) {
-  is_call(x, "-", n = 1)
-}
-
 sym_dollar <- quote(`$`)
 sym_brackets2 <- quote(`[[`)
 is_data_pronoun <- function(expr) {
@@ -160,5 +156,13 @@ check_missing <- function(x, exprs) {
       "Selections can't have missing values. We detected missing elements in:
        { bad }"
     ))
+  }
+}
+
+quo_get_expr2 <- function(x, default) {
+  if (is_quosure(x)) {
+    quo_get_expr(x)
+  } else {
+    default
   }
 }

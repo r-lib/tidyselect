@@ -1,6 +1,9 @@
 
 # tidyselect (development)
 
+* Improved detection of negated arguments in first position, including
+  inside `c()`.
+
 * The `.strict` argument of `vars_select()` now works more robustly
   and consistently.
 
