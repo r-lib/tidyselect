@@ -341,3 +341,10 @@ test_that("matchers accept length > 1 vectors (#50)", {
     vars_select(names(iris), matches("epal") | contains("eta")),
   )
 })
+
+test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
+  expect_identical(
+    vars_select(letters, all_of(c("a", "bar", "c")), .strict = FALSE),
+    c(a = "a", c = "c")
+  )
+})

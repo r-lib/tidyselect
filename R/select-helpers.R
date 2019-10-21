@@ -166,12 +166,7 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 #' @export
 all_of <- function(x, ..., vars = peek_vars()) {
   ellipsis::check_dots_empty()
-
-  n <- length(vars)
-  subclass_index_errors(
-    vctrs::vec_as_index(x, n, names = vars, allow_types = "name"),
-    allow_positions = FALSE
-  )
+  x
 }
 
 #' @rdname select_helpers
