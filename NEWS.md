@@ -1,6 +1,9 @@
 
 # tidyselect (development)
 
+* The `.strict` argument of `vars_select()` now works more robustly
+  and consistently.
+
 * `starts_with()`, `ends_with()`, `contains()`, and `matches()` now
   accept vector inputs (#50). For instance these are now equivalent
   ways of selecting all variables that start with either `"a"` or `"b"`:

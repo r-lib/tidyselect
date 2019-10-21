@@ -1,5 +1,5 @@
 
-vars_select_eval <- function(vars, quos) {
+vars_select_eval <- function(vars, quos, strict) {
   is_symbolic <- map_lgl(quos, quo_is_symbolic)
 
   if (any(is_symbolic)) {
@@ -29,13 +29,14 @@ vars_select_eval <- function(vars, quos) {
 
     # Save metadata in masks
     data_mask$.__tidyselect__.$internal$vars <- vars
+    data_mask$.__tidyselect__.$internal$strict <- strict
   }
 
   map_if(
     quos,
     is_symbolic,
     ~ walk_data_tree(., data_mask, context_mask),
-    .else = ~ as_indices_impl(quo_get_expr(.), vars = vars)
+    .else = ~ as_indices_impl(quo_get_expr(.), vars = vars, strict = strict)
   )
 }
 
@@ -77,16 +78,27 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   )
 
   vars <- data_mask$.__tidyselect__.$internal$vars
-  out <- as_indices_impl(out, vars = vars)
+  strict <- data_mask$.__tidyselect__.$internal$strict
+  out <- as_indices_impl(out, vars = vars, strict = strict)
+
   vctrs::vec_as_index(out, length(vars), vars, convert_values = NULL)
 }
 
-as_indices_impl <- function(x, vars) {
+as_indices_impl <- function(x, vars, strict) {
   if (is_null(x)) {
     return(int())
   }
 
   x <- vctrs::vec_coerce_index(x, allow_types = c("position", "name"))
+
+  if (!strict) {
+    # Remove out-of-bounds elements if non-strict
+    x <- switch(typeof(x),
+      character = intersect(x, vars),
+      double = ,
+      integer = x[x <= length(vars)]
+    )
+  }
 
   switch(typeof(x),
     character = set_names(vctrs::vec_as_index(x, length(vars), vars), names(x)),
@@ -96,8 +108,8 @@ as_indices_impl <- function(x, vars) {
   )
 }
 
-as_indices <- function(x, vars) {
-  inds <- subclass_index_errors(as_indices_impl(x, vars))
+as_indices <- function(x, vars, strict = TRUE) {
+  inds <- subclass_index_errors(as_indices_impl(x, vars, strict))
   vctrs::vec_as_index(inds, length(vars), vars, convert_values = NULL)
 }
 
@@ -256,8 +268,8 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
     return(value)
   }
 
-  # FIXME: export `stop_bad_index()`?
-  vctrs::vec_as_index(name, 0L, names = character())
+  # Let caller issue OOB error
+  name
 }
 
 mark_data_dups <- function(x) {
