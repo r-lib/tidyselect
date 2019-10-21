@@ -166,10 +166,10 @@ vars_select <- function(.vars, ...,
 
   # Include/.exclude specified variables
   if (length(.include)) {
-    sel <- c(setdiff2(.include, sel), sel)
+    sel <- c(setdiff(.include, sel), sel)
   }
   if (length(.exclude)) {
-    sel <- setdiff2(sel, .exclude)
+    sel <- setdiff(sel, .exclude)
   }
 
   # Ensure all output .vars named

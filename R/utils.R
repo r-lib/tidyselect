@@ -153,10 +153,6 @@ flat_map_int <- function(.x, .fn, ...) {
   vctrs::vec_c(!!!out, .ptype = int())
 }
 
-setdiff2 <- function(x, y) {
-  x[match(x, y, 0L) == 0L]
-}
-
 check_missing <- function(x, exprs) {
   any_missing <- anyNA(x, recursive = TRUE)
   if (any_missing) {
