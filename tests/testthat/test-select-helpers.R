@@ -315,12 +315,12 @@ test_that("any_of() is lax", {
 })
 
 test_that("all_of() and any_of() check their inputs", {
-  expect_error(vars_select(letters, all_of(1L)), class = "tidyselect_error_index_bad_type")
-  expect_error(vars_select(letters, any_of(1L)), class = "tidyselect_error_index_bad_type")
   expect_error(vars_select(letters, all_of(NA)), "missing")
   expect_error(vars_select(letters, any_of(NA)), "missing")
   expect_error(vars_select(letters, all_of(na_chr)), "missing")
   expect_error(vars_select(letters, any_of(na_chr)), "missing")
+  expect_error(vars_select(letters, all_of(TRUE)), class = "tidyselect_error_index_bad_type")
+  expect_error(vars_select(letters, any_of(TRUE)), class = "tidyselect_error_index_bad_type")
 })
 
 test_that("matchers accept length > 1 vectors (#50)", {
@@ -339,5 +339,12 @@ test_that("matchers accept length > 1 vectors (#50)", {
   expect_identical(
     vars_select(names(iris), matches(c("epal", "eta"))),
     vars_select(names(iris), matches("epal") | contains("eta")),
+  )
+})
+
+test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
+  expect_identical(
+    vars_select(letters, all_of(c("a", "bar", "c")), .strict = FALSE),
+    c(a = "a", c = "c")
   )
 })

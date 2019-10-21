@@ -161,33 +161,18 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 }
 
 #' @rdname select_helpers
-#' @param x A character vector.
+#' @param x An index vector of names or positions.
 #' @inheritParams ellipsis::dots_empty
 #' @export
-all_of <- function(x, ..., vars = peek_vars()) {
-  ellipsis::check_dots_empty()
-
-  n <- length(vars)
-  subclass_index_errors(
-    vctrs::vec_as_index(x, n, names = vars, allow_types = "name"),
-    allow_positions = FALSE
-  )
+all_of <- function(x) {
+  x
 }
 
 #' @rdname select_helpers
 #' @export
 any_of <- function(x, ..., vars = peek_vars()) {
   ellipsis::check_dots_empty()
-
-  x <- subclass_index_errors(
-    vctrs::vec_coerce_index(x, allow_types = "name"),
-    allow_positions = FALSE
-  )
-
-  # Ensure missing values slip through (they cause an error later on)
-  vars <- c(vars, na_chr)
-
-  set_intersect(vars, x)
+  as_indices_impl(x, vars = vars, strict = FALSE)
 }
 
 #' @export

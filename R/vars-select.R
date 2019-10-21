@@ -139,11 +139,7 @@ vars_select <- function(.vars, ...,
     return(empty_sel(.vars, .include, .exclude))
   }
 
-  if (!.strict) {
-    quos <- ignore_unknown_symbols(.vars, quos)
-  }
-
-  ind_list <- subclass_index_errors(vars_select_eval(.vars, quos))
+  ind_list <- subclass_index_errors(vars_select_eval(.vars, quos, .strict))
   check_missing(ind_list, quos)
 
   if (is_empty(ind_list)) {
@@ -187,44 +183,4 @@ vars_select <- function(.vars, ...,
 empty_sel <- function(vars, include, exclude) {
   vars <- setdiff(include, exclude)
   set_names(vars, vars)
-}
-
-ignore_unknown_symbols <- function(vars, quos) {
-  quos <- discard(quos, is_ignored, vars)
-  quos <- map_if(quos, quo_is_concat_call, call_ignore_unknown_symbols, vars)
-  quos
-}
-call_ignore_unknown_symbols <- function(quo, vars) {
-  expr <- quo_get_expr(quo)
-
-  args <- call_args(expr)
-  args <- discard(args, is_unknown_symbol, vars)
-  expr <- call2(node_car(expr), !!! args)
-
-  quo_set_expr(quo, expr)
-}
-
-is_ignored <- function(quo, vars) {
-  is_unknown_symbol(quo, vars) || is_ignored_minus_call(quo, vars)
-}
-is_ignored_minus_call <- function(quo, vars) {
-  expr <- maybe_unwrap_quosure(quo)
-
-  if (!is_call(expr, quote(`-`), 1L)) {
-    return(FALSE)
-  }
-
-  is_unknown_symbol(node_cadr(expr), vars)
-}
-is_unknown_symbol <- function(quo, vars) {
-  expr <- maybe_unwrap_quosure(quo)
-
-  if (!is_symbol(expr) && !is_string(expr)) {
-    return(FALSE)
-  }
-
-  !as_string(expr) %in% vars
-}
-quo_is_concat_call <- function(quo) {
-  quo_is_call(quo, quote(`c`))
 }

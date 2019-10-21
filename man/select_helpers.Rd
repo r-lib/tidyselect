@@ -23,7 +23,7 @@ matches(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars())
 
 num_range(prefix, range, width = NULL, vars = peek_vars())
 
-all_of(x, ..., vars = peek_vars())
+all_of(x)
 
 any_of(x, ..., vars = peek_vars())
 
@@ -51,7 +51,7 @@ automatically set to the names of the table.}
 \item{width}{Optionally, the "width" of the numeric range. For example,
 a range of 2 gives "01", a range of three "001", etc.}
 
-\item{x}{A character vector.}
+\item{x}{An index vector of names or positions.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 
