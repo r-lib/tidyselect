@@ -173,16 +173,7 @@ all_of <- function(x, ..., vars = peek_vars()) {
 #' @export
 any_of <- function(x, ..., vars = peek_vars()) {
   ellipsis::check_dots_empty()
-
-  x <- subclass_index_errors(
-    vctrs::vec_coerce_index(x, allow_types = "name"),
-    allow_positions = FALSE
-  )
-
-  # Ensure missing values slip through (they cause an error later on)
-  vars <- c(vars, na_chr)
-
-  set_intersect(vars, x)
+  as_indices_impl(x, vars = vars, strict = FALSE)
 }
 
 #' @export

@@ -126,9 +126,7 @@ set_diff <- function(x, y) {
   vctrs::vec_slice(x, !vctrs::vec_in(x, y))
 }
 set_intersect <- function(x, y) {
-  loc_in_y <- match(x, y)
-  loc_in_y <- vctrs::vec_slice(loc_in_y, !is.na(loc_in_y))
-  vctrs::vec_slice(y, loc_in_y)
+  vctrs::vec_slice(x, match(y, x, 0))
 }
 
 vec_is_subtype <- function(x, super, ..., x_arg = "x", super_arg = "super") {

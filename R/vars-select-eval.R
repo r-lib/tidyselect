@@ -94,7 +94,7 @@ as_indices_impl <- function(x, vars, strict) {
   if (!strict) {
     # Remove out-of-bounds elements if non-strict
     x <- switch(typeof(x),
-      character = intersect(x, vars),
+      character = set_intersect(x, c(vars, na_chr)),
       double = ,
       integer = x[x <= length(vars)]
     )
