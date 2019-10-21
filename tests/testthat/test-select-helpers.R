@@ -315,8 +315,6 @@ test_that("any_of() is lax", {
 })
 
 test_that("all_of() and any_of() check their inputs", {
-  expect_error(vars_select(letters, all_of(1L)), class = "tidyselect_error_index_bad_type")
-  expect_error(vars_select(letters, any_of(1L)), class = "tidyselect_error_index_bad_type")
   expect_error(vars_select(letters, all_of(NA)), "missing")
   expect_error(vars_select(letters, any_of(NA)), "missing")
   expect_error(vars_select(letters, all_of(na_chr)), "missing")

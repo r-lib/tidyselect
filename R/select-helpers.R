@@ -161,11 +161,10 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 }
 
 #' @rdname select_helpers
-#' @param x A character vector.
+#' @param x An index vector of names or positions.
 #' @inheritParams ellipsis::dots_empty
 #' @export
-all_of <- function(x, ..., vars = peek_vars()) {
-  ellipsis::check_dots_empty()
+all_of <- function(x) {
   x
 }
 
