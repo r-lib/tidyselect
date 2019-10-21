@@ -319,6 +319,8 @@ test_that("all_of() and any_of() check their inputs", {
   expect_error(vars_select(letters, any_of(NA)), "missing")
   expect_error(vars_select(letters, all_of(na_chr)), "missing")
   expect_error(vars_select(letters, any_of(na_chr)), "missing")
+  expect_error(vars_select(letters, all_of(TRUE)), class = "tidyselect_error_index_bad_type")
+  expect_error(vars_select(letters, any_of(TRUE)), class = "tidyselect_error_index_bad_type")
 })
 
 test_that("matchers accept length > 1 vectors (#50)", {
