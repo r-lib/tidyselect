@@ -143,3 +143,22 @@ test_that("selection helpers are in the context mask", {
   })
   expect_identical(out, c(a = "a"))
 })
+
+test_that("non-strict evaluation allows unknown variables", {
+  expect_identical(
+    vars_select(letters, identity("foo"), .strict = FALSE),
+    vars_select(letters, int())
+  )
+  expect_identical(
+    vars_select(letters, identity(100), .strict = FALSE),
+    vars_select(letters, int())
+  )
+  expect_identical(
+    vars_select(letters, -identity("foo"), .strict = FALSE),
+    vars_select(letters, -int())
+  )
+  expect_identical(
+    vars_select(letters, -identity(100), .strict = FALSE),
+    vars_select(letters, -int())
+  )
+})
