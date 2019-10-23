@@ -188,11 +188,11 @@ is_negated <- function(x) {
   repeat {
     x <- quo_get_expr2(x, x)
 
-    if (!is_call(x, c("c", "&", "|"))) {
+    if (!is_call(x, "c")) {
       break
     }
     x <- node_cadr(x)
   }
 
-  is_call(x, c("-", "!"), n = 1)
+  is_call(x, "-", n = 1)
 }
