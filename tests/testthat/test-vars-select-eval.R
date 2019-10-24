@@ -162,3 +162,20 @@ test_that("non-strict evaluation allows unknown variables", {
     vars_select(letters, -int())
   )
 })
+
+test_that("can use predicates in selections", {
+  expect_identical(select_pos(iris, is.factor), c(Species = 5L))
+  expect_identical(select_pos(iris, is.numeric), set_names(1:4, names(iris)[1:4]))
+})
+
+test_that("predicates have access to the full data", {
+  p <- function(x) is.numeric(x) && mean(x) > 5
+  expect_identical(select_pos(iris, p), c(Sepal.Length = 1L))
+})
+
+test_that("informative error with legacy tidyselect", {
+  expect_error(
+    vars_select(letters, is.numeric),
+    "doesn't support predicates yet"
+  )
+})
