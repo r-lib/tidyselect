@@ -97,9 +97,9 @@ test_that("scalar boolean operators fail informatively", {
   })
 })
 
-test_that("can't use boolean operators with symbols", {
-  expect_error(vars_select(letters, starts_with("a") & z), "bare variables")
-  expect_error(vars_select(letters, starts_with("a") | z), "bare variables")
+test_that("boolean operators evaluate symbols outside the data", {
+  expect_error(vars_select(letters, starts_with("a") & z), "not found")
+  expect_error(vars_select(letters, starts_with("a") | z), "not found")
 
   verify_output(test_path("outputs", "vars-select-bool-symbols.txt"), {
     vars_select(letters, starts_with("a") & z)
@@ -166,6 +166,8 @@ test_that("non-strict evaluation allows unknown variables", {
 test_that("can use predicates in selections", {
   expect_identical(select_pos(iris, is.factor), c(Species = 5L))
   expect_identical(select_pos(iris, is.numeric), set_names(1:4, names(iris)[1:4]))
+  expect_identical(select_pos(iris, is.numeric & is.factor), set_names(int(), chr()))
+  expect_identical(select_pos(iris, is.numeric | is.factor), set_names(1:5, names(iris)))
 })
 
 test_that("inline functions are allowed", {

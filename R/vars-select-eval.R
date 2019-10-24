@@ -188,24 +188,20 @@ eval_minus <- function(expr, data_mask, context_mask) {
 }
 
 eval_or <- function(expr, data_mask, context_mask) {
-  x <- walk_non_symbol(expr[[2]], data_mask, context_mask)
-  y <- walk_non_symbol(expr[[3]], data_mask, context_mask)
+  x <- walk_operand(expr[[2]], data_mask, context_mask)
+  y <- walk_operand(expr[[3]], data_mask, context_mask)
   c(x, y)
 }
 
 eval_and <- function(expr, data_mask, context_mask) {
-  x <- walk_non_symbol(expr[[2]], data_mask, context_mask)
-  y <- walk_non_symbol(expr[[3]], data_mask, context_mask)
+  x <- walk_operand(expr[[2]], data_mask, context_mask)
+  y <- walk_operand(expr[[3]], data_mask, context_mask)
   set_intersect(x, y)
 }
 
-walk_non_symbol <- function(expr, data_mask, context_mask) {
+walk_operand <- function(expr, data_mask, context_mask) {
   if (is_symbol(expr)) {
-    abort(glue_c(
-      "Can't use boolean operators with bare variables.",
-      x = "`{expr}` is a bare variable.",
-      i = "Do you need `all_of({expr})`?"
-    ))
+    expr <- eval_sym_strict(expr, context_mask)
   }
   walk_data_tree(expr, data_mask, context_mask)
 }
@@ -299,6 +295,17 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
 
   # Let caller issue OOB error
   name
+}
+
+eval_sym_strict <- function(sym, context_mask) {
+  fn <- eval_context(sym, context_mask)
+
+  if (!is_function(fn)) {
+    name <- as_string(expr)
+    abort(glue::glue("`{name}` must be a predicate function."))
+  }
+
+  fn
 }
 
 mark_data_dups <- function(x) {
