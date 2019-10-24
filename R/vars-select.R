@@ -151,14 +151,6 @@ vars_select <- function(.vars,
 
   sel <- set_names(.vars[idx], names(idx))
 
-  # Include/.exclude specified variables
-  if (length(.include)) {
-    sel <- c(setdiff(.include, sel), sel)
-  }
-  if (length(.exclude)) {
-    sel <- setdiff(sel, .exclude)
-  }
-
   # Ensure all output are named, with `.vars` as default
   if (is_empty(sel)) {
     signal("", "tidyselect_empty")

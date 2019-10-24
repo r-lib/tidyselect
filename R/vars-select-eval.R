@@ -1,6 +1,6 @@
 
 vars_select_eval <- function(vars, quos, strict, data = NULL) {
-  is_symbolic <- map_lgl(quos, quo_is_symbolic)
+  is_symbolic <- map_lgl(quos, function(x) is_symbolic(quo_get_expr2(x, x)))
 
   if (any(is_symbolic)) {
     vars <- peek_vars()
@@ -39,7 +39,7 @@ vars_select_eval <- function(vars, quos, strict, data = NULL) {
       context_mask
     ),
     .else = ~ as_indices_sel_impl(
-      quo_get_expr(.),
+      quo_get_expr2(., .),
       vars = vars,
       strict = strict,
       data = data
@@ -65,7 +65,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   # later on.
   if (is_quosure(expr)) {
     scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
-    expr <- quo_get_expr(expr)
+    expr <- quo_get_expr2(expr, expr)
   }
 
   out <- switch(expr_kind(expr),
@@ -240,7 +240,7 @@ eval_c <- function(expr, data_mask, context_mask) {
 eval_c_arg <- function(expr, data_mask, context_mask) {
   if (is_quosure(expr)) {
     scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
-    expr <- quo_get_expr(expr)
+    expr <- quo_get_expr2(expr, expr)
   }
 
   if (is_symbol(expr, "...")) {

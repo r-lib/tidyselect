@@ -1,12 +1,22 @@
 
-select_pos <- function(.x, ..., .strict = TRUE) {
+select_pos <- function(.x,
+                       ...,
+                       .include = NULL,
+                       .exclude = NULL,
+                       .strict = TRUE) {
   vars <- names(.x)
   if (is_null(vars)) {
     abort("Can't select within an unnamed vector.")
   }
 
   scoped_vars(vars)
-  select_impl(.x, ..., .strict = .strict)
+  select_impl(
+    .x,
+    ...,
+    .include = .include,
+    .exclude = .exclude,
+    .strict = .strict
+  )
 }
 
 # Example of implementation, mainly used for unit tests
@@ -20,23 +30,32 @@ vec_select <- function(.x, ..., .strict = TRUE) {
 
 select_impl <- function(.x = NULL,
                         ...,
+                        .include = NULL,
+                        .exclude = NULL,
                         .strict = TRUE) {
   dots <- enquos(...)
   vars <- peek_vars()
-
-  ind_list <- subclass_index_errors(
-    vars_select_eval(vars, dots, .strict, data = .x)
-  )
 
   # If the first selector is exclusive (negative), start with all
   # columns. We need to check for symbolic `-` here because if the
   # selection is empty, `inds_combine()` cannot detect a negative
   # indice in first position.
-  if (is_negated(quo_get_expr(dots[[1]]))) {
-    ind_list <- c(list(seq_along(vars)), ind_list)
+  if (length(dots) && is_negated(dots[[1]])) {
+    dots <- list(expr(c(everything(), !!!dots)))
   }
 
-  inds_combine(vars, ind_list)
+  if (length(.include)) {
+    dots <- list(expr(all_of(!!.include) | c(!!!dots)))
+  }
+  if (length(.exclude)) {
+    dots <- list(expr(c(!!!dots, -!!.exclude)))
+  }
+
+  inds <- subclass_index_errors(
+    vars_select_eval(vars, dots, .strict, data = .x)
+  )
+
+  inds_combine(vars, inds)
 }
 
 is_negated <- function(x) {
