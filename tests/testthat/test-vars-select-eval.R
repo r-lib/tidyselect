@@ -168,6 +168,17 @@ test_that("can use predicates in selections", {
   expect_identical(select_pos(iris, is.numeric), set_names(1:4, names(iris)[1:4]))
 })
 
+test_that("inline functions are allowed", {
+  expect_identical(
+    select_pos(iris, !!is.numeric),
+    select_pos(iris, is.numeric),
+  )
+  expect_identical(
+    select_pos(iris, function(x) is.numeric(x)),
+    select_pos(iris, is.numeric),
+  )
+})
+
 test_that("predicates have access to the full data", {
   p <- function(x) is.numeric(x) && mean(x) > 5
   expect_identical(select_pos(iris, p), c(Sepal.Length = 1L))

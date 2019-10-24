@@ -33,8 +33,17 @@ vars_select_eval <- function(vars, quos, strict, data = NULL) {
   inds <- map_if(
     quos,
     is_symbolic,
-    ~ walk_data_tree(., data_mask, context_mask),
-    .else = ~ as_indices_impl(quo_get_expr(.), vars = vars, strict = strict)
+    ~ walk_data_tree(
+      .,
+      data_mask,
+      context_mask
+    ),
+    .else = ~ as_indices_sel_impl(
+      quo_get_expr(.),
+      vars = vars,
+      strict = strict,
+      data = data
+    )
   )
 
   check_missing(inds, quos)
@@ -80,9 +89,25 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   vars <- data_mask$.__tidyselect__.$internal$vars
   strict <- data_mask$.__tidyselect__.$internal$strict
-  out <- as_indices_impl(out, vars = vars, strict = strict)
+  data <- data_mask$.__tidyselect__.$internal$data
+  out <- as_indices_sel_impl(out, vars = vars, strict = strict, data)
 
   vctrs::vec_as_index(out, length(vars), vars, convert_values = NULL)
+}
+
+as_indices_sel_impl <- function(x, vars, strict, data = NULL) {
+  if (is.function(x)) {
+    if (is_null(data)) {
+      abort(c(
+        "This tidyselect interface doesn't support predicates yet.",
+        i = "Contact the package author and suggest using `select_pos()`."
+      ))
+    }
+    predicate <- x
+    x <- which(map_lgl(data, predicate))
+  }
+
+  as_indices_impl(x, vars, strict = strict)
 }
 
 as_indices_impl <- function(x, vars, strict) {
@@ -261,13 +286,7 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
   )
 
   if (!is_missing(value)) {
-    if (is_function(value)) {
-      data <- data_mask$.__tidyselect__.$internal$data
-      if (is_null(data)) {
-        abort("This tidyselect interface doesn't support predicates yet.")
-      }
-      value <- which(map_lgl(data, value))
-    } else {
+    if (!is_function(value)) {
       inform(glue_c(
         "Note: Using an external vector in selections is brittle.",
         i = "If the data contains `{name}` it will be selected instead.",

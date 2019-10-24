@@ -104,6 +104,10 @@ test_that("position must resolve to numeric variables throws error", {
   )
   expect_error(
     vars_select(letters, !!function() NULL),
+    "doesn't support predicates yet"
+  )
+  expect_error(
+    vars_select(letters, !!env()),
     class = "tidyselect_error_index_bad_type"
   )
 })
