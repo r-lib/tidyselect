@@ -17,14 +17,14 @@ inds_combine <- function(vars, inds) {
     vctrs::vec_as_index(inds, length(vars), vars, convert_values = NULL)
   )
 
-  dir <- vec_split_id_direction(inds)
+  dir <- vec_group_pos_direction(inds)
   pos <- match("pos", dir$key)
   neg <- match("neg", dir$key)
 
   if (first_negative) {
     incl <- seq_along(vars)
   } else if (!is.na(pos)) {
-    incl <- inds[dir$id[[pos]]]
+    incl <- inds[dir$pos[[pos]]]
     incl <- vctrs::vec_as_index(incl, length(vars))
     incl <- inds_unique(incl, vars)
   } else {
@@ -32,7 +32,7 @@ inds_combine <- function(vars, inds) {
   }
 
   if (!is.na(neg)) {
-    excl <- -inds[dir$id[[neg]]]
+    excl <- -inds[dir$pos[[neg]]]
     excl <- vctrs::vec_as_index(excl, length(vars))
     incl <- set_diff(incl, excl)
   }
@@ -53,10 +53,10 @@ inds_combine <- function(vars, inds) {
   incl
 }
 
-vec_split_id_direction <- function(x) {
+vec_group_pos_direction <- function(x) {
   direction <- ifelse(x < 0L, 1L, 2L)
   direction <- factor(direction, 1:2, c("neg", "pos"))
-  vctrs::vec_split_id(direction)
+  vctrs::vec_group_pos(direction)
 }
 
 inds_unique <- function(x, vars) {
