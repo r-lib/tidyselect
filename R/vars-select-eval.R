@@ -287,7 +287,7 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
       inform(glue_c(
         "Note: Using an external vector in selections is brittle.",
         i = "If the data contains `{name}` it will be selected instead.",
-        i = "Use `all_of({name})` instead of just `{name}` to silence this message."
+        i = "Use `all_of({name})` instead of `{name}` to silence this message."
       ))
     }
 
