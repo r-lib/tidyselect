@@ -4,6 +4,8 @@ select_pos <- function(.x,
                        .include = NULL,
                        .exclude = NULL,
                        .strict = TRUE) {
+  vctrs::vec_assert(.x)
+
   vars <- names(.x)
   if (is_null(vars)) {
     abort("Can't select within an unnamed vector.")

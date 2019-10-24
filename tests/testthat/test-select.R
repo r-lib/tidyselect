@@ -25,3 +25,7 @@ test_that("can specify inclusion and exclusion", {
   expect_identical(select_pos(x, int(), .include = "b"), c(b = 2L))
   expect_identical(select_pos(x, -int(), .exclude = c("a", "c")), c(b = 2L))
 })
+
+test_that("select_pos() checks inputs", {
+  expect_error(select_pos(function() NULL), class = "vctrs_error_scalar_type")
+})
