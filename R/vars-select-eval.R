@@ -254,7 +254,8 @@ eval_c_arg <- function(expr, data_mask, context_mask) {
 }
 
 eval_context <- function(expr, context_mask) {
-  expr <- as_quosure(expr, context_mask$.__current__.)
+  env <- context_mask$.__current__. %||% base_env()
+  expr <- as_quosure(expr, env)
   eval_tidy(expr, context_mask)
 }
 
