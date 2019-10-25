@@ -22,12 +22,9 @@ select_pos <- function(.x,
 }
 
 # Example of implementation, mainly used for unit tests
-vec_select <- function(.x, ..., .strict = TRUE) {
-  if (is.data.frame(.x)) {
-    abort("`.x` can't be a data frame.")
-  }
+select <- function(.x, ..., .strict = TRUE) {
   idx <- select_pos(.x, ..., .strict = .strict)
-  set_names(vctrs::vec_slice(.x, idx), names(idx))
+  set_names(.x[idx], names(idx))
 }
 
 select_impl <- function(.x = NULL,
