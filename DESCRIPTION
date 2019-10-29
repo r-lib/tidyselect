@@ -16,14 +16,13 @@ Imports:
     ellipsis,
     glue (>= 1.3.0),
     purrr (>= 0.3.2),
-    rlang (>= 0.4.0.9006),
+    rlang (>= 0.4.1),
     vctrs (>= 0.2.0.9007)
 Suggests:
     covr,
     dplyr,
     testthat (>= 2.2.1.9002)
 remotes:
-    r-lib/rlang,
     r-lib/testthat,
     r-lib/vctrs
 License: GPL-3
