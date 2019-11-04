@@ -44,10 +44,10 @@ select_impl <- function(.x = NULL,
   }
 
   if (length(.include)) {
-    dots <- list(expr(all_of(!!.include) | c(!!!dots)))
+    dots <- list(quo(all_of(.include) | c(!!!dots)))
   }
   if (length(.exclude)) {
-    dots <- list(expr(c(!!!dots, -!!.exclude)))
+    dots <- list(quo(c(!!!dots, -.exclude)))
   }
 
   inds <- subclass_index_errors(
