@@ -1,53 +1,38 @@
 
-vars_select_eval <- function(vars, quos, strict, data = NULL) {
-  is_symbolic <- map_lgl(quos, function(x) is_symbolic(quo_get_expr2(x, x)))
+vars_select_eval <- function(vars, expr, strict, data = NULL) {
+  wrapped <- quo_get_expr2(expr, expr)
 
-  if (any(is_symbolic)) {
-    vars <- peek_vars()
-
-    vars_split <- vctrs::vec_split(seq_along(vars), vars)
-
-    # Mark data duplicates to differentiate them from overlapping selections
-    vars_split$val <- map(vars_split$val, mark_data_dups)
-
-    # We are intentionally lenient towards partially named inputs
-    vars_split <- vctrs::vec_slice(vars_split, !are_empty_name(vars_split$key))
-
-    top <- env()
-    bottom <- env(top, !!!set_names(vars_split$val, vars_split$key))
-    data_mask <- new_data_mask(bottom, top)
-    data_mask$.data <- as_data_pronoun(data_mask)
-
-    # Add `.data` pronoun in the context mask even though it doesn't
-    # contain data. This way the pronoun can be used in any parts of the
-    # expression.
-    context_mask <- new_data_mask(env(!!!vars_select_helpers))
-    context_mask$.data <- data_mask$.data
-
-    # Save metadata in mask
-    data_mask$.__tidyselect__.$internal$vars <- vars
-    data_mask$.__tidyselect__.$internal$data <- data
-    data_mask$.__tidyselect__.$internal$strict <- strict
+  if (!is_missing(wrapped) && !is_symbolic(wrapped)) {
+    return(as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data))
   }
 
-  inds <- map_if(
-    quos,
-    is_symbolic,
-    ~ walk_data_tree(
-      .,
-      data_mask,
-      context_mask
-    ),
-    .else = ~ as_indices_sel_impl(
-      quo_get_expr2(., .),
-      vars = vars,
-      strict = strict,
-      data = data
-    )
-  )
+  vars <- peek_vars()
 
-  check_missing(inds, quos)
-  inds
+  vars_split <- vctrs::vec_split(seq_along(vars), vars)
+
+  # Mark data duplicates to differentiate them from overlapping selections
+  vars_split$val <- map(vars_split$val, mark_data_dups)
+
+  # We are intentionally lenient towards partially named inputs
+  vars_split <- vctrs::vec_slice(vars_split, !are_empty_name(vars_split$key))
+
+  top <- env()
+  bottom <- env(top, !!!set_names(vars_split$val, vars_split$key))
+  data_mask <- new_data_mask(bottom, top)
+  data_mask$.data <- as_data_pronoun(data_mask)
+
+  # Add `.data` pronoun in the context mask even though it doesn't
+  # contain data. This way the pronoun can be used in any parts of the
+  # expression.
+  context_mask <- new_data_mask(env(!!!vars_select_helpers))
+  context_mask$.data <- data_mask$.data
+
+  # Save metadata in mask
+  data_mask$.__tidyselect__.$internal$vars <- vars
+  data_mask$.__tidyselect__.$internal$data <- data
+  data_mask$.__tidyselect__.$internal$strict <- strict
+
+  walk_data_tree(expr, data_mask, context_mask)
 }
 
 # `walk_data_tree()` is a recursive interpreter that implements a
@@ -239,8 +224,17 @@ stop_bad_arith_op <- function(op) {
 
 eval_c <- function(expr, data_mask, context_mask) {
   expr <- duplicate(expr, shallow = TRUE)
-
   node <- node_cdr(expr)
+
+  # If the first selector is exclusive (negative), start with all
+  # columns. We need to check for symbolic `-` here because if the
+  # selection is empty, `inds_combine()` cannot detect a negative
+  # indice in first position.
+  if (is_negated(node_car(node))) {
+    node <- new_node(quote(everything()), node)
+    expr <- node_poke_cdr(expr, node)
+  }
+
   while (!is_null(node)) {
     arg <- eval_c_arg(node_car(node), data_mask, context_mask)
 
@@ -249,6 +243,11 @@ eval_c <- function(expr, data_mask, context_mask) {
   }
 
   eval(expr, base_env())
+}
+
+is_negated <- function(x) {
+  x <- quo_get_expr2(x, x)
+  is_call(x, "-", n = 1)
 }
 
 eval_c_arg <- function(expr, data_mask, context_mask) {

@@ -1,7 +1,5 @@
 
 inds_combine <- function(vars, inds) {
-  first_negative <- length(inds) && length(inds[[1]]) && inds[[1]][[1]] < 0
-
   # Don't suffix existing duplicate with a sequential suffix
   dups <- purrr::map_lgl(inds, is_data_dups)
   spec <- function(outer, inner) {
@@ -16,14 +14,13 @@ inds_combine <- function(vars, inds) {
   inds <- subclass_index_errors(
     vctrs::vec_as_index(inds, length(vars), vars, convert_values = NULL)
   )
+  check_missing(inds)
 
   dir <- vec_group_pos_direction(inds)
   pos <- match("pos", dir$key)
   neg <- match("neg", dir$key)
 
-  if (first_negative) {
-    incl <- seq_along(vars)
-  } else if (!is.na(pos)) {
+  if (!is.na(pos)) {
     incl <- inds[dir$pos[[pos]]]
     incl <- vctrs::vec_as_index(incl, length(vars))
     incl <- inds_unique(incl, vars)

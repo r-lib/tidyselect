@@ -143,7 +143,7 @@ vars_select <- function(.vars,
 
   idx <- select_impl(
     NULL,
-    !!!dots,
+    c(!!!dots),
     .include = .include,
     .exclude = .exclude,
     .strict = .strict

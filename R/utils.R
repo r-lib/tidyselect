@@ -147,15 +147,9 @@ flat_map_int <- function(.x, .fn, ...) {
   vctrs::vec_c(!!!out, .ptype = int())
 }
 
-check_missing <- function(x, exprs) {
-  any_missing <- anyNA(x, recursive = TRUE)
-  if (any_missing) {
-    is_missing <- map_lgl(x, anyNA)
-    bad <- collapse_labels(exprs[is_missing])
-    abort(glue(
-      "Selections can't have missing values. We detected missing elements in:
-       { bad }"
-    ))
+check_missing <- function(x) {
+  if (anyNA(x, recursive = TRUE)) {
+    abort("Selections can't have missing values.")
   }
 }
 
