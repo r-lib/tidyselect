@@ -352,3 +352,10 @@ test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
     c(a = "a", c = "c")
   )
 })
+
+test_that("`all_of()` requires indices", {
+  expect_error(
+    select(iris, all_of(is.factor)),
+    class = "tidyselect_error_index_bad_type"
+  )
+})

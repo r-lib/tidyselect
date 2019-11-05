@@ -165,6 +165,12 @@ num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
 #' @inheritParams ellipsis::dots_empty
 #' @export
 all_of <- function(x) {
+  if (is.function(x)) {
+    # Trigger bad type error
+    vctrs::vec_as_index(x, 0L)
+    abort("Internal error: `all_of()` should have failed sooner")
+  }
+
   x
 }
 
