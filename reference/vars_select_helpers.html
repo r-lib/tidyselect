@@ -138,7 +138,7 @@ having to track addition of new helpers in tidyselect.</p>
   <span class='no'>helpers</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tidyselect</span><span class='kw ns'>::</span><span class='no'><a href='https://tidyselect.r-lib.org/reference/vars_select_helpers.html'>vars_select_helpers</a></span>
 
   <span class='no'>my_select</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) {
-    <span class='no'>quos</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/quotation.html'>quos</a></span>(<span class='no'>...</span>)
+    <span class='no'>quos</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quos</a></span>(<span class='no'>...</span>)
     <span class='no'>quos</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>quos</span>, <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='no'><a href='https://rlang.r-lib.org/reference/env_bury.html'>env_bury</a></span>, !!! <span class='no'>helpers</span>)
 
     <span class='kw pkg'>tidyselect</span><span class='kw ns'>::</span><span class='fu'><a href='https://tidyselect.r-lib.org/reference/vars_select.html'>vars_select</a></span>(<span class='no'>vars</span>, !!! <span class='no'>quos</span>)

@@ -136,10 +136,10 @@ enable dplyr selecting or renaming semantics in your own functions.</p>
       <th>..., args</th>
       <td><p>Selection inputs. See the help for <a href='select_helpers.html'>selection helpers</a>.</p>
 <p>If you supply named inputs, the selected variables are renamed.</p>
-<p>These arguments are automatically <a href='https://rlang.r-lib.org/reference/quotation.html'>quoted</a> and
+<p>These arguments are automatically <a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quoted</a> and
 <a href='https://rlang.r-lib.org/reference/eval_tidy.html'>evaluated</a> in a context where elements of
 <code>vars</code> are objects representing their positions within
-<code>vars</code>. They support <a href='https://rlang.r-lib.org/reference/quasiquotation.html'>unquoting</a> and
+<code>vars</code>. They support <a href='https://rlang.r-lib.org/reference/nse-force.html'>unquoting</a> and
 splicing. See <code>vignette("programming")</code> for an introduction to
 these concepts.</p>
 <p>Note that except for <code>:</code>, <code>-</code> and <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>, all complex expressions
@@ -234,7 +234,7 @@ existing name is an error.</p></li>
 <span class='fu'>vars_select</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>iris</span>), !! <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span>(<span class='no'>Petal.Length</span>))</div><div class='output co'>#&gt;   Petal.Length 
 #&gt; "Petal.Length" </div><div class='input'>
 <span class='co'># And unquote-splice lists of symbols or quosures</span>
-<span class='fu'>vars_select</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>iris</span>), !!! <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/quotation.html'>quo</a></span>(<span class='no'>Petal.Length</span>), <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span>(<span class='no'>Petal.Width</span>)))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
+<span class='fu'>vars_select</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>iris</span>), !!! <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quo</a></span>(<span class='no'>Petal.Length</span>), <span class='fu'><a href='https://rdrr.io/r/base/substitute.html'>quote</a></span>(<span class='no'>Petal.Width</span>)))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
 #&gt; "Petal.Length"  "Petal.Width" </div><div class='input'>
 
 <span class='co'># If you want to avoid ambiguity about where to find objects you</span>
@@ -255,7 +255,7 @@ existing name is an error.</p></li>
 <span class='co'># via splicing to avoid matching dotted arguments to vars_select()</span>
 <span class='co'># named arguments (`vars`, `include` and `exclude`):</span>
 <span class='no'>wrapper</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) {
-  <span class='fu'>vars_select</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), !!! <span class='fu'><a href='https://rlang.r-lib.org/reference/quotation.html'>quos</a></span>(<span class='no'>...</span>))
+  <span class='fu'>vars_select</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), !!! <span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quos</a></span>(<span class='no'>...</span>))
 }
 
 <span class='co'># This won't partial-match on `vars`:</span>
@@ -269,7 +269,7 @@ existing name is an error.</p></li>
 <span class='co'># unquote to pass them to vars_select(). See the vignette on</span>
 <span class='co'># programming with dplyr for more on this:</span>
 <span class='no'>wrapper</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>var1</span>, <span class='no'>var2</span>) {
-  <span class='fu'>vars_select</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), !! <span class='fu'><a href='https://rlang.r-lib.org/reference/quotation.html'>enquo</a></span>(<span class='no'>var1</span>), !! <span class='fu'><a href='https://rlang.r-lib.org/reference/quotation.html'>enquo</a></span>(<span class='no'>var2</span>))
+  <span class='fu'>vars_select</span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), !! <span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>enquo</a></span>(<span class='no'>var1</span>), !! <span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>enquo</a></span>(<span class='no'>var2</span>))
 }
 <span class='fu'>wrapper</span>(<span class='fu'><a href='select_helpers.html'>starts_with</a></span>(<span class='st'>"d"</span>), <span class='fu'><a href='select_helpers.html'>starts_with</a></span>(<span class='st'>"c"</span>))</div><div class='output co'>#&gt;   disp   drat    cyl   carb 
 #&gt; "disp" "drat"  "cyl" "carb" </div></pre>
