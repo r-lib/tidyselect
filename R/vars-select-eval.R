@@ -236,7 +236,14 @@ eval_c <- function(expr, data_mask, context_mask) {
   }
 
   while (!is_null(node)) {
-    arg <- eval_c_arg(node_car(node), data_mask, context_mask)
+    tag <- node_tag(node)
+    car <- node_car(node)
+
+    if (!is_null(tag) && is_negated(car)) {
+      abort("Can't rename negative selections.")
+    }
+
+    arg <- eval_c_arg(car, data_mask, context_mask)
 
     node_poke_car(node, arg)
     node <- node_cdr(node)

@@ -215,3 +215,8 @@ test_that("boolean operators throw relevant errors", {
     select_pos(mtcars, cyl & am)
   })
 })
+
+test_that("can't rename negative selections", {
+  expect_error(select(iris, foo = -Species), "negative selections")
+  expect_error(select(iris, c(foo = -Species)), "negative selections")
+})
