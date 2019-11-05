@@ -1,11 +1,8 @@
 
-vars_select_eval <- function(vars, quos, strict) {
-  is_symbolic <- map_lgl(quos, quo_is_symbolic)
+vars_select_eval <- function(vars, quos, strict, data = NULL) {
+  is_symbolic <- map_lgl(quos, function(x) is_symbolic(quo_get_expr2(x, x)))
 
   if (any(is_symbolic)) {
-    scoped_vars(vars)
-
-    # Peek validated variables
     vars <- peek_vars()
 
     vars_split <- vctrs::vec_split(seq_along(vars), vars)
@@ -27,16 +24,26 @@ vars_select_eval <- function(vars, quos, strict) {
     context_mask <- new_data_mask(env(!!!vars_select_helpers))
     context_mask$.data <- data_mask$.data
 
-    # Save metadata in masks
+    # Save metadata in mask
     data_mask$.__tidyselect__.$internal$vars <- vars
+    data_mask$.__tidyselect__.$internal$data <- data
     data_mask$.__tidyselect__.$internal$strict <- strict
   }
 
   inds <- map_if(
     quos,
     is_symbolic,
-    ~ walk_data_tree(., data_mask, context_mask),
-    .else = ~ as_indices_impl(quo_get_expr(.), vars = vars, strict = strict)
+    ~ walk_data_tree(
+      .,
+      data_mask,
+      context_mask
+    ),
+    .else = ~ as_indices_sel_impl(
+      quo_get_expr2(., .),
+      vars = vars,
+      strict = strict,
+      data = data
+    )
   )
 
   check_missing(inds, quos)
@@ -58,12 +65,12 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   # later on.
   if (is_quosure(expr)) {
     scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
-    expr <- quo_get_expr(expr)
+    expr <- quo_get_expr2(expr, expr)
   }
 
   out <- switch(expr_kind(expr),
     literal = expr,
-    symbol = eval_sym(as_string(expr), data_mask, context_mask, colon = colon),
+    symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `!` = ,
     `-` = eval_minus(expr, data_mask, context_mask),
@@ -82,9 +89,25 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   vars <- data_mask$.__tidyselect__.$internal$vars
   strict <- data_mask$.__tidyselect__.$internal$strict
-  out <- as_indices_impl(out, vars = vars, strict = strict)
+  data <- data_mask$.__tidyselect__.$internal$data
+  out <- as_indices_sel_impl(out, vars = vars, strict = strict, data)
 
   vctrs::vec_as_index(out, length(vars), vars, convert_values = NULL)
+}
+
+as_indices_sel_impl <- function(x, vars, strict, data = NULL) {
+  if (is.function(x)) {
+    if (is_null(data)) {
+      abort(c(
+        "This tidyselect interface doesn't support predicates yet.",
+        i = "Contact the package author and suggest using `select_pos()`."
+      ))
+    }
+    predicate <- x
+    x <- which(map_lgl(data, predicate))
+  }
+
+  as_indices_impl(x, vars, strict = strict)
 }
 
 as_indices_impl <- function(x, vars, strict) {
@@ -165,24 +188,38 @@ eval_minus <- function(expr, data_mask, context_mask) {
 }
 
 eval_or <- function(expr, data_mask, context_mask) {
-  x <- walk_non_symbol(expr[[2]], data_mask, context_mask)
-  y <- walk_non_symbol(expr[[3]], data_mask, context_mask)
+  x <- walk_operand(expr[[2]], data_mask, context_mask)
+  y <- walk_operand(expr[[3]], data_mask, context_mask)
   c(x, y)
 }
 
 eval_and <- function(expr, data_mask, context_mask) {
-  x <- walk_non_symbol(expr[[2]], data_mask, context_mask)
-  y <- walk_non_symbol(expr[[3]], data_mask, context_mask)
+  x <- expr[[2]]
+  y <- expr[[3]]
+
+  if (is_symbol(x) && is_symbol(y)) {
+    x_name <- as_string(x)
+    y_name <- as_string(y)
+
+    x <- eval_sym(x, data_mask, context_mask, strict = TRUE)
+    y <- eval_sym(y, data_mask, context_mask, strict = TRUE)
+
+    if (!is_function(x) && !is_function(y)) {
+      abort(glue_c(
+        "Can't take the intersection of two columns.",
+        i = "`{x_name} & {y_name}` is always an empty selection."
+      ))
+    }
+  }
+
+  x <- walk_operand(x, data_mask, context_mask)
+  y <- walk_operand(y, data_mask, context_mask)
   set_intersect(x, y)
 }
 
-walk_non_symbol <- function(expr, data_mask, context_mask) {
+walk_operand <- function(expr, data_mask, context_mask) {
   if (is_symbol(expr)) {
-    abort(glue_c(
-      "Can't use boolean operators with bare variables.",
-      x = "`{expr}` is a bare variable.",
-      i = "Do you need `all_of({expr})`?"
-    ))
+    expr <- eval_sym(expr, data_mask, context_mask, strict = TRUE)
   }
   walk_data_tree(expr, data_mask, context_mask)
 }
@@ -217,7 +254,7 @@ eval_c <- function(expr, data_mask, context_mask) {
 eval_c_arg <- function(expr, data_mask, context_mask) {
   if (is_quosure(expr)) {
     scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
-    expr <- quo_get_expr(expr)
+    expr <- quo_get_expr2(expr, expr)
   }
 
   if (is_symbol(expr, "...")) {
@@ -235,11 +272,14 @@ eval_c_arg <- function(expr, data_mask, context_mask) {
 }
 
 eval_context <- function(expr, context_mask) {
-  expr <- as_quosure(expr, context_mask$.__current__.)
+  env <- context_mask$.__current__. %||% base_env()
+  expr <- as_quosure(expr, env)
   eval_tidy(expr, context_mask)
 }
 
-eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
+eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
+  name <- as_string(expr)
+
   top <- data_mask$.top_env
   cur <- data_mask
   value <- missing_arg()
@@ -263,11 +303,19 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
   )
 
   if (!is_missing(value)) {
-    inform(glue_c(
-      "Note: Using an external vector in selections is brittle.",
-      i = "If the data contains `{name}` it will be selected instead.",
-      i = "Use `all_of({name})` instead of just `{name}` to silence this message."
-    ))
+    if (!is_function(value)) {
+      if (strict) {
+        browser()
+        vctrs::vec_as_index(name, data_mask$.__tidyselect__.$internal$vars)
+      } else {
+        inform(glue_c(
+          "Note: Using an external vector in selections is brittle.",
+          i = "If the data contains `{name}` it will be selected instead.",
+          i = "Use `all_of({name})` instead of `{name}` to silence this message."
+        ))
+      }
+    }
+
     return(value)
   }
 

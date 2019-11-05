@@ -1,0 +1,14 @@
+> # Unknown names
+> select_pos(mtcars, foobar & contains("am"))
+Error: Must select existing columns.
+x Can't subset element with unknown name `foobar`.
+
+> select_pos(mtcars, contains("am") | foobar)
+Error: Must select existing columns.
+x Can't subset element with unknown name `foobar`.
+
+> # Empty intersection
+> select_pos(mtcars, cyl & am)
+Error: Can't take the intersection of two columns.
+i `cyl & am` is always an empty selection.
+

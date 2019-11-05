@@ -128,49 +128,33 @@
 #'   vars_select(names(mtcars), !! enquo(var1), !! enquo(var2))
 #' }
 #' wrapper(starts_with("d"), starts_with("c"))
-vars_select <- function(.vars, ...,
+vars_select <- function(.vars,
+                        ...,
                         .include = character(),
                         .exclude = character(),
                         .strict = TRUE) {
-  quos <- quos(...)
+  scoped_vars(.vars)
 
-  if (!length(quos)) {
+  dots <- enquos(...)
+  if (!length(dots)) {
     signal("", "tidyselect_empty_dots")
     return(empty_sel(.vars, .include, .exclude))
   }
 
-  ind_list <- subclass_index_errors(vars_select_eval(.vars, quos, .strict))
+  idx <- select_impl(
+    NULL,
+    !!!dots,
+    .include = .include,
+    .exclude = .exclude,
+    .strict = .strict
+  )
 
-  if (is_empty(ind_list)) {
-    signal("", "tidyselect_empty")
-    return(empty_sel(.vars, .include, .exclude))
-  }
+  sel <- set_names(.vars[idx], names(idx))
 
-  # If the first selector is exclusive (negative), start with all
-  # columns. We need to check for symbolic `-` here because if the
-  # selection is empty, `inds_combine()` cannot detect a negative
-  # indice in first position.
-  if (is_negated(quos[[1]])) {
-    ind_list <- c(list(seq_along(.vars)), ind_list)
-  }
-
-  incl <- inds_combine(.vars, ind_list)
-
-  # Returned names must be unique
-  sel <- set_names(.vars[incl], names(incl))
-
-  # Include/.exclude specified variables
-  if (length(.include)) {
-    sel <- c(setdiff(.include, sel), sel)
-  }
-  if (length(.exclude)) {
-    sel <- setdiff(sel, .exclude)
-  }
-
-  # Ensure all output .vars named
+  # Ensure all output are named, with `.vars` as default
   if (is_empty(sel)) {
     signal("", "tidyselect_empty")
-    names(sel) <- sel
+    names(sel) <- chr()
   } else {
     unnamed <- names2(sel) == ""
     names(sel)[unnamed] <- sel[unnamed]
@@ -182,17 +166,4 @@ vars_select <- function(.vars, ...,
 empty_sel <- function(vars, include, exclude) {
   vars <- setdiff(include, exclude)
   set_names(vars, vars)
-}
-
-is_negated <- function(x) {
-  repeat {
-    x <- quo_get_expr2(x, x)
-
-    if (!is_call(x, "c")) {
-      break
-    }
-    x <- node_cadr(x)
-  }
-
-  is_call(x, "-", n = 1)
 }

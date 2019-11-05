@@ -104,6 +104,10 @@ test_that("position must resolve to numeric variables throws error", {
   )
   expect_error(
     vars_select(letters, !!function() NULL),
+    "doesn't support predicates yet"
+  )
+  expect_error(
+    vars_select(letters, !!env()),
     class = "tidyselect_error_index_bad_type"
   )
 })
@@ -346,5 +350,12 @@ test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
   expect_identical(
     vars_select(letters, all_of(c("a", "bar", "c")), .strict = FALSE),
     c(a = "a", c = "c")
+  )
+})
+
+test_that("`all_of()` requires indices", {
+  expect_error(
+    select(iris, all_of(is.factor)),
+    class = "tidyselect_error_index_bad_type"
   )
 })

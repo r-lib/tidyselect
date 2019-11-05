@@ -97,16 +97,6 @@ test_that("scalar boolean operators fail informatively", {
   })
 })
 
-test_that("can't use boolean operators with symbols", {
-  expect_error(vars_select(letters, starts_with("a") & z), "bare variables")
-  expect_error(vars_select(letters, starts_with("a") | z), "bare variables")
-
-  verify_output(test_path("outputs", "vars-select-bool-symbols.txt"), {
-    vars_select(letters, starts_with("a") & z)
-    vars_select(letters, starts_with("a") | z)
-  })
-})
-
 test_that("can't use arithmetic operators in data context", {
   expect_error(vars_select(letters, a + 2), "arithmetic")
   expect_error(vars_select(letters, a * 2), "arithmetic")
@@ -129,7 +119,7 @@ test_that("symbol lookup outside data informs caller about better practice", {
   vars <- c("a", "b")
   expect_message(
     vars_select(letters, vars),
-    "Use `all_of(vars)` instead of just `vars` to silence",
+    "Use `all_of(vars)` instead of `vars` to silence",
     fixed = TRUE
   )
   verify_output(test_path("outputs", "vars-select-context-lookup.txt"), {
@@ -161,4 +151,67 @@ test_that("non-strict evaluation allows unknown variables", {
     vars_select(letters, -identity(100), .strict = FALSE),
     vars_select(letters, -int())
   )
+})
+
+test_that("can use predicates in selections", {
+  expect_identical(select_pos(iris, is.factor), c(Species = 5L))
+  expect_identical(select_pos(iris, is.numeric), set_names(1:4, names(iris)[1:4]))
+  expect_identical(select_pos(iris, is.numeric & is.factor), set_names(int(), chr()))
+  expect_identical(select_pos(iris, is.numeric | is.factor), set_names(1:5, names(iris)))
+})
+
+test_that("inline functions are allowed", {
+  expect_identical(
+    select_pos(iris, !!is.numeric),
+    select_pos(iris, is.numeric),
+  )
+  expect_identical(
+    select_pos(iris, function(x) is.numeric(x)),
+    select_pos(iris, is.numeric),
+  )
+})
+
+test_that("predicates have access to the full data", {
+  p <- function(x) is.numeric(x) && mean(x) > 5
+  expect_identical(select_pos(iris, p), c(Sepal.Length = 1L))
+})
+
+test_that("informative error with legacy tidyselect", {
+  expect_error(
+    vars_select(letters, is.numeric),
+    "doesn't support predicates yet"
+  )
+})
+
+test_that("can refer to columns in | operands", {
+  expect_identical(select_pos(mtcars, cyl | am), c(cyl = 2L, am = 9L))
+})
+
+test_that("can refer to columns in & operands", {
+  expect_identical(select_pos(mtcars, cyl & contains("am")), set_names(int(), chr()))
+  expect_identical(select_pos(mtcars, cyl & is.numeric), c(cyl = 2L))
+})
+
+test_that("boolean operators throw relevant errors", {
+  expect_error(
+    select_pos(mtcars, foobar & contains("am")),
+    class = "tidyselect_error_index_oob_names"
+  )
+  expect_error(
+    select_pos(mtcars, contains("am") | foobar),
+    class = "tidyselect_error_index_oob_names"
+  )
+  expect_error(
+    select_pos(mtcars, cyl & am),
+    "empty selection"
+  )
+
+  verify_output(test_path("outputs", "select-eval-boolean-errors.txt"), {
+    "Unknown names"
+    select_pos(mtcars, foobar & contains("am"))
+    select_pos(mtcars, contains("am") | foobar)
+
+    "Empty intersection"
+    select_pos(mtcars, cyl & am)
+  })
 })
