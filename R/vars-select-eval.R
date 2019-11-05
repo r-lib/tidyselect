@@ -70,7 +70,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   out <- switch(expr_kind(expr),
     literal = expr,
-    symbol = eval_sym(as_string(expr), data_mask, context_mask, colon = colon),
+    symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `!` = ,
     `-` = eval_minus(expr, data_mask, context_mask),
@@ -194,14 +194,32 @@ eval_or <- function(expr, data_mask, context_mask) {
 }
 
 eval_and <- function(expr, data_mask, context_mask) {
-  x <- walk_operand(expr[[2]], data_mask, context_mask)
-  y <- walk_operand(expr[[3]], data_mask, context_mask)
+  x <- expr[[2]]
+  y <- expr[[3]]
+
+  if (is_symbol(x) && is_symbol(y)) {
+    x_name <- as_string(x)
+    y_name <- as_string(y)
+
+    x <- eval_sym(x, data_mask, context_mask, strict = TRUE)
+    y <- eval_sym(y, data_mask, context_mask, strict = TRUE)
+
+    if (!is_function(x) && !is_function(y)) {
+      abort(glue_c(
+        "Can't take the intersection of two columns.",
+        i = "`{x_name} & {y_name}` is always an empty selection."
+      ))
+    }
+  }
+
+  x <- walk_operand(x, data_mask, context_mask)
+  y <- walk_operand(y, data_mask, context_mask)
   set_intersect(x, y)
 }
 
 walk_operand <- function(expr, data_mask, context_mask) {
   if (is_symbol(expr)) {
-    expr <- eval_sym_strict(expr, context_mask)
+    expr <- eval_sym(expr, data_mask, context_mask, strict = TRUE)
   }
   walk_data_tree(expr, data_mask, context_mask)
 }
@@ -259,7 +277,9 @@ eval_context <- function(expr, context_mask) {
   eval_tidy(expr, context_mask)
 }
 
-eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
+eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
+  name <- as_string(expr)
+
   top <- data_mask$.top_env
   cur <- data_mask
   value <- missing_arg()
@@ -284,11 +304,16 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
 
   if (!is_missing(value)) {
     if (!is_function(value)) {
-      inform(glue_c(
-        "Note: Using an external vector in selections is brittle.",
-        i = "If the data contains `{name}` it will be selected instead.",
-        i = "Use `all_of({name})` instead of `{name}` to silence this message."
-      ))
+      if (strict) {
+        browser()
+        vctrs::vec_as_index(name, data_mask$.__tidyselect__.$internal$vars)
+      } else {
+        inform(glue_c(
+          "Note: Using an external vector in selections is brittle.",
+          i = "If the data contains `{name}` it will be selected instead.",
+          i = "Use `all_of({name})` instead of `{name}` to silence this message."
+        ))
+      }
     }
 
     return(value)
@@ -296,17 +321,6 @@ eval_sym <- function(name, data_mask, context_mask, colon = FALSE) {
 
   # Let caller issue OOB error
   name
-}
-
-eval_sym_strict <- function(sym, context_mask) {
-  fn <- eval_context(sym, context_mask)
-
-  if (!is_function(fn)) {
-    name <- as_string(expr)
-    abort(glue::glue("`{name}` must be a predicate function."))
-  }
-
-  fn
 }
 
 mark_data_dups <- function(x) {

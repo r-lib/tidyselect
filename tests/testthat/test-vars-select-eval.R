@@ -97,16 +97,6 @@ test_that("scalar boolean operators fail informatively", {
   })
 })
 
-test_that("boolean operators evaluate symbols outside the data", {
-  expect_error(vars_select(letters, starts_with("a") & z), "not found")
-  expect_error(vars_select(letters, starts_with("a") | z), "not found")
-
-  verify_output(test_path("outputs", "vars-select-bool-symbols.txt"), {
-    vars_select(letters, starts_with("a") & z)
-    vars_select(letters, starts_with("a") | z)
-  })
-})
-
 test_that("can't use arithmetic operators in data context", {
   expect_error(vars_select(letters, a + 2), "arithmetic")
   expect_error(vars_select(letters, a * 2), "arithmetic")
@@ -191,4 +181,37 @@ test_that("informative error with legacy tidyselect", {
     vars_select(letters, is.numeric),
     "doesn't support predicates yet"
   )
+})
+
+test_that("can refer to columns in | operands", {
+  expect_identical(select_pos(mtcars, cyl | am), c(cyl = 2L, am = 9L))
+})
+
+test_that("can refer to columns in & operands", {
+  expect_identical(select_pos(mtcars, cyl & contains("am")), set_names(int(), chr()))
+  expect_identical(select_pos(mtcars, cyl & is.numeric), c(cyl = 2L))
+})
+
+test_that("boolean operators throw relevant errors", {
+  expect_error(
+    select_pos(mtcars, foobar & contains("am")),
+    class = "tidyselect_error_index_oob_names"
+  )
+  expect_error(
+    select_pos(mtcars, contains("am") | foobar),
+    class = "tidyselect_error_index_oob_names"
+  )
+  expect_error(
+    select_pos(mtcars, cyl & am),
+    "empty selection"
+  )
+
+  verify_output(test_path("outputs", "select-eval-boolean-errors.txt"), {
+    "Unknown names"
+    select_pos(mtcars, foobar & contains("am"))
+    select_pos(mtcars, contains("am") | foobar)
+
+    "Empty intersection"
+    select_pos(mtcars, cyl & am)
+  })
 })

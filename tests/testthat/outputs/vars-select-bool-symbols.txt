@@ -1,6 +1,0 @@
-> vars_select(letters, starts_with("a") & z)
-Error in eval_tidy(expr, context_mask): object 'z' not found
-
-> vars_select(letters, starts_with("a") | z)
-Error in eval_tidy(expr, context_mask): object 'z' not found
-
