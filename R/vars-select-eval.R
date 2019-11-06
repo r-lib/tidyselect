@@ -64,7 +64,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     literal = expr,
     symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
-    `!` = ,
+    `!` = eval_bang(expr, data_mask, context_mask),
     `-` = eval_minus(expr, data_mask, context_mask),
     `:` = eval_colon(expr, data_mask, context_mask),
     `|` = eval_or(expr, data_mask, context_mask),
@@ -176,6 +176,13 @@ eval_colon <- function(expr, data_mask, context_mask) {
   y <- walk_data_tree(expr[[3]], data_mask, context_mask, colon = TRUE)
 
   x:y
+}
+
+eval_bang <- function(expr, data_mask, context_mask) {
+  x <- walk_data_tree(expr[[2]], data_mask, context_mask)
+
+  vars <- data_mask$.__tidyselect__.$internal$vars
+  set_diff(seq_along(vars), x)
 }
 
 eval_minus <- function(expr, data_mask, context_mask) {
