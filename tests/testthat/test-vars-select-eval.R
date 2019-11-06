@@ -216,11 +216,6 @@ test_that("boolean operators throw relevant errors", {
   })
 })
 
-test_that("can't rename negative selections", {
-  expect_error(select(iris, foo = -Species), "negative selections")
-  expect_error(select(iris, c(foo = -Species)), "negative selections")
-})
-
 test_that("c() interpolates union and setdiff operations (#130)", {
   expect_identical(select_pos(mtcars, c(mpg:disp, -(mpg:cyl))), c(disp = 3L))
 
@@ -247,4 +242,8 @@ test_that("c() combines names tidily", {
 
   expect_identical(select_pos(mtcars, c(foo = mpg:cyl)), set_names(1:2, c("foo1", "foo2")))
   expect_identical(select_pos(mtcars, c(foo = c(bar = mpg:cyl))), set_names(1:2, c("foo...bar1", "foo...bar2")))
+})
+
+test_that("allow named negative selections for consistency even if it has no effect", {
+  expect_identical(select_pos(iris, c(foo = -!Species)), c(Species = 5L))
 })

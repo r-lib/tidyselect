@@ -267,9 +267,6 @@ reduce_sels <- function(node, data_mask, context_mask) {
 
   neg <- is_negated(car)
   if (neg) {
-    if (!is_null(tag)) {
-      abort("Can't rename negative selections.")
-    }
     car <- unnegate(car)
   }
 
