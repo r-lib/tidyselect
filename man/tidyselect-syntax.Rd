@@ -41,5 +41,7 @@ If the first \code{...} or \code{c()} input is negative, an implicit
 iris \%>\% select(everything(), -starts_with("Sepal"))
 iris \%>\% select(!starts_with("Sepal"))
 }
+
+Unary \code{-} cannot be used outside \code{...} or \code{c()}.
 }
 

@@ -96,5 +96,7 @@ select_impl <- function(.x,
 #' iris %>% select(!starts_with("Sepal"))
 #' ```
 #'
+#' Unary `-` cannot be used outside `...` or `c()`.
+#'
 #' @name tidyselect-syntax
 NULL

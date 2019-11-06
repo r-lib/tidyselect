@@ -186,12 +186,11 @@ eval_bang <- function(expr, data_mask, context_mask) {
 }
 
 eval_minus <- function(expr, data_mask, context_mask) {
-  if (length(expr) != 2) {
-    return(eval_context(expr, context_mask))
+  if (length(expr) == 2) {
+    abort("Unary `-` must be used inside `c()`.")
   }
 
-  x <- walk_data_tree(expr[[2]], data_mask, context_mask)
-  -x
+  eval_context(expr, context_mask)
 }
 
 eval_or <- function(expr, data_mask, context_mask) {
