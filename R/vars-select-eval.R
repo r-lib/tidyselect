@@ -286,9 +286,9 @@ reduce_sels <- function(node, data_mask, context_mask) {
   lhs <- reduce_sels(cdr, data_mask, context_mask)
 
   if (neg) {
-    set_diff(lhs, out)
+    sel_diff(lhs, out)
   } else {
-    set_union(lhs, out)
+    sel_union(lhs, out)
   }
 }
 

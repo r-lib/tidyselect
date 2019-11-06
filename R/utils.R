@@ -117,17 +117,6 @@ vec_index_is_empty <- function(x) {
   !length(x) || all(x == 0L)
 }
 
-# https://github.com/r-lib/vctrs/issues/548
-set_diff <- function(x, y) {
-  vctrs::vec_slice(x, !vctrs::vec_in(x, y))
-}
-set_intersect <- function(x, y) {
-  vctrs::vec_slice(x, match(y, x, 0))
-}
-set_union <- function(x, y) {
-  vctrs::vec_unique(vctrs::vec_c(x, y))
-}
-
 vec_is_subtype <- function(x, super, ..., x_arg = "x", super_arg = "super") {
   tryCatch(
     vctrs_error_incompatible_type = function(...) FALSE,

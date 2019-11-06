@@ -1,0 +1,21 @@
+
+test_that("`sel_union()` matches named elements", {
+  expect_identical(sel_union(1L, c(foo = 1L)), c(foo = 1L))
+  expect_identical(sel_union(named(1L), c(foo = 1L)), c(foo = 1L))
+  expect_identical(sel_union(c(foo = 1L), 1L), c(foo = 1L))
+  expect_identical(sel_union(c(foo = 1L), named(1L)), c(foo = 1L))
+
+  expect_identical(sel_union(named(c(1L, 2L, 1L)), c(foo = 1L, 1L)), c(foo = 1L, 2L))
+})
+
+test_that("`sel_diff()` matches named elements", {
+  expect_identical(sel_diff(named(1L), named(1L)), named(int()))
+  expect_identical(sel_diff(named(1L), c(foo = 1L)), named(int()))
+  expect_identical(sel_diff(named(1L), c(foo = 1L, bar = 1L)), named(int()))
+
+  expect_identical(sel_diff(c(foo = 1L), named(1L)), named(int()))
+  expect_identical(sel_diff(c(foo = 1L), c(foo = 1L)), named(int()))
+  expect_identical(sel_diff(c(foo = 1L), c(bar = 1L)), c(foo = 1L))
+
+  expect_identical(sel_diff(c(foo = 1L), c(bar = 1L)), c(foo = 1L))
+})

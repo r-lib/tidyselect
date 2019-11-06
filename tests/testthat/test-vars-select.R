@@ -5,16 +5,8 @@ test_that("vars_select can rename variables", {
   expect_equal(vars_select(vars, b = a, a = b), c("b" = "a", "a" = "b"))
 })
 
-test_that("last rename wins", {
-  vars <- c("a", "b")
-  expect_equal(
-    expect_warning(
-      vars_select(vars, c = a, d = a),
-      "being renamed to \`c\` and \`d\`",
-      fixed = TRUE
-    ),
-    c("d" = "a")
-  )
+test_that("can rename to multiple columns", {
+  expect_equal(vars_select(c("a", "b"), c = a, d = a), c(c = "a", d = "a"))
 })
 
 test_that("negative index removes values", {

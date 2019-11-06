@@ -247,3 +247,11 @@ test_that("c() combines names tidily", {
 test_that("allow named negative selections for consistency even if it has no effect", {
   expect_identical(select_pos(iris, c(foo = -!Species)), c(Species = 5L))
 })
+
+test_that("c() handles names consistently", {
+  x <- list(a = 1L, b = 2L)
+  expect_identical(select(x, a, foo = a), list(foo = 1L))
+  expect_identical(select(x, a, foo = a, bar = a), list(foo = 1L, bar = 1L))
+  expect_identical(select(x, foo = a, -a), named(list()))
+  expect_identical(select(x, foo = a, -c(bar = a)), list(foo = 1L))
+})
