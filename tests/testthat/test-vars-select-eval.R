@@ -240,3 +240,11 @@ test_that("c() expands dots", {
   expect_identical(fn(mpg, cyl), c(mpg = 1L, cyl = 2L))
   expect_identical(fn(mpg, cyl, disp), c(mpg = 1L, cyl = 2L, disp = 3L))
 })
+
+test_that("c() combines names tidily", {
+  expect_identical(select_pos(mtcars, c(foo = mpg)), set_names(1L, "foo"))
+  expect_identical(select_pos(mtcars, c(foo = c(bar = mpg))), set_names(1L, "foo...bar"))
+
+  expect_identical(select_pos(mtcars, c(foo = mpg:cyl)), set_names(1:2, c("foo1", "foo2")))
+  expect_identical(select_pos(mtcars, c(foo = c(bar = mpg:cyl))), set_names(1:2, c("foo...bar1", "foo...bar2")))
+})

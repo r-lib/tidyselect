@@ -276,6 +276,7 @@ reduce_sels <- function(node, data_mask, context_mask) {
 
   out <- walk_data_tree(car, data_mask, context_mask)
 
+  # Combine names with `c()` if name is supplied
   if (!is_null(tag)) {
     out <- vctrs::vec_c(!!tag := out, .name_spec = tidyselect_name_spec)
   }
@@ -296,7 +297,8 @@ reduce_sels <- function(node, data_mask, context_mask) {
 }
 
 tidyselect_name_spec <- function(outer, inner) {
-  paste0(outer, inner)
+  sep <- if (is_character(inner)) "..." else ""
+  paste(outer, inner, sep = sep)
 }
 
 is_negated <- function(x) {
