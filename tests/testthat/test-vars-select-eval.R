@@ -220,3 +220,23 @@ test_that("can't rename negative selections", {
   expect_error(select(iris, foo = -Species), "negative selections")
   expect_error(select(iris, c(foo = -Species)), "negative selections")
 })
+
+test_that("c() interpolates union and setdiff operations (#130)", {
+  expect_identical(select_pos(mtcars, c(mpg:disp, -(mpg:cyl))), c(disp = 3L))
+
+  expect_identical(select_pos(mtcars, c(mpg, -mpg)), set_names(int(), chr()))
+  expect_identical(select_pos(mtcars, c(mpg, -mpg, mpg)), c(mpg = 1L))
+  expect_identical(select_pos(mtcars, c(mpg, -mpg, mpg, -mpg)), set_names(int(), chr()))
+
+  expect_identical(select_pos(mtcars, c(mpg, cyl, -mpg)), c(cyl = 2L))
+  expect_identical(select_pos(mtcars, c(mpg, cyl, -mpg, -cyl)), set_names(int(), chr()))
+  expect_identical(select_pos(mtcars, c(mpg, cyl, -mpg, mpg, -cyl)), c(mpg = 1L))
+})
+
+test_that("c() expands dots", {
+  fn <- function(...) select_pos(mtcars, c(...))
+  expect_identical(fn(), set_names(int(), chr()))
+  expect_identical(fn(mpg), c(mpg = 1L))
+  expect_identical(fn(mpg, cyl), c(mpg = 1L, cyl = 2L))
+  expect_identical(fn(mpg, cyl, disp), c(mpg = 1L, cyl = 2L, disp = 3L))
+})

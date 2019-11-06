@@ -41,9 +41,60 @@ select_impl <- function(.x,
     expr <- list(quo(c(!!!dots, -.exclude)))
   }
 
-  inds <- subclass_index_errors(
+  subclass_index_errors(
     vars_select_eval(vars, expr, .strict, data = .x)
   )
-
-  inds_combine(vars, inds)
 }
+
+#' The syntax and semantics of tidyselect
+#'
+#' This is a technical description of the tidyselect interface.
+#'
+#' @section Dots, `c()`, and unary `-`:
+#'
+#' tidyselect functions can take dots like `dplyr::select()`, or a
+#' named argument like `tidyr::pivot_longer()`. In the latter case,
+#' the dots syntax is accessible via `c()`. In fact `...` syntax is
+#' implemented through `c(...)` and is thus completely equivalent.
+#'
+#' ```
+#' # There is no semantical differences between these two expressions
+#' dplyr::select(mtcars, mpg, disp:am)
+#' dplyr::select(mtcars, c(mpg, disp:am))
+#' ```
+#'
+#' Dots and `c()` are syntax for:
+#'
+#' - Set union
+#' - Set difference or complement, in combination with unary `-`
+#' - Renaming variables
+#'
+#' Non-negative inputs are recursively joined with `union()`. The
+#' precedence is left-associative, just like with boolean operators.
+#' These expressions are all syntax for _set union_:
+#'
+#' ```
+#' iris %>% select(starts_with("Sepal"), ends_with("Width"), Species)
+#' iris %>% select(starts_with("Sepal") | ends_with("Width") | Species)
+#' iris %>% select(union(union(starts_with("Sepal"), ends_with("Width")), 5L))
+#' ```
+#'
+#' Unary `-` is normally syntax for _set difference_:
+#'
+#' ```
+#' iris %>% select(starts_with("Sepal"), -ends_with("Width"), -Sepal.Length)
+#' iris %>% select(setdiff(setdiff(starts_with("Sepal"), ends_with("Width")), 1L))
+#' ```
+#'
+#' If the first `...` or `c()` input is negative, an implicit
+#' `everything()` is appended. In this case, unary `-` is syntax for
+#' _set complement_.
+#'
+#' ```
+#' iris %>% select(-starts_with("Sepal"))
+#' iris %>% select(everything(), -starts_with("Sepal"))
+#' iris %>% select(!starts_with("Sepal"))
+#' ```
+#'
+#' @name tidyselect-syntax
+NULL

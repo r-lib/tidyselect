@@ -124,6 +124,9 @@ set_diff <- function(x, y) {
 set_intersect <- function(x, y) {
   vctrs::vec_slice(x, match(y, x, 0))
 }
+set_union <- function(x, y) {
+  vctrs::vec_unique(vctrs::vec_c(x, y))
+}
 
 vec_is_subtype <- function(x, super, ..., x_arg = "x", super_arg = "super") {
   tryCatch(
@@ -159,4 +162,77 @@ quo_get_expr2 <- function(x, default) {
   } else {
     default
   }
+}
+
+# Always returns a fresh non-shared call
+call_expand_dots <- function(call, env) {
+  if (!is_call(call)) {
+    abort("`call` must be a call.")
+  }
+
+  call <- duplicate(call, shallow = TRUE)
+
+  prev <- call
+  node <- node_cdr(call)
+
+  while (!is_null(node)) {
+    if (is_symbol(node_car(node), "...")) {
+      # Capture dots in a pairlist of quosures
+      dots_mask <- env(env, enquos = enquos)
+      dots <- eval_bare(quote(enquos(...)), dots_mask)
+      dots <- as.pairlist(dots)
+
+      # Splice the dots in the call
+      if (!is_null(dots)) {
+        node_poke_tail(dots, node_cdr(node))
+      }
+      node_poke_cdr(prev, dots)
+
+      break
+    }
+
+    prev <- node
+    node <- node_cdr(node)
+  }
+
+  call
+}
+
+node_tail <- function(node) {
+  rest <- node_cdr(node)
+
+  while (!is_null(rest)) {
+    node <- rest
+    rest <- node_cdr(node)
+  }
+
+  node
+}
+
+node_poke_tail <- function(node, new) {
+  node_poke_cdr(node_tail(node), new)
+}
+
+node_reverse <- function(node) {
+  if (is_null(node)) {
+    return(NULL)
+  }
+
+  prev <- NULL
+  rest <- NULL
+  tail <- node
+
+  while (!is_null(tail)) {
+    rest <- node_cdr(tail)
+
+    if (is_reference(rest, node)) {
+      abort("Can't reverse cyclic pairlist.")
+    }
+
+    node_poke_cdr(tail, prev)
+    prev <- tail
+    tail <- rest
+  }
+
+  prev
 }

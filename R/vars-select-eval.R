@@ -32,7 +32,14 @@ vars_select_eval <- function(vars, expr, strict, data = NULL) {
   data_mask$.__tidyselect__.$internal$data <- data
   data_mask$.__tidyselect__.$internal$strict <- strict
 
-  walk_data_tree(expr, data_mask, context_mask)
+  pos <- walk_data_tree(expr, data_mask, context_mask)
+
+  # Ensure position vector is fully named
+  nms <- names(pos) <- names2(pos)
+  nms_missing <- nms == ""
+  names(pos)[nms_missing] <- vars[pos[nms_missing]]
+
+  pos
 }
 
 # `walk_data_tree()` is a recursive interpreter that implements a
@@ -75,9 +82,8 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   vars <- data_mask$.__tidyselect__.$internal$vars
   strict <- data_mask$.__tidyselect__.$internal$strict
   data <- data_mask$.__tidyselect__.$internal$data
-  out <- as_indices_sel_impl(out, vars = vars, strict = strict, data)
 
-  vctrs::vec_as_index(out, length(vars), vars, convert_values = NULL)
+  as_indices_sel_impl(out, vars = vars, strict = strict, data)
 }
 
 as_indices_sel_impl <- function(x, vars, strict, data = NULL) {
@@ -100,21 +106,30 @@ as_indices_impl <- function(x, vars, strict) {
     return(int())
   }
 
-  x <- vctrs::vec_coerce_index(x, allow_types = c("position", "name"))
-
   if (!strict) {
-    # Remove out-of-bounds elements if non-strict
+    # Remove out-of-bounds elements if non-strict. First coerce to the
+    # right type before changing the values.
+    x <- vctrs::vec_coerce_index(x)
     x <- switch(typeof(x),
       character = set_intersect(x, c(vars, na_chr)),
       double = ,
-      integer = x[x <= length(vars)]
+      integer = x[x <= length(vars)],
+      x
     )
   }
 
-  switch(typeof(x),
-    character = set_names(vctrs::vec_as_index(x, length(vars), vars), names(x)),
+  out <- vctrs::vec_as_index(
+    x,
+    n = length(vars),
+    names = vars,
+    allow_types = c("position", "name"),
+    convert_values = NULL
+  )
+
+  switch(typeof(out),
+    character = set_names(out, names(x)),
     double = ,
-    integer = x,
+    integer = out,
     abort("Internal error: Unexpected type in `as_indices()`.")
   )
 }
@@ -175,7 +190,8 @@ eval_minus <- function(expr, data_mask, context_mask) {
 eval_or <- function(expr, data_mask, context_mask) {
   x <- walk_operand(expr[[2]], data_mask, context_mask)
   y <- walk_operand(expr[[3]], data_mask, context_mask)
-  c(x, y)
+
+  sel_union(x, y)
 }
 
 eval_and <- function(expr, data_mask, context_mask) {
@@ -223,58 +239,67 @@ stop_bad_arith_op <- function(op) {
 }
 
 eval_c <- function(expr, data_mask, context_mask) {
-  expr <- duplicate(expr, shallow = TRUE)
+  expr <- call_expand_dots(expr, context_mask$.__current__.)
   node <- node_cdr(expr)
 
   # If the first selector is exclusive (negative), start with all
-  # columns. We need to check for symbolic `-` here because if the
-  # selection is empty, `inds_combine()` cannot detect a negative
-  # indice in first position.
+  # columns. `-foo` is syntax for `everything() - foo`.
   if (is_negated(node_car(node))) {
     node <- new_node(quote(everything()), node)
     expr <- node_poke_cdr(expr, node)
   }
 
-  while (!is_null(node)) {
-    tag <- node_tag(node)
-    car <- node_car(node)
+  # Reduce over reversed list to produce left-associative precedence
+  node <- node_reverse(node)
+  reduce_sels(node, data_mask, context_mask)
+}
 
-    if (!is_null(tag) && is_negated(car)) {
+reduce_sels <- function(node, data_mask, context_mask) {
+  tag <- node_tag(node)
+  car <- node_car(node)
+  cdr <- node_cdr(node)
+
+  neg <- is_negated(car)
+  if (neg) {
+    if (!is_null(tag)) {
       abort("Can't rename negative selections.")
     }
-
-    arg <- eval_c_arg(car, data_mask, context_mask)
-
-    node_poke_car(node, arg)
-    node <- node_cdr(node)
+    car <- unnegate(car)
   }
 
-  eval(expr, base_env())
+  out <- walk_data_tree(car, data_mask, context_mask)
+
+  if (!is_null(tag)) {
+    out <- vctrs::vec_c(!!tag := out, .name_spec = tidyselect_name_spec)
+  }
+
+  # Base case of the reduction
+  if (is_null(cdr)) {
+    return(out)
+  }
+
+  # The left operands are in the CDR because the pairlist has been reversed
+  lhs <- reduce_sels(cdr, data_mask, context_mask)
+
+  if (neg) {
+    set_diff(lhs, out)
+  } else {
+    set_union(lhs, out)
+  }
+}
+
+tidyselect_name_spec <- function(outer, inner) {
+  paste0(outer, inner)
 }
 
 is_negated <- function(x) {
   x <- quo_get_expr2(x, x)
   is_call(x, "-", n = 1)
 }
-
-eval_c_arg <- function(expr, data_mask, context_mask) {
-  if (is_quosure(expr)) {
-    scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
-    expr <- quo_get_expr2(expr, expr)
-  }
-
-  if (is_symbol(expr, "...")) {
-    # Capture arguments in dots as quosures
-    dots_mask <- env(context_mask$.__current__., enquos = enquos)
-    dots <- eval_bare(quote(enquos(...)), dots_mask)
-    call <- call2(quote(c), !!!dots)
-
-    # Evaluate dots separately by recursing into `c()`. The result is
-    # automatically spliced by the upstack `c()`.
-    eval_c(call, data_mask, context_mask)
-  } else {
-    walk_data_tree(expr, data_mask, context_mask)
-  }
+unnegate <- function(x) {
+  expr <- quo_get_expr2(x, x)
+  expr <- node_cadr(expr)
+  set_expr(x, expr)
 }
 
 eval_context <- function(expr, context_mask) {
