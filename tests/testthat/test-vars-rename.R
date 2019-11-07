@@ -160,3 +160,10 @@ test_that("vars_rename() type-checks arguments", {
     vars_rename(letters, A = list())
   })
 })
+
+test_that("vars_rename() ignore unknown columns if strict is FALSE", {
+  expect_identical(
+    vars_rename(letters, foo = bar, .strict = FALSE),
+    vars_rename(letters)
+  )
+})

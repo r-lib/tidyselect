@@ -35,6 +35,16 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
   out
 }
 
+is_unknown_symbol <- function(quo, vars) {
+  expr <- get_expr(quo)
+
+  if (!is_symbol(expr) && !is_string(expr)) {
+    return(FALSE)
+  }
+
+  !as_string(expr) %in% vars
+}
+
 vars_rename_eval <- function(quos, vars) {
   is_symbolic <- map_lgl(quos, quo_is_symbolic)
 
