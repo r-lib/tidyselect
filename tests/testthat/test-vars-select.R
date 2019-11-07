@@ -178,6 +178,17 @@ test_that("select helpers support redundantly named vectors", {
   expect_error(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), class = "vctrs_error_names_must_be_unique")
 })
 
+test_that("vars_select() uses unique name spec", {
+  expect_identical(
+    vars_select(names(iris), petal = starts_with("Petal")),
+    c(petal1 = "Petal.Length", petal2 = "Petal.Width")
+  )
+  expect_identical(
+    vars_select(names(iris), petal = c(foo = starts_with("Petal"))),
+    c(petal...foo1 = "Petal.Length", petal...foo2 = "Petal.Width")
+  )
+})
+
 test_that("vars_select() can drop duplicate names by position (#94)", {
   expect_identical(vars_select(c("a", "b", "a"), 2), c(b = "b"))
   expect_identical(vars_select(c("a", "b", "a"), -3), c(a = "a", b = "b"))

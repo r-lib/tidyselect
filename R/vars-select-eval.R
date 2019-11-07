@@ -1,5 +1,9 @@
 
-vars_select_eval <- function(vars, expr, strict, data = NULL) {
+vars_select_eval <- function(vars,
+                             expr,
+                             strict,
+                             data = NULL,
+                             name_spec = NULL) {
   wrapped <- quo_get_expr2(expr, expr)
 
   if (is_missing(wrapped)) {
@@ -30,10 +34,22 @@ vars_select_eval <- function(vars, expr, strict, data = NULL) {
   context_mask <- new_data_mask(env(!!!vars_select_helpers))
   context_mask$.data <- data_mask$.data
 
+  if (is_null(name_spec)) {
+    if (inherits(data, "data.frame")) {
+      name_spec <- unique_name_spec
+    } else {
+      name_spec <- minimal_name_spec
+    }
+  }
+
   # Save metadata in mask
-  data_mask$.__tidyselect__.$internal$vars <- vars
-  data_mask$.__tidyselect__.$internal$data <- data
-  data_mask$.__tidyselect__.$internal$strict <- strict
+  internal <- list(
+    vars = vars,
+    data = data,
+    strict = strict,
+    name_spec = name_spec
+  )
+  data_mask$.__tidyselect__.$internal <- internal
 
   pos <- walk_data_tree(expr, data_mask, context_mask)
 
@@ -281,7 +297,8 @@ reduce_sels <- function(node, data_mask, context_mask) {
   out <- walk_data_tree(car, data_mask, context_mask)
 
   if (!is_null(tag)) {
-    out <- combine_names(out, tag)
+    name_spec <- data_mask$.__tidyselect__.$internal$name_spec
+    out <- combine_names(out, tag, name_spec)
   }
 
   # Base case of the reduction
@@ -309,22 +326,27 @@ unnegate <- function(x) {
   quo_set_expr2(x, expr, expr)
 }
 
-combine_names <- function(x, tag) {
-  # Existing duplicates are renamed to the same name. Otherwise,
-  # use normal name combination.
+combine_names <- function(x, tag, name_spec) {
+  # Existing duplicates are always renamed to the same name.
+  # Otherwise, use normal name combination.
   if (is_data_dups(x) && is_null(names(x))) {
     name_spec <- "{outer}"
-  } else {
-    name_spec <- tidyselect_name_spec
   }
 
   vctrs::vec_c(!!tag := x, .name_spec = name_spec)
 }
-tidyselect_name_spec <- function(outer, inner) {
+unique_name_spec <- function(outer, inner) {
   # For compatibily, we enumerate as "foo1", "foo2", rather than
   # "foo...1", "foo...2"
   sep <- if (is_character(inner)) "..." else ""
   paste(outer, inner, sep = sep)
+}
+minimal_name_spec <- function(outer, inner) {
+  if (is_character(inner)) {
+    paste(outer, inner, sep = "...")
+  } else {
+    outer
+  }
 }
 
 eval_context <- function(expr, context_mask) {

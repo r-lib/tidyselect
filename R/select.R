@@ -3,7 +3,8 @@ select_pos <- function(.x,
                        expr,
                        .include = NULL,
                        .exclude = NULL,
-                       .strict = TRUE) {
+                       .strict = TRUE,
+                       name_spec = NULL) {
   vctrs::vec_assert(.x)
 
   vars <- names(.x)
@@ -16,7 +17,8 @@ select_pos <- function(.x,
     {{ expr }},
     .include = .include,
     .exclude = .exclude,
-    .strict = .strict
+    .strict = .strict,
+    name_spec = name_spec
   )
 }
 
@@ -30,7 +32,8 @@ select_impl <- function(.x,
                         expr,
                         .include = NULL,
                         .exclude = NULL,
-                        .strict = TRUE) {
+                        .strict = TRUE,
+                        name_spec = NULL) {
   expr <- enquo(expr)
   vars <- peek_vars()
 
@@ -42,7 +45,7 @@ select_impl <- function(.x,
   }
 
   subclass_index_errors(
-    vars_select_eval(vars, expr, .strict, data = .x)
+    vars_select_eval(vars, expr, .strict, data = .x, name_spec = name_spec)
   )
 }
 

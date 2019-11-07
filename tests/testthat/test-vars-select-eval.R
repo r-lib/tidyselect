@@ -261,6 +261,16 @@ test_that("c() handles names consistently", {
   expect_identical(select(x, foo = a, -c(bar = a)), list(foo = 1L))
 })
 
+test_that("with uniquely-named inputs names are propagated with disambiguation", {
+  expect_identical(select_pos(mtcars, c(foo = c(mpg, cyl))), c(foo1 = 1L, foo2 = 2L))
+  expect_identical(select_pos(mtcars, c(bar = c(foo = c(mpg, cyl)))), c(bar...foo1 = 1L, bar...foo2 = 2L))
+})
+
+test_that("with minimally-named inputs names are propagated without disambiguation", {
+  expect_identical(select_pos(unclass(mtcars), c(foo = c(mpg, cyl))), c(foo = 1L, foo = 2L))
+  expect_identical(select_pos(unclass(mtcars), c(bar = c(foo = c(mpg, cyl)))), c(bar...foo = 1L, bar...foo = 2L))
+})
+
 test_that("unary `-` is alias for `!`", {
   expect_identical(select_pos(mtcars, -(cyl:carb)), c(mpg = 1L))
 })
