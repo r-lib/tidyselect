@@ -33,7 +33,8 @@ select_impl <- function(.x,
                         .include = NULL,
                         .exclude = NULL,
                         .strict = TRUE,
-                        name_spec = NULL) {
+                        name_spec = NULL,
+                        uniquely_named = NULL) {
   expr <- enquo(expr)
   vars <- peek_vars()
 
@@ -45,7 +46,14 @@ select_impl <- function(.x,
   }
 
   subclass_index_errors(
-    vars_select_eval(vars, expr, .strict, data = .x, name_spec = name_spec)
+    vars_select_eval(
+      vars,
+      expr,
+      .strict,
+      data = .x,
+      name_spec = name_spec,
+      uniquely_named = uniquely_named
+    )
   )
 }
 

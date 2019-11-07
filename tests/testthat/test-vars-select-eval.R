@@ -271,6 +271,17 @@ test_that("with minimally-named inputs names are propagated without disambiguati
   expect_identical(select_pos(unclass(mtcars), c(bar = c(foo = c(mpg, cyl)))), c(bar...foo = 1L, bar...foo = 2L))
 })
 
+test_that("uniquely-named inputs can't rename duplicates", {
+  df <- tibble::new_tibble(list(a = 1, b = 2, a = 3), nrow = 1)
+
+  expect_error(select_pos(df, c(foo = a)), "must be unique")
+  expect_identical(select_pos(unclass(df), c(foo = a)), c(foo = 1L, foo = 3L))
+
+  verify_output(test_path("outputs", "c-rename-duplicates.txt"), {
+    select_pos(df, c(foo = a))
+  })
+})
+
 test_that("unary `-` is alias for `!`", {
   expect_identical(select_pos(mtcars, -(cyl:carb)), c(mpg = 1L))
 })

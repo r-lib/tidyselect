@@ -130,7 +130,8 @@ vars_select <- function(.vars,
     .include = .include,
     .exclude = .exclude,
     .strict = .strict,
-    name_spec = unique_name_spec
+    name_spec = unique_name_spec,
+    uniquely_named = TRUE
   )
 
   sel <- set_names(.vars[idx], names(idx))

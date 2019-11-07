@@ -3,7 +3,8 @@ vars_select_eval <- function(vars,
                              expr,
                              strict,
                              data = NULL,
-                             name_spec = NULL) {
+                             name_spec = NULL,
+                             uniquely_named = NULL) {
   wrapped <- quo_get_expr2(expr, expr)
 
   if (is_missing(wrapped)) {
@@ -17,8 +18,12 @@ vars_select_eval <- function(vars,
 
   vars_split <- vctrs::vec_split(seq_along(vars), vars)
 
-  # Mark data duplicates to differentiate them from overlapping selections
-  vars_split$val <- map(vars_split$val, mark_data_dups)
+  # Mark data duplicates so we can fail instead of disambiguating them
+  # when renaming
+  uniquely_named <- uniquely_named %||% is.data.frame(data)
+  if (uniquely_named) {
+    vars_split$val <- map(vars_split$val, mark_data_dups)
+  }
 
   # We are intentionally lenient towards partially named inputs
   vars_split <- vctrs::vec_slice(vars_split, !are_empty_name(vars_split$key))
@@ -47,7 +52,8 @@ vars_select_eval <- function(vars,
     vars = vars,
     data = data,
     strict = strict,
-    name_spec = name_spec
+    name_spec = name_spec,
+    uniquely_named = uniquely_named
   )
   data_mask$.__tidyselect__.$internal <- internal
 
@@ -59,7 +65,7 @@ vars_select_eval <- function(vars,
   names(pos)[nms_missing] <- vars[pos[nms_missing]]
 
   # Duplicates are not allowed for data frames
-  if (is_null(data) || is.data.frame(data)) {
+  if (uniquely_named) {
     vctrs::vec_as_names(names(pos), repair = "check_unique")
   }
 
@@ -297,8 +303,8 @@ reduce_sels <- function(node, data_mask, context_mask) {
   out <- walk_data_tree(car, data_mask, context_mask)
 
   if (!is_null(tag)) {
-    name_spec <- data_mask$.__tidyselect__.$internal$name_spec
-    out <- combine_names(out, tag, name_spec)
+    internal <- data_mask$.__tidyselect__.$internal
+    out <- combine_names(out, tag, internal$name_spec, internal$strict)
   }
 
   # Base case of the reduction
@@ -326,11 +332,14 @@ unnegate <- function(x) {
   quo_set_expr2(x, expr, expr)
 }
 
-combine_names <- function(x, tag, name_spec) {
-  # Existing duplicates are always renamed to the same name.
-  # Otherwise, use normal name combination.
-  if (is_data_dups(x) && is_null(names(x))) {
-    name_spec <- "{outer}"
+combine_names <- function(x, tag, name_spec, uniquely_named) {
+  if (uniquely_named && is_data_dups(x)) {
+    name <- as_string(tag)
+    msg <- glue_c(
+      "Names must be unique.",
+      x = "Can't rename duplicate variables to `{name}`."
+    )
+    abort(msg)
   }
 
   vctrs::vec_c(!!tag := x, .name_spec = name_spec)
