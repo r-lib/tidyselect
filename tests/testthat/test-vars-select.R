@@ -164,18 +164,18 @@ test_that("can rename and select at the same time", {
 
 test_that("vars_select() supports redundantly named vectors", {
   expect_identical(vars_select(c("a", "b", "a"), b), c(b = "b"))
-  expect_error(vars_select(c("a", "b", "a"), a), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), a, b), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), b, a), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), c(b, a)), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), a), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), a, b), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), b, a), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), c(b, a)), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("select helpers support redundantly named vectors", {
-  expect_error(vars_select(c("a", "b", "a"), everything()), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), starts_with("a")), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), everything()), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), starts_with("a")), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("vars_select() uses unique name spec", {
@@ -207,17 +207,17 @@ test_that("vars_select() can select out existing duplicates", {
 })
 
 test_that("vars_select() cannot rename existing duplicates", {
-  expect_error(vars_select(c("a", "b", "a"), b = a, a = b), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), a = b, b = a), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), b = a, a = b), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), a = b, b = a), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("vars_select() fails when renaming to existing name", {
-  expect_error(vars_select(letters[1:2], a, a = b), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(letters[1:2], a, a = b), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("vars_select() fails when renaming to same name", {
-  expect_error(vars_select(letters[1:3], a = b, a = c), class = "vctrs_error_names_must_be_unique")
-  expect_error(vars_select(letters[1:2], A = a, A = b), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(letters[1:3], a = b, a = c), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(letters[1:2], A = a, A = b), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("vars_select() fails informatively when renaming to same", {

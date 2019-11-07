@@ -274,7 +274,7 @@ test_that("with minimally-named inputs names are propagated without disambiguati
 test_that("uniquely-named inputs can't rename duplicates", {
   df <- tibble::new_tibble(list(a = 1, b = 2, a = 3), nrow = 1)
 
-  expect_error(select_pos(df, c(foo = a)), "must be unique")
+  expect_error(select_pos(df, c(foo = a)), class = "tidyselect_error_names_must_be_unique")
   expect_identical(select_pos(unclass(df), c(foo = a)), c(foo = 1L, foo = 3L))
 
   verify_output(test_path("outputs", "c-rename-duplicates.txt"), {
