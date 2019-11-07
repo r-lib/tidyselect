@@ -38,23 +38,6 @@
 #' @return A named character vector. Values are existing column names,
 #'   names are new names.
 #'
-#' @section Conditions:
-#'
-#' `vars_select()` signals the following warning.
-#'
-#' * `tidyselect_warning_duplicate_renaming`: Supplying named inputs
-#'   in `...` causes the variables to be renamed. For technical
-#'   reasons there can only be one target name. If the same variable
-#'   is renamed to different names, tidyselect issues this warning.
-#'
-#' `vars_select()` signals the following conditions.
-#'
-#' * `tidyselect_error_rename_to_same`: Renaming multiple variables to
-#'   the same name is an error.
-#'
-#' * `tidyselect_error_rename_to_existing`: Renaming a variable to an
-#'   existing name is an error.
-#'
 #' @seealso [vars_pull()]
 #' @export
 #' @keywords internal
