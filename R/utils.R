@@ -152,6 +152,13 @@ quo_get_expr2 <- function(x, default) {
     default
   }
 }
+quo_set_expr2 <- function(x, value, default) {
+  if (is_quosure(x)) {
+    quo_set_expr(x, value)
+  } else {
+    default
+  }
+}
 
 # Always returns a fresh non-shared call
 call_expand_dots <- function(call, env) {

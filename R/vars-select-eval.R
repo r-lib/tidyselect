@@ -304,7 +304,7 @@ is_negated <- function(x) {
 unnegate <- function(x) {
   expr <- quo_get_expr2(x, x)
   expr <- node_cadr(expr)
-  set_expr(x, expr)
+  quo_set_expr2(x, expr, expr)
 }
 
 eval_context <- function(expr, context_mask) {
