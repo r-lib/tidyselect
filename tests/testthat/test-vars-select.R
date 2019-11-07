@@ -111,18 +111,29 @@ test_that("can select with length > 1 double vectors (#43)", {
 })
 
 test_that("missing values are detected in vars_select() (#72)", {
-  expect_error(vars_select("foo", na_cpl), class = "tidyselect_error_index_bad_type")
-
   expect_error(
-    vars_select(letters, NA, c(1, NA), !!na_chr, !!na_int, !!na_dbl),
-    glue(
-      "* NA
-       * c(1, NA)
-       * NA_character_
-       * NA_integer_
-       * NA_real_"
-    ),
-    fixed = TRUE
+    vars_select("foo", na_cpl),
+    class = "tidyselect_error_index_bad_type"
+  )
+  expect_error(
+    vars_select(letters, NA),
+    "missing"
+  )
+  expect_error(
+    vars_select(letters, c(1, NA)),
+    "missing"
+  )
+  expect_error(
+    vars_select(letters, !!na_chr),
+    "missing"
+  )
+  expect_error(
+    vars_select(letters, !!na_int),
+    "missing"
+  )
+  expect_error(
+    vars_select(letters, !!na_dbl),
+    "missing"
   )
 })
 

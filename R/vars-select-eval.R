@@ -64,6 +64,8 @@ vars_select_eval <- function(vars,
   nms_missing <- nms == ""
   names(pos)[nms_missing] <- vars[pos[nms_missing]]
 
+  check_missing(pos)
+
   # Duplicates are not allowed for data frames
   if (uniquely_named) {
     vctrs::vec_as_names(names(pos), repair = "check_unique")
