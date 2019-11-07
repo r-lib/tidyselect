@@ -46,3 +46,31 @@ If unary \code{-} is used outside \code{...} or \code{c()}, it also stands for s
 complement.
 }
 
+\section{Renaming variables}{
+
+
+When named inputs are provided in \code{...} or \code{c()}, the selection is
+renamed. If the inputs are already named, the outer and inner names
+are pasted together with a \code{...} separator. Otherwise the outer
+names is propagated to the selected elements according to the
+following rules:
+\itemize{
+\item With data frames, a numeric suffix is appended because columns
+must be uniquely named.
+\item With normal vectors, the name is simply assigned to all selected
+inputs.
+}
+
+Unnamed elements match any names:
+\itemize{
+\item \code{a | c(foo = a)} is equivalent to \code{c(foo = a)}.
+\item \code{a & c(foo = a)} is equivalent to \code{c(foo = a)}.
+\item \code{c(foo = a) & c(bar = a)} is equivalent to \code{c()}.
+\item \code{c(foo = a) | c(bar = a)} is equivalent to \code{c(foo = a, bar = a)}.
+}
+
+Because unnamed elements match any named ones, it is possible to
+select multiple elements and rename one of them:\preformatted{select(iris, starts_with("Sepal"), foo = Sepal.Width)
+}
+}
+

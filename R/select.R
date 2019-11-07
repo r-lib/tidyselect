@@ -110,5 +110,34 @@ select_impl <- function(.x,
 #' If unary `-` is used outside `...` or `c()`, it also stands for set
 #' complement.
 #'
+#'
+#' @section Renaming variables:
+#'
+#' When named inputs are provided in `...` or `c()`, the selection is
+#' renamed. If the inputs are already named, the outer and inner names
+#' are pasted together with a `...` separator. Otherwise the outer
+#' names is propagated to the selected elements according to the
+#' following rules:
+#'
+#' - With data frames, a numeric suffix is appended because columns
+#'   must be uniquely named.
+#'
+#' - With normal vectors, the name is simply assigned to all selected
+#'   inputs.
+#'
+#' Unnamed elements match any names:
+#'
+#' - `a | c(foo = a)` is equivalent to `c(foo = a)`.
+#' - `a & c(foo = a)` is equivalent to `c(foo = a)`.
+#' - `c(foo = a) & c(bar = a)` is equivalent to `c()`.
+#' - `c(foo = a) | c(bar = a)` is equivalent to `c(foo = a, bar = a)`.
+#'
+#' Because unnamed elements match any named ones, it is possible to
+#' select multiple elements and rename one of them:
+#'
+#' ```
+#' select(iris, starts_with("Sepal"), foo = Sepal.Width)
+#' ```
+#'
 #' @name tidyselect-syntax
 NULL
