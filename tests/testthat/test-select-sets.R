@@ -35,3 +35,16 @@ test_that("unique elements are returned", {
   expect_identical(sel_diff(c(1L, 1L), 2L), 1L)
   expect_identical(sel_intersect(c(foo = 1L), c(foo = 1L, foo = 1L)), c(foo = 1L))
 })
+
+test_that("order is preserved", {
+  expect_identical(sel_union(c(1L, bar = 1L), c(1L, foo = 1L)), c(bar = 1L, foo = 1L))
+  expect_identical(sel_union(c(1L, foo = 1L), c(1L, bar = 1L)), c(foo = 1L, bar = 1L))
+  expect_identical(sel_union(c(1L, foo = 1L), c(1L, foo = 1L)), c(foo = 1L))
+
+  expect_identical(sel_intersect(c(1L, foo = 1L, bar = 1L), c(1L, bar = 1L, foo = 1L)), c(bar = 1L, foo = 1L))
+  expect_identical(sel_intersect(c(1L, bar = 1L, foo = 1L), c(1L, foo = 1L, bar = 1L)), c(foo = 1L, bar = 1L))
+
+  expect_identical(sel_diff(c(1L, foo = 1L, bar = 1L), c(1L, bar = 1L)), c(foo = 1L))
+  expect_identical(sel_diff(c(1L, bar = 1L, foo = 1L), c(1L, foo = 1L)), c(bar = 1L))
+})
+

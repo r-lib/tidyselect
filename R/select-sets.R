@@ -46,6 +46,9 @@ propagate_names <- function(x, from = NULL) {
     return(x)
   }
 
+  # Match names inside `x` first, so we preserve order
+  from <- vctrs::vec_c(x, from)
+
   # Prevent unnamed elements from matching
   vctrs::vec_slice(from$value, from$names == "") <- NA
 
