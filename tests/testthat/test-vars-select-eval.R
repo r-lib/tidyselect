@@ -244,6 +244,11 @@ test_that("c() combines names tidily", {
   expect_identical(select_pos(mtcars, c(foo = c(bar = mpg:cyl))), set_names(1:2, c("foo...bar1", "foo...bar2")))
 })
 
+test_that("c() renames duplicates", {
+  x <- list(a = 1L, b = 2L, a = 3L)
+  expect_identical(select(x, foo = a, bar = b), list(foo = 1L, foo = 3L, bar = 2L))
+})
+
 test_that("allow named negative selections for consistency even if it has no effect", {
   expect_identical(select_pos(iris, c(foo = -!Species)), c(Species = 5L))
 })

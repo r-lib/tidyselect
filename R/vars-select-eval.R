@@ -272,9 +272,8 @@ reduce_sels <- function(node, data_mask, context_mask) {
 
   out <- walk_data_tree(car, data_mask, context_mask)
 
-  # Combine names with `c()` if name is supplied
   if (!is_null(tag)) {
-    out <- vctrs::vec_c(!!tag := out, .name_spec = tidyselect_name_spec)
+    out <- combine_names(out, tag)
   }
 
   # Base case of the reduction
@@ -292,11 +291,6 @@ reduce_sels <- function(node, data_mask, context_mask) {
   }
 }
 
-tidyselect_name_spec <- function(outer, inner) {
-  sep <- if (is_character(inner)) "..." else ""
-  paste(outer, inner, sep = sep)
-}
-
 is_negated <- function(x) {
   x <- quo_get_expr2(x, x)
   is_call(x, "-", n = 1)
@@ -305,6 +299,24 @@ unnegate <- function(x) {
   expr <- quo_get_expr2(x, x)
   expr <- node_cadr(expr)
   quo_set_expr2(x, expr, expr)
+}
+
+combine_names <- function(x, tag) {
+  # Existing duplicates are renamed to the same name. Otherwise,
+  # use normal name combination.
+  if (is_data_dups(x) && is_null(names(x))) {
+    name_spec <- "{outer}"
+  } else {
+    name_spec <- tidyselect_name_spec
+  }
+
+  vctrs::vec_c(!!tag := x, .name_spec = name_spec)
+}
+tidyselect_name_spec <- function(outer, inner) {
+  # For compatibily, we enumerate as "foo1", "foo2", rather than
+  # "foo...1", "foo...2"
+  sep <- if (is_character(inner)) "..." else ""
+  paste(outer, inner, sep = sep)
 }
 
 eval_context <- function(expr, context_mask) {
