@@ -315,3 +315,11 @@ test_that("negative indices are disallowed", {
   expect_error(select_pos(mtcars, !!c(-1, 1)), "negative")
   expect_error(select_pos(mtcars, cyl | !!c(-1, 1)), "negative")
 })
+
+test_that("unique elements are returned", {
+  x <- list(a = 1L, b = 2L)
+  expect_identical(select_pos(x, !!c(1L, 1L)), named(1L))
+  expect_identical(select_pos(x, !!c(1L, foo = 1L)), c(foo = 1L))
+  expect_identical(select_pos(x, !!c(foo = 1L, 1L)), c(foo = 1L))
+  expect_identical(select_pos(x, !!c(foo = 1L, 1L, bar = 1L)), c(foo = 1L, bar = 1L))
+})

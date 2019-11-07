@@ -12,8 +12,7 @@ vars_select_eval <- function(vars,
   }
   if (!is_symbolic(wrapped)) {
     pos <- as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data)
-    check_pos(pos)
-    return(named(pos))
+    return(pos_validate(pos))
   }
 
   vars <- peek_vars()
@@ -60,7 +59,7 @@ vars_select_eval <- function(vars,
   data_mask$.__tidyselect__.$internal <- internal
 
   pos <- walk_data_tree(expr, data_mask, context_mask)
-  check_pos(pos)
+  pos <- pos_validate(pos)
 
   # Ensure position vector is fully named
   nms <- names(pos) <- names2(pos)

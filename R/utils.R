@@ -139,9 +139,11 @@ flat_map_int <- function(.x, .fn, ...) {
   vctrs::vec_c(!!!out, .ptype = int())
 }
 
-check_pos <- function(x) {
-  check_missing(x)
-  check_negative(x)
+pos_validate <- function(pos) {
+  check_missing(pos)
+  check_negative(pos)
+
+  named(sel_unique(pos))
 }
 check_missing <- function(x) {
   if (anyNA(x)) {

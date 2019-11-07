@@ -22,6 +22,13 @@ sel_intersect <- function(x, y) {
     sel_operation(x, y, set_intersect)
   }
 }
+sel_unique <- function(x) {
+  x <- tibble::as_tibble(list(value = x, names = names2(x)))
+  x <- propagate_names(x)
+
+  out <- vctrs::vec_unique(x)
+  set_names(out$value, out$names)
+}
 
 sel_operation <- function(x, y, sel_op) {
   x <- tibble::as_tibble(list(value = x, names = names2(x)))
@@ -33,17 +40,21 @@ sel_operation <- function(x, y, sel_op) {
   out <- sel_op(x, y)
   set_names(out$value, out$names)
 }
-propagate_names <- function(x, y) {
-  x_unnamed <- x$names == ""
-
-  if (any(x_unnamed)) {
-    matches <- match(
-      x$value[x_unnamed],
-      y$value[y$names != ""],
-      nomatch = 0L
-    )
-    x$names[x_unnamed][matches != 0L] <- y$names[matches]
+propagate_names <- function(x, from = NULL) {
+  unnamed <- x$names == ""
+  if (!any(unnamed)) {
+    return(x)
   }
+
+  # Prevent unnamed elements from matching
+  vctrs::vec_slice(from$value, from$names == "") <- NA
+
+  matches <- match(
+    x$value[unnamed],
+    from$value,
+    nomatch = 0L
+  )
+  x$names[unnamed][matches != 0L] <- from$names[matches]
 
   x
 }
