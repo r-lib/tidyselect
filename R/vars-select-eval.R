@@ -2,7 +2,10 @@
 vars_select_eval <- function(vars, expr, strict, data = NULL) {
   wrapped <- quo_get_expr2(expr, expr)
 
-  if (!is_missing(wrapped) && !is_symbolic(wrapped)) {
+  if (is_missing(wrapped)) {
+    return(named(int()))
+  }
+  if (!is_symbolic(wrapped)) {
     return(as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data))
   }
 
