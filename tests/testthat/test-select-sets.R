@@ -19,3 +19,9 @@ test_that("`sel_diff()` matches named elements", {
 
   expect_identical(sel_diff(c(foo = 1L), c(bar = 1L)), c(foo = 1L))
 })
+
+test_that("sel_intersect() matches named elements", {
+  expect_identical(sel_intersect(1L, c(foo = 1L)), c(foo = 1L))
+  expect_identical(sel_intersect(c(foo = 1L), 1L), c(foo = 1L))
+  expect_identical(sel_intersect(c(foo = 1L), c(bar = 1L)), named(int()))
+})

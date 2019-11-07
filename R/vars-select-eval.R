@@ -254,7 +254,8 @@ eval_and <- function(expr, data_mask, context_mask) {
 
   x <- walk_operand(x, data_mask, context_mask)
   y <- walk_operand(y, data_mask, context_mask)
-  set_intersect(x, y)
+
+  sel_intersect(x, y)
 }
 
 walk_operand <- function(expr, data_mask, context_mask) {
