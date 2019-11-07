@@ -285,3 +285,26 @@ test_that("uniquely-named inputs can't rename duplicates", {
 test_that("unary `-` is alias for `!`", {
   expect_identical(select_pos(mtcars, -(cyl:carb)), c(mpg = 1L))
 })
+
+test_that("empty inputs return empty indices", {
+  expect_identical(select_pos(mtcars, int()), named(int()))
+  expect_identical(select_pos(mtcars, !!int()), named(int()))
+})
+
+test_that("indices are returned in order of evaluation", {
+  expect_identical(select_pos(mtcars, cyl | mpg), c(cyl = 2L, mpg = 1L))
+  expect_identical(select_pos(mtcars, c(cyl | mpg)), c(cyl = 2L, mpg = 1L))
+})
+
+test_that("0 is ignored", {
+  expect_identical(select_pos(mtcars, 0), named(int()))
+  expect_identical(select_pos(mtcars, identity(0)), named(int()))
+  expect_identical(select_pos(mtcars, 0L | 0L), named(int()))
+  expect_identical(select_pos(mtcars, c(0L, -1L)), named(int()))
+})
+
+test_that("negative indices are disallowed", {
+  expect_error(select_pos(mtcars, identity(c(-1, 1))), "negative")
+  expect_error(select_pos(mtcars, !!c(-1, 1)), "negative")
+  expect_error(select_pos(mtcars, cyl | !!c(-1, 1)), "negative")
+})

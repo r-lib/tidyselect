@@ -11,7 +11,9 @@ vars_select_eval <- function(vars,
     return(named(int()))
   }
   if (!is_symbolic(wrapped)) {
-    return(as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data))
+    pos <- as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data)
+    check_pos(pos)
+    return(named(pos))
   }
 
   vars <- peek_vars()
@@ -58,13 +60,12 @@ vars_select_eval <- function(vars,
   data_mask$.__tidyselect__.$internal <- internal
 
   pos <- walk_data_tree(expr, data_mask, context_mask)
+  check_pos(pos)
 
   # Ensure position vector is fully named
   nms <- names(pos) <- names2(pos)
   nms_missing <- nms == ""
   names(pos)[nms_missing] <- vars[pos[nms_missing]]
-
-  check_missing(pos)
 
   # Duplicates are not allowed for data frames
   if (uniquely_named) {

@@ -139,9 +139,18 @@ flat_map_int <- function(.x, .fn, ...) {
   vctrs::vec_c(!!!out, .ptype = int())
 }
 
+check_pos <- function(x) {
+  check_missing(x)
+  check_negative(x)
+}
 check_missing <- function(x) {
-  if (anyNA(x, recursive = TRUE)) {
+  if (anyNA(x)) {
     abort("Selections can't have missing values.")
+  }
+}
+check_negative <- function(x) {
+  if (any(x < 0L)) {
+    abort("Selections can't have negative values.")
   }
 }
 
