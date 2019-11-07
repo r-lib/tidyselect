@@ -61,10 +61,13 @@ propagate_names <- function(x, from = NULL) {
 
 # https://github.com/r-lib/vctrs/issues/548
 set_diff <- function(x, y) {
-  vctrs::vec_slice(x, !vctrs::vec_in(x, y))
+  vctrs::vec_unique(vctrs::vec_slice(x, !vctrs::vec_in(x, y)))
 }
 set_intersect <- function(x, y) {
-  vctrs::vec_slice(x, na.omit(vctrs::vec_match(y, x)))
+  pos <- vctrs::vec_match(y, x)
+  pos <- vctrs::vec_unique(pos)
+  pos <- pos[!is.na(pos)]
+  vctrs::vec_slice(x, pos)
 }
 set_union <- function(x, y) {
   vctrs::vec_unique(vctrs::vec_c(x, y))

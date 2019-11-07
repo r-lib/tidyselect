@@ -29,3 +29,9 @@ test_that("sel_intersect() matches named elements", {
 test_that("sel_unique() returns unique elements", {
   expect_identical(sel_unique(c(1L, foo = 1L, bar = 1L)), c(foo = 1L, bar = 1L))
 })
+
+test_that("unique elements are returned", {
+  expect_identical(sel_union(c(1L, 1L), 2L), c(1L, 2L))
+  expect_identical(sel_diff(c(1L, 1L), 2L), 1L)
+  expect_identical(sel_intersect(c(foo = 1L), c(foo = 1L, foo = 1L)), c(foo = 1L))
+})
