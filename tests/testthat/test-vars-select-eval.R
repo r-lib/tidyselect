@@ -260,3 +260,7 @@ test_that("c() handles names consistently", {
   expect_identical(select(x, foo = a, -a), named(list()))
   expect_identical(select(x, foo = a, -c(bar = a)), list(foo = 1L))
 })
+
+test_that("unary `-` is alias for `!`", {
+  expect_identical(select_pos(mtcars, -(cyl:carb)), c(mpg = 1L))
+})

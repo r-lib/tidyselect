@@ -42,6 +42,7 @@ iris \%>\% select(everything(), -starts_with("Sepal"))
 iris \%>\% select(!starts_with("Sepal"))
 }
 
-Unary \code{-} cannot be used outside \code{...} or \code{c()}.
+If unary \code{-} is used outside \code{...} or \code{c()}, it also stands for set
+complement.
 }
 

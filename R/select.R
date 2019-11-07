@@ -35,10 +35,10 @@ select_impl <- function(.x,
   vars <- peek_vars()
 
   if (length(.include)) {
-    expr <- list(quo(all_of(.include) | !!expr))
+    expr <- quo(all_of(.include) | !!expr)
   }
   if (length(.exclude)) {
-    expr <- list(quo(c(!!!dots, -.exclude)))
+    expr <- quo(!!expr & !all_of(.exclude))
   }
 
   subclass_index_errors(
@@ -96,7 +96,8 @@ select_impl <- function(.x,
 #' iris %>% select(!starts_with("Sepal"))
 #' ```
 #'
-#' Unary `-` cannot be used outside `...` or `c()`.
+#' If unary `-` is used outside `...` or `c()`, it also stands for set
+#' complement.
 #'
 #' @name tidyselect-syntax
 NULL

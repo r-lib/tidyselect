@@ -195,10 +195,10 @@ eval_bang <- function(expr, data_mask, context_mask) {
 
 eval_minus <- function(expr, data_mask, context_mask) {
   if (length(expr) == 2) {
-    abort("Unary `-` must be used inside `c()`.")
+    eval_bang(expr, data_mask, context_mask)
+  } else {
+    eval_context(expr, context_mask)
   }
-
-  eval_context(expr, context_mask)
 }
 
 eval_or <- function(expr, data_mask, context_mask) {
