@@ -23,8 +23,10 @@ Suggests:
     crayon,
     dplyr,
     knitr,
+    magrittr,
     rmarkdown,
-    testthat (>= 2.3.0)
+    testthat (>= 2.3.0),
+    tibble (>= 2.3.0)
 remotes:
     r-lib/vctrs
 License: GPL-3
