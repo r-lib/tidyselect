@@ -1,13 +1,7 @@
 
 subclass_index_errors <- function(expr, allow_positions = TRUE) {
   tryCatch(
-    withCallingHandlers(
-      expr,
-      simpleError = function(cnd) {
-        # Pass `cnd` as parent to ensure proper backtraces
-        abort(conditionMessage(cnd), parent = cnd)
-      }
-    ),
+    sanitise_base_errors(expr),
     vctrs_error_index_oob_names = function(cnd) {
       stop_index_oob(parent = cnd, .subclass = "tidyselect_error_index_oob_names")
     },
@@ -19,6 +13,15 @@ subclass_index_errors <- function(expr, allow_positions = TRUE) {
     },
     vctrs_error_names_must_be_unique = function(cnd) {
       stop_names_must_be_unique(parent = cnd)
+    }
+  )
+}
+sanitise_base_errors <- function(expr) {
+  withCallingHandlers(
+    expr,
+    simpleError = function(cnd) {
+      # Pass `cnd` as parent to ensure proper backtraces
+      abort(conditionMessage(cnd), parent = cnd)
     }
   )
 }
