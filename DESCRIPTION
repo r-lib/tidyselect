@@ -22,6 +22,8 @@ Suggests:
     covr,
     crayon,
     dplyr,
+    knitr,
+    rmarkdown,
     testthat (>= 2.3.0)
 remotes:
     r-lib/vctrs
@@ -33,3 +35,4 @@ RoxygenNote: 6.1.1
 Roxygen: list(markdown = TRUE)
 URL: https://tidyselect.r-lib.org, https://github.com/r-lib/tidyselect
 BugReports: https://github.com/r-lib/tidyselect/issues
+VignetteBuilder: knitr

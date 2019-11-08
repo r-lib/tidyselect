@@ -7,3 +7,4 @@ revdep/library
 *.so
 issues
 docs/
+inst/doc
