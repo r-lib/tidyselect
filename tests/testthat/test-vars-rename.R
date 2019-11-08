@@ -1,7 +1,6 @@
 context("rename vars")
 
 test_that("when .strict = FALSE, vars_rename always succeeds", {
-  skip("FIXME")
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
     "object 'e' not found",
@@ -26,14 +25,19 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
 
   expect_error(
     vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE),
-    "Unknown columns `e` and `g`",
-    fixed = TRUE
+    class = "tidyselect_error_index_oob_names"
   )
 
   expect_identical(
     vars_rename("x", A = "x", B = "y", .strict = FALSE),
     c(A = "x")
   )
+
+  verify_output(test_path("outputs", "rename-strict-errors.txt"), {
+    vars_rename(c("a", "b"), d = e, .strict = TRUE)
+    vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
+    vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
+  })
 })
 
 test_that("vars_rename() works with positions", {
@@ -57,16 +61,25 @@ test_that("vars_rename() unquotes named character vectors", {
 })
 
 test_that("missing values are detected in vars_rename() (#72)", {
-  expect_error(vars_rename(letters, A = na_cpl), class = "tidyselect_error_index_bad_type")
   expect_error(
-    vars_rename(letters, A = NA, B = na_chr, C = na_int, D = na_dbl),
-    glue(
-      "* NA
-       * na_chr
-       * na_int
-       * na_dbl"
-    ),
-    fixed = TRUE
+    vars_rename(letters, A = na_cpl),
+    class = "tidyselect_error_index_bad_type"
+  )
+  expect_error(
+    vars_rename(letters, A = NA),
+    "missing"
+  )
+  expect_error(
+    vars_rename(letters, B = na_chr),
+    "missing"
+  )
+  expect_error(
+    vars_rename(letters, C = na_int),
+    "missing"
+  )
+  expect_error(
+    vars_rename(letters, D = na_dbl),
+    "missing"
   )
 })
 

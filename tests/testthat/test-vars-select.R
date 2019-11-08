@@ -5,16 +5,8 @@ test_that("vars_select can rename variables", {
   expect_equal(vars_select(vars, b = a, a = b), c("b" = "a", "a" = "b"))
 })
 
-test_that("last rename wins", {
-  vars <- c("a", "b")
-  expect_equal(
-    expect_warning(
-      vars_select(vars, c = a, d = a),
-      "being renamed to \`c\` and \`d\`",
-      fixed = TRUE
-    ),
-    c("d" = "a")
-  )
+test_that("can rename to multiple columns", {
+  expect_equal(vars_select(c("a", "b"), c = a, d = a), c(c = "a", d = "a"))
 })
 
 test_that("negative index removes values", {
@@ -119,18 +111,29 @@ test_that("can select with length > 1 double vectors (#43)", {
 })
 
 test_that("missing values are detected in vars_select() (#72)", {
-  expect_error(vars_select("foo", na_cpl), class = "tidyselect_error_index_bad_type")
-
   expect_error(
-    vars_select(letters, NA, c(1, NA), !!na_chr, !!na_int, !!na_dbl),
-    glue(
-      "* NA
-       * c(1, NA)
-       * NA_character_
-       * NA_integer_
-       * NA_real_"
-    ),
-    fixed = TRUE
+    vars_select("foo", na_cpl),
+    class = "tidyselect_error_index_bad_type"
+  )
+  expect_error(
+    vars_select(letters, NA),
+    "missing"
+  )
+  expect_error(
+    vars_select(letters, c(1, NA)),
+    "missing"
+  )
+  expect_error(
+    vars_select(letters, !!na_chr),
+    "missing"
+  )
+  expect_error(
+    vars_select(letters, !!na_int),
+    "missing"
+  )
+  expect_error(
+    vars_select(letters, !!na_dbl),
+    "missing"
   )
 })
 
@@ -172,18 +175,29 @@ test_that("can rename and select at the same time", {
 
 test_that("vars_select() supports redundantly named vectors", {
   expect_identical(vars_select(c("a", "b", "a"), b), c(b = "b"))
-  expect_identical(vars_select(c("a", "b", "a"), a), c(a = "a", a = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), a, b), c(a = "a", a = "a", b = "b"))
-  expect_identical(vars_select(c("a", "b", "a"), b, a), c(b = "b", a = "a", a = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), c(b, a)), c(b = "b", a = "a", a = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), c(b = "b", a = "a", a = "a"))
+  expect_error(vars_select(c("a", "b", "a"), a), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), a, b), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), b, a), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), c(b, a)), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("select helpers support redundantly named vectors", {
-  expect_identical(vars_select(c("a", "b", "a"), everything()), c(a = "a", b = "b", a = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), starts_with("a")), c(a = "a", a = "a"))
-  expect_identical(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), c(b = "b", a = "a", a = "a"))
-  expect_identical(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), c(b = "b", a1 = "a1", a1 = "a1", a2 = "a2"))
+  expect_error(vars_select(c("a", "b", "a"), everything()), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), starts_with("a")), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), class = "tidyselect_error_names_must_be_unique")
+})
+
+test_that("vars_select() uses unique name spec", {
+  expect_identical(
+    vars_select(names(iris), petal = starts_with("Petal")),
+    c(petal1 = "Petal.Length", petal2 = "Petal.Width")
+  )
+  expect_identical(
+    vars_select(names(iris), petal = c(foo = starts_with("Petal"))),
+    c(petal...foo1 = "Petal.Length", petal...foo2 = "Petal.Width")
+  )
 })
 
 test_that("vars_select() can drop duplicate names by position (#94)", {
@@ -198,21 +212,27 @@ test_that("vars_select() can rename variables", {
   expect_identical(vars_select(letters[1:2], a = b, a = b), c(a = "b"))
 })
 
-test_that("vars_select() can rename existing duplicates", {
-  expect_identical(vars_select(c("a", "b", "a"), b = a, a = b), c(b = "a", b = "a", a = "b"))
-  expect_identical(vars_select(c("a", "b", "a"), a = b, b = a), c(a = "b", b = "a", b = "a"))
+test_that("vars_select() can select out existing duplicates", {
+  expect_identical(vars_select(c("a", "b", "a"), b), c(b = "b"))
+  expect_identical(vars_select(c("a", "b", "a"), a = b), c(a = "b"))
+})
+
+test_that("vars_select() cannot rename existing duplicates", {
+  expect_error(vars_select(c("a", "b", "a"), b = a, a = b), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), a = b, b = a), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("vars_select() fails when renaming to existing name", {
-  expect_error(vars_select(letters[1:2], a, a = b), class = "tidyselect_error_rename_to_existing")
+  expect_error(vars_select(letters[1:2], a, a = b), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("vars_select() fails when renaming to same name", {
-  expect_error(vars_select(letters[1:3], a = b, a = c), class = "tidyselect_error_rename_to_same")
-  expect_error(vars_select(letters[1:2], A = a, A = b), class = "tidyselect_error_rename_to_same")
+  expect_error(vars_select(letters[1:3], a = b, a = c), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(letters[1:2], A = a, A = b), class = "tidyselect_error_names_must_be_unique")
 })
 
 test_that("vars_select() fails informatively when renaming to same", {
+  skip("FIXME")
   verify_output(test_path("outputs", "vars-select-renaming-to-same.txt"), {
     "Renaming to same:"
     vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e)
@@ -227,6 +247,7 @@ test_that("vars_select() has consistent position errors", {
   expect_error(vars_select(letters, -foo), class = "tidyselect_error_index_oob_names")
   expect_error(vars_select(letters, 100), class = "tidyselect_error_index_oob_positions")
   expect_error(vars_select(letters, -100), class = "tidyselect_error_index_oob_positions")
+  expect_error(vars_select(letters, !100), class = "tidyselect_error_index_oob_positions")
 
   verify_output(test_path("outputs", "vars-select-oob-errors.txt"), {
     "Bare names"
@@ -240,6 +261,7 @@ test_that("vars_select() has consistent position errors", {
     "Positions"
     vars_select(letters, 30, 50, 100)
     vars_select(letters, -100)
+    vars_select(letters, !100)
   })
 })
 

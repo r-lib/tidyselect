@@ -10,6 +10,9 @@ subclass_index_errors <- function(expr, allow_positions = TRUE) {
     },
     vctrs_error_index = function(cnd) {
       stop_index_bad_type(parent = cnd, allow_positions = allow_positions)
+    },
+    vctrs_error_names_must_be_unique = function(cnd) {
+      stop_names_must_be_unique(parent = cnd)
     }
   )
 }
@@ -54,4 +57,15 @@ cnd_issue.tidyselect_error_index_oob <- function(c) {
 #' @export
 cnd_bullets.tidyselect_error_index_oob <- function(c) {
   cnd_bullets(c$parent)
+}
+
+stop_names_must_be_unique <- function(..., class = NULL) {
+  abort(
+    .subclass = c(class, "tidyselect_error_names_must_be_unique"),
+    ...
+  )
+}
+#' @export
+cnd_issue.tidyselect_error_names_must_be_unique <- function(cnd, ...) {
+  "Names must be unique."
 }

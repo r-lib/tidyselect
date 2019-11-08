@@ -117,14 +117,6 @@ vec_index_is_empty <- function(x) {
   !length(x) || all(x == 0L)
 }
 
-# https://github.com/r-lib/vctrs/issues/548
-set_diff <- function(x, y) {
-  vctrs::vec_slice(x, !vctrs::vec_in(x, y))
-}
-set_intersect <- function(x, y) {
-  vctrs::vec_slice(x, match(y, x, 0))
-}
-
 vec_is_subtype <- function(x, super, ..., x_arg = "x", super_arg = "super") {
   tryCatch(
     vctrs_error_incompatible_type = function(...) FALSE,
@@ -147,15 +139,26 @@ flat_map_int <- function(.x, .fn, ...) {
   vctrs::vec_c(!!!out, .ptype = int())
 }
 
-check_missing <- function(x, exprs) {
-  any_missing <- anyNA(x, recursive = TRUE)
-  if (any_missing) {
-    is_missing <- map_lgl(x, anyNA)
-    bad <- collapse_labels(exprs[is_missing])
-    abort(glue(
-      "Selections can't have missing values. We detected missing elements in:
-       { bad }"
-    ))
+pos_validate <- function(pos, vars) {
+  check_missing(pos)
+  check_negative(pos)
+
+  pos <- vctrs::vec_as_index(
+    pos,
+    n = length(vars),
+    allow_types = "position"
+  )
+
+  named(sel_unique(pos))
+}
+check_missing <- function(x) {
+  if (anyNA(x)) {
+    abort("Selections can't have missing values.")
+  }
+}
+check_negative <- function(x) {
+  if (any(x < 0L)) {
+    abort("Selections can't have negative values.")
   }
 }
 
@@ -165,4 +168,88 @@ quo_get_expr2 <- function(x, default) {
   } else {
     default
   }
+}
+quo_set_expr2 <- function(x, value, default) {
+  if (is_quosure(x)) {
+    quo_set_expr(x, value)
+  } else {
+    default
+  }
+}
+
+# Always returns a fresh non-shared call
+call_expand_dots <- function(call, env) {
+  if (!is_call(call)) {
+    abort("`call` must be a call.")
+  }
+
+  call <- duplicate(call, shallow = TRUE)
+
+  prev <- call
+  node <- node_cdr(call)
+
+  while (!is_null(node)) {
+    if (is_symbol(node_car(node), "...")) {
+      # Capture dots in a pairlist of quosures
+      dots_mask <- env(env, enquos = enquos)
+      dots <- eval_bare(quote(enquos(...)), dots_mask)
+      dots <- as.pairlist(dots)
+
+      # Splice the dots in the call
+      if (!is_null(dots)) {
+        node_poke_tail(dots, node_cdr(node))
+      }
+      node_poke_cdr(prev, dots)
+
+      break
+    }
+
+    prev <- node
+    node <- node_cdr(node)
+  }
+
+  call
+}
+
+node_tail <- function(node) {
+  rest <- node_cdr(node)
+
+  while (!is_null(rest)) {
+    node <- rest
+    rest <- node_cdr(node)
+  }
+
+  node
+}
+
+node_poke_tail <- function(node, new) {
+  node_poke_cdr(node_tail(node), new)
+}
+
+node_reverse <- function(node) {
+  if (is_null(node)) {
+    return(NULL)
+  }
+
+  prev <- NULL
+  rest <- NULL
+  tail <- node
+
+  while (!is_null(tail)) {
+    rest <- node_cdr(tail)
+
+    if (is_reference(rest, node)) {
+      abort("Can't reverse cyclic pairlist.")
+    }
+
+    node_poke_cdr(tail, prev)
+    prev <- tail
+    tail <- rest
+  }
+
+  prev
+}
+
+named <- function(x) {
+  set_names(x, names2(x))
 }

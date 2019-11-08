@@ -27,3 +27,8 @@ Error: Must select existing columns.
 x Can't subset position 100.
 i There are only 26 elements.
 
+> vars_select(letters, !100)
+Error: Must select existing columns.
+x Can't subset position 100.
+i There are only 26 elements.
+

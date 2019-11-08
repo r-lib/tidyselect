@@ -1,8 +1,12 @@
 
 # tidyselect (development)
 
-* Improved detection of negated arguments in first position, including
-  inside `c()`.
+* Unary `-` inside nested `c()` is now consistently syntax for set
+  difference (#130).
+
+* Improved support for named elements. It is now possible to assign
+  the same name to multiple elements, if the input data structure
+  doesn't require unique names (i.e. anything but a data frame).
 
 * The `.strict` argument of `vars_select()` now works more robustly
   and consistently.
@@ -107,15 +111,9 @@
   #> 1     2     3
   ```
 
-* `vars_select()` now warns when multiple renamings are detected, as
-  only the last one is taken into account (#52). The warning inherits
-  from `tidyselect_warning_duplicate_renaming`.
-
-* `vars_select()` now ignores existing duplicate variables (#94). It
-  fails if user attempts to rename to an existing variable, or if
-  different variables are renamed to the same name. The errors inherit
-  from `tidyselect_error_rename_to_existing` or
-  `tidyselect_error_rename_to_same` respectively.
+* It is now possible to select columns in data frames containing
+  duplicate variables (#94). However, the duplicates can't be part of
+  the final selection.
 
 * `one_of()` now always coerces its input to a character, or fails. Similary,
   `vars_select()` now supports unquoting S3 vectors.

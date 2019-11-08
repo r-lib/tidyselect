@@ -29,3 +29,10 @@ test_that("can specify inclusion and exclusion", {
 test_that("select_pos() checks inputs", {
   expect_error(select_pos(function() NULL), class = "vctrs_error_scalar_type")
 })
+
+test_that("select_pos() accepts name spec", {
+  expect_identical(
+    select_pos(mtcars, c(foo = c(mpg, cyl)), name_spec = "{outer}_{inner}"),
+    c(foo_1 = 1L, foo_2 = 2L)
+  )
+})
