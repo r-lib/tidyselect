@@ -16,7 +16,7 @@ sel_intersect <- function(x, y) {
   }
 }
 sel_unique <- function(x) {
-  x <- tibble::as_tibble(list(value = x, names = names2(x)))
+  x <- vctrs::new_data_frame(list(value = x, names = names2(x)))
   x <- propagate_names(x)
 
   out <- vctrs::vec_unique(x)
@@ -40,8 +40,8 @@ sel_complement <- function(x, vars = NULL) {
 }
 
 sel_operation <- function(x, y, sel_op) {
-  x <- tibble::as_tibble(list(value = x, names = names2(x)))
-  y <- tibble::as_tibble(list(value = y, names = names2(y)))
+  x <- vctrs::new_data_frame(list(value = x, names = names2(x)))
+  y <- vctrs::new_data_frame(list(value = y, names = names2(y)))
 
   x <- propagate_names(x, y)
   y <- propagate_names(y, x)
