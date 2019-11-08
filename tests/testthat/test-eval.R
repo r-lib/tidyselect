@@ -236,3 +236,10 @@ test_that("unique elements are returned", {
   expect_identical(select_pos(x, !!c(foo = 1L, 1L)), c(foo = 1L))
   expect_identical(select_pos(x, !!c(foo = 1L, 1L, bar = 1L)), c(foo = 1L, bar = 1L))
 })
+
+test_that("selections provide informative errors", {
+  verify_output(test_path("outputs", "eval-errors.txt"), {
+    "Foreign errors during evaluation"
+    select_pos(iris, eval_tidy(foobar))
+  })
+})

@@ -1,8 +1,8 @@
 > vars_rename(c("a", "b"), d = e, .strict = TRUE)
-Error in eval_tidy(quo, mask): object 'e' not found
+Error: object 'e' not found
 
 > vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
-Error in eval_tidy(quo, mask): object 'e' not found
+Error: object 'e' not found
 
 > vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
 Error: Must select existing columns.

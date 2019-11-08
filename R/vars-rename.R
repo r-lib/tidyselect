@@ -61,7 +61,9 @@ vars_rename_eval <- function(quos, vars) {
     mask <- NULL
   }
 
-  map(quos, expr_rename_eval, mask)
+  sanitise_base_errors(
+    map(quos, expr_rename_eval, mask)
+  )
 }
 
 expr_rename_eval <- function(quo, mask) {
