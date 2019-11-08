@@ -1,4 +1,4 @@
 > # Foreign errors during evaluation
 > select_pos(iris, eval_tidy(foobar))
-Error in eval_tidy(foobar): object 'foobar' not found
+Error: object 'foobar' not found
 

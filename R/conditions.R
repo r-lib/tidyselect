@@ -1,7 +1,13 @@
 
 subclass_index_errors <- function(expr, allow_positions = TRUE) {
   tryCatch(
-    expr,
+    withCallingHandlers(
+      expr,
+      simpleError = function(cnd) {
+        # Pass `cnd` as parent to ensure proper backtraces
+        abort(conditionMessage(cnd), parent = cnd)
+      }
+    ),
     vctrs_error_index_oob_names = function(cnd) {
       stop_index_oob(parent = cnd, .subclass = "tidyselect_error_index_oob_names")
     },
