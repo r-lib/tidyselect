@@ -177,26 +177,6 @@ names. This must be a character vector of length 2 whose first
 component is the singular form and the second is the plural. For
 example, <code><a href='https://rdrr.io/r/base/c.html'>c("variable", "variables")</a></code>.</p>
     
-    <h2 class="hasAnchor" id="conditions"><a class="anchor" href="#conditions"></a>Conditions</h2>
-
-    
-
-
-<p><code>vars_select()</code> signals the following warning.</p><ul>
-<li><p><code>tidyselect_warning_duplicate_renaming</code>: Supplying named inputs
-in <code>...</code> causes the variables to be renamed. For technical
-reasons there can only be one target name. If the same variable
-is renamed to different names, tidyselect issues this warning.</p></li>
-</ul>
-
-<p><code>vars_select()</code> signals the following conditions.</p><ul>
-<li><p><code>tidyselect_error_rename_to_same</code>: Renaming multiple variables to
-the same name is an error.</p></li>
-<li><p><code>tidyselect_error_rename_to_existing</code>: Renaming a variable to an
-existing name is an error.</p></li>
-</ul>
-
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='vars_pull.html'>vars_pull()</a></code></p></div>
@@ -282,8 +262,6 @@ existing name is an error.</p></li>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#customising-error-messages">Customising error messages</a></li>
-
-      <li><a href="#conditions">Conditions</a></li>
 
       <li><a href="#see-also">See also</a></li>
       
