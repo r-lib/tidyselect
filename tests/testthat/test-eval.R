@@ -115,18 +115,35 @@ test_that("can use arithmetic operators in non-data context", {
 })
 
 test_that("symbol lookup outside data informs caller about better practice", {
+  scoped_options(tidyselect_verbosity = "verbose")
+
   vars1 <- c("a", "b")
-  vars2 <- c("a", "b") # To force a message the second time
   expect_message(vars_select(letters, vars1))
+
+  vars2 <- c("a", "b") # To force a message the second time
   verify_output(test_path("outputs", "vars-select-context-lookup.txt"), {
     vars_select(letters, vars2)
   })
 })
 
 test_that("symbol evaluation only informs once", {
-  idx <- 1
-  expect_message(select_pos(iris, idx), "brittle")
-  expect_message(select_pos(iris, idx), regexp = NA)
+  scoped_options(tidyselect_verbosity = "verbose")
+  `_identifier` <- 1
+  expect_message(select_pos(iris, `_identifier`), "brittle")
+  expect_message(select_pos(iris, `_identifier`), regexp = NA)
+})
+
+test_that("symbol evaluation informs from global environment but not packages", {
+  fn <- function(name, select_pos) {
+    assign(name, 1L)
+    eval(bquote(select_pos(iris, .(as.symbol(name)))))
+  }
+
+  environment(fn) <- env(global_env())
+  expect_message(fn("from-global-env", select_pos), "brittle")
+
+  environment(fn) <- ns_env("rlang")
+  expect_message(fn("from-ns-env", select_pos), NA)
 })
 
 test_that("selection helpers are in the context mask", {

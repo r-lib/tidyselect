@@ -257,13 +257,15 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     return(name)
   }
 
-  msg <- glue_c(
-    "Note: Using an external vector in selections is brittle.",
-    i = "If the data contains `{name}` it will be selected instead.",
-    i = "Use `all_of({name})` instead of `{name}` to silence this message."
-  )
-  id <- paste0("strict_lookup_", name)
-  inform_once(msg, id)
+  if (needs_advice(env)) {
+    msg <- glue_c(
+      "Note: Using an external vector in selections is brittle.",
+      i = "If the data contains `{name}` it will be selected instead.",
+      i = "Use `all_of({name})` instead of `{name}` to silence this message."
+    )
+    id <- paste0("strict_lookup_", name)
+    inform_once(msg, id)
+  }
 
   value
 }

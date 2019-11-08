@@ -256,10 +256,6 @@ named <- function(x) {
 
 inform_env <- env()
 inform_once <- function(msg, id = msg) {
-  if (is_string(peek_option("tidyselect_verbosity"), "quiet")) {
-    return(invisible(NULL))
-  }
-
   stopifnot(is_string(id))
 
   if (env_has(inform_env, id)) {
@@ -270,6 +266,34 @@ inform_once <- function(msg, id = msg) {
   inform(paste_line(
     msg, silver("This message is displayed once per session.")
   ))
+}
+
+needs_advice <- function(env) {
+  opt <- peek_option("tidyselect_verbosity")
+  if (is_string(opt)) {
+    return(switch(opt,
+      quiet = FALSE,
+      verbose = TRUE,
+      abort("`tidyselect_verbosity` must be `\"quiet\"` or `\"verbose\"`.")
+    ))
+  }
+
+  if (is_reference(topenv(env), global_env())) {
+    return(TRUE)
+  }
+
+  if (from_tests(env)) {
+    return(TRUE)
+  }
+
+  FALSE
+}
+from_tests <- function(env) {
+  testthat_pkg <- Sys.getenv("TESTTHAT_PKG")
+
+  nzchar(testthat_pkg) &&
+    identical(Sys.getenv("NOT_CRAN"), "true") &&
+    env_name(topenv(env)) == env_name(ns_env(testthat_pkg))
 }
 
 has_crayon <- function() {
