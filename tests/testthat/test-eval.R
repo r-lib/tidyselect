@@ -115,15 +115,18 @@ test_that("can use arithmetic operators in non-data context", {
 })
 
 test_that("symbol lookup outside data informs caller about better practice", {
-  vars <- c("a", "b")
-  expect_message(
-    vars_select(letters, vars),
-    "Use `all_of(vars)` instead of `vars` to silence",
-    fixed = TRUE
-  )
+  vars1 <- c("a", "b")
+  vars2 <- c("a", "b") # To force a message the second time
+  expect_message(vars_select(letters, vars1))
   verify_output(test_path("outputs", "vars-select-context-lookup.txt"), {
-    vars_select(letters, vars)
+    vars_select(letters, vars2)
   })
+})
+
+test_that("symbol evaluation only informs once", {
+  idx <- 1
+  expect_message(select_pos(iris, idx), "brittle")
+  expect_message(select_pos(iris, idx), regexp = NA)
 })
 
 test_that("selection helpers are in the context mask", {

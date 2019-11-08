@@ -20,6 +20,7 @@ Imports:
     vctrs (>= 0.2.0.9007)
 Suggests:
     covr,
+    crayon,
     dplyr,
     testthat (>= 2.2.1.9002)
 remotes:

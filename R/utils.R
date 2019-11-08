@@ -253,3 +253,26 @@ node_reverse <- function(node) {
 named <- function(x) {
   set_names(x, names2(x))
 }
+
+inform_env <- env()
+inform_once <- function(msg, id = msg) {
+  if (is_string(peek_option("tidyselect_verbosity"), "quiet")) {
+    return(invisible(NULL))
+  }
+
+  stopifnot(is_string(id))
+
+  if (env_has(inform_env, id)) {
+    return(invisible(NULL))
+  }
+  inform_env[[id]] <- TRUE
+
+  inform(paste_line(
+    msg, silver("This message is displayed once per session.")
+  ))
+}
+
+has_crayon <- function() {
+  is_installed("crayon") && crayon::has_color()
+}
+silver <- function(x) if (has_crayon()) crayon::silver(x) else x

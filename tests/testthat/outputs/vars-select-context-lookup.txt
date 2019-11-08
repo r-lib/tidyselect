@@ -1,7 +1,8 @@
-> vars_select(letters, vars)
+> vars_select(letters, vars2)
 Message: Note: Using an external vector in selections is brittle.
-i If the data contains `vars` it will be selected instead.
-i Use `all_of(vars)` instead of `vars` to silence this message.
+If the data contains `vars2` it will be selected instead.
+Use `all_of(vars2)` instead of `vars2` to silence this message.
+This message is displayed once per session.
 
   a   b 
 "a" "b" 
