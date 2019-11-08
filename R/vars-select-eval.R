@@ -12,7 +12,7 @@ vars_select_eval <- function(vars,
   }
   if (!is_symbolic(wrapped)) {
     pos <- as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data)
-    return(pos_validate(pos))
+    return(pos_validate(pos, vars))
   }
 
   vars <- peek_vars()
@@ -59,7 +59,7 @@ vars_select_eval <- function(vars,
   data_mask$.__tidyselect__.$internal <- internal
 
   pos <- walk_data_tree(expr, data_mask, context_mask)
-  pos <- pos_validate(pos)
+  pos <- pos_validate(pos, vars)
 
   # Ensure position vector is fully named
   nms <- names(pos) <- names2(pos)
@@ -138,10 +138,11 @@ as_indices_impl <- function(x, vars, strict) {
     return(int())
   }
 
+  x <- vctrs::vec_coerce_index(x, allow_types = c("position", "name"))
+
   if (!strict) {
-    # Remove out-of-bounds elements if non-strict. First coerce to the
-    # right type before changing the values.
-    x <- vctrs::vec_coerce_index(x)
+    # Remove out-of-bounds elements if non-strict. We do this eagerly
+    # because names vectors must be converted to positions here.
     x <- switch(typeof(x),
       character = set_intersect(x, c(vars, na_chr)),
       double = ,
@@ -150,20 +151,17 @@ as_indices_impl <- function(x, vars, strict) {
     )
   }
 
-  out <- vctrs::vec_as_index(
-    x,
-    n = length(vars),
-    names = vars,
-    allow_types = c("position", "name"),
-    convert_values = NULL
-  )
-
-  switch(typeof(out),
-    character = set_names(out, names(x)),
+  switch(typeof(x),
+    character = chr_as_positions(x, vars),
     double = ,
-    integer = out,
+    integer = x,
     abort("Internal error: Unexpected type in `as_indices()`.")
   )
+}
+
+chr_as_positions <- function(x, vars) {
+  out <- vctrs::vec_as_index(x, n = length(vars), names = vars)
+  set_names(out, names(x))
 }
 
 as_indices <- function(x, vars, strict = TRUE) {
@@ -214,7 +212,7 @@ eval_bang <- function(expr, data_mask, context_mask) {
   x <- walk_data_tree(expr[[2]], data_mask, context_mask)
 
   vars <- data_mask$.__tidyselect__.$internal$vars
-  set_diff(seq_along(vars), x)
+  sel_complement(x, vars)
 }
 
 eval_minus <- function(expr, data_mask, context_mask) {
@@ -319,7 +317,8 @@ reduce_sels <- function(node, data_mask, context_mask) {
   lhs <- reduce_sels(cdr, data_mask, context_mask)
 
   if (neg) {
-    sel_diff(lhs, out)
+    vars <- data_mask$.__tidyselect__.$internal$vars
+    sel_diff(lhs, out, vars)
   } else {
     sel_union(lhs, out)
   }

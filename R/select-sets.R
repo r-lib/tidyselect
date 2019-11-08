@@ -8,13 +8,6 @@ sel_union <- function(x, y) {
     sel_operation(x, y, set_union)
   }
 }
-sel_diff <- function(x, y) {
-  if (is_null(names(x)) || is_null(names(y))) {
-    set_diff(x, y)
-  } else {
-    sel_operation(x, y, set_diff)
-  }
-}
 sel_intersect <- function(x, y) {
   if (is_null(names(x)) && is_null(names(y))) {
     set_intersect(x, y)
@@ -28,6 +21,22 @@ sel_unique <- function(x) {
 
   out <- vctrs::vec_unique(x)
   set_names(out$value, out$names)
+}
+
+# Set difference and set complement must validate their RHS eagerly,
+# otherwise OOB elements might be selected out and go unnoticed
+sel_diff <- function(x, y, vars = NULL) {
+  if (!is_null(vars)) {
+    y <- pos_validate(y, vars)
+  }
+  if (is_null(names(x)) || is_null(names(y))) {
+    set_diff(x, y)
+  } else {
+    sel_operation(x, y, set_diff)
+  }
+}
+sel_complement <- function(x, vars = NULL) {
+  sel_diff(seq_along(vars), x, vars)
 }
 
 sel_operation <- function(x, y, sel_op) {

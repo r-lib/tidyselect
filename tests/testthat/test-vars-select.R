@@ -247,6 +247,7 @@ test_that("vars_select() has consistent position errors", {
   expect_error(vars_select(letters, -foo), class = "tidyselect_error_index_oob_names")
   expect_error(vars_select(letters, 100), class = "tidyselect_error_index_oob_positions")
   expect_error(vars_select(letters, -100), class = "tidyselect_error_index_oob_positions")
+  expect_error(vars_select(letters, !100), class = "tidyselect_error_index_oob_positions")
 
   verify_output(test_path("outputs", "vars-select-oob-errors.txt"), {
     "Bare names"
@@ -260,6 +261,7 @@ test_that("vars_select() has consistent position errors", {
     "Positions"
     vars_select(letters, 30, 50, 100)
     vars_select(letters, -100)
+    vars_select(letters, !100)
   })
 })
 

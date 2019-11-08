@@ -139,9 +139,15 @@ flat_map_int <- function(.x, .fn, ...) {
   vctrs::vec_c(!!!out, .ptype = int())
 }
 
-pos_validate <- function(pos) {
+pos_validate <- function(pos, vars) {
   check_missing(pos)
   check_negative(pos)
+
+  pos <- vctrs::vec_as_index(
+    pos,
+    n = length(vars),
+    allow_types = "position"
+  )
 
   named(sel_unique(pos))
 }
