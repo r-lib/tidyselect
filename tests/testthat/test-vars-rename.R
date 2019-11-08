@@ -32,6 +32,12 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
     vars_rename("x", A = "x", B = "y", .strict = FALSE),
     c(A = "x")
   )
+
+  verify_output(test_path("outputs", "rename-strict-errors.txt"), {
+    vars_rename(c("a", "b"), d = e, .strict = TRUE)
+    vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
+    vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
+  })
 })
 
 test_that("vars_rename() works with positions", {

@@ -2,7 +2,7 @@
 # tidyselect (development)
 
 * Unary `-` inside nested `c()` is now consistently syntax for set
-  difference.
+  difference (#130).
 
 * Improved support for named elements. It is now possible to assign
   the same name to multiple elements, if the input data structure

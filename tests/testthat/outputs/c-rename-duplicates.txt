@@ -1,3 +1,6 @@
+> names(df)
+[1] "a" "b" "a"
+
 > select_pos(df, c(foo = a))
 Error: Names must be unique.
 x Can't rename duplicate variables to `foo`.
