@@ -22,9 +22,8 @@ Suggests:
     covr,
     crayon,
     dplyr,
-    testthat (>= 2.2.1.9002)
+    testthat (>= 2.3.0)
 remotes:
-    r-lib/testthat,
     r-lib/vctrs
 License: GPL-3
 Encoding: UTF-8
