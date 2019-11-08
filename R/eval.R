@@ -240,32 +240,30 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     return(value)
   }
 
-  value <- env_get(
-    context_mask$.__current__.,
-    name,
-    default = missing_arg(),
-    inherit = TRUE
-  )
+  env <- context_mask$.__current__.
+  value <- env_get(env, name, default = missing_arg(), inherit = TRUE)
 
-  if (!is_missing(value)) {
-    if (!is_function(value)) {
-      if (strict) {
-        browser()
-        vctrs::vec_as_index(name, data_mask$.__tidyselect__.$internal$vars)
-      } else {
-        inform(glue_c(
-          "Note: Using an external vector in selections is brittle.",
-          i = "If the data contains `{name}` it will be selected instead.",
-          i = "Use `all_of({name})` instead of `{name}` to silence this message."
-        ))
-      }
-    }
+  # Cause OOB error
+  if (is_missing(value)) {
+    return(name)
+  }
 
+  if (is_function(value)) {
     return(value)
   }
 
-  # Let caller issue OOB error
-  name
+  # Cause OOB error
+  if (strict) {
+    return(name)
+  }
+
+  inform(glue_c(
+    "Note: Using an external vector in selections is brittle.",
+    i = "If the data contains `{name}` it will be selected instead.",
+    i = "Use `all_of({name})` instead of `{name}` to silence this message."
+  ))
+
+  value
 }
 
 mark_data_dups <- function(x) {

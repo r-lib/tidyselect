@@ -12,3 +12,9 @@ x Can't subset element with unknown name `foobar`.
 Error: Can't take the intersection of two columns.
 i `cyl & am` is always an empty selection.
 
+> # Symbol operands are evaluated in strict mode
+> foo <- 1:2
+> select_pos(iris, Species | foo)
+Error: Must select existing columns.
+x Can't subset element with unknown name `foo`.
+

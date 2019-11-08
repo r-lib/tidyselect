@@ -15,6 +15,14 @@ test_that("can use named inputs in & operands", {
     expect_identical(select_pos(x, c(foo = a) & c(bar = a)), named(int()))
 })
 
+test_that("symbol operands are evaluated in strict mode", {
+  foo <- 1:2
+  expect_error(
+    select(iris, Species | foo),
+    class = "tidyselect_error_index_oob_names"
+  )
+})
+
 test_that("boolean operators throw relevant errors", {
   expect_error(
     select_pos(mtcars, foobar & contains("am")),
@@ -36,5 +44,9 @@ test_that("boolean operators throw relevant errors", {
 
     "Empty intersection"
     select_pos(mtcars, cyl & am)
+
+    "Symbol operands are evaluated in strict mode"
+    foo <- 1:2
+    select_pos(iris, Species | foo)
   })
 })
