@@ -6,13 +6,8 @@ select_pos <- function(.x,
                        .strict = TRUE,
                        name_spec = NULL) {
   vctrs::vec_assert(.x)
+  local_names(.x)
 
-  vars <- names(.x)
-  if (is_null(vars)) {
-    abort("Can't select within an unnamed vector.")
-  }
-
-  scoped_vars(vars)
   select_impl(.x,
     {{ expr }},
     .include = .include,

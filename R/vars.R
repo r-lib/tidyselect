@@ -138,3 +138,18 @@ vars_validate <- function(vars) {
 }
 
 vars_env <- new_environment()
+
+local_names <- function(x, rename = FALSE, frame = caller_env()) {
+  vars <- names(x)
+
+  if (is_null(vars)) {
+    if (rename) {
+      msg <- "Can't rename an unnamed vector."
+    } else {
+      msg <- "Can't select within an unnamed vector."
+    }
+    abort(msg)
+  }
+
+  scoped_vars(vars, frame = frame)
+}
