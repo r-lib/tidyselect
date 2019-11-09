@@ -1,0 +1,8 @@
+> # Unnamed vector
+> rename_pos(letters, c(foo = a))
+Error: Can't rename an unnamed vector.
+
+> # Duplicate names (FIXME)
+> rename_pos(mtcars[1:3], c(foo = cyl, foo = disp))
+Error: Names must be unique.
+
