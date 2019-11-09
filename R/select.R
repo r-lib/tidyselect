@@ -6,9 +6,10 @@ select_pos <- function(.x,
                        .strict = TRUE,
                        name_spec = NULL) {
   vctrs::vec_assert(.x)
-  local_names(.x)
 
-  select_impl(.x,
+  select_impl(
+    .x,
+    names(.x),
     {{ expr }},
     .include = .include,
     .exclude = .exclude,
@@ -19,15 +20,22 @@ select_pos <- function(.x,
 
 # Caller must put vars in scope
 select_impl <- function(.x,
+                        names,
                         expr,
                         .include = NULL,
                         .exclude = NULL,
                         .strict = TRUE,
                         name_spec = NULL,
                         uniquely_named = NULL) {
-  expr <- enquo(expr)
+  if (is_null(names)) {
+    abort("Can't select within an unnamed vector.")
+  }
+
+  # Put vars in scope and peek validated vars
+  scoped_vars(names)
   vars <- peek_vars()
 
+  expr <- enquo(expr)
   if (length(.include)) {
     expr <- quo(all_of(.include) | !!expr)
   }

@@ -116,8 +116,6 @@ vars_select <- function(.vars,
                         .include = character(),
                         .exclude = character(),
                         .strict = TRUE) {
-  scoped_vars(.vars)
-
   dots <- enquos(...)
   if (!length(dots)) {
     signal("", "tidyselect_empty_dots")
@@ -126,6 +124,7 @@ vars_select <- function(.vars,
 
   idx <- select_impl(
     NULL,
+    .vars,
     c(!!!dots),
     .include = .include,
     .exclude = .exclude,
