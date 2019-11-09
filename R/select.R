@@ -17,12 +17,6 @@ select_pos <- function(.x,
   )
 }
 
-# Example of implementation, mainly used for unit tests
-select <- function(.x, ..., .strict = TRUE) {
-  pos <- select_pos(.x, c(!!!enquos(...)), .strict = .strict)
-  set_names(.x[pos], names(pos))
-}
-
 # Caller must put vars in scope
 select_impl <- function(.x,
                         expr,
@@ -52,6 +46,13 @@ select_impl <- function(.x,
     )
   )
 }
+
+# Example implementation mainly used for unit tests
+select <- function(.x, ..., .strict = TRUE) {
+  pos <- select_pos(.x, c(...), .strict = .strict)
+  set_names(.x[pos], names(pos))
+}
+
 
 #' The syntax and semantics of tidyselect
 #'
