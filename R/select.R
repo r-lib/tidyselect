@@ -24,10 +24,11 @@ select_pos <- function(.x,
 
 # Example of implementation, mainly used for unit tests
 select <- function(.x, ..., .strict = TRUE) {
-  idx <- select_pos(.x, c(!!!enquos(...)), .strict = .strict)
-  set_names(.x[idx], names(idx))
+  pos <- select_pos(.x, c(!!!enquos(...)), .strict = .strict)
+  set_names(.x[pos], names(pos))
 }
 
+# Caller must put vars in scope
 select_impl <- function(.x,
                         expr,
                         .include = NULL,
