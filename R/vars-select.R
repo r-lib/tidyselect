@@ -126,9 +126,9 @@ vars_select <- function(.vars,
     NULL,
     .vars,
     c(!!!dots),
-    .include = .include,
-    .exclude = .exclude,
-    .strict = .strict,
+    include = .include,
+    exclude = .exclude,
+    strict = .strict,
     name_spec = unique_name_spec,
     uniquely_named = TRUE
   )

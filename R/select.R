@@ -1,30 +1,32 @@
 
-select_pos <- function(.x,
-                       expr,
-                       .include = NULL,
-                       .exclude = NULL,
-                       .strict = TRUE,
+select_pos <- function(x,
+                       sel,
+                       ...,
+                       include = NULL,
+                       exclude = NULL,
+                       strict = TRUE,
                        name_spec = NULL) {
-  vctrs::vec_assert(.x)
+  ellipsis::check_dots_empty()
+  vctrs::vec_assert(x)
 
   select_impl(
-    .x,
-    names(.x),
-    {{ expr }},
-    .include = .include,
-    .exclude = .exclude,
-    .strict = .strict,
+    x,
+    names(x),
+    {{ sel }},
+    include = include,
+    exclude = exclude,
+    strict = strict,
     name_spec = name_spec
   )
 }
 
 # Caller must put vars in scope
-select_impl <- function(.x,
+select_impl <- function(x,
                         names,
                         expr,
-                        .include = NULL,
-                        .exclude = NULL,
-                        .strict = TRUE,
+                        include = NULL,
+                        exclude = NULL,
+                        strict = TRUE,
                         name_spec = NULL,
                         uniquely_named = NULL) {
   if (is_null(names)) {
@@ -36,19 +38,19 @@ select_impl <- function(.x,
   vars <- peek_vars()
 
   expr <- enquo(expr)
-  if (length(.include)) {
-    expr <- quo(all_of(.include) | !!expr)
+  if (length(include)) {
+    expr <- quo(all_of(include) | !!expr)
   }
-  if (length(.exclude)) {
-    expr <- quo(!!expr & !all_of(.exclude))
+  if (length(exclude)) {
+    expr <- quo(!!expr & !all_of(exclude))
   }
 
   subclass_index_errors(
     vars_select_eval(
       vars,
       expr,
-      .strict,
-      data = .x,
+      strict,
+      data = x,
       name_spec = name_spec,
       uniquely_named = uniquely_named
     )
@@ -57,7 +59,7 @@ select_impl <- function(.x,
 
 # Example implementation mainly used for unit tests
 select <- function(.x, ..., .strict = TRUE) {
-  pos <- select_pos(.x, c(...), .strict = .strict)
+  pos <- select_pos(.x, c(...), strict = .strict)
   set_names(.x[pos], names(pos))
 }
 

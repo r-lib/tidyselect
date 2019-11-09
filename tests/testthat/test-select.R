@@ -22,8 +22,8 @@ test_that("can call `select_pos()` without arguments", {
 
 test_that("can specify inclusion and exclusion", {
   x <- list(a = 1, b = 2, c = 3)
-  expect_identical(select_pos(x, int(), .include = "b"), c(b = 2L))
-  expect_identical(select_pos(x, -int(), .exclude = c("a", "c")), c(b = 2L))
+  expect_identical(select_pos(x, int(), include = "b"), c(b = 2L))
+  expect_identical(select_pos(x, -int(), exclude = c("a", "c")), c(b = 2L))
 })
 
 test_that("select_pos() checks inputs", {
