@@ -8,5 +8,9 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
     c(...),
     strict = .strict
   )
-  set_names(.vars, names(pos))
+
+  .vars <- set_names(.vars)
+  names(.vars)[pos] <- names(pos)
+
+  .vars
 }

@@ -34,21 +34,20 @@ rename_impl <- function(x,
     name_spec = name_spec
   )
 
-  seq <- set_names(seq_along(names), names)
-  names(seq)[pos] <- names(pos)
-
   # Check for unique names only if input is a data frame
   if (is.data.frame(x) || is_null(x)) {
+    names[pos] <- names(pos)
     subclass_index_errors(
-      vctrs::vec_as_names(names(seq), repair = "check_unique")
+      vctrs::vec_as_names(names, repair = "check_unique")
     )
   }
 
-  seq
+  pos
 }
 
 # Example implementation mainly used for unit tests
 rename <- function(.x, ..., .strict = TRUE) {
   pos <- rename_pos(.x, c(...), strict = .strict)
-  set_names(.x[pos], names(pos))
+  names(.x)[pos] <- names(pos)
+  .x
 }
