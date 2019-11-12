@@ -4,7 +4,8 @@ vars_select_eval <- function(vars,
                              strict,
                              data = NULL,
                              name_spec = NULL,
-                             uniquely_named = NULL) {
+                             uniquely_named = NULL,
+                             type = "select") {
   wrapped <- quo_get_expr2(expr, expr)
 
   if (is_missing(wrapped)) {
@@ -60,6 +61,10 @@ vars_select_eval <- function(vars,
 
   pos <- walk_data_tree(expr, data_mask, context_mask)
   pos <- pos_validate(pos, vars)
+
+  if (type == "rename" && !is_named(pos)) {
+    abort("All renaming inputs must be named.")
+  }
 
   # Ensure position vector is fully named
   nms <- names(pos) <- names2(pos)

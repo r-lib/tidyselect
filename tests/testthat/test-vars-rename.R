@@ -1,16 +1,13 @@
-context("rename vars")
 
 test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
-    "object 'e' not found",
-    fixed = TRUE
+    class = "tidyselect_error_index_oob_names"
   )
 
   expect_error(
     vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE),
-    "object 'e' not found",
-    fixed = TRUE
+    class = "tidyselect_error_index_oob_names"
   )
 
   expect_equal(
@@ -57,7 +54,8 @@ test_that("vars_rename() unquotes named character vectors", {
   vars <- c(foo = "a", bar = "z")
   expect_identical(vars_rename(letters, !!!vars), vars_rename(letters, foo = a, bar = z))
   expect_identical(vars_rename(letters, !!vars), vars_rename(letters, foo = a, bar = z))
-  expect_error(vars_rename(letters, foo = !!vars), class = "tidyselect_error_rename_to_same")
+  expect_identical(vars_rename(letters, all_of(vars)), vars_rename(letters, foo = a, bar = z))
+  expect_identical(vars_rename(c("a", "b", "z"), foo = !!vars), c(foo...foo = "a", b = "b", foo...bar = "z"))
 })
 
 test_that("missing values are detected in vars_rename() (#72)", {
@@ -94,15 +92,15 @@ test_that("vars_rename() allows consecutive renames", {
 test_that("vars_rename() disallows renaming to same column", {
   expect_error(
     vars_rename(letters, A = 1:2),
-    class = "tidyselect_error_rename_to_same"
+    class = "tidyselect_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "c"), foo = a, foo = b),
-    class = "tidyselect_error_rename_to_same"
+    class = "tidyselect_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "c"), c = a, c = b),
-    class = "tidyselect_error_rename_to_same"
+    class = "tidyselect_error_names_must_be_unique"
   )
 
   verify_output(test_path("outputs", "vars-rename-error-rename-to-same.txt"), {
@@ -121,15 +119,15 @@ test_that("vars_rename() allows overlapping renames", {
 test_that("vars_rename() disallows renaming to existing columns (#70)", {
   expect_error(
     vars_rename(c("a", "b", "c"), b = a),
-    class = "tidyselect_error_rename_to_existing"
+    class = "tidyselect_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "c", "d"), c = a, d = b),
-    class = "tidyselect_error_rename_to_existing"
+    class = "tidyselect_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "c"), b = a, c = b),
-    class = "tidyselect_error_rename_to_existing"
+    class = "tidyselect_error_names_must_be_unique"
   )
   verify_output(test_path("outputs", "vars-rename-error-rename-to-existing.txt"), {
     "One column"
@@ -143,12 +141,22 @@ test_that("vars_rename() disallows renaming to existing columns (#70)", {
   })
 })
 
-test_that("vars_rename() ignores existing duplicates", {
-  expect_identical(vars_rename(c("a", "b", "a"), foo = b), c(a = "a", foo = "b", a = "a"))
+test_that("vars_rename() can't rename existing duplicates in bulk", {
+  expect_error(
+    vars_rename(c("a", "b", "a"), foo = b),
+    class = "tidyselect_error_names_must_be_unique"
+  )
+  expect_error(
+    vars_rename(c("a", "b", "a"), a = b, b = a),
+    class = "tidyselect_error_names_must_be_unique"
+  )
 })
 
-test_that("vars_rename() renames existing duplicates", {
-  expect_identical(vars_rename(c("a", "b", "a"), a = b, b = a), c(b = "a", a = "b", b = "a"))
+test_that("vars_rename() can fix duplicates by position", {
+  expect_identical(
+    vars_rename(c("a", "b", "a"), foo = 3),
+    c(a = "a", b = "b", foo = "a")
+  )
 })
 
 test_that("vars_rename() can fix duplicates by supplying positions", {
