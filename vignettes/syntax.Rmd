@@ -1,8 +1,8 @@
 ---
-title: "The tidyselect syntax"
+title: "Technical description of tidyselect"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{syntax}
+  %\VignetteIndexEntry{Technical description of tidyselect}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -41,11 +41,12 @@ iris <- tibble::as_tibble(iris)
 ## Sets of variables
 
 The tidyselect syntax is all about __sets__ of variables, internally
-represented by integer vectors of __positions__. `c(1L, 2L, 1L)`
-represents the set of the first and second variables.
+represented by integer vectors of __positions__. For example, `c(1L,
+2L)` represents the set of the first and second variables, as does
+`c(1L, 2L, 1L)`.
 
 If a vector of positions contains duplicates, they are normally
-treated as the same element since they represent sets. An exception to
+treated as the same element, since they represent sets. An exception to
 this occurs with named elements whose names differ. If the names don't
 match, they are treated as different elements in order to allow
 renaming a variable to multiple names (see section on Renaming
@@ -246,6 +247,11 @@ iris %>% select_pos(is.numeric | is.factor)
 iris %>% select_pos(is.numeric & is.factor)
 ```
 
+Predicate functions supplied as symbols are ambiguous with column
+names, however proper naming conventions should ensure distinct
+namespaces in practice. See the Evaluation section for more about this
+ambiguity.
+
 
 ## Selection helpers
 
@@ -381,8 +387,7 @@ This introduces an ambiguity when a predicate function has the same
 name as a column. This is a conscious design decision:
 
 - It makes it easier to use predicate functions interactively.
-- Predicate functions and data frame columns should normally have
-  different names.
+- The names of predicate functions and data frame columns rarely overlap.
 
 If you need 100% unambiguity, use `all_of()` to refer to data frame
 columns and force predicate functions with `!!` or
