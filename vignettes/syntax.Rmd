@@ -31,12 +31,100 @@ library(magrittr)
 # This is like dplyr::select() but it also works with normal vectors
 select <- tidyselect:::select
 
+select_pos <- function(data, ...) {
+  tidyselect:::select_pos(data, !!rlang::expr(c(...)))
+}
+
 # For better printing
 mtcars <- tibble::as_tibble(mtcars)
 iris <- tibble::as_tibble(iris)
 ```
 
-## Dots, `c()`, and unary `-`:
+
+## Sets of variables
+
+The tidyselect syntax is all about __sets__ of variables, internally
+represented by integer vectors of __positions__. `c(1L, 2L, 1L)`
+represents the set of the first and second variables.
+
+If a vector of positions contains duplicates, they are normally
+treated as the same element since they represent sets. An exception to
+this occurs with named elements whose names differ. If the names don't
+match, they are treated as different elements in order to allow
+renaming a variable to multiple names (see section on Renaming
+variables).
+
+The syntax of tidyselect is generally designed for set combination.
+For instance, `c(foo(), bar())` represents the union of the variables
+in `foo()` and those in `bar()`.
+
+
+### Bare names
+
+Within _data-expressions_ (see Evaluation section), bare names
+represent their own positions, i.e. a set of size 1. The following
+expressions are equivalent:
+
+```{r, eval = TRUE}
+mtcars %>% select_pos(mpg:hp, -cyl, vs)
+
+mtcars %>% select_pos(1:4, -2, 8)
+```
+
+
+### The `:` operator
+
+`:` can be used to select consecutive variables between two positions.
+It returns the corresponding sequence of positions.
+
+```{r, eval = TRUE}
+mtcars %>% select_pos(2:4)
+```
+
+Because bare names represent their own positions, it is easy to select
+a range of variables:
+
+```{r, eval = TRUE}
+mtcars %>% select_pos(cyl:hp)
+```
+
+
+### Boolean operators
+
+Boolean operators provide a more intuitive approach to set
+combination. Though sets are internally represented with vectors of
+positions, they could equally be represented with a full logical
+vector of inclusion indicators (taking the `which()` of this vector
+would then recover the positions). The boolean operators should be
+considered in terms of the logical representation of sets.
+
+The `|` operator takes the __union__ of two sets:
+
+```{r, eval = TRUE}
+iris %>% select_pos(starts_with("Sepal") | ends_with("Width"))
+```
+
+The `&` operator takes the __intersection__ of two sets:
+
+```{r, eval = TRUE}
+iris %>% select_pos(starts_with("Sepal") & ends_with("Width"))
+```
+
+The `!` operator takes the __complement__ of a set:
+
+```{r, eval = TRUE}
+iris %>% select_pos(!ends_with("Width"))
+```
+
+Taking the intersection with a complement produces a set
+__difference__:
+
+```{r, eval = TRUE}
+iris %>% select_pos(starts_with("Sepal") & !ends_with("Width"))
+```
+
+
+### Dots, `c()`, and unary `-`
 
 tidyselect functions can take dots like `dplyr::select()`, or a named
 argument like `tidyr::pivot_longer()`. In the latter case, the dots
@@ -53,9 +141,6 @@ Dots and `c()` are syntax for:
 
 * Set union or set difference
 * Renaming variables
-
-
-### Set union or difference
 
 Non-negative inputs are recursively joined with `union()`. The
 precedence is left-associative, just like with boolean operators.
