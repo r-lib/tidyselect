@@ -53,7 +53,8 @@ select_impl <- function(x,
       strict,
       data = x,
       name_spec = name_spec,
-      uniquely_named = uniquely_named
+      uniquely_named = uniquely_named,
+      type = type
     ),
     type = type
   )

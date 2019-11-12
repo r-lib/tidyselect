@@ -6,3 +6,7 @@ Error: Can't rename an unnamed vector.
 > rename_pos(mtcars, c(foo = cyl, foo = disp))
 Error: Names must be unique.
 
+> # Unnamed inputs
+> rename_pos(iris, Species)
+Error: All renaming inputs must be named.
+

@@ -71,6 +71,15 @@ test_that("rename_pos() allows fixing duplicates by position", {
   )
 })
 
+test_that("rename_pos() requires named inputs", {
+  expect_error(rename_pos(iris, Species), "named")
+  expect_error(rename_pos(iris, c(contains("Width"))), "named")
+})
+
+test_that("rename_pos() uses names inside c()", {
+  expect_identical(rename_pos(iris, c(foo = Species)), c(foo = 5L))
+})
+
 test_that("rename_pos() throws helpful errors", {
   verify_output(test_path("outputs", "rename-errors.txt"), {
     "Unnamed vector"
@@ -78,5 +87,8 @@ test_that("rename_pos() throws helpful errors", {
 
     "Duplicate names (FIXME)"
     rename_pos(mtcars, c(foo = cyl, foo = disp))
+
+    "Unnamed inputs"
+    rename_pos(iris, Species)
   })
 })
