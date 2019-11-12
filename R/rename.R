@@ -1,16 +1,15 @@
 
-rename_pos <- function(x,
-                       sel,
-                       ...,
-                       strict = TRUE,
-                       name_spec = NULL) {
+eval_rename <- function(expr,
+                        data,
+                        env = caller_env(),
+                        ...,
+                        strict = TRUE,
+                        name_spec = NULL) {
   ellipsis::check_dots_empty()
-  vctrs::vec_assert(x)
-
   rename_impl(
-    x,
-    names(x),
-    enquo(sel),
+    data,
+    names(data),
+    as_quosure(expr, env),
     strict = strict,
     name_spec = name_spec
   )
@@ -48,7 +47,7 @@ rename_impl <- function(x,
 
 # Example implementation mainly used for unit tests
 rename <- function(.x, ..., .strict = TRUE) {
-  pos <- rename_pos(.x, c(...), strict = .strict)
+  pos <- eval_rename(expr(c(...)), .x, strict = .strict)
   names(.x)[pos] <- names(pos)
   .x
 }

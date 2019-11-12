@@ -17,3 +17,18 @@ select_pos <- function(x,
     name_spec = name_spec
   )
 }
+
+rename_pos <- function(x,
+                       sel,
+                       ...,
+                       strict = TRUE,
+                       name_spec = NULL) {
+  ellipsis::check_dots_empty()
+  rename_impl(
+    x,
+    names(x),
+    enquo(sel),
+    strict = strict,
+    name_spec = name_spec
+  )
+}
