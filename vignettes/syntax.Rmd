@@ -433,3 +433,18 @@ mtcars %>% select_pos(cyl^2)
 
 mtcars %>% select_pos(mpg * wt)
 ```
+
+
+## Acknowledgements
+
+The tidyselect syntax was inspired by the `base::subset()` function
+written by Peter Dalgaard. The `select` parameter of
+`subset.data.frame()` is evaluated in a data mask where the column
+names are bound to their positions in the data frame. This allows `:`
+to create sequences of variable positions. The positions can be
+combined with `c()`. This selection interface set the tone for the
+development of the tidyselect syntax.
+
+```{r}
+mtcars %>% subset(select = c(cyl, hp:wt))
+```
