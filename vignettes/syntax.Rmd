@@ -175,7 +175,25 @@ In this case, unary `-` is syntax for _set complement_. Unary `-` and
 
 ```{r}
 iris %>% select_pos(-starts_with("Sepal"))
+
 iris %>% select_pos(!starts_with("Sepal"))
+```
+
+Each level of `c()` is independent. In particular, a nested `c()`
+starting with `-` always stands for set complement:
+
+```{r}
+iris %>% select_pos(c(starts_with("Sepal"), -Sepal.Length))
+
+iris %>% select_pos(c(starts_with("Sepal"), c(-Sepal.Length)))
+```
+
+In boolean terms, these expressions are equivalent to:
+
+```{r}
+iris %>% select_pos(starts_with("Sepal") & !Sepal.Length)
+
+iris %>% select_pos(starts_with("Sepal") | !Sepal.Length)
 ```
 
 In general, when unary `-` is used alone outside `...` or `c()`, it
