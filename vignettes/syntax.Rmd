@@ -396,3 +396,17 @@ iris %>% select_pos(!!Species)
 # Use the env-expression `force()` to force the env-var `Species`:
 iris %>% select_pos(force(Species))
 ```
+
+
+### Arithmetic operators
+
+Within data-expressions (see Evaluation section), `+`, `*` and `/` are
+overridden to cause an error. This is to prevent confusion stemming
+from normal data masking usage where variables can be transformed on
+the fly:
+
+```{r, error = TRUE}
+mtcars %>% select_pos(cyl^2)
+
+mtcars %>% select_pos(mpg * wt)
+```
