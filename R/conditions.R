@@ -55,17 +55,17 @@ cnd_issue.tidyselect_error_index_bad_type <- function(cnd, ...) {
   }
 }
 #' @export
-cnd_bullets.tidyselect_error_index_bad_type <- function(c) {
-  cnd_bullets(c$parent)
+cnd_bullets.tidyselect_error_index_bad_type <- function(cnd, ...) {
+  cnd_bullets(cnd$parent)
 }
 
 #' @export
-cnd_issue.tidyselect_error_index_oob <- function(c) {
+cnd_issue.tidyselect_error_index_oob <- function(cnd, ...) {
   "Must select existing columns."
 }
 #' @export
-cnd_bullets.tidyselect_error_index_oob <- function(c) {
-  cnd_bullets(c$parent)
+cnd_bullets.tidyselect_error_index_oob <- function(cnd, ...) {
+  cnd_bullets(cnd$parent)
 }
 
 stop_names_must_be_unique <- function(..., class = NULL) {
