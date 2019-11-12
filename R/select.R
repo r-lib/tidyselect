@@ -28,7 +28,8 @@ select_impl <- function(x,
                         exclude = NULL,
                         strict = TRUE,
                         name_spec = NULL,
-                        uniquely_named = NULL) {
+                        uniquely_named = NULL,
+                        type = "select") {
   if (is_null(names)) {
     abort("Can't select within an unnamed vector.")
   }
@@ -53,7 +54,8 @@ select_impl <- function(x,
       data = x,
       name_spec = name_spec,
       uniquely_named = uniquely_named
-    )
+    ),
+    type = type
   )
 }
 

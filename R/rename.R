@@ -31,7 +31,8 @@ rename_impl <- function(x,
     names,
     {{ sel }},
     strict = strict,
-    name_spec = name_spec
+    name_spec = name_spec,
+    type = "rename"
   )
 
   # Check for unique names only if input is a data frame
