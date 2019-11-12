@@ -1,7 +1,8 @@
 pandoc: '2.2'
 pkgdown: 1.4.1
 pkgdown_sha: ~
-articles: []
+articles:
+  syntax: syntax.html
 urls:
   reference: https://tidyselect.r-lib.org/reference
   article: https://tidyselect.r-lib.org/articles
