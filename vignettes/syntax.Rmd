@@ -183,7 +183,37 @@ In general, when unary `-` is used alone outside `...` or `c()`, it
 stands for set complement.
 
 
-### Renaming variables:
+### Predicate functions
+
+Predicate function objects can be supplied as input. They are applied
+to all elements of the input, and should return `TRUE` or `FALSE` to
+indicate inclusion. Predicates in data-expressions are effectively
+expanded to the set of variables that they represent:
+
+```{r, eval = TRUE}
+iris %>% select_pos(is.numeric)
+
+iris %>% select_pos(is.factor)
+
+iris %>% select_pos(is.numeric | is.factor)
+
+iris %>% select_pos(is.numeric & is.factor)
+```
+
+
+## Selection helpers
+
+We call _selection helpers_ any function that inspects the currently
+active variables with `peek_vars()` and returns a selection.
+
+- `peek_vars()` returns a character vector of names.
+- The returned selection can be any output conforming to the types
+  described in the Data types section.
+
+Examples of selection helpers are `all_of()`, `contains()`, or
+`last_col()`. These selection helpers are evaluated as env-expressions
+(see Evaluation section).
+
 
 When named inputs are provided in `...` or `c()`, the selection is
 renamed. If the inputs are already named, the outer and inner names
