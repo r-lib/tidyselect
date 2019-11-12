@@ -27,9 +27,9 @@ This is a technical description of the tidyselect syntax.
 library(tidyselect)
 library(magrittr)
 
-# FIXME: `select_pos()` should be exported as `eval_select()`
+# FIXME: `eval_select()` should be exported
 select_pos <- function(data, ...) {
-  tidyselect:::select_pos(data, !!rlang::expr(c(...)))
+  tidyselect:::eval_select(rlang::expr(c(...)), data)
 }
 
 # For better printing

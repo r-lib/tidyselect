@@ -10,7 +10,7 @@ rename_pos <- function(x,
   rename_impl(
     x,
     names(x),
-    {{ sel }},
+    enquo(sel),
     strict = strict,
     name_spec = name_spec
   )
@@ -26,7 +26,7 @@ rename_impl <- function(x,
     abort("Can't rename an unnamed vector.")
   }
 
-  pos <- select_impl(
+  pos <- eval_select_impl(
     x,
     names,
     {{ sel }},

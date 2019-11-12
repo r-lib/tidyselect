@@ -1,18 +1,17 @@
 
-select_pos <- function(x,
-                       sel,
-                       ...,
-                       include = NULL,
-                       exclude = NULL,
-                       strict = TRUE,
-                       name_spec = NULL) {
+eval_select <- function(expr,
+                        data,
+                        env = caller_env(),
+                        ...,
+                        include = NULL,
+                        exclude = NULL,
+                        strict = TRUE,
+                        name_spec = NULL) {
   ellipsis::check_dots_empty()
-  vctrs::vec_assert(x)
-
-  select_impl(
-    x,
-    names(x),
-    {{ sel }},
+  eval_select_impl(
+    data,
+    names(data),
+    as_quosure(expr, env),
     include = include,
     exclude = exclude,
     strict = strict,
@@ -21,15 +20,18 @@ select_pos <- function(x,
 }
 
 # Caller must put vars in scope
-select_impl <- function(x,
-                        names,
-                        expr,
-                        include = NULL,
-                        exclude = NULL,
-                        strict = TRUE,
-                        name_spec = NULL,
-                        uniquely_named = NULL,
-                        type = "select") {
+eval_select_impl <- function(x,
+                             names,
+                             expr,
+                             include = NULL,
+                             exclude = NULL,
+                             strict = TRUE,
+                             name_spec = NULL,
+                             uniquely_named = NULL,
+                             type = "select") {
+  if (!is_null(x)) {
+    vctrs::vec_assert(x)
+  }
   if (is_null(names)) {
     abort("Can't select within an unnamed vector.")
   }
@@ -38,7 +40,6 @@ select_impl <- function(x,
   scoped_vars(names)
   vars <- peek_vars()
 
-  expr <- enquo(expr)
   if (length(include)) {
     expr <- quo(all_of(include) | !!expr)
   }
@@ -62,6 +63,6 @@ select_impl <- function(x,
 
 # Example implementation mainly used for unit tests
 select <- function(.x, ..., .strict = TRUE) {
-  pos <- select_pos(.x, c(...), strict = .strict)
+  pos <- eval_select(expr(c(...)), .x, strict = .strict)
   set_names(.x[pos], names(pos))
 }
