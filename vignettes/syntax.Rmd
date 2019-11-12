@@ -10,8 +10,7 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>",
-  eval = FALSE
+  comment = "#>"
 )
 options(
   tibble.print_min = 4,
@@ -24,13 +23,11 @@ options(
 
 This is a technical description of the tidyselect syntax.
 
-```{r setup, eval = TRUE}
+```{r setup}
 library(tidyselect)
 library(magrittr)
 
-# This is like dplyr::select() but it also works with normal vectors
-select <- tidyselect:::select
-
+# FIXME: `select_pos()` should be exported as `eval_select()`
 select_pos <- function(data, ...) {
   tidyselect:::select_pos(data, !!rlang::expr(c(...)))
 }
@@ -65,7 +62,7 @@ Within _data-expressions_ (see Evaluation section), bare names
 represent their own positions, i.e. a set of size 1. The following
 expressions are equivalent:
 
-```{r, eval = TRUE}
+```{r}
 mtcars %>% select_pos(mpg:hp, -cyl, vs)
 
 mtcars %>% select_pos(1:4, -2, 8)
@@ -77,14 +74,14 @@ mtcars %>% select_pos(1:4, -2, 8)
 `:` can be used to select consecutive variables between two positions.
 It returns the corresponding sequence of positions.
 
-```{r, eval = TRUE}
+```{r}
 mtcars %>% select_pos(2:4)
 ```
 
 Because bare names represent their own positions, it is easy to select
 a range of variables:
 
-```{r, eval = TRUE}
+```{r}
 mtcars %>% select_pos(cyl:hp)
 ```
 
@@ -100,26 +97,26 @@ considered in terms of the logical representation of sets.
 
 The `|` operator takes the __union__ of two sets:
 
-```{r, eval = TRUE}
+```{r}
 iris %>% select_pos(starts_with("Sepal") | ends_with("Width"))
 ```
 
 The `&` operator takes the __intersection__ of two sets:
 
-```{r, eval = TRUE}
+```{r}
 iris %>% select_pos(starts_with("Sepal") & ends_with("Width"))
 ```
 
 The `!` operator takes the __complement__ of a set:
 
-```{r, eval = TRUE}
+```{r}
 iris %>% select_pos(!ends_with("Width"))
 ```
 
 Taking the intersection with a complement produces a set
 __difference__:
 
-```{r, eval = TRUE}
+```{r}
 iris %>% select_pos(starts_with("Sepal") & !ends_with("Width"))
 ```
 
@@ -132,9 +129,9 @@ syntax is accessible via `c()`. In fact `...` syntax is implemented
 through `c(...)` and is thus completely equivalent.
 
 ```{r}
-# These are equivalent
-mtcars %>% select(mpg, disp:am)
-mtcars %>% select(c(mpg, disp:am))
+mtcars %>% select_pos(mpg, disp:hp)
+
+mtcars %>% select_pos(c(mpg, disp:hp))
 ```
 
 Dots and `c()` are syntax for:
@@ -147,36 +144,38 @@ precedence is left-associative, just like with boolean operators.
 These expressions are all syntax for _set union_:
 
 ```{r}
-# These are equivalent
-iris %>% select(starts_with("Sepal"), ends_with("Width"), Species)
-iris %>% select(starts_with("Sepal") | ends_with("Width") | Species)
-iris %>% select(union(union(starts_with("Sepal"), ends_with("Width")), 5L))
+iris %>% select_pos(starts_with("Sepal"), ends_with("Width"), Species)
+
+iris %>% select_pos(starts_with("Sepal") | ends_with("Width") | Species)
+
+iris %>% select_pos(union(union(starts_with("Sepal"), ends_with("Width")), 5L))
 ```
 
 Unary `-` is normally syntax for _set difference_:
 
 ```{r}
-# These are equivalent
-iris %>% select(starts_with("Sepal"), -ends_with("Width"), -Sepal.Length)
-iris %>% select(setdiff(setdiff(starts_with("Sepal"), ends_with("Width")), 1L))
+iris %>% select_pos(starts_with("Sepal"), -ends_with("Width"), -Sepal.Length)
+
+iris %>% select_pos(setdiff(setdiff(starts_with("Sepal"), ends_with("Width")), 1L))
 ```
 
 If the first `...` or `c()` input is negative, an implicit
 `everything()` is appended.
 
 ```{r}
-# These are equivalent
-iris %>% select(-starts_with("Sepal"))
-iris %>% select(everything(), -starts_with("Sepal"))
-iris %>% select(setdiff(everything(), starts_with("Sepal")))
+iris %>% select_pos(-starts_with("Sepal"))
+
+iris %>% select_pos(everything(), -starts_with("Sepal"))
+
+iris %>% select_pos(setdiff(everything(), starts_with("Sepal")))
 ```
 
-In this case, unary `-` is syntax for _set complement_.
+In this case, unary `-` is syntax for _set complement_. Unary `-` and
+`!` are equivalent:
 
 ```{r}
-# These are equivalent
-iris %>% select(-starts_with("Sepal"))
-iris %>% select(!starts_with("Sepal"))
+iris %>% select_pos(-starts_with("Sepal"))
+iris %>% select_pos(!starts_with("Sepal"))
 ```
 
 In general, when unary `-` is used alone outside `...` or `c()`, it
@@ -190,7 +189,7 @@ to all elements of the input, and should return `TRUE` or `FALSE` to
 indicate inclusion. Predicates in data-expressions are effectively
 expanded to the set of variables that they represent:
 
-```{r, eval = TRUE}
+```{r}
 iris %>% select_pos(is.numeric)
 
 iris %>% select_pos(is.factor)
@@ -238,7 +237,7 @@ Because unnamed elements match any named ones, it is possible to
 select multiple elements and rename one of them:
 
 ```{r}
-iris %>% select(starts_with("Sepal"), foo = Sepal.Width)
+iris %>% select_pos(!Species, foo = Sepal.Width)
 ```
 
 
@@ -251,7 +250,7 @@ that there is no data masking. In a typical tidy eval function,
 expressions are evaluated with data-vars first in scope, followed by
 env-vars:
 
-```{r, eval = TRUE}
+```{r}
 mask <- function(data, expr) {
   rlang::eval_tidy(rlang::enquo(expr), data)
 }
@@ -259,14 +258,14 @@ mask <- function(data, expr) {
 foo <- 10
 cyl <- 200
 
-# `cyl` represents the data frame here:
+# `cyl` represents the data frame column here:
 mtcars %>% mask(cyl * foo)
 ```
 
 It is possible to bypass the data frame variables by forcing symbols
 to be looked up in the environment with `!!` or `.env`:
 
-```{r, eval = TRUE}
+```{r}
 mtcars %>% mask(!!cyl * foo)
 mtcars %>% mask(.env$cyl * foo)
 ```
@@ -280,9 +279,9 @@ on the kind of expression:
     includes bare symbols, the boolean operators, `-`, `:`, and `c()`.
     You can't refer to environment-variables in a data-expression:
 
-    ```{r, eval = TRUE, error = TRUE}
+    ```{r, error = TRUE}
     cyl_pos <- 2
-    mtcars %>% select(mpg | cyl_pos)
+    mtcars %>% select_pos(mpg | cyl_pos)
     ```
 
 2.  __env-expressions__ are evaluated in the environment. This
@@ -290,20 +289,20 @@ on the kind of expression:
     symbols that are part of those calls. You can't refer to
     data-variables in a data-expression:
 
-    ```{r, eval = TRUE, error = TRUE}
-    mtcars %>% select(all_of(mpg))
+    ```{r, error = TRUE}
+    mtcars %>% select_pos(all_of(mpg))
     ```
 
 Because the scoping is unambiguous, you can safely refer to env-vars
 in an env-expression, without having to worry about potential naming
 clashes with data-vars:
 
-```{r, eval = TRUE}
+```{r}
 x <- data.frame(x = 1:3, y = 4:6, z = 7:9)
 
 # `ncol(x)` is an env-expression, so `x` represents the data frame in
 # the environment rather than the column in the data frame
-x %>% select(2:ncol(x))
+x %>% select_pos(2:ncol(x))
 ```
 
 If you have variable names in a character vector, it is safe to refer
@@ -312,7 +311,7 @@ env-expression:
 
 ```{r}
 y <- c("y", "z")
-x %>% select(all_of(y))
+x %>% select_pos(all_of(y))
 ```
 
 Note that currently, env-vars are still allowed in some
@@ -321,8 +320,8 @@ being deprecated and you should see a note recommending to use
 `all_of()` instead. This note will become a deprecation warning in the
 future, and then an error.
 
-```{r, eval = TRUE}
-mtcars %>% select(cyl_pos)
+```{r}
+mtcars %>% select_pos(cyl_pos)
 ```
 
 
@@ -345,27 +344,27 @@ columns and force predicate functions with `!!` or
 columns, even if a function of the same name is found in the
 environment:
 
-```{r, eval = TRUE, error = TRUE}
+```{r, error = TRUE}
 Species <- function(x) is.numeric(x)
 
 # Since `Species` is defined as a function, you won't get an error
 # even though the data-var doesn't exist:
-mtcars %>% select(Species)
+mtcars %>% select_pos(Species)
 
 # Use `all_of()` to be explicit that you want a data-var, not an env-var:
-mtcars %>% select(all_of("Species"))
+mtcars %>% select_pos(all_of("Species"))
 ```
 
 Similarly, you can be explicit about finding predicate functions in
 the environment by forcing the symbols:
 
-```{r, eval = TRUE}
+```{r}
 # By default the data-var has precedence over the env-var:
-iris %>% select(Species)
+iris %>% select_pos(Species)
 
 # Use the force operator `!!` to force the env-var `Species`:
-iris %>% select(!!Species)
+iris %>% select_pos(!!Species)
 
 # Use the env-expression `force()` to force the env-var `Species`:
-iris %>% select(force(Species))
+iris %>% select_pos(force(Species))
 ```
