@@ -4,6 +4,9 @@
     <loc>https://tidyselect.r-lib.org/index.html</loc>
   </url>
   <url>
+    <loc>https://tidyselect.r-lib.org/reference/eval_select.html</loc>
+  </url>
+  <url>
     <loc>https://tidyselect.r-lib.org/reference/one_of.html</loc>
   </url>
   <url>
@@ -29,5 +32,8 @@
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/articles/syntax.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/articles/tidyselect.html</loc>
   </url>
 </urlset>
