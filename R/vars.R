@@ -81,8 +81,12 @@ poke_vars <- function(vars) {
 #' @rdname poke_vars
 #' @param fn the name of the function to use in the error message. Defaults to
 #'   `NULL`, which will use the first element of `sys.call(sys.parent())`.
+#' @inheritParams ellipsis::dots_empty
 #' @export
-peek_vars <- function(fn = NULL) {
+peek_vars <- function(..., fn = NULL) {
+  if (!missing(...)) {
+    ellipsis::check_dots_empty()
+  }
   if (is.null(vars_env$selected)) {
     if (is.null(fn)) {
       the_call <- sys.call(sys.parent())
@@ -97,7 +101,7 @@ peek_vars <- function(fn = NULL) {
       msg <- "No tidyselect variables were registered."
     }
     abort(msg)
-  } 
+  }
   vars_env$selected
 }
 

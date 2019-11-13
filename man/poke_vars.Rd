@@ -10,7 +10,7 @@
 \usage{
 poke_vars(vars)
 
-peek_vars(fn = NULL)
+peek_vars(..., fn = NULL)
 
 scoped_vars(vars, frame = caller_env())
 
@@ -20,6 +20,8 @@ has_vars()
 }
 \arguments{
 \item{vars}{A character vector of variable names.}
+
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{fn}{the name of the function to use in the error message. Defaults to
 \code{NULL}, which will use the first element of \code{sys.call(sys.parent())}.}
