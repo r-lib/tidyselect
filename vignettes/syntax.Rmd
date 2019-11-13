@@ -27,20 +27,23 @@ This is a technical description of the tidyselect syntax.
 library(tidyselect)
 library(magrittr)
 
-# FIXME: `eval_select()` and `eval_rename()` should be exported
-eval_select <- tidyselect:::eval_select
-eval_rename <- tidyselect:::eval_rename
-
-select_pos <- function(data, ...) {
-  eval_select(rlang::expr(c(...)), data)
-}
-rename_pos <- function(data, ...) {
-  eval_rename(rlang::expr(c(...)), data)
-}
-
 # For better printing
 mtcars <- tibble::as_tibble(mtcars)
 iris <- tibble::as_tibble(iris)
+```
+
+To illustrate the semantics of tidyselect, we'll use variants of
+`dplyr::select()` and `dplyr::rename()` that return the named vector
+of positions for the selected or renamed elements:
+
+```{r}
+select_pos <- function(data, ...) {
+  eval_select(rlang::expr(c(...)), data)
+}
+
+rename_pos <- function(data, ...) {
+  eval_rename(rlang::expr(c(...)), data)
+}
 ```
 
 
