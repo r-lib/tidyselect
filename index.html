@@ -46,15 +46,6 @@
      
   </a>
 </li>
-<li>
-  <a href="reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="reference/news.html">News</a>
-</li>
-<li>
-  <a href="articles/tidyselect.html">Get started</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
@@ -68,13 +59,32 @@
   </ul>
 </li>
 <li>
+  <a href="articles/tidyselect.html">Get started</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    News
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="news/index.html">Changelog</a>
+    </li>
+  </ul>
+</li>
+<li>
   <a href="https://github.com/r-lib/tidyselect">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -94,13 +104,18 @@
 <h2 class="hasAnchor">
 <a href="#overview" class="anchor"></a>Overview</h2>
 <p>The tidyselect package is the backend of functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a></code> as well as several tidyr verbs. It allows you to create selecting verbs that are consistent with other tidyverse packages.</p>
+<ul>
+<li><p>To learn about tidyselect syntax as a user of dplyr or tidyr, read the <a href="https://r4ds.had.co.nz/transform.html#select">selection section</a> of the R4DS book.</p></li>
+<li><p>To learn how to implement tidyselect in your own functions, read the <a href="https://tidyselect.r-lib.org/articles/tidyselect.html">Get started</a> vignette.</p></li>
+<li><p>To learn how to implement tidyselect in your own functions, read the <a href="https://tidyselect.r-lib.org/articles/syntax.html">Technical descrition</a> vignette.</p></li>
+</ul>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <p>tidyselect is on CRAN. You can also install the development version from github with:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("devtools")</span></a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">"r-lib/tidyselect"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># install.packages("remotes")</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">remotes<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/remotes/man/install_github.html">install_github</a></span>(<span class="st">"r-lib/tidyselect"</span>)</a></code></pre></div>
 </div>
 </div>
   </div>

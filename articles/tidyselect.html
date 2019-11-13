@@ -43,15 +43,6 @@
      
   </a>
 </li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
-<li>
-  <a href="../reference/news.html">News</a>
-</li>
-<li>
-  <a href="../articles/tidyselect.html">Get started</a>
-</li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
@@ -65,13 +56,32 @@
   </ul>
 </li>
 <li>
+  <a href="../articles/tidyselect.html">Get started</a>
+</li>
+      </ul>
+<ul class="nav navbar-nav navbar-right">
+<li>
+  <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    News
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="../news/index.html">Changelog</a>
+    </li>
+  </ul>
+</li>
+<li>
   <a href="https://github.com/r-lib/tidyselect">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
 </li>
       </ul>
-<ul class="nav navbar-nav navbar-right"></ul>
 </div>
 <!--/.nav-collapse -->
   </div>
@@ -96,8 +106,8 @@
     
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(tidyselect)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(magrittr)</a></code></pre></div>
-<p>tidyselect implements a specialised sublanguage of R for selecting variables from data frames and other data structures. A technical description of the DSL is available in the <a href="https://tidyselect.r-lib.org/articles/syntax.html">syntax vignette</a>. In this vignette, we describe how to include tidyselect in your own packages.</p>
-<p>TODO: Link to user-friendly description of the syntax.</p>
+<p>tidyselect implements a specialised sublanguage of R for selecting variables from data frames and other data structures. A technical description of the DSL is available in the <a href="https://tidyselect.r-lib.org/articles/syntax.html">syntax vignette</a>.</p>
+<p>In this vignette, we describe how to include tidyselect in your own packages. If you just want to know how to use tidyselect syntax in dplyr or tidyr, please read <a href="https://r4ds.had.co.nz/transform.html#select" class="uri">https://r4ds.had.co.nz/transform.html#select</a> instead.</p>
 <div id="before-we-start" class="section level2">
 <h2 class="hasAnchor">
 <a href="#before-we-start" class="anchor"></a>Before we start</h2>
