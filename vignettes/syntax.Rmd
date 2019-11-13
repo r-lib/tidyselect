@@ -532,6 +532,41 @@ mtcars %>% rename_pos(foo = cyl, cyl = mpg)
 ```
 
 
+## Duplicate columns in data frames
+
+Normally a data frame shouldn't have duplicate names. However, the
+real world is messy and duplicates do happen in the wild. tidyselect
+tries to be as permissive as it can with these duplicates so that
+users can restore unique names with `select()` or `rename()`.
+
+First let's create a data frame with duplicate names:
+
+```{r}
+dups <- vctrs::new_data_frame(list(x = 1, y = 2, x = 3))
+```
+
+If the duplicates are not part of the selection, they are simply
+ignored:
+
+```{r}
+dups %>% select_pos(y)
+```
+
+If the duplicates are selected, this is an error:
+
+```{r, error = TRUE}
+dups %>% select_pos(x)
+```
+
+The duplicate names can be repaired by renaming chosen positions:
+
+```{r}
+dups %>% select_pos(x, foo = 3)
+
+dups %>% rename_pos(foo = 3)
+```
+
+
 ## Acknowledgements
 
 The tidyselect syntax was inspired by the `base::subset()` function
