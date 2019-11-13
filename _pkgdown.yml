@@ -30,6 +30,11 @@ reference:
   - starts_with("starts")
   - last_col
 
+- title: Evaluate expressions with tidyselect rules
+  contents:
+  - eval_select
+  - eval_rename
+
 - title: Register tidyselect variables
   contents:
   - poke_vars

@@ -1,4 +1,5 @@
-
+#' @rdname eval_select
+#' @export
 eval_rename <- function(expr,
                         data,
                         env = caller_env(),
