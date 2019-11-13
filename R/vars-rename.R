@@ -5,7 +5,7 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
   pos <- rename_impl(
     NULL,
     .vars,
-    c(...),
+    quo(c(...)),
     strict = .strict
   )
 

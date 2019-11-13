@@ -27,14 +27,23 @@ This is a technical description of the tidyselect syntax.
 library(tidyselect)
 library(magrittr)
 
-# FIXME: `select_pos()` should be exported as `eval_select()`
-select_pos <- function(data, ...) {
-  tidyselect:::select_pos(data, !!rlang::expr(c(...)))
-}
-
 # For better printing
 mtcars <- tibble::as_tibble(mtcars)
 iris <- tibble::as_tibble(iris)
+```
+
+To illustrate the semantics of tidyselect, we'll use variants of
+`dplyr::select()` and `dplyr::rename()` that return the named vector
+of positions for the selected or renamed elements:
+
+```{r}
+select_pos <- function(data, ...) {
+  eval_select(rlang::expr(c(...)), data)
+}
+
+rename_pos <- function(data, ...) {
+  eval_rename(rlang::expr(c(...)), data)
+}
 ```
 
 
@@ -227,7 +236,7 @@ according to the following rules:
   inputs.
 
     ```{r}
-    unclass(mtcars) %>% select_pos(foo = c(mpg, cyl))
+    as.list(mtcars) %>% select_pos(foo = c(mpg, cyl))
     ```
 
 Combination and propagation can be composed by using nested `c()`:
@@ -459,6 +468,102 @@ the fly:
 mtcars %>% select_pos(cyl^2)
 
 mtcars %>% select_pos(mpg * wt)
+```
+
+
+## Selecting versus renaming
+
+The select and rename variants take the same types of inputs and
+have the same type of return value. They have a few important
+differences.
+
+
+### All renaming inputs must be named
+
+Unlike `eval_select()` which can select without renaming,
+`eval_rename()` expects a fully named selection. If one or several
+names are missing, an error is thrown.
+
+```{r, error = TRUE}
+mtcars %>% select_pos(mpg)
+
+mtcars %>% rename_pos(mpg)
+```
+
+
+### Renaming to an existing variable name
+
+If the input data is a data frame, tidyselect generally throws an
+error when duplicate column names are selected, in order to respect
+the invariant of unique column names.
+
+```{r, error = TRUE}
+# Lists can have duplicates
+as.list(mtcars) %>% select_pos(foo = mpg, foo = cyl)
+
+# Data frames cannot
+mtcars %>% select_pos(foo = mpg, foo = cyl)
+```
+
+A selection can rename a variable to an existing name if the latter is
+not part of the selection:
+
+```{r, error = TRUE}
+mtcars %>% select_pos(cyl, cyl = mpg)
+
+mtcars %>% select_pos(disp, cyl = mpg)
+```
+
+This is not possible when renaming.
+
+```{r, error = TRUE}
+mtcars %>% rename_pos(cyl, cyl = mpg)
+
+mtcars %>% rename_pos(disp, cyl = mpg)
+```
+
+However, the name conflict can be solved by renaming the existing
+variable to another name:
+
+```{r}
+mtcars %>% select_pos(foo = cyl, cyl = mpg)
+
+mtcars %>% rename_pos(foo = cyl, cyl = mpg)
+```
+
+
+## Duplicate columns in data frames
+
+Normally a data frame shouldn't have duplicate names. However, the
+real world is messy and duplicates do happen in the wild. tidyselect
+tries to be as permissive as it can with these duplicates so that
+users can restore unique names with `select()` or `rename()`.
+
+First let's create a data frame with duplicate names:
+
+```{r}
+dups <- vctrs::new_data_frame(list(x = 1, y = 2, x = 3))
+```
+
+If the duplicates are not part of the selection, they are simply
+ignored:
+
+```{r}
+dups %>% select_pos(y)
+```
+
+If the duplicates are selected, this is an error:
+
+```{r, error = TRUE}
+dups %>% select_pos(x)
+```
+
+The duplicate names can be repaired by renaming chosen positions:
+
+```{r}
+dups %>% select_pos(x, foo = 3)
+
+dups %>% rename_pos(foo = 3)
 ```
 
 

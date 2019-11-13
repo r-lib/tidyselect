@@ -1,6 +1,14 @@
 
 # tidyselect (development)
 
+* New `eval_select()` and `eval_rename()` functions for client
+  packages. These replace `vars_select()` and `vars_rename()`, which
+  are now deprecated.
+
+* New Get started vignette for client packages. Read it with
+  `vignette("tidyselect")` or at
+  <https://tidyselect.r-lib.org/articles/tidyselect.html>.
+
 * Unary `-` inside nested `c()` is now consistently syntax for set
   difference (#130).
 

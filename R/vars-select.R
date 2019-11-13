@@ -122,10 +122,10 @@ vars_select <- function(.vars,
     return(empty_sel(.vars, .include, .exclude))
   }
 
-  idx <- select_impl(
+  idx <- eval_select_impl(
     NULL,
     .vars,
-    c(!!!dots),
+    expr(c(!!!dots)),
     include = .include,
     exclude = .exclude,
     strict = .strict,
