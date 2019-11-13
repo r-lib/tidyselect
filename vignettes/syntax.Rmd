@@ -203,22 +203,50 @@ stands for set complement.
 
 ### Renaming variables
 
+#### Name combination and propagation
+
 When named inputs are provided in `...` or `c()`, the selection is
 renamed. If the inputs are already named, the outer and inner names
-are pasted together with a `...` separator. Otherwise the outer
-names is propagated to the selected elements according to the
-following rules:
+are __combined__ with a `...` separator:
+
+```{r}
+mtcars %>% select_pos(foo = c(bar = mpg, baz = cyl))
+```
+
+Otherwise the outer names is __propagated__ to the selected elements
+according to the following rules:
 
 - With data frames, a numeric suffix is appended because columns
   must be uniquely named.
 
+    ```{r}
+    mtcars %>% select_pos(foo = c(mpg, cyl))
+    ```
+
 - With normal vectors, the name is simply assigned to all selected
   inputs.
 
-Unnamed elements match any names:
+    ```{r}
+    unclass(mtcars) %>% select_pos(foo = c(mpg, cyl))
+    ```
+
+Combination and propagation can be composed by using nested `c()`:
+
+```{r}
+mtcars %>% select_pos(foo = c(bar = c(mpg, cyl)))
+```
+
+
+#### Set combination with named variables
+
+Named elements have special rules to determine their identities in a
+set. Unnamed elements match any names:
 
 - `a | c(foo = a)` is equivalent to `c(foo = a)`.
 - `a & c(foo = a)` is equivalent to `c(foo = a)`.
+
+Named elements with different names are distinct:
+
 - `c(foo = a) & c(bar = a)` is equivalent to `c()`.
 - `c(foo = a) | c(bar = a)` is equivalent to `c(foo = a, bar = a)`.
 
@@ -233,7 +261,7 @@ iris %>% select_pos(!Species, foo = Sepal.Width)
 ### Predicate functions
 
 Predicate function objects can be supplied as input. They are applied
-to all elements of the input, and should return `TRUE` or `FALSE` to
+to all elements of the data, and should return `TRUE` or `FALSE` to
 indicate inclusion. Predicates in data-expressions are effectively
 expanded to the set of variables that they represent:
 
@@ -381,19 +409,18 @@ mtcars %>% select_pos(cyl_pos)
 
 There is one exception to the unambiguous lookup rules in data
 expressions. If a data-var is not found in the data frame, tidyselect
-tries to find a predicate function in the environment.
-
-This introduces an ambiguity when a predicate function has the same
-name as a column. This is a conscious design decision:
+attempts to find a predicate function in the environment. This
+introduces an ambiguity when a predicate function has the same name as
+a column. This is a conscious design decision:
 
 - It makes it easier to use predicate functions interactively.
 - The names of predicate functions and data frame columns rarely overlap.
 
 If you need 100% unambiguity, use `all_of()` to refer to data frame
-columns and force predicate functions with `!!` or
-`force()`. `all_of()` will fail if the data frame doesn't contain the
-columns, even if a function of the same name is found in the
-environment:
+columns, and force predicate functions with `!!` or `force()`.
+`all_of()` is a way to explicitly opt for data lookup because it fails
+if the data frame doesn't contain the columns, even if a function of
+the same name is found in the environment:
 
 ```{r, error = TRUE}
 Species <- function(x) is.numeric(x)
