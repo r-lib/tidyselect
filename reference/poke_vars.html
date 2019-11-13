@@ -173,7 +173,7 @@ done. This is for expert use only.</p></li>
 
     <pre class="usage"><span class='fu'>poke_vars</span>(<span class='no'>vars</span>)
 
-<span class='fu'>peek_vars</span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>peek_vars</span>(<span class='no'>...</span>, <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>scoped_vars</span>(<span class='no'>vars</span>, <span class='kw'>frame</span> <span class='kw'>=</span> <span class='fu'>caller_env</span>())
 
@@ -187,6 +187,10 @@ done. This is for expert use only.</p></li>
     <tr>
       <th>vars</th>
       <td><p>A character vector of variable names.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>These dots are for future extensions and must be empty.</p></td>
     </tr>
     <tr>
       <th>fn</th>
