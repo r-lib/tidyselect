@@ -13,14 +13,14 @@ home:
 
 navbar:
   structure:
-    left:  [home, reference, news]
-    right:
-    - icon: fa-github fa-lg
-      href: https://github.com/r-lib/tidyselect
+    left:  [home, articles]
+    right: [reference, news, github]
   components:
     news:
       text: News
-      href: reference/news.html
+      menu:
+      - text: "Changelog"
+        href: news/index.html
 
 reference:
 - title: General
