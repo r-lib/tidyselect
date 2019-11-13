@@ -36,6 +36,8 @@ description of the DSL is available in the [syntax
 vignette](https://tidyselect.r-lib.org/articles/syntax.html). In this
 vignette, we describe how to include tidyselect in your own packages.
 
+TODO: Link to user-friendly description of the syntax.
+
 
 ## Before we start
 
@@ -44,15 +46,15 @@ vignette, we describe how to include tidyselect in your own packages.
 There are two major ways of designing a function that takes
 selections.
 
-- __Variadic dots__ as in `dplyr::select()`.
+- Passing __dots__ as in `dplyr::select()`.
 
     ```{r, eval = FALSE}
     mtcars %>% dplyr::select(mpg, cyl)
     ```
 
-- __Named arguments__ as in `tidyr::pivot_longer()`. In this case,
-  multiple inputs can be provided inside `c()` or by using boolean
-  operators:
+- Interpolating __named arguments__ as in `tidyr::pivot_longer()`. In
+  this case, multiple inputs can be provided inside `c()` or by using
+  boolean operators:
 
     ```{r, eval = FALSE}
     mtcars %>% pivot_longer(c(mpg, cyl))
@@ -62,17 +64,19 @@ selections.
 Our general recommendation is to take dots when the main purpose of
 the function is to create a new data structure based on a selection.
 When the selection is accessory to the main purpose of the function,
-take it as a named argument. For more advice about this, see the
-[Making data with `...`](https://design.tidyverse.org/dots-data.html)
-section of the tidyverse design book.
+take it as a named argument. In doubt, we recommend using named
+arguments because it is easier to change a named argument to dots than
+the other way around. For more advice about this, see the [Making data
+with `...`](https://design.tidyverse.org/dots-data.html) section of
+the tidyverse design book.
 
 
 ### Do you need tidyselect?
 
 The tools described in this vignette are rather low level. Depending
-on your use case, it may be easier to wrap around `dplyr::select()`.
-You'll get a data frame containing the columns selected by your user,
-which you can then handle in various ways.
+on your use case, it may be easier to wrap `dplyr::select()`. You'll
+get a data frame containing the columns selected by your user, which
+you can then handle in various ways.
 
 The following examples illustrate how you could write a function that
 takes a selection of data and returns the corresponding data frame
@@ -115,8 +119,7 @@ The main advantage of the lower level tidyselect tools is that they
 offer a bit more information and flexibility. Instead of returning the
 selected data, they return the __positions__ of selected elements
 inside the input data. If you don't need the selected positions and
-can afford the dependency, you may consider wrapping around dplyr
-instead.
+can afford the dependency, you may consider wrapping dplyr instead.
 
 
 ## The selection evaluators
