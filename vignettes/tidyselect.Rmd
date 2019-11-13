@@ -33,10 +33,12 @@ options(
 tidyselect implements a specialised sublanguage of R for selecting
 variables from data frames and other data structures. A technical
 description of the DSL is available in the [syntax
-vignette](https://tidyselect.r-lib.org/articles/syntax.html). In this
-vignette, we describe how to include tidyselect in your own packages.
+vignette](https://tidyselect.r-lib.org/articles/syntax.html).
 
-TODO: Link to user-friendly description of the syntax.
+In this vignette, we describe how to include tidyselect in your own
+packages. If you just want to know how to use tidyselect syntax in
+dplyr or tidyr, please read <https://r4ds.had.co.nz/transform.html#select>
+instead.
 
 
 ## Before we start
