@@ -233,7 +233,7 @@ according to the following rules:
   inputs.
 
     ```{r}
-    unclass(mtcars) %>% select_pos(foo = c(mpg, cyl))
+    as.list(mtcars) %>% select_pos(foo = c(mpg, cyl))
     ```
 
 Combination and propagation can be composed by using nested `c()`:
@@ -496,7 +496,7 @@ the invariant of unique column names.
 
 ```{r, error = TRUE}
 # Lists can have duplicates
-unclass(mtcars) %>% select_pos(foo = mpg, foo = cyl)
+as.list(mtcars) %>% select_pos(foo = mpg, foo = cyl)
 
 # Data frames cannot
 mtcars %>% select_pos(foo = mpg, foo = cyl)
