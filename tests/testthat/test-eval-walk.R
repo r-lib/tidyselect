@@ -1,18 +1,18 @@
 
 test_that("leaves of data expression tree are evaluated in the context", {
-  wrapper <- function(x, var) vars_select(x, {{ var }}:length(x))
-  expect_identical(wrapper(letters, x), vars_select(letters, x:26))
+  wrapper <- function(x, var) select_pos(x, {{ var }}:length(x))
+  expect_identical(wrapper(letters2, x), select_pos(letters2, x:26))
 
-  wrapper <- function(x, var) vars_select(x, -({{ var }}:length(x)))
-  expect_identical(wrapper(letters, x), vars_select(letters, -(x:26)))
+  wrapper <- function(x, var) select_pos(x, -({{ var }}:length(x)))
+  expect_identical(wrapper(letters2, x), select_pos(letters2, -(x:26)))
 
-  wrapper <- function(x, var1, var2) vars_select(x, c(-{{ var1 }}, -({{ var2 }}:length(x))))
-  expect_identical(wrapper(letters, a, c), vars_select(letters, -a, -(c:26)))
+  wrapper <- function(x, var1, var2) select_pos(x, c(-{{ var1 }}, -({{ var2 }}:length(x))))
+  expect_identical(wrapper(letters2, a, c), select_pos(letters2, c(-a, -(c:26))))
 })
 
 test_that("dots passed to `c()` are evaluated in their context", {
   wrapper <- function(x, ...) {
-    vars_select(x, c(x, length(x), ...))
+    select_pos(x, c(x, length(x), ...))
   }
   f <- function(x, ...) {
     a <- 13
@@ -22,13 +22,13 @@ test_that("dots passed to `c()` are evaluated in their context", {
     a <- 15
     wrapper(x, ..., identity(a))
   }
-  expect_identical(f(letters, e, 10), vars_select(letters, x, 26, e, 10, 13, 15))
+  expect_identical(f(letters2, e, 10), select_pos(letters2, c(x, 26, e, 10, 13, 15)))
 })
 
 test_that("quosures can be used in data expressions", {
-  expect_identical(vars_select(letters, !!quo(a)), vars_select(letters, a))
-  expect_identical(vars_select(letters, !!quo(a:!!quo(c))), vars_select(letters, a:c))
-  expect_identical(vars_select(letters, !!quo(c(!!quo(a)))), vars_select(letters, a))
+  expect_identical(select_pos(letters2, !!quo(a)), select_pos(letters2, a))
+  expect_identical(select_pos(letters2, !!quo(a:!!quo(c))), select_pos(letters2, a:c))
+  expect_identical(select_pos(letters2, !!quo(c(!!quo(a)))), select_pos(letters2, a))
 })
 
 test_that("quosures update the current context", {
@@ -36,93 +36,93 @@ test_that("quosures update the current context", {
     `_foo` <- 24
     quo(a:identity(`_foo`))
   })
-  expect_identical(vars_select(letters, !!quo(c(-(!!quo)))), vars_select(letters, -(a:24)))
+  expect_identical(select_pos(letters2, !!quo(c(-(!!quo)))), select_pos(letters2, -(a:24)))
 })
 
 test_that("data expressions support character vectors (#78)", {
-  expect_identical(vars_select(letters, -identity(letters[2:5])), vars_select(letters, -(2:5)))
-  expect_identical(vars_select(letters, identity("a"):identity("c")), vars_select(letters, a:c))
-  expect_identical(vars_select(letters, (identity(letters[[1]]))), vars_select(letters, a))
-  expect_identical(vars_select(letters, c(identity(letters[[1]]))), vars_select(letters, a))
+  expect_identical(select_pos(letters2, -identity(letters2[2:5])), select_pos(letters2, -(2:5)))
+  expect_identical(select_pos(letters2, identity("a"):identity("c")), select_pos(letters2, a:c))
+  expect_identical(select_pos(letters2, (identity(letters2[[1]]))), select_pos(letters2, a))
+  expect_identical(select_pos(letters2, c(identity(letters2[[1]]))), select_pos(letters2, a))
 })
 
 test_that("boolean operators are overloaded", {
   expect_identical(
-    vars_select(letters, starts_with("a") & ends_with("a")),
-    vars_select(letters, intersect(starts_with("a"), ends_with("a"))),
+    select_pos(letters2, starts_with("a") & ends_with("a")),
+    select_pos(letters2, intersect(starts_with("a"), ends_with("a"))),
   )
 
   expect_identical(
-    vars_select(letters, starts_with("a") | ends_with("c")),
-    vars_select(letters, c(starts_with("a"), ends_with("c")))
+    select_pos(letters2, starts_with("a") | ends_with("c")),
+    select_pos(letters2, c(starts_with("a"), ends_with("c")))
   )
 
   expect_identical(
-    vars_select(letters, starts_with("a") | ends_with("c") | contains("z")),
-    vars_select(letters, starts_with("a"), ends_with("c"), contains("z"))
+    select_pos(letters2, starts_with("a") | ends_with("c") | contains("z")),
+    select_pos(letters2, c(starts_with("a"), ends_with("c"), contains("z")))
   )
 
   expect_identical(
-    vars_select(letters, (starts_with("a") | ends_with("c")) & contains("a")),
-    vars_select(letters, intersect(c(starts_with("a"), ends_with("c")), contains("a")))
+    select_pos(letters2, (starts_with("a") | ends_with("c")) & contains("a")),
+    select_pos(letters2, intersect(c(starts_with("a"), ends_with("c")), contains("a")))
   )
 
   expect_identical(
-    vars_select(letters, !(starts_with("a") | ends_with("c"))),
-    vars_select(letters, -(starts_with("a") | ends_with("c"))),
+    select_pos(letters2, !(starts_with("a") | ends_with("c"))),
+    select_pos(letters2, -(starts_with("a") | ends_with("c"))),
   )
 
   # This pattern is not possible with `intersect()` because its
   # arguments are evaluated in non-data context
   expect_error(
-    vars_select(letters, intersect(c(starts_with("a"), ends_with("c")), b:d)),
+    select_pos(letters2, intersect(c(starts_with("a"), ends_with("c")), b:d)),
     "not found"
   )
   expect_identical(
-    vars_select(letters, (starts_with("a") | ends_with("c")) & b:d),
-    vars_select(letters, c)
+    select_pos(letters2, (starts_with("a") | ends_with("c")) & b:d),
+    select_pos(letters2, c)
   )
 
   expect_identical(
-    vars_select(letters, (starts_with("a") | ends_with("c")) | i:k),
-    vars_select(letters, c(starts_with("a"), ends_with("c")), i:k),
+    select_pos(letters2, (starts_with("a") | ends_with("c")) | i:k),
+    select_pos(letters2, c(c(starts_with("a"), ends_with("c")), i:k)),
   )
 })
 
 test_that("scalar boolean operators fail informatively", {
   verify_output(test_path("outputs", "vars-select-bool-scalar-ops.txt"), {
-    vars_select(letters, starts_with("a") || ends_with("b"))
-    vars_select(letters, starts_with("a") && ends_with("b"))
+    select_pos(letters2, starts_with("a") || ends_with("b"))
+    select_pos(letters2, starts_with("a") && ends_with("b"))
   })
 })
 
 test_that("can't use arithmetic operators in data context", {
-  expect_error(vars_select(letters, a + 2), "arithmetic")
-  expect_error(vars_select(letters, a * 2), "arithmetic")
-  expect_error(vars_select(letters, a / 2), "arithmetic")
-  expect_error(vars_select(letters, a^2), "arithmetic")
+  expect_error(select_pos(letters2, a + 2), "arithmetic")
+  expect_error(select_pos(letters2, a * 2), "arithmetic")
+  expect_error(select_pos(letters2, a / 2), "arithmetic")
+  expect_error(select_pos(letters2, a^2), "arithmetic")
 
   verify_output(test_path("outputs", "vars-select-num-ops.txt"), {
-    vars_select(letters, a + 2)
-    vars_select(letters, a * 2)
-    vars_select(letters, a / 2)
-    vars_select(letters, a^2)
+    select_pos(letters2, a + 2)
+    select_pos(letters2, a * 2)
+    select_pos(letters2, a / 2)
+    select_pos(letters2, a^2)
   })
 })
 
 test_that("can use arithmetic operators in non-data context", {
-  expect_identical(vars_select(letters, identity(2 * 2 + 2 ^ 2 / 2)), c(f = "f"))
+  expect_identical(select_pos(letters2, identity(2 * 2 + 2 ^ 2 / 2)), c(f = 6L))
 })
 
 test_that("symbol lookup outside data informs caller about better practice", {
   scoped_options(tidyselect_verbosity = "verbose")
 
   vars1 <- c("a", "b")
-  expect_message(vars_select(letters, vars1))
+  expect_message(select_pos(letters2, vars1))
 
   vars2 <- c("a", "b") # To force a message the second time
   verify_output(test_path("outputs", "vars-select-context-lookup.txt"), {
-    vars_select(letters, vars2)
+    select_pos(letters2, vars2)
   })
 })
 
@@ -148,27 +148,28 @@ test_that("symbol evaluation informs from global environment but not packages", 
 
 test_that("selection helpers are in the context mask", {
   out <- local(envir = baseenv(), {
-    tidyselect::vars_select(letters, all_of("a"))
+    letters2 <- rlang::set_names(letters)
+    tidyselect::eval_select(quote(all_of("a")), letters2)
   })
-  expect_identical(out, c(a = "a"))
+  expect_identical(out, c(a = 1L))
 })
 
 test_that("non-strict evaluation allows unknown variables", {
   expect_identical(
-    vars_select(letters, identity("foo"), .strict = FALSE),
-    vars_select(letters, int())
+    select_pos(letters2, identity("foo"), strict = FALSE),
+    select_pos(letters2, int())
   )
   expect_identical(
-    vars_select(letters, identity(100), .strict = FALSE),
-    vars_select(letters, int())
+    select_pos(letters2, identity(100), strict = FALSE),
+    select_pos(letters2, int())
   )
   expect_identical(
-    vars_select(letters, -identity("foo"), .strict = FALSE),
-    vars_select(letters, -int())
+    select_pos(letters2, -identity("foo"), strict = FALSE),
+    select_pos(letters2, -int())
   )
   expect_identical(
-    vars_select(letters, -identity(100), .strict = FALSE),
-    vars_select(letters, -int())
+    select_pos(letters2, -identity(100), strict = FALSE),
+    select_pos(letters2, -int())
   )
 })
 
@@ -193,13 +194,6 @@ test_that("inline functions are allowed", {
 test_that("predicates have access to the full data", {
   p <- function(x) is.numeric(x) && mean(x) > 5
   expect_identical(select_pos(iris, p), c(Sepal.Length = 1L))
-})
-
-test_that("informative error with legacy tidyselect", {
-  expect_error(
-    vars_select(letters, is.numeric),
-    "doesn't support predicates yet"
-  )
 })
 
 test_that("unary `-` is alias for `!`", {
@@ -242,4 +236,11 @@ test_that("selections provide informative errors", {
     "Foreign errors during evaluation"
     select_pos(iris, eval_tidy(foobar))
   })
+})
+
+test_that("can select with .data pronoun (#2715)", {
+  expect_identical(select_pos(c(foo = "foo"), .data$foo), c(foo = 1L))
+  expect_identical(select_pos(c(foo = "foo"), .data[["foo"]]), c(foo = 1L))
+  expect_identical(select_pos(letters2, .data$a : .data$b), c(a = 1L, b = 2L))
+  expect_identical(select_pos(letters2, .data[["a"]] : .data[["b"]]), c(a = 1L, b = 2L))
 })

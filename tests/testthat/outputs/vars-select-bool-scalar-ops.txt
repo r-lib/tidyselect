@@ -1,8 +1,8 @@
-> vars_select(letters, starts_with("a") || ends_with("b"))
+> select_pos(letters2, starts_with("a") || ends_with("b"))
 Error: Can't use scalar `||` in selections.
 i Do you need `|` instead?
 
-> vars_select(letters, starts_with("a") && ends_with("b"))
+> select_pos(letters2, starts_with("a") && ends_with("b"))
 Error: Can't use scalar `&&` in selections.
 i Do you need `&` instead?
 

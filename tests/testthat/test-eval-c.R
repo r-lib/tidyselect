@@ -65,3 +65,7 @@ test_that("uniquely-named inputs can't rename duplicates", {
     select_pos(df, c(foo = a))
   })
 })
+
+test_that("can select with c() (#2685)", {
+  expect_identical(select_pos(letters2, c(a, z)), c(a = 1L, z = 26L))
+})

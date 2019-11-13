@@ -1,9 +1,9 @@
-> vars_select(letters, vars2)
+> select_pos(letters2, vars2)
 Message: Note: Using an external vector in selections is brittle.
 If the data contains `vars2` it will be selected instead.
 Use `all_of(vars2)` instead of `vars2` to silence this message.
 This message is displayed once per session.
 
-  a   b 
-"a" "b" 
+a b 
+1 2 
 
