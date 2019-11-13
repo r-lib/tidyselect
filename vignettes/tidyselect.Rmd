@@ -150,8 +150,8 @@ own
 Defuse _the user's_ R code with `enquo()`:
 
 ```{r}
-fn <- function(own) {
-  expr <- rlang::enquo(own)
+fn <- function(arg) {
+  expr <- rlang::enquo(arg)
   expr
 }
 user <- fn(1 + 2)
