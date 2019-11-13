@@ -27,9 +27,15 @@ This is a technical description of the tidyselect syntax.
 library(tidyselect)
 library(magrittr)
 
-# FIXME: `eval_select()` should be exported
+# FIXME: `eval_select()` and `eval_rename()` should be exported
+eval_select <- tidyselect:::eval_select
+eval_rename <- tidyselect:::eval_rename
+
 select_pos <- function(data, ...) {
-  tidyselect:::eval_select(rlang::expr(c(...)), data)
+  eval_select(rlang::expr(c(...)), data)
+}
+rename_pos <- function(data, ...) {
+  eval_rename(rlang::expr(c(...)), data)
 }
 
 # For better printing
@@ -459,6 +465,67 @@ the fly:
 mtcars %>% select_pos(cyl^2)
 
 mtcars %>% select_pos(mpg * wt)
+```
+
+
+## Selecting versus renaming
+
+The select and rename variants take the same types of inputs and
+have the same type of return value. They have a few important
+differences.
+
+
+### All renaming inputs must be named
+
+Unlike `eval_select()` which can select without renaming,
+`eval_rename()` expects a fully named selection. If one or several
+names are missing, an error is thrown.
+
+```{r, error = TRUE}
+mtcars %>% select_pos(mpg)
+
+mtcars %>% rename_pos(mpg)
+```
+
+
+### Renaming to an existing variable name
+
+If the input data is a data frame, tidyselect generally throws an
+error when duplicate column names are selected, in order to respect
+the invariant of unique column names.
+
+```{r, error = TRUE}
+# Lists can have duplicates
+unclass(mtcars) %>% select_pos(foo = mpg, foo = cyl)
+
+# Data frames cannot
+mtcars %>% select_pos(foo = mpg, foo = cyl)
+```
+
+A selection can rename a variable to an existing name if the latter is
+not part of the selection:
+
+```{r, error = TRUE}
+mtcars %>% select_pos(cyl, cyl = mpg)
+
+mtcars %>% select_pos(disp, cyl = mpg)
+```
+
+This is not possible when renaming.
+
+```{r, error = TRUE}
+mtcars %>% rename_pos(cyl, cyl = mpg)
+
+mtcars %>% rename_pos(disp, cyl = mpg)
+```
+
+However, the name conflict can be solved by renaming the existing
+variable to another name:
+
+```{r}
+mtcars %>% select_pos(foo = cyl, cyl = mpg)
+
+mtcars %>% rename_pos(foo = cyl, cyl = mpg)
 ```
 
 
