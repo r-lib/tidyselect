@@ -169,7 +169,7 @@
 <div id="the-selection-evaluators" class="section level2">
 <h2 class="hasAnchor">
 <a href="#the-selection-evaluators" class="anchor"></a>The selection evaluators</h2>
-<p>tidyselect is implemented with non-standard evaluation (NSE). This unique feature of the R language refers to the ability of functions to <strong>defuse</strong> some or all of their arguments, and resume evaluation later on. Crucially, evaluation can be resumed in a different context or according to different rules, which is often how domain-specific languages are created in R.</p>
+<p>tidyselect is implemented with non-standard evaluation (NSE). This unique feature of the R language refers to the ability of functions to <strong>defuse</strong> (i.e. delay the execution) some or all of their arguments, and resume evaluation later on<a href="#fn1" class="footnote-ref" id="fnref1"><sup>1</sup></a>. Crucially, evaluation can be resumed in a different context or according to different rules, which is often how domain-specific languages are created in R.</p>
 <div id="defusing-and-resuming-evaluation-of-r-code" class="section level3">
 <h3 class="hasAnchor">
 <a href="#defusing-and-resuming-evaluation-of-r-code" class="anchor"></a>Defusing and resuming evaluation of R code</h3>
@@ -322,6 +322,12 @@
 <a class="sourceLine" id="cb17-16" data-line-number="16"><span class="co">#&gt; # … with 28 more rows</span></a></code></pre></div>
 </div>
 </div>
+</div>
+<div class="footnotes">
+<hr>
+<ol>
+<li id="fn1"><p>The defusing step is also known as <em>quoting</em>.<a href="#fnref1" class="footnote-back">↩</a></p></li>
+</ol>
 </div>
   </div>
 

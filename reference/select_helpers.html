@@ -266,10 +266,7 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>nms</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>iris</span>)
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: `vars_select()` is deprecated as of lifecycle 1.0.0.</span>
-#&gt; <span class='warning'>Please use `eval_select()` instead.</span>
-#&gt; <span class='warning'><span style='color: #555555;'>This warning is displayed once per session.</span><span></span>
-#&gt; <span class='warning'></span><span style='color: #555555;'>Call `lifecycle::last_warnings()` to see where this warning was generated.</span><span></span></div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
+<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
 #&gt; "Petal.Length"  "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Sepal.Width   Petal.Width 
 #&gt; "Sepal.Width" "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>contains</span>(<span class='st'>"etal"</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
 #&gt; "Petal.Length"  "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>matches</span>(<span class='st'>".t."</span>))</div><div class='output co'>#&gt;   Sepal.Length    Sepal.Width   Petal.Length    Petal.Width 
@@ -295,7 +292,7 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 <span class='co'># Whereas `all_of()` is strict, `any_of()` allows missing</span>
 <span class='co'># variables.</span>
 <span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>))))</div><div class='output co'>#&gt; Error : Must select existing columns.
-#&gt; </span><span style='color: #BB0000;'>✖</span><span> Can't subset element with unknown name `Genres`.</div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>any_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>)))</div><div class='output co'>#&gt;   Species 
+#&gt; <span style='color: #BB0000;'>✖</span><span> Can't subset element with unknown name `Genres`.</div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>any_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>)))</div><div class='output co'>#&gt;   Species 
 #&gt; "Species" </div><div class='input'>
 <span class='co'># The lax variant is especially useful to make sure a variable is</span>
 <span class='co'># selected out:</span>
