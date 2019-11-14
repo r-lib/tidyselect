@@ -1,7 +1,13 @@
-#' Select or rename variables (deprecated)
+#' Select or rename variables (questioning)
 #'
-#' These functions are now deprecated. Please use [eval_select()] and
-#' [eval_rename()] instead. See `vignette("tidyselect")`.
+#' @description
+#'
+#' These functions are now in the [questioning
+#' stage](https://www.tidyverse.org/lifecycle/). They might be retired
+#' or deprecated in the future.
+#'
+#' Please use [eval_select()] and [eval_rename()] instead. See
+#' `vignette("tidyselect")` to get started.
 #'
 #' @param .vars A character vector of existing column names.
 #' @param ...,args Selection inputs. See the help for [selection
@@ -21,8 +27,6 @@ vars_select <- function(.vars,
                         .include = character(),
                         .exclude = character(),
                         .strict = TRUE) {
-  lifecycle::deprecate_soft("1.0.0", "vars_select()", with = "eval_select()")
-
   dots <- enquos(...)
   if (!length(dots)) {
     signal("", "tidyselect_empty_dots")
@@ -62,8 +66,6 @@ empty_sel <- function(vars, include, exclude) {
 #' @export
 #' @rdname vars_select
 vars_rename <- function(.vars, ..., .strict = TRUE) {
-  lifecycle::deprecate_soft("1.0.0", "vars_rename()", with = "eval_rename()")
-
   pos <- rename_impl(
     NULL,
     .vars,

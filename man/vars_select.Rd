@@ -3,7 +3,7 @@
 \name{vars_select}
 \alias{vars_select}
 \alias{vars_rename}
-\title{Select or rename variables (deprecated)}
+\title{Select or rename variables (questioning)}
 \usage{
 vars_select(.vars, ..., .include = character(), .exclude = character(),
   .strict = TRUE)
@@ -26,8 +26,11 @@ A named character vector. Values are existing column names,
 names are new names.
 }
 \description{
-These functions are now deprecated. Please use \code{\link[=eval_select]{eval_select()}} and
-\code{\link[=eval_rename]{eval_rename()}} instead. See \code{vignette("tidyselect")}.
+These functions are now in the \href{https://www.tidyverse.org/lifecycle/}{questioning stage}. They might be retired
+or deprecated in the future.
+
+Please use \code{\link[=eval_select]{eval_select()}} and \code{\link[=eval_rename]{eval_rename()}} instead. See
+\code{vignette("tidyselect")} to get started.
 }
 \seealso{
 \code{\link[=vars_pull]{vars_pull()}}
