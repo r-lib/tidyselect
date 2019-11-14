@@ -23,8 +23,9 @@ has_vars()
 
 \item{...}{These dots are for future extensions and must be empty.}
 
-\item{fn}{the name of the function to use in the error message. Defaults to
-\code{NULL}, which will use the first element of \code{sys.call(sys.parent())}.}
+\item{fn}{The name of the function to use in error messages when
+the helper is used in the wrong context. If not supplied, a
+generic error message is used instead.}
 
 \item{frame}{The frame environment where the exit hook for
 restoring the old variables should be registered.}

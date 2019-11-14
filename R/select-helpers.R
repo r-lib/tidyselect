@@ -88,7 +88,9 @@ NULL
 
 #' @export
 #' @rdname select_helpers
-starts_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
+starts_with <- function(match,
+                        ignore.case = TRUE,
+                        vars = peek_vars(fn = "starts_with")) {
   check_match(match)
 
   if (ignore.case) {
@@ -105,7 +107,9 @@ starts_with_impl <- function(x, vars) {
 
 #' @export
 #' @rdname select_helpers
-ends_with <- function(match, ignore.case = TRUE, vars = peek_vars()) {
+ends_with <- function(match,
+                      ignore.case = TRUE,
+                      vars = peek_vars(fn = "ends_with")) {
   check_match(match)
 
   if (ignore.case) {
@@ -123,7 +127,9 @@ ends_with_impl <- function(x, vars, length) {
 
 #' @export
 #' @rdname select_helpers
-contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
+contains <- function(match,
+                     ignore.case = TRUE,
+                     vars = peek_vars(fn = "contains")) {
   check_match(match)
 
   if (ignore.case) {
@@ -136,7 +142,10 @@ contains <- function(match, ignore.case = TRUE, vars = peek_vars()) {
 
 #' @export
 #' @rdname select_helpers
-matches <- function(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars()) {
+matches <- function(match,
+                    ignore.case = TRUE,
+                    perl = FALSE,
+                    vars = peek_vars(fn = "matches")) {
   check_match(match)
   flat_map_int(match, grep_vars, vars, ignore.case = ignore.case, perl = perl)
 }
@@ -153,7 +162,10 @@ check_match <- function(match) {
 #' @param range A sequence of integers, like `1:5`.
 #' @param width Optionally, the "width" of the numeric range. For example,
 #'   a range of 2 gives "01", a range of three "001", etc.
-num_range <- function(prefix, range, width = NULL, vars = peek_vars()) {
+num_range <- function(prefix,
+                      range,
+                      width = NULL,
+                      vars = peek_vars(fn = "num_range")) {
   if (!is_null(width)) {
     range <- sprintf(paste0("%0", width, "d"), range)
   }
@@ -176,14 +188,16 @@ all_of <- function(x) {
 
 #' @rdname select_helpers
 #' @export
-any_of <- function(x, ..., vars = peek_vars()) {
+any_of <- function(x,
+                   ...,
+                   vars = peek_vars(fn = "any_of")) {
   ellipsis::check_dots_empty()
   as_indices_impl(x, vars = vars, strict = FALSE)
 }
 
 #' @export
 #' @rdname select_helpers
-everything <- function(vars = peek_vars()) {
+everything <- function(vars = peek_vars(fn = "everything")) {
   seq_along(vars)
 }
 
@@ -191,7 +205,7 @@ everything <- function(vars = peek_vars()) {
 #' @export
 #' @param offset Set it to `n` to select the nth var from the end.
 #' @rdname select_helpers
-last_col <- function(offset = 0L, vars = peek_vars()) {
+last_col <- function(offset = 0L, vars = peek_vars(fn = "last_col")) {
   stopifnot(is_integerish(offset))
   n <- length(vars)
 
@@ -232,7 +246,7 @@ which_vars <- function(needle, haystack) {
 #'   from inside selecting functions like [dplyr::select()] these are
 #'   automatically set to the names of the table.
 #' @export
-one_of <- function(..., .vars = peek_vars()) {
+one_of <- function(..., .vars = peek_vars(fn = "one_of")) {
   keep <- compact(list(...))
 
   bad_input <- detect_index(keep, ~ !vec_is_coercible(., chr()))

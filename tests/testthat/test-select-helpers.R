@@ -8,28 +8,11 @@ test_that("no set variables throws error from the correct function", {
   expect_error(one_of(starts_with("z")), "`starts_with()` must be used within a *selecting* function", fixed = TRUE)
 })
 
-
-# ZNK 2019-07-08: This is a weird situation where a NULL input gets peek_vars()
-# to get its caller. The problem with this is that testthat wraps everything in
-# the test environment, so peek_vars() then returns the error message
-# `eval()` must be used within a *selecting* function.... which doesn't really
-# make a whole lot of sense ಠ_ಠ
-#
-# These next two tests do two things to actually test the path of the code:
-#
-# 1. test if the first part of the call is not a symbol
-# 2. test if fn is equal to `peek_vars`, which would happen in a
-#    global environment setting.
-test_that("if the parent call is not a symbol, then return generic", {
-  pv <- function() function() peek_vars()
-  expect_error(pv()(), "No tidyselect variables were registered.")
+test_that("generic error message is thrown if `fn` is not supplied", {
+  expect_error(peek_vars(), "Selection helpers must be used")
 })
 
-test_that("if the fn is peek_vars, then return generic", {
-  expect_error(peek_vars(fn = "peek_vars"), "`peek_vars()` must be used within a *selecting* function", fixed = TRUE)
-})
-
-test_that("peek_vars can take a custom function name", {
+test_that("custom error message is thrown if `fn` is supplied", {
   expect_error(peek_vars(fn = "z"), "`z()` must be used", fixed = TRUE)
 })
 

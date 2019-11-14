@@ -4,7 +4,7 @@
 \alias{one_of}
 \title{Retired selection helpers}
 \usage{
-one_of(..., .vars = peek_vars())
+one_of(..., .vars = peek_vars(fn = "one_of"))
 }
 \arguments{
 \item{...}{One or more character vectors.}

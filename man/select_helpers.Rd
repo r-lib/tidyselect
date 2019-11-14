@@ -13,23 +13,27 @@
 \alias{last_col}
 \title{Select helpers}
 \usage{
-starts_with(match, ignore.case = TRUE, vars = peek_vars())
+starts_with(match, ignore.case = TRUE, vars = peek_vars(fn =
+  "starts_with"))
 
-ends_with(match, ignore.case = TRUE, vars = peek_vars())
+ends_with(match, ignore.case = TRUE, vars = peek_vars(fn =
+  "ends_with"))
 
-contains(match, ignore.case = TRUE, vars = peek_vars())
+contains(match, ignore.case = TRUE, vars = peek_vars(fn = "contains"))
 
-matches(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars())
+matches(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars(fn
+  = "matches"))
 
-num_range(prefix, range, width = NULL, vars = peek_vars())
+num_range(prefix, range, width = NULL, vars = peek_vars(fn =
+  "num_range"))
 
 all_of(x)
 
-any_of(x, ..., vars = peek_vars())
+any_of(x, ..., vars = peek_vars(fn = "any_of"))
 
-everything(vars = peek_vars())
+everything(vars = peek_vars(fn = "everything"))
 
-last_col(offset = 0L, vars = peek_vars())
+last_col(offset = 0L, vars = peek_vars(fn = "last_col"))
 }
 \arguments{
 \item{match}{A character vector. If length > 1, the union of the

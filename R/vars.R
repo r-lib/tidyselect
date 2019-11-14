@@ -79,30 +79,28 @@ poke_vars <- function(vars) {
   invisible(old)
 }
 #' @rdname poke_vars
-#' @param fn the name of the function to use in the error message. Defaults to
-#'   `NULL`, which will use the first element of `sys.call(sys.parent())`.
+#' @param fn The name of the function to use in error messages when
+#'   the helper is used in the wrong context. If not supplied, a
+#'   generic error message is used instead.
 #' @inheritParams ellipsis::dots_empty
 #' @export
 peek_vars <- function(..., fn = NULL) {
   if (!missing(...)) {
     ellipsis::check_dots_empty()
   }
-  if (is.null(vars_env$selected)) {
-    if (is.null(fn)) {
-      the_call <- sys.call(sys.parent())
-      fn <- the_call[[1]]
+
+  vars <- vars_env$selected
+
+  if (is_null(vars)) {
+    if (is_null(fn)) {
+      fn <- "Selection helpers"
     } else {
-      fn <- as.symbol(fn)
+      fn <- glue::glue("`{fn}()`")
     }
-    if (is.symbol(fn)) {
-      fn  <- as.character(fn)
-      msg <- sprintf("`%s()` must be used within a *selecting* function", fn)
-    } else {
-      msg <- "No tidyselect variables were registered."
-    }
-    abort(msg)
+    abort(paste0(fn, " must be used within a *selecting* function."))
   }
-  vars_env$selected
+
+  vars
 }
 
 #' @rdname poke_vars
