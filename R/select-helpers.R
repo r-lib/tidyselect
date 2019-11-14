@@ -245,6 +245,8 @@ which_vars <- function(needle, haystack) {
 #' @param .vars A character vector of variable names. When called
 #'   from inside selecting functions like [dplyr::select()] these are
 #'   automatically set to the names of the table.
+#'
+#' @keywords internal
 #' @export
 one_of <- function(..., .vars = peek_vars(fn = "one_of")) {
   keep <- compact(list(...))
@@ -273,6 +275,7 @@ one_of <- function(..., .vars = peek_vars(fn = "one_of")) {
 #' having to track addition of new helpers in tidyselect.
 #'
 #' @export
+#' @keywords internal
 #' @examples
 #' # You can easily embed the helpers by burying them in the scopes of
 #' # input quosures. For this example we need an environment where

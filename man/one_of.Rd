@@ -17,3 +17,4 @@ automatically set to the names of the table.}
 \code{one_of()} is retired in favour of the more precise \code{\link[=any_of]{any_of()}} and
 \code{\link[=all_of]{all_of()}} selectors.
 }
+\keyword{internal}

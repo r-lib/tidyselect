@@ -33,4 +33,4 @@ local(envir = baseenv(), {
   my_select(starts_with("b"))
 })
 }
-\keyword{datasets}
+\keyword{internal}
