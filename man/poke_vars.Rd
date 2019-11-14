@@ -2,15 +2,12 @@
 % Please edit documentation in R/vars.R
 \name{poke_vars}
 \alias{poke_vars}
-\alias{peek_vars}
 \alias{scoped_vars}
 \alias{with_vars}
 \alias{has_vars}
 \title{Replace or get current variables}
 \usage{
 poke_vars(vars)
-
-peek_vars(..., fn = NULL)
 
 scoped_vars(vars, frame = caller_env())
 
@@ -20,12 +17,6 @@ has_vars()
 }
 \arguments{
 \item{vars}{A character vector of variable names.}
-
-\item{...}{These dots are for future extensions and must be empty.}
-
-\item{fn}{The name of the function to use in error messages when
-the helper is used in the wrong context. If not supplied, a
-generic error message is used instead.}
 
 \item{frame}{The frame environment where the exit hook for
 restoring the old variables should be registered.}
@@ -97,4 +88,7 @@ fn <- function(expr) {
   with_vars(vars, expr)
 }
 fn(starts_with("r"))
+}
+\seealso{
+peek_vars
 }
