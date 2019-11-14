@@ -1,0 +1,56 @@
+---
+title: "Frequently asked questions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Frequently asked questions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+This vignette serves as a reference for frequently asked questions or
+frequently googled error messages. If you think a question or an error
+should be added, feel free to [open a Github
+issue](https://github.com/r-lib/tidyselect/issues). If you need more
+help, please [open a Community thread](https://community.rstudio.com/).
+
+```{r, include = FALSE}
+library(tidyselect)
+
+select <- function(.data, ...) {
+  expr <- rlang::expr(c(...))
+  pos <- eval_select(expr, data = .data)
+  rlang::set_names(.data[pos], names(pos))
+}
+```
+
+
+## Must be used within a *selecting* function. {#selection-context}
+
+Functions like `starts_with()`, `contains()` or `matches()` are
+__selection helpers__ that only work in a selection context.
+
+Examples of valid selection contexts are:
+
+- Inside `dplyr::select()`.
+- The `cols` argument of `tidyr::pivot_longer()`.
+
+Using a selection helper anywhere else results in an error:
+
+```{r, error = TRUE}
+starts_with("foo")
+
+mtcars[contains("foo")]
+
+subset(mtcars, select = matches("foo"))
+```
+
+If you see this error, you've probably used a selection helper in the
+wrong place, possibly as the result of a typo (e.g. misplaced comma or
+wrong argument name).
