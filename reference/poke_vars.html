@@ -194,8 +194,9 @@ done. This is for expert use only.</p></li>
     </tr>
     <tr>
       <th>fn</th>
-      <td><p>the name of the function to use in the error message. Defaults to
-<code>NULL</code>, which will use the first element of <code><a href='https://rdrr.io/r/base/sys.parent.html'>sys.call(sys.parent())</a></code>.</p></td>
+      <td><p>The name of the function to use in error messages when
+the helper is used in the wrong context. If not supplied, a
+generic error message is used instead.</p></td>
     </tr>
     <tr>
       <th>frame</th>
