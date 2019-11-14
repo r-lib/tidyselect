@@ -244,3 +244,10 @@ test_that("can select with .data pronoun (#2715)", {
   expect_identical(select_pos(letters2, .data$a : .data$b), c(a = 1L, b = 2L))
   expect_identical(select_pos(letters2, .data[["a"]] : .data[["b"]]), c(a = 1L, b = 2L))
 })
+
+test_that("binary `-` is short for set difference", {
+  expect_identical(
+    select_pos(iris, starts_with("Sepal") - ends_with("Width")),
+    select_pos(iris, c(starts_with("Sepal"), -ends_with("Width")))
+  )
+})

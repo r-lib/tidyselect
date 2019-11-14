@@ -94,10 +94,6 @@ test_that("`-` handles strings", {
   expect_identical(vars_select(letters, -"c"), vars_select(letters, -c))
 })
 
-test_that("`-` handles positions", {
-  expect_identical(vars_select(letters, 10 - 7), vars_select(letters, 3))
-})
-
 test_that("`-` handles character vectors (#35)", {
   expect_identical(vars_select(letters, - (!! letters[1:20])), vars_select(letters, -(1:20)))
   expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "tidyselect_error_index_oob_names")
