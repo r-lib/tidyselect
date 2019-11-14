@@ -128,11 +128,12 @@ can afford the dependency, you may consider wrapping dplyr instead.
 
 tidyselect is implemented with non-standard evaluation (NSE). This
 unique feature of the R language refers to the ability of functions to
-__defuse__ some or all of their arguments, and resume evaluation later
-on. Crucially, evaluation can be resumed in a different context or
-according to different rules, which is often how domain-specific
-languages are created in R.
+__defuse__ (i.e. delay the execution) some or all of their arguments,
+and resume evaluation later on[^1]. Crucially, evaluation can be
+resumed in a different context or according to different rules, which
+is often how domain-specific languages are created in R.
 
+[^1]: The defusing step is also known as _quoting_.
 
 ### Defusing and resuming evaluation of R code
 
