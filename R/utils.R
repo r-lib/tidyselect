@@ -263,6 +263,15 @@ inform_once <- function(msg, id = msg) {
   }
   inform_env[[id]] <- TRUE
 
+  issue <- msg[[1]]
+  bullets <- msg[-1]
+
+  msg <- issue
+  if (length(bullets)) {
+    bullets <- format_bullets(bullets)
+    msg <- paste_line(msg, bullets)
+  }
+
   inform(paste_line(
     msg, silver("This message is displayed once per session.")
   ))
