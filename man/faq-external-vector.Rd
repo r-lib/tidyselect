@@ -16,7 +16,7 @@ In selecting functions like \code{dplyr::select()} or
 #> 2     6     1     0
 #> 3     4     1     1
 #> 4     6     0     1
-#> # … with 28 more rows
+#> # ... with 28 more rows
 
 mtcars \%>\% select(mpg:disp)
 #> # A tibble: 32 x 3
@@ -26,7 +26,7 @@ mtcars \%>\% select(mpg:disp)
 #> 2  21       6   160
 #> 3  22.8     4   108
 #> 4  21.4     6   258
-#> # … with 28 more rows
+#> # ... with 28 more rows
 }\if{html}{\out{</div>}}
 
 For historical reasons, it is also possible to refer an external vector
@@ -59,7 +59,7 @@ In a selection context however, the column wins:\if{html}{\out{<div class="r">}}
 #> 2     2
 #> 3     3
 #> 4     4
-#> # … with 28 more rows
+#> # ... with 28 more rows
 }\if{html}{\out{</div>}}
 }
 
@@ -74,7 +74,7 @@ To make your selection code more robust and silence the message, use
 #> 2     6     1     0
 #> 3     4     1     1
 #> 4     6     0     1
-#> # … with 28 more rows
+#> # ... with 28 more rows
 }\if{html}{\out{</div>}}
 
 For more information or if you have comments about this, please see the

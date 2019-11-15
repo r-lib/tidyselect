@@ -26,4 +26,9 @@ options(
   tibble.print_min = 4,
   tibble.print_max = 4
 )
+
+# Fix Latex error
+options(
+  cli.unicode = FALSE
+)
 ```
