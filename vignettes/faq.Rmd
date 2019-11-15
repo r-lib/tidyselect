@@ -21,8 +21,13 @@ issue](https://github.com/r-lib/tidyselect/issues). If you need more
 help, please [open a Community thread](https://community.rstudio.com/).
 
 
-## Errors
+## Frequent messages, warnings, and errors
 
 #### Must be used within a *selecting* function
 
 `?"faq-selection-context"`
+
+
+#### Using an external vector in selections is brittle
+
+`?"faq-external-vector"`

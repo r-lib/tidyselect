@@ -6,4 +6,24 @@ knitr::opts_chunk$set(
 )
 
 library(tidyselect)
+library(magrittr)
+
+# For examples
+rename <- function(.x, ..., .strict = TRUE) {
+  pos <- eval_rename(rlang::expr(c(...)), .x, strict = .strict)
+  names(.x)[pos] <- names(pos)
+  .x
+}
+select <- function(.x, ..., .strict = TRUE) {
+  pos <- eval_select(rlang::expr(c(...)), .x, strict = .strict)
+  rlang::set_names(.x[pos], names(pos))
+}
+
+# Better printing
+mtcars <- tibble::as_tibble(mtcars)
+iris <- tibble::as_tibble(iris)
+options(
+  tibble.print_min = 4,
+  tibble.print_max = 4
+)
 ```
