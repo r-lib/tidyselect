@@ -215,10 +215,14 @@ eval_colon <- function(expr, data_mask, context_mask) {
 
 eval_minus <- function(expr, data_mask, context_mask) {
   if (length(expr) == 2) {
-    eval_bang(expr, data_mask, context_mask)
-  } else {
-    eval_context(expr, context_mask)
+    return(eval_bang(expr, data_mask, context_mask))
   }
+
+  lhs <- walk_data_tree(expr[[2]], data_mask, context_mask)
+  rhs <- walk_data_tree(expr[[3]], data_mask, context_mask)
+  vars <- data_mask$.__tidyselect__.$internal$vars
+
+  sel_diff(lhs, rhs, vars)
 }
 
 eval_context <- function(expr, context_mask) {

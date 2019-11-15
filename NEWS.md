@@ -1,6 +1,14 @@
 
 # tidyselect (development)
 
+* Binary `-` is now short for set difference. These expressions are
+  now equivalent:
+
+  ```{r}
+  iris %>% select(starts_with("Sepal") - ends_with("Width"))
+  iris %>% select(starts_with("Sepal"), -ends_with("Width"))
+  ```
+
 * New `eval_select()` and `eval_rename()` functions for client
   packages. These replace `vars_select()` and `vars_rename()`, which
   are now deprecated.

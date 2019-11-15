@@ -96,7 +96,7 @@ mtcars %>% select_pos(cyl:hp)
 ```
 
 
-### Boolean operators
+### Boolean operators and binary `-`
 
 Boolean operators provide a more intuitive approach to set
 combination. Though sets are internally represented with vectors of
@@ -128,6 +128,12 @@ __difference__:
 
 ```{r}
 iris %>% select_pos(starts_with("Sepal") & !ends_with("Width"))
+```
+
+Another way of expressing set difference is binary `-`:
+
+```{r}
+iris %>% select_pos(starts_with("Sepal") - ends_with("Width"))
 ```
 
 
