@@ -32,9 +32,11 @@ peek_vars <- function(..., fn = NULL) {
     } else {
       fn <- glue::glue("`{fn}()`")
     }
+
+    # Please keep in sync with faq.R.
     abort(glue_c(
       "{fn} must be used within a *selecting* function.",
-      i = "See https://tidyselect.r-lib.org/articles/faq.html#selection-context"
+      i = "See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>."
     ))
   }
 
