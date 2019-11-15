@@ -169,19 +169,20 @@ for names that don't exist.</p></li>
     
     </div>
 
-    <pre class="usage"><span class='fu'>starts_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span>
-  <span class='st'>"starts_with"</span>))
+    <pre class="usage"><span class='fu'>starts_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"starts_with"</span>))
 
-<span class='fu'>ends_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span>
-  <span class='st'>"ends_with"</span>))
+<span class='fu'>ends_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"ends_with"</span>))
 
 <span class='fu'>contains</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"contains"</span>))
 
-<span class='fu'>matches</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>perl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span>
-  <span class='kw'>=</span> <span class='st'>"matches"</span>))
+<span class='fu'>matches</span>(
+  <span class='no'>match</span>,
+  <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>perl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"matches"</span>)
+)
 
-<span class='fu'>num_range</span>(<span class='no'>prefix</span>, <span class='no'>range</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span>
-  <span class='st'>"num_range"</span>))
+<span class='fu'>num_range</span>(<span class='no'>prefix</span>, <span class='no'>range</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='poke_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"num_range"</span>))
 
 <span class='fu'>all_of</span>(<span class='no'>x</span>)
 
@@ -248,15 +249,15 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>In selection context you can also use these operators:</p><ul>
-<li><p><code>-</code> for selecting a selection.</p></li>
-<li><p><code>:</code> for selecting a range of consecutive variables.</p></li>
-<li><p><code>c</code> for selecting the union of sets of variables.</p></li>
+<li><p><code><a href='https://rdrr.io/r/base/Arithmetic.html'>"-"</a></code> for taking the difference between two sets of variables.</p></li>
+<li><p><code>":"</code> for selecting a range of consecutive variables.</p></li>
+<li><p><code>"c"</code> for selecting the union of sets of variables.</p></li>
 </ul>
 
 <p>The boolean operators were more recently overloaded to operate on
 selections:</p><ul>
-<li><p><code>!</code> for negating a selection.</p></li>
-<li><p><code>&amp;</code> and <code>|</code> for selecting the intersection or the union of two
+<li><p><code>"!"</code> for taking the complement of a set of variables.</p></li>
+<li><p><code>"&amp;"</code> and <code><a href='https://rdrr.io/r/base/Logic.html'>"|"</a></code> for selecting the intersection or the union of two
 sets of variables.</p></li>
 </ul>
 

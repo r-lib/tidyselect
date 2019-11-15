@@ -155,11 +155,25 @@ your packages.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>eval_rename</span>(<span class='no'>expr</span>, <span class='no'>data</span>, <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'>caller_env</span>(), <span class='no'>...</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>name_spec</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>eval_rename</span>(
+  <span class='no'>expr</span>,
+  <span class='no'>data</span>,
+  <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'>caller_env</span>(),
+  <span class='no'>...</span>,
+  <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>name_spec</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)
 
-<span class='fu'>eval_select</span>(<span class='no'>expr</span>, <span class='no'>data</span>, <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'>caller_env</span>(), <span class='no'>...</span>, <span class='kw'>include</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>name_spec</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>eval_select</span>(
+  <span class='no'>expr</span>,
+  <span class='no'>data</span>,
+  <span class='kw'>env</span> <span class='kw'>=</span> <span class='fu'>caller_env</span>(),
+  <span class='no'>...</span>,
+  <span class='kw'>include</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>name_spec</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,7 +186,7 @@ tidyselect syntax.</p></td>
     <tr>
       <th>data</th>
       <td><p>A named list, data frame, or atomic vector.
-Technically, <code>data</code> can be any vector with <code><a href='https://rdrr.io/r/base/names.html'>names()</a></code> and <code>[[</code>
+Technically, <code>data</code> can be any vector with <code><a href='https://rdrr.io/r/base/names.html'>names()</a></code> and <code><a href='https://rdrr.io/r/base/Extract.html'>"[["</a></code>
 implementations.</p></td>
     </tr>
     <tr>
