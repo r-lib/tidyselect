@@ -92,3 +92,4 @@ fn(starts_with("r"))
 \seealso{
 peek_vars
 }
+\keyword{internal}

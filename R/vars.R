@@ -69,7 +69,9 @@ peek_vars <- function(..., fn = NULL) {
 #'   registered.
 #'
 #' @seealso peek_vars
+#'
 #' @export
+#' @keywords internal
 #' @examples
 #' poke_vars(letters)
 #' peek_vars()

@@ -24,10 +24,6 @@ reference:
   - eval_select
   - eval_rename
 
-- title: Register tidyselect variables
+- title: Peek at current selection variables
   contents:
-  - poke_vars
   - peek_vars
-  - scoped_vars
-  - with_vars
-  - has_vars
