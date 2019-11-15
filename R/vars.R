@@ -1,3 +1,44 @@
+#' Peek at variables in the selection context
+#'
+#' @description
+#'
+#' `peek_vars()` returns the vector of names of the variables
+#' currently available for selection. Read the [Get
+#' started](https://tidyselect.r-lib.org/articles/tidyselect.html) for
+#' examples of how to create selection helpers with `peek_vars()`.
+#'
+#' The variable names in a selection context are registered
+#' automatically by [eval_select()] and [eval_rename()] for the
+#' duration of the evaluation. `peek_vars()` is the glue that connects
+#' [selection helpers][select_helpers] to the current selection
+#' context.
+#'
+#' @inheritParams ellipsis::dots_empty
+#' @param fn The name of the function to use in error messages when
+#'   the helper is used in the wrong context. If not supplied, a
+#'   generic error message is used instead.
+#'
+#' @export
+peek_vars <- function(..., fn = NULL) {
+  if (!missing(...)) {
+    ellipsis::check_dots_empty()
+  }
+
+  vars <- vars_env$selected
+
+  if (is_null(vars)) {
+    if (is_null(fn)) {
+      fn <- "Selection helpers"
+    } else {
+      fn <- glue::glue("`{fn}()`")
+    }
+    abort(paste0(fn, " must be used within a *selecting* function."))
+  }
+
+  vars
+}
+
+
 #' Replace or get current variables
 #'
 #' @description
@@ -26,6 +67,8 @@
 #' @return For `poke_vars()` and `scoped_vars()`, the old variables
 #'   invisibly. For `peek_vars()`, the variables currently
 #'   registered.
+#'
+#' @seealso peek_vars
 #' @export
 #' @examples
 #' poke_vars(letters)
@@ -77,30 +120,6 @@ poke_vars <- function(vars) {
   vars_env$selected <- vars
 
   invisible(old)
-}
-#' @rdname poke_vars
-#' @param fn The name of the function to use in error messages when
-#'   the helper is used in the wrong context. If not supplied, a
-#'   generic error message is used instead.
-#' @inheritParams ellipsis::dots_empty
-#' @export
-peek_vars <- function(..., fn = NULL) {
-  if (!missing(...)) {
-    ellipsis::check_dots_empty()
-  }
-
-  vars <- vars_env$selected
-
-  if (is_null(vars)) {
-    if (is_null(fn)) {
-      fn <- "Selection helpers"
-    } else {
-      fn <- glue::glue("`{fn}()`")
-    }
-    abort(paste0(fn, " must be used within a *selecting* function."))
-  }
-
-  vars
 }
 
 #' @rdname poke_vars
