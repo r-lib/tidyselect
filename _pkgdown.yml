@@ -28,6 +28,6 @@ reference:
   contents:
   - peek_vars
 
-- title: Frequently asked questions or googled messages
+- title: FAQ
   contents:
   - starts_with("faq")
