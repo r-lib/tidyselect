@@ -4,7 +4,6 @@
 #'
 #' @includeRmd man/faq/selection-context.Rmd
 #'
-#' @family faq
 #' @name faq-selection-context
 NULL
 
@@ -14,6 +13,5 @@ NULL
 #'
 #' @includeRmd man/faq/external-vector.Rmd
 #'
-#' @family faq
 #' @name faq-external-vector
 NULL

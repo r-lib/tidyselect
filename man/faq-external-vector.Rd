@@ -83,8 +83,3 @@ For more information or if you have comments about this, please see the
 the deprecation process.
 }
 }
-\seealso{
-Other faq: 
-\code{\link{faq-selection-context}}
-}
-\concept{faq}

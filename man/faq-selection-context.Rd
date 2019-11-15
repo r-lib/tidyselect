@@ -32,8 +32,3 @@ If you see this error, you’ve probably used a selection helper in the
 wrong place, possibly as the result of a typo (e.g. misplaced comma or
 wrong argument name).
 }
-\seealso{
-Other faq: 
-\code{\link{faq-external-vector}}
-}
-\concept{faq}
