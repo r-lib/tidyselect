@@ -5,8 +5,6 @@
 \alias{faq-selection-context}
 \title{Error: Must be used within a \emph{selecting} function}
 \description{
-
-
 Functions like \code{starts_with()}, \code{contains()} or \code{matches()} are
 \strong{selection helpers} that only work in a selection context.
 

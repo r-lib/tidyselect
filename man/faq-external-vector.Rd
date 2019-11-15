@@ -5,8 +5,6 @@
 \alias{faq-external-vector}
 \title{Note: Using an external vector in selections is brittle}
 \description{
-
-
 \subsection{Ambiguity between columns and external variables}{
 
 In selecting functions like \code{dplyr::select()} or
