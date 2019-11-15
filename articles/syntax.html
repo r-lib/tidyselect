@@ -149,9 +149,10 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  cyl disp   hp </span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;    2    3    4</span></a></code></pre></div>
 </div>
-<div id="boolean-operators" class="section level3">
+<div id="boolean-operators-and-binary--" class="section level3">
 <h3 class="hasAnchor">
-<a href="#boolean-operators" class="anchor"></a>Boolean operators</h3>
+<a href="#boolean-operators-and-binary--" class="anchor"></a>Boolean operators and binary <code>-</code>
+</h3>
 <p>Boolean operators provide a more intuitive approach to set combination. Though sets are internally represented with vectors of positions, they could equally be represented with a full logical vector of inclusion indicators (taking the <code><a href="https://rdrr.io/r/base/which.html">which()</a></code> of this vector would then recover the positions). The boolean operators should be considered in terms of the logical representation of sets.</p>
 <p>The <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> operator takes the <strong>union</strong> of two sets:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">|</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
@@ -169,78 +170,82 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Sepal.Length </span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt;            1</span></a></code></pre></div>
+<p>Another way of expressing set difference is binary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
+<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; Sepal.Length </span></a>
+<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;            1</span></a></code></pre></div>
 </div>
 <div id="dots-c-and-unary--" class="section level3">
 <h3 class="hasAnchor">
 <a href="#dots-c-and-unary--" class="anchor"></a>Dots, <code>c()</code>, and unary <code>-</code>
 </h3>
 <p>tidyselect functions can take dots like <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code>, or a named argument like <code>tidyr::pivot_longer()</code>. In the latter case, the dots syntax is accessible via <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. In fact <code>...</code> syntax is implemented through <code><a href="https://rdrr.io/r/base/c.html">c(...)</a></code> and is thus completely equivalent.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(mpg, disp<span class="op">:</span>hp)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt;  mpg disp   hp </span></a>
-<a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;    1    3    4</span></a>
-<a class="sourceLine" id="cb10-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb10-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(mpg, disp<span class="op">:</span>hp))</a>
-<a class="sourceLine" id="cb10-6" data-line-number="6"><span class="co">#&gt;  mpg disp   hp </span></a>
-<a class="sourceLine" id="cb10-7" data-line-number="7"><span class="co">#&gt;    1    3    4</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(mpg, disp<span class="op">:</span>hp)</a>
+<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt;  mpg disp   hp </span></a>
+<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt;    1    3    4</span></a>
+<a class="sourceLine" id="cb11-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb11-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(mpg, disp<span class="op">:</span>hp))</a>
+<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt;  mpg disp   hp </span></a>
+<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt;    1    3    4</span></a></code></pre></div>
 <p>Dots and <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> are syntax for:</p>
 <ul>
 <li>Set union or set difference</li>
 <li>Renaming variables</li>
 </ul>
 <p>Non-negative inputs are recursively joined with <code><a href="https://rdrr.io/r/base/sets.html">union()</a></code>. The precedence is left-associative, just like with boolean operators. These expressions are all syntax for <em>set union</em>:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>), Species)</a>
-<a class="sourceLine" id="cb11-2" data-line-number="2"><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb11-3" data-line-number="3"><span class="co">#&gt;            1            2            4            5</span></a>
-<a class="sourceLine" id="cb11-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb11-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">|</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>) <span class="op">|</span><span class="st"> </span>Species)</a>
-<a class="sourceLine" id="cb11-6" data-line-number="6"><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb11-7" data-line-number="7"><span class="co">#&gt;            1            2            4            5</span></a>
-<a class="sourceLine" id="cb11-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb11-9" data-line-number="9">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">union</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">union</a></span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>)), 5L))</a>
-<a class="sourceLine" id="cb11-10" data-line-number="10"><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb11-11" data-line-number="11"><span class="co">#&gt;            1            2            4            5</span></a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>), Species)</a>
+<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span></a>
+<a class="sourceLine" id="cb12-3" data-line-number="3"><span class="co">#&gt;            1            2            4            5</span></a>
+<a class="sourceLine" id="cb12-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb12-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">|</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>) <span class="op">|</span><span class="st"> </span>Species)</a>
+<a class="sourceLine" id="cb12-6" data-line-number="6"><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span></a>
+<a class="sourceLine" id="cb12-7" data-line-number="7"><span class="co">#&gt;            1            2            4            5</span></a>
+<a class="sourceLine" id="cb12-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb12-9" data-line-number="9">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">union</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">union</a></span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>)), 5L))</a>
+<a class="sourceLine" id="cb12-10" data-line-number="10"><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span></a>
+<a class="sourceLine" id="cb12-11" data-line-number="11"><span class="co">#&gt;            1            2            4            5</span></a></code></pre></div>
 <p>Unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> is normally syntax for <em>set difference</em>:</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>), <span class="op">-</span>Sepal.Length)</a>
-<a class="sourceLine" id="cb12-2" data-line-number="2"><span class="co">#&gt; named integer(0)</span></a>
-<a class="sourceLine" id="cb12-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb12-4" data-line-number="4">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>)), 1L))</a>
-<a class="sourceLine" id="cb12-5" data-line-number="5"><span class="co">#&gt; named integer(0)</span></a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>), <span class="op">-</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; named integer(0)</span></a>
+<a class="sourceLine" id="cb13-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb13-4" data-line-number="4">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>)), 1L))</a>
+<a class="sourceLine" id="cb13-5" data-line-number="5"><span class="co">#&gt; named integer(0)</span></a></code></pre></div>
 <p>If the first <code>...</code> or <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> input is negative, an implicit <code><a href="../reference/select_helpers.html">everything()</a></code> is appended.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>))</a>
-<a class="sourceLine" id="cb13-2" data-line-number="2"><span class="co">#&gt; Petal.Length  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb13-3" data-line-number="3"><span class="co">#&gt;            3            4            5</span></a>
-<a class="sourceLine" id="cb13-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb13-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">everything</a></span>(), <span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>))</a>
-<a class="sourceLine" id="cb13-6" data-line-number="6"><span class="co">#&gt; Petal.Length  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb13-7" data-line-number="7"><span class="co">#&gt;            3            4            5</span></a>
-<a class="sourceLine" id="cb13-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb13-9" data-line-number="9">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw"><a href="../reference/select_helpers.html">everything</a></span>(), <span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>)))</a>
-<a class="sourceLine" id="cb13-10" data-line-number="10"><span class="co">#&gt; Petal.Length  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb13-11" data-line-number="11"><span class="co">#&gt;            3            4            5</span></a></code></pre></div>
-<p>In this case, unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> is syntax for <em>set complement</em>. Unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> and <code>!</code> are equivalent:</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>))</a>
 <a class="sourceLine" id="cb14-2" data-line-number="2"><span class="co">#&gt; Petal.Length  Petal.Width      Species </span></a>
 <a class="sourceLine" id="cb14-3" data-line-number="3"><span class="co">#&gt;            3            4            5</span></a>
 <a class="sourceLine" id="cb14-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb14-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">!</span><span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>))</a>
+<a class="sourceLine" id="cb14-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">everything</a></span>(), <span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>))</a>
 <a class="sourceLine" id="cb14-6" data-line-number="6"><span class="co">#&gt; Petal.Length  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt;            3            4            5</span></a></code></pre></div>
-<p>Each level of <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> is independent. In particular, a nested <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> starting with <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> always stands for set complement:</p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="op">-</span>Sepal.Length))</a>
-<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; Sepal.Width </span></a>
-<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt;           2</span></a>
+<a class="sourceLine" id="cb14-7" data-line-number="7"><span class="co">#&gt;            3            4            5</span></a>
+<a class="sourceLine" id="cb14-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb14-9" data-line-number="9">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/sets.html">setdiff</a></span>(<span class="kw"><a href="../reference/select_helpers.html">everything</a></span>(), <span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>)))</a>
+<a class="sourceLine" id="cb14-10" data-line-number="10"><span class="co">#&gt; Petal.Length  Petal.Width      Species </span></a>
+<a class="sourceLine" id="cb14-11" data-line-number="11"><span class="co">#&gt;            3            4            5</span></a></code></pre></div>
+<p>In this case, unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> is syntax for <em>set complement</em>. Unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> and <code>!</code> are equivalent:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>))</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2"><span class="co">#&gt; Petal.Length  Petal.Width      Species </span></a>
+<a class="sourceLine" id="cb15-3" data-line-number="3"><span class="co">#&gt;            3            4            5</span></a>
 <a class="sourceLine" id="cb15-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb15-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span>Sepal.Length)))</a>
-<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;            1            2            3            4            5</span></a></code></pre></div>
-<p>In boolean terms, these expressions are equivalent to:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb15-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">!</span><span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>))</a>
+<a class="sourceLine" id="cb15-6" data-line-number="6"><span class="co">#&gt; Petal.Length  Petal.Width      Species </span></a>
+<a class="sourceLine" id="cb15-7" data-line-number="7"><span class="co">#&gt;            3            4            5</span></a></code></pre></div>
+<p>Each level of <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> is independent. In particular, a nested <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> starting with <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> always stands for set complement:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="op">-</span>Sepal.Length))</a>
 <a class="sourceLine" id="cb16-2" data-line-number="2"><span class="co">#&gt; Sepal.Width </span></a>
 <a class="sourceLine" id="cb16-3" data-line-number="3"><span class="co">#&gt;           2</span></a>
 <a class="sourceLine" id="cb16-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb16-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">|</span><span class="st"> </span><span class="op">!</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb16-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="op">-</span>Sepal.Length)))</a>
 <a class="sourceLine" id="cb16-6" data-line-number="6"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span></a>
 <a class="sourceLine" id="cb16-7" data-line-number="7"><span class="co">#&gt;            1            2            3            4            5</span></a></code></pre></div>
+<p>In boolean terms, these expressions are equivalent to:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; Sepal.Width </span></a>
+<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co">#&gt;           2</span></a>
+<a class="sourceLine" id="cb17-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb17-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">|</span><span class="st"> </span><span class="op">!</span>Sepal.Length)</a>
+<a class="sourceLine" id="cb17-6" data-line-number="6"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span></a>
+<a class="sourceLine" id="cb17-7" data-line-number="7"><span class="co">#&gt;            1            2            3            4            5</span></a></code></pre></div>
 <p>In general, when unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> is used alone outside <code>...</code> or <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, it stands for set complement.</p>
 </div>
 <div id="renaming-variables" class="section level3">
@@ -250,28 +255,28 @@
 <h4 class="hasAnchor">
 <a href="#name-combination-and-propagation" class="anchor"></a>Name combination and propagation</h4>
 <p>When named inputs are provided in <code>...</code> or <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>, the selection is renamed. If the inputs are already named, the outer and inner names are <strong>combined</strong> with a <code>...</code> separator:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">bar =</span> mpg, <span class="dt">baz =</span> cyl))</a>
-<a class="sourceLine" id="cb17-2" data-line-number="2"><span class="co">#&gt; foo...bar foo...baz </span></a>
-<a class="sourceLine" id="cb17-3" data-line-number="3"><span class="co">#&gt;         1         2</span></a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">bar =</span> mpg, <span class="dt">baz =</span> cyl))</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co">#&gt; foo...bar foo...baz </span></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co">#&gt;         1         2</span></a></code></pre></div>
 <p>Otherwise the outer names is <strong>propagated</strong> to the selected elements according to the following rules:</p>
 <ul>
 <li>
 <p>With data frames, a numeric suffix is appended because columns must be uniquely named.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(mpg, cyl))</a>
-<a class="sourceLine" id="cb18-2" data-line-number="2"><span class="co">#&gt; foo1 foo2 </span></a>
-<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="co">#&gt;    1    2</span></a></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(mpg, cyl))</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co">#&gt; foo1 foo2 </span></a>
+<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co">#&gt;    1    2</span></a></code></pre></div>
 </li>
 <li>
 <p>With normal vectors, the name is simply assigned to all selected inputs.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(mpg, cyl))</a>
-<a class="sourceLine" id="cb19-2" data-line-number="2"><span class="co">#&gt; foo foo </span></a>
-<a class="sourceLine" id="cb19-3" data-line-number="3"><span class="co">#&gt;   1   2</span></a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(mpg, cyl))</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt; foo foo </span></a>
+<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">#&gt;   1   2</span></a></code></pre></div>
 </li>
 </ul>
 <p>Combination and propagation can be composed by using nested <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>:</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">bar =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(mpg, cyl)))</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2"><span class="co">#&gt; foo...bar1 foo...bar2 </span></a>
-<a class="sourceLine" id="cb20-3" data-line-number="3"><span class="co">#&gt;          1          2</span></a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dt">bar =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(mpg, cyl)))</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; foo...bar1 foo...bar2 </span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt;          1          2</span></a></code></pre></div>
 </div>
 <div id="set-combination-with-named-variables" class="section level4">
 <h4 class="hasAnchor">
@@ -291,29 +296,29 @@
 <code>c(foo = a) | c(bar = a)</code> is equivalent to <code><a href="https://rdrr.io/r/base/c.html">c(foo = a, bar = a)</a></code>.</li>
 </ul>
 <p>Because unnamed elements match any named ones, it is possible to select multiple elements and rename one of them:</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">!</span>Species, <span class="dt">foo =</span> Sepal.Width)</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; Sepal.Length          foo Petal.Length  Petal.Width </span></a>
-<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt;            1            2            3            4</span></a></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">!</span>Species, <span class="dt">foo =</span> Sepal.Width)</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#&gt; Sepal.Length          foo Petal.Length  Petal.Width </span></a>
+<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co">#&gt;            1            2            3            4</span></a></code></pre></div>
 </div>
 </div>
 <div id="predicate-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#predicate-functions" class="anchor"></a>Predicate functions</h3>
 <p>Predicate function objects can be supplied as input. They are applied to all elements of the data, and should return <code>TRUE</code> or <code>FALSE</code> to indicate inclusion. Predicates in data-expressions are effectively expanded to the set of variables that they represent:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(is.numeric)</a>
-<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></a>
-<a class="sourceLine" id="cb22-3" data-line-number="3"><span class="co">#&gt;            1            2            3            4</span></a>
-<a class="sourceLine" id="cb22-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb22-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(is.factor)</a>
-<a class="sourceLine" id="cb22-6" data-line-number="6"><span class="co">#&gt; Species </span></a>
-<a class="sourceLine" id="cb22-7" data-line-number="7"><span class="co">#&gt;       5</span></a>
-<a class="sourceLine" id="cb22-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb22-9" data-line-number="9">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(is.numeric <span class="op">|</span><span class="st"> </span>is.factor)</a>
-<a class="sourceLine" id="cb22-10" data-line-number="10"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span></a>
-<a class="sourceLine" id="cb22-11" data-line-number="11"><span class="co">#&gt;            1            2            3            4            5</span></a>
-<a class="sourceLine" id="cb22-12" data-line-number="12"></a>
-<a class="sourceLine" id="cb22-13" data-line-number="13">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(is.numeric <span class="op">&amp;</span><span class="st"> </span>is.factor)</a>
-<a class="sourceLine" id="cb22-14" data-line-number="14"><span class="co">#&gt; named integer(0)</span></a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(is.numeric)</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt;            1            2            3            4</span></a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(is.factor)</a>
+<a class="sourceLine" id="cb23-6" data-line-number="6"><span class="co">#&gt; Species </span></a>
+<a class="sourceLine" id="cb23-7" data-line-number="7"><span class="co">#&gt;       5</span></a>
+<a class="sourceLine" id="cb23-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb23-9" data-line-number="9">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(is.numeric <span class="op">|</span><span class="st"> </span>is.factor)</a>
+<a class="sourceLine" id="cb23-10" data-line-number="10"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span></a>
+<a class="sourceLine" id="cb23-11" data-line-number="11"><span class="co">#&gt;            1            2            3            4            5</span></a>
+<a class="sourceLine" id="cb23-12" data-line-number="12"></a>
+<a class="sourceLine" id="cb23-13" data-line-number="13">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(is.numeric <span class="op">&amp;</span><span class="st"> </span>is.factor)</a>
+<a class="sourceLine" id="cb23-14" data-line-number="14"><span class="co">#&gt; named integer(0)</span></a></code></pre></div>
 <p>Predicate functions supplied as symbols are ambiguous with column names, however proper naming conventions should ensure distinct namespaces in practice. See the Evaluation section for more about this ambiguity.</p>
 </div>
 </div>
@@ -335,21 +340,21 @@
 <ul>
 <li>
 <p>Vectors of positions:</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">3</span>)))</a>
-<a class="sourceLine" id="cb23-2" data-line-number="2"><span class="co">#&gt; Sepal.Length Petal.Length </span></a>
-<a class="sourceLine" id="cb23-3" data-line-number="3"><span class="co">#&gt;            1            3</span></a></code></pre></div>
-</li>
-<li>
-<p>Vectors of names. These are matched and transformed to positions.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Length"</span>)))</a>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">3</span>)))</a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt; Sepal.Length Petal.Length </span></a>
 <a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt;            1            3</span></a></code></pre></div>
 </li>
 <li>
+<p>Vectors of names. These are matched and transformed to positions.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Length"</span>)))</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt; Sepal.Length Petal.Length </span></a>
+<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt;            1            3</span></a></code></pre></div>
+</li>
+<li>
 <p>Predicate functions. These are applied to all elements to determine inclusion.</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(is.numeric))</a>
-<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></a>
-<a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt;            1            2            3            4</span></a></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(is.numeric))</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co">#&gt;            1            2            3            4</span></a></code></pre></div>
 </li>
 </ul>
 </div>
@@ -360,58 +365,58 @@
 <h3 class="hasAnchor">
 <a href="#data-expressions-and-env-expressions" class="anchor"></a>Data-expressions and env-expressions</h3>
 <p>tidyselect is not a typical tidy evaluation UI. The main difference is that there is no data masking. In a typical tidy eval function, expressions are evaluated with data-vars first in scope, followed by env-vars:</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1">mask &lt;-<span class="st"> </span><span class="cf">function</span>(data, expr) {</a>
-<a class="sourceLine" id="cb26-2" data-line-number="2">  rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span>(rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/nse-defuse.html">enquo</a></span>(expr), data)</a>
-<a class="sourceLine" id="cb26-3" data-line-number="3">}</a>
-<a class="sourceLine" id="cb26-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb26-5" data-line-number="5">foo &lt;-<span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb26-6" data-line-number="6">cyl &lt;-<span class="st"> </span><span class="dv">200</span></a>
-<a class="sourceLine" id="cb26-7" data-line-number="7"></a>
-<a class="sourceLine" id="cb26-8" data-line-number="8"><span class="co"># `cyl` represents the data frame column here:</span></a>
-<a class="sourceLine" id="cb26-9" data-line-number="9">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mask</span>(cyl <span class="op">*</span><span class="st"> </span>foo)</a>
-<a class="sourceLine" id="cb26-10" data-line-number="10"><span class="co">#&gt;  [1] 60 60 40 60 80 60 80 40 40 60 60 80 80 80 80 80 80 40 40 40 40 80 80 80 80</span></a>
-<a class="sourceLine" id="cb26-11" data-line-number="11"><span class="co">#&gt; [26] 40 40 40 80 60 80 40</span></a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">mask &lt;-<span class="st"> </span><span class="cf">function</span>(data, expr) {</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">  rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/eval_tidy.html">eval_tidy</a></span>(rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/nse-defuse.html">enquo</a></span>(expr), data)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb27-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb27-5" data-line-number="5">foo &lt;-<span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb27-6" data-line-number="6">cyl &lt;-<span class="st"> </span><span class="dv">200</span></a>
+<a class="sourceLine" id="cb27-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb27-8" data-line-number="8"><span class="co"># `cyl` represents the data frame column here:</span></a>
+<a class="sourceLine" id="cb27-9" data-line-number="9">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mask</span>(cyl <span class="op">*</span><span class="st"> </span>foo)</a>
+<a class="sourceLine" id="cb27-10" data-line-number="10"><span class="co">#&gt;  [1] 60 60 40 60 80 60 80 40 40 60 60 80 80 80 80 80 80 40 40 40 40 80 80 80 80</span></a>
+<a class="sourceLine" id="cb27-11" data-line-number="11"><span class="co">#&gt; [26] 40 40 40 80 60 80 40</span></a></code></pre></div>
 <p>It is possible to bypass the data frame variables by forcing symbols to be looked up in the environment with <code>!!</code> or <code>.env</code>:</p>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mask</span>(<span class="op">!!</span>cyl <span class="op">*</span><span class="st"> </span>foo)</a>
-<a class="sourceLine" id="cb27-2" data-line-number="2"><span class="co">#&gt; [1] 2000</span></a>
-<a class="sourceLine" id="cb27-3" data-line-number="3">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mask</span>(.env<span class="op">$</span>cyl <span class="op">*</span><span class="st"> </span>foo)</a>
-<a class="sourceLine" id="cb27-4" data-line-number="4"><span class="co">#&gt; [1] 2000</span></a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mask</span>(<span class="op">!!</span>cyl <span class="op">*</span><span class="st"> </span>foo)</a>
+<a class="sourceLine" id="cb28-2" data-line-number="2"><span class="co">#&gt; [1] 2000</span></a>
+<a class="sourceLine" id="cb28-3" data-line-number="3">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mask</span>(.env<span class="op">$</span>cyl <span class="op">*</span><span class="st"> </span>foo)</a>
+<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">#&gt; [1] 2000</span></a></code></pre></div>
 <p>With tidyselect, there is no such hierarchical data masking. Instead, expressions are evaluated either in the context of the data frame or in the user environment, without overlap. The scope of lookup depends on the kind of expression:</p>
 <ol style="list-style-type: decimal">
 <li>
 <p><strong>data-expressions</strong> are evaluated in the data frame only. This includes bare symbols, the boolean operators, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, <code>:</code>, and <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. You can’t refer to environment-variables in a data-expression:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1">cyl_pos &lt;-<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb28-2" data-line-number="2">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(mpg <span class="op">|</span><span class="st"> </span>cyl_pos)</a>
-<a class="sourceLine" id="cb28-3" data-line-number="3"><span class="co">#&gt; Error: Must select existing columns.</span></a>
-<a class="sourceLine" id="cb28-4" data-line-number="4"><span class="co">#&gt; ✖ Can't subset element with unknown name `cyl_pos`.</span></a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">cyl_pos &lt;-<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb29-2" data-line-number="2">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(mpg <span class="op">|</span><span class="st"> </span>cyl_pos)</a>
+<a class="sourceLine" id="cb29-3" data-line-number="3"><span class="co">#&gt; Error: Must select existing columns.</span></a>
+<a class="sourceLine" id="cb29-4" data-line-number="4"><span class="co">#&gt; ✖ Can't subset element with unknown name `cyl_pos`.</span></a></code></pre></div>
 </li>
 <li>
 <p><strong>env-expressions</strong> are evaluated in the environment. This includes all calls other than those mentioned above, as well as symbols that are part of those calls. You can’t refer to data-variables in a data-expression:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">all_of</a></span>(mpg))</a>
-<a class="sourceLine" id="cb29-2" data-line-number="2"><span class="co">#&gt; Error: object 'mpg' not found</span></a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">all_of</a></span>(mpg))</a>
+<a class="sourceLine" id="cb30-2" data-line-number="2"><span class="co">#&gt; Error: object 'mpg' not found</span></a></code></pre></div>
 </li>
 </ol>
 <p>Because the scoping is unambiguous, you can safely refer to env-vars in an env-expression, without having to worry about potential naming clashes with data-vars:</p>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">z =</span> <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)</a>
-<a class="sourceLine" id="cb30-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb30-3" data-line-number="3"><span class="co"># `ncol(x)` is an env-expression, so `x` represents the data frame in</span></a>
-<a class="sourceLine" id="cb30-4" data-line-number="4"><span class="co"># the environment rather than the column in the data frame</span></a>
-<a class="sourceLine" id="cb30-5" data-line-number="5">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(x))</a>
-<a class="sourceLine" id="cb30-6" data-line-number="6"><span class="co">#&gt; y z </span></a>
-<a class="sourceLine" id="cb30-7" data-line-number="7"><span class="co">#&gt; 2 3</span></a></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">x &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">x =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">3</span>, <span class="dt">y =</span> <span class="dv">4</span><span class="op">:</span><span class="dv">6</span>, <span class="dt">z =</span> <span class="dv">7</span><span class="op">:</span><span class="dv">9</span>)</a>
+<a class="sourceLine" id="cb31-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co"># `ncol(x)` is an env-expression, so `x` represents the data frame in</span></a>
+<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co"># the environment rather than the column in the data frame</span></a>
+<a class="sourceLine" id="cb31-5" data-line-number="5">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(x))</a>
+<a class="sourceLine" id="cb31-6" data-line-number="6"><span class="co">#&gt; y z </span></a>
+<a class="sourceLine" id="cb31-7" data-line-number="7"><span class="co">#&gt; 2 3</span></a></code></pre></div>
 <p>If you have variable names in a character vector, it is safe to refer to the env-var containing the names with <code><a href="../reference/select_helpers.html">all_of()</a></code> because it is an env-expression:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"y"</span>, <span class="st">"z"</span>)</a>
-<a class="sourceLine" id="cb31-2" data-line-number="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">all_of</a></span>(y))</a>
-<a class="sourceLine" id="cb31-3" data-line-number="3"><span class="co">#&gt; y z </span></a>
-<a class="sourceLine" id="cb31-4" data-line-number="4"><span class="co">#&gt; 2 3</span></a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"y"</span>, <span class="st">"z"</span>)</a>
+<a class="sourceLine" id="cb32-2" data-line-number="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">all_of</a></span>(y))</a>
+<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co">#&gt; y z </span></a>
+<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co">#&gt; 2 3</span></a></code></pre></div>
 <p>Note that currently, env-vars are still allowed in some data-expressions, for compatibility. However this is in the process of being deprecated and you should see a note recommending to use <code><a href="../reference/select_helpers.html">all_of()</a></code> instead. This note will become a deprecation warning in the future, and then an error.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(cyl_pos)</a>
-<a class="sourceLine" id="cb32-2" data-line-number="2"><span class="co">#&gt; Note: Using an external vector in selections is brittle.</span></a>
-<a class="sourceLine" id="cb32-3" data-line-number="3"><span class="co">#&gt; If the data contains `cyl_pos` it will be selected instead.</span></a>
-<a class="sourceLine" id="cb32-4" data-line-number="4"><span class="co">#&gt; Use `all_of(cyl_pos)` instead of `cyl_pos` to silence this message.</span></a>
-<a class="sourceLine" id="cb32-5" data-line-number="5"><span class="co">#&gt; This message is displayed once per session.</span></a>
-<a class="sourceLine" id="cb32-6" data-line-number="6"><span class="co">#&gt; cyl </span></a>
-<a class="sourceLine" id="cb32-7" data-line-number="7"><span class="co">#&gt;   2</span></a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(cyl_pos)</a>
+<a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#&gt; Note: Using an external vector in selections is brittle.</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">#&gt; If the data contains `cyl_pos` it will be selected instead.</span></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; Use `all_of(cyl_pos)` instead of `cyl_pos` to silence this message.</span></a>
+<a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt; This message is displayed once per session.</span></a>
+<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt; cyl </span></a>
+<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;   2</span></a></code></pre></div>
 </div>
 <div id="predicate-functions-within-data-expressions" class="section level3">
 <h3 class="hasAnchor">
@@ -422,43 +427,43 @@
 <li>The names of predicate functions and data frame columns rarely overlap.</li>
 </ul>
 <p>If you need 100% unambiguity, use <code><a href="../reference/select_helpers.html">all_of()</a></code> to refer to data frame columns, and force predicate functions with <code>!!</code> or <code><a href="https://rdrr.io/r/base/force.html">force()</a></code>. <code><a href="../reference/select_helpers.html">all_of()</a></code> is a way to explicitly opt for data lookup because it fails if the data frame doesn’t contain the columns, even if a function of the same name is found in the environment:</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">Species &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span>(x)</a>
-<a class="sourceLine" id="cb33-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co"># Since `Species` is defined as a function, you won't get an error</span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co"># even though the data-var doesn't exist:</span></a>
-<a class="sourceLine" id="cb33-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(Species)</a>
-<a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span></a>
-<a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;    1    2    3    4    5    6    7    8    9   10   11</span></a>
-<a class="sourceLine" id="cb33-8" data-line-number="8"></a>
-<a class="sourceLine" id="cb33-9" data-line-number="9"><span class="co"># Use `all_of()` to be explicit that you want a data-var, not an env-var:</span></a>
-<a class="sourceLine" id="cb33-10" data-line-number="10">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">all_of</a></span>(<span class="st">"Species"</span>))</a>
-<a class="sourceLine" id="cb33-11" data-line-number="11"><span class="co">#&gt; Error: Must select existing columns.</span></a>
-<a class="sourceLine" id="cb33-12" data-line-number="12"><span class="co">#&gt; ✖ Can't subset element with unknown name `Species`.</span></a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1">Species &lt;-<span class="st"> </span><span class="cf">function</span>(x) <span class="kw"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span>(x)</a>
+<a class="sourceLine" id="cb34-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="co"># Since `Species` is defined as a function, you won't get an error</span></a>
+<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co"># even though the data-var doesn't exist:</span></a>
+<a class="sourceLine" id="cb34-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(Species)</a>
+<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span></a>
+<a class="sourceLine" id="cb34-7" data-line-number="7"><span class="co">#&gt;    1    2    3    4    5    6    7    8    9   10   11</span></a>
+<a class="sourceLine" id="cb34-8" data-line-number="8"></a>
+<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="co"># Use `all_of()` to be explicit that you want a data-var, not an env-var:</span></a>
+<a class="sourceLine" id="cb34-10" data-line-number="10">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="../reference/select_helpers.html">all_of</a></span>(<span class="st">"Species"</span>))</a>
+<a class="sourceLine" id="cb34-11" data-line-number="11"><span class="co">#&gt; Error: Must select existing columns.</span></a>
+<a class="sourceLine" id="cb34-12" data-line-number="12"><span class="co">#&gt; ✖ Can't subset element with unknown name `Species`.</span></a></code></pre></div>
 <p>Similarly, you can be explicit about finding predicate functions in the environment by forcing the symbols:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># By default the data-var has precedence over the env-var:</span></a>
-<a class="sourceLine" id="cb34-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(Species)</a>
-<a class="sourceLine" id="cb34-3" data-line-number="3"><span class="co">#&gt; Species </span></a>
-<a class="sourceLine" id="cb34-4" data-line-number="4"><span class="co">#&gt;       5</span></a>
-<a class="sourceLine" id="cb34-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb34-6" data-line-number="6"><span class="co"># Use the force operator `!!` to force the env-var `Species`:</span></a>
-<a class="sourceLine" id="cb34-7" data-line-number="7">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">!!</span>Species)</a>
-<a class="sourceLine" id="cb34-8" data-line-number="8"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></a>
-<a class="sourceLine" id="cb34-9" data-line-number="9"><span class="co">#&gt;            1            2            3            4</span></a>
-<a class="sourceLine" id="cb34-10" data-line-number="10"></a>
-<a class="sourceLine" id="cb34-11" data-line-number="11"><span class="co"># Use the env-expression `force()` to force the env-var `Species`:</span></a>
-<a class="sourceLine" id="cb34-12" data-line-number="12">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(Species))</a>
-<a class="sourceLine" id="cb34-13" data-line-number="13"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></a>
-<a class="sourceLine" id="cb34-14" data-line-number="14"><span class="co">#&gt;            1            2            3            4</span></a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1"><span class="co"># By default the data-var has precedence over the env-var:</span></a>
+<a class="sourceLine" id="cb35-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(Species)</a>
+<a class="sourceLine" id="cb35-3" data-line-number="3"><span class="co">#&gt; Species </span></a>
+<a class="sourceLine" id="cb35-4" data-line-number="4"><span class="co">#&gt;       5</span></a>
+<a class="sourceLine" id="cb35-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb35-6" data-line-number="6"><span class="co"># Use the force operator `!!` to force the env-var `Species`:</span></a>
+<a class="sourceLine" id="cb35-7" data-line-number="7">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="op">!!</span>Species)</a>
+<a class="sourceLine" id="cb35-8" data-line-number="8"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></a>
+<a class="sourceLine" id="cb35-9" data-line-number="9"><span class="co">#&gt;            1            2            3            4</span></a>
+<a class="sourceLine" id="cb35-10" data-line-number="10"></a>
+<a class="sourceLine" id="cb35-11" data-line-number="11"><span class="co"># Use the env-expression `force()` to force the env-var `Species`:</span></a>
+<a class="sourceLine" id="cb35-12" data-line-number="12">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(Species))</a>
+<a class="sourceLine" id="cb35-13" data-line-number="13"><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></a>
+<a class="sourceLine" id="cb35-14" data-line-number="14"><span class="co">#&gt;            1            2            3            4</span></a></code></pre></div>
 </div>
 <div id="arithmetic-operators" class="section level3">
 <h3 class="hasAnchor">
 <a href="#arithmetic-operators" class="anchor"></a>Arithmetic operators</h3>
 <p>Within data-expressions (see Evaluation section), <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> and <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code> are overridden to cause an error. This is to prevent confusion stemming from normal data masking usage where variables can be transformed on the fly:</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(cyl<span class="op">^</span><span class="dv">2</span>)</a>
-<a class="sourceLine" id="cb35-2" data-line-number="2"><span class="co">#&gt; Error: Can't use arithmetic operator `^` in selection context.</span></a>
-<a class="sourceLine" id="cb35-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb35-4" data-line-number="4">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(mpg <span class="op">*</span><span class="st"> </span>wt)</a>
-<a class="sourceLine" id="cb35-5" data-line-number="5"><span class="co">#&gt; Error: Can't use arithmetic operator `*` in selection context.</span></a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(cyl<span class="op">^</span><span class="dv">2</span>)</a>
+<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="co">#&gt; Error: Can't use arithmetic operator `^` in selection context.</span></a>
+<a class="sourceLine" id="cb36-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb36-4" data-line-number="4">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(mpg <span class="op">*</span><span class="st"> </span>wt)</a>
+<a class="sourceLine" id="cb36-5" data-line-number="5"><span class="co">#&gt; Error: Can't use arithmetic operator `*` in selection context.</span></a></code></pre></div>
 </div>
 </div>
 <div id="selecting-versus-renaming" class="section level2">
@@ -469,46 +474,46 @@
 <h3 class="hasAnchor">
 <a href="#all-renaming-inputs-must-be-named" class="anchor"></a>All renaming inputs must be named</h3>
 <p>Unlike <code><a href="../reference/eval_select.html">eval_select()</a></code> which can select without renaming, <code><a href="../reference/eval_select.html">eval_rename()</a></code> expects a fully named selection. If one or several names are missing, an error is thrown.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(mpg)</a>
-<a class="sourceLine" id="cb36-2" data-line-number="2"><span class="co">#&gt; mpg </span></a>
-<a class="sourceLine" id="cb36-3" data-line-number="3"><span class="co">#&gt;   1</span></a>
-<a class="sourceLine" id="cb36-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb36-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(mpg)</a>
-<a class="sourceLine" id="cb36-6" data-line-number="6"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(mpg)</a>
+<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="co">#&gt; mpg </span></a>
+<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co">#&gt;   1</span></a>
+<a class="sourceLine" id="cb37-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb37-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(mpg)</a>
+<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a></code></pre></div>
 </div>
 <div id="renaming-to-an-existing-variable-name" class="section level3">
 <h3 class="hasAnchor">
 <a href="#renaming-to-an-existing-variable-name" class="anchor"></a>Renaming to an existing variable name</h3>
 <p>If the input data is a data frame, tidyselect generally throws an error when duplicate column names are selected, in order to respect the invariant of unique column names.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" data-line-number="1"><span class="co"># Lists can have duplicates</span></a>
-<a class="sourceLine" id="cb37-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> mpg, <span class="dt">foo =</span> cyl)</a>
-<a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co">#&gt; foo foo </span></a>
-<a class="sourceLine" id="cb37-4" data-line-number="4"><span class="co">#&gt;   1   2</span></a>
-<a class="sourceLine" id="cb37-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb37-6" data-line-number="6"><span class="co"># Data frames cannot</span></a>
-<a class="sourceLine" id="cb37-7" data-line-number="7">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> mpg, <span class="dt">foo =</span> cyl)</a>
-<a class="sourceLine" id="cb37-8" data-line-number="8"><span class="co">#&gt; Error: Names must be unique.</span></a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1"><span class="co"># Lists can have duplicates</span></a>
+<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(mtcars) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> mpg, <span class="dt">foo =</span> cyl)</a>
+<a class="sourceLine" id="cb38-3" data-line-number="3"><span class="co">#&gt; foo foo </span></a>
+<a class="sourceLine" id="cb38-4" data-line-number="4"><span class="co">#&gt;   1   2</span></a>
+<a class="sourceLine" id="cb38-5" data-line-number="5"></a>
+<a class="sourceLine" id="cb38-6" data-line-number="6"><span class="co"># Data frames cannot</span></a>
+<a class="sourceLine" id="cb38-7" data-line-number="7">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> mpg, <span class="dt">foo =</span> cyl)</a>
+<a class="sourceLine" id="cb38-8" data-line-number="8"><span class="co">#&gt; Error: Names must be unique.</span></a></code></pre></div>
 <p>A selection can rename a variable to an existing name if the latter is not part of the selection:</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(cyl, <span class="dt">cyl =</span> mpg)</a>
-<a class="sourceLine" id="cb38-2" data-line-number="2"><span class="co">#&gt; Error: Names must be unique.</span></a>
-<a class="sourceLine" id="cb38-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb38-4" data-line-number="4">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(disp, <span class="dt">cyl =</span> mpg)</a>
-<a class="sourceLine" id="cb38-5" data-line-number="5"><span class="co">#&gt; disp  cyl </span></a>
-<a class="sourceLine" id="cb38-6" data-line-number="6"><span class="co">#&gt;    3    1</span></a></code></pre></div>
-<p>This is not possible when renaming.</p>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(cyl, <span class="dt">cyl =</span> mpg)</a>
-<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(cyl, <span class="dt">cyl =</span> mpg)</a>
+<a class="sourceLine" id="cb39-2" data-line-number="2"><span class="co">#&gt; Error: Names must be unique.</span></a>
 <a class="sourceLine" id="cb39-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb39-4" data-line-number="4">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(disp, <span class="dt">cyl =</span> mpg)</a>
-<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a></code></pre></div>
+<a class="sourceLine" id="cb39-4" data-line-number="4">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(disp, <span class="dt">cyl =</span> mpg)</a>
+<a class="sourceLine" id="cb39-5" data-line-number="5"><span class="co">#&gt; disp  cyl </span></a>
+<a class="sourceLine" id="cb39-6" data-line-number="6"><span class="co">#&gt;    3    1</span></a></code></pre></div>
+<p>This is not possible when renaming.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(cyl, <span class="dt">cyl =</span> mpg)</a>
+<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a>
+<a class="sourceLine" id="cb40-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb40-4" data-line-number="4">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(disp, <span class="dt">cyl =</span> mpg)</a>
+<a class="sourceLine" id="cb40-5" data-line-number="5"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a></code></pre></div>
 <p>However, the name conflict can be solved by renaming the existing variable to another name:</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> cyl, <span class="dt">cyl =</span> mpg)</a>
-<a class="sourceLine" id="cb40-2" data-line-number="2"><span class="co">#&gt; foo cyl </span></a>
-<a class="sourceLine" id="cb40-3" data-line-number="3"><span class="co">#&gt;   2   1</span></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb40-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(<span class="dt">foo =</span> cyl, <span class="dt">cyl =</span> mpg)</a>
-<a class="sourceLine" id="cb40-6" data-line-number="6"><span class="co">#&gt; foo cyl </span></a>
-<a class="sourceLine" id="cb40-7" data-line-number="7"><span class="co">#&gt;   2   1</span></a></code></pre></div>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(<span class="dt">foo =</span> cyl, <span class="dt">cyl =</span> mpg)</a>
+<a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co">#&gt; foo cyl </span></a>
+<a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#&gt;   2   1</span></a>
+<a class="sourceLine" id="cb41-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb41-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(<span class="dt">foo =</span> cyl, <span class="dt">cyl =</span> mpg)</a>
+<a class="sourceLine" id="cb41-6" data-line-number="6"><span class="co">#&gt; foo cyl </span></a>
+<a class="sourceLine" id="cb41-7" data-line-number="7"><span class="co">#&gt;   2   1</span></a></code></pre></div>
 </div>
 </div>
 <div id="duplicate-columns-in-data-frames" class="section level2">
@@ -516,36 +521,36 @@
 <a href="#duplicate-columns-in-data-frames" class="anchor"></a>Duplicate columns in data frames</h2>
 <p>Normally a data frame shouldn’t have duplicate names. However, the real world is messy and duplicates do happen in the wild. tidyselect tries to be as permissive as it can with these duplicates so that users can restore unique names with <code>select()</code> or <code>rename()</code>.</p>
 <p>First let’s create a data frame with duplicate names:</p>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">dups &lt;-<span class="st"> </span>vctrs<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/vctrs/man/new_data_frame.html">new_data_frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">2</span>, <span class="dt">x =</span> <span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">dups &lt;-<span class="st"> </span>vctrs<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/vctrs/man/new_data_frame.html">new_data_frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">x =</span> <span class="dv">1</span>, <span class="dt">y =</span> <span class="dv">2</span>, <span class="dt">x =</span> <span class="dv">3</span>))</a></code></pre></div>
 <p>If the duplicates are not part of the selection, they are simply ignored:</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(y)</a>
-<a class="sourceLine" id="cb42-2" data-line-number="2"><span class="co">#&gt; y </span></a>
-<a class="sourceLine" id="cb42-3" data-line-number="3"><span class="co">#&gt; 2</span></a></code></pre></div>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(y)</a>
+<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="co">#&gt; y </span></a>
+<a class="sourceLine" id="cb43-3" data-line-number="3"><span class="co">#&gt; 2</span></a></code></pre></div>
 <p>If the duplicates are selected, this is an error:</p>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(x)</a>
-<a class="sourceLine" id="cb43-2" data-line-number="2"><span class="co">#&gt; Error: Names must be unique.</span></a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(x)</a>
+<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="co">#&gt; Error: Names must be unique.</span></a></code></pre></div>
 <p>The duplicate names can be repaired by renaming chosen positions:</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(x, <span class="dt">foo =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb44-2" data-line-number="2"><span class="co">#&gt;   x foo </span></a>
-<a class="sourceLine" id="cb44-3" data-line-number="3"><span class="co">#&gt;   1   3</span></a>
-<a class="sourceLine" id="cb44-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb44-5" data-line-number="5">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(<span class="dt">foo =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb44-6" data-line-number="6"><span class="co">#&gt; foo </span></a>
-<a class="sourceLine" id="cb44-7" data-line-number="7"><span class="co">#&gt;   3</span></a></code></pre></div>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(x, <span class="dt">foo =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="co">#&gt;   x foo </span></a>
+<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="co">#&gt;   1   3</span></a>
+<a class="sourceLine" id="cb45-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb45-5" data-line-number="5">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(<span class="dt">foo =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="co">#&gt; foo </span></a>
+<a class="sourceLine" id="cb45-7" data-line-number="7"><span class="co">#&gt;   3</span></a></code></pre></div>
 </div>
 <div id="acknowledgements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
 <p>The tidyselect syntax was inspired by the <code><a href="https://rdrr.io/r/base/subset.html">base::subset()</a></code> function written by Peter Dalgaard. The <code>select</code> parameter of <code><a href="https://rdrr.io/r/base/subset.html">subset.data.frame()</a></code> is evaluated in a data mask where the column names are bound to their positions in the data frame. This allows <code>:</code> to create sequences of variable positions. The positions can be combined with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. This selection interface set the tone for the development of the tidyselect syntax.</p>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="dt">select =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(cyl, hp<span class="op">:</span>wt))</a>
-<a class="sourceLine" id="cb45-2" data-line-number="2"><span class="co">#&gt; # A tibble: 32 x 4</span></a>
-<a class="sourceLine" id="cb45-3" data-line-number="3"><span class="co">#&gt;     cyl    hp  drat    wt</span></a>
-<a class="sourceLine" id="cb45-4" data-line-number="4"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb45-5" data-line-number="5"><span class="co">#&gt; 1     6   110  3.9   2.62</span></a>
-<a class="sourceLine" id="cb45-6" data-line-number="6"><span class="co">#&gt; 2     6   110  3.9   2.88</span></a>
-<a class="sourceLine" id="cb45-7" data-line-number="7"><span class="co">#&gt; 3     4    93  3.85  2.32</span></a>
-<a class="sourceLine" id="cb45-8" data-line-number="8"><span class="co">#&gt; 4     6   110  3.08  3.22</span></a>
-<a class="sourceLine" id="cb45-9" data-line-number="9"><span class="co">#&gt; # … with 28 more rows</span></a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="dt">select =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(cyl, hp<span class="op">:</span>wt))</a>
+<a class="sourceLine" id="cb46-2" data-line-number="2"><span class="co">#&gt; # A tibble: 32 x 4</span></a>
+<a class="sourceLine" id="cb46-3" data-line-number="3"><span class="co">#&gt;     cyl    hp  drat    wt</span></a>
+<a class="sourceLine" id="cb46-4" data-line-number="4"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb46-5" data-line-number="5"><span class="co">#&gt; 1     6   110  3.9   2.62</span></a>
+<a class="sourceLine" id="cb46-6" data-line-number="6"><span class="co">#&gt; 2     6   110  3.9   2.88</span></a>
+<a class="sourceLine" id="cb46-7" data-line-number="7"><span class="co">#&gt; 3     4    93  3.85  2.32</span></a>
+<a class="sourceLine" id="cb46-8" data-line-number="8"><span class="co">#&gt; 4     6   110  3.08  3.22</span></a>
+<a class="sourceLine" id="cb46-9" data-line-number="9"><span class="co">#&gt; # … with 28 more rows</span></a></code></pre></div>
 </div>
   </div>
 
