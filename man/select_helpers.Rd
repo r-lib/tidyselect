@@ -13,19 +13,20 @@
 \alias{last_col}
 \title{Select helpers}
 \usage{
-starts_with(match, ignore.case = TRUE, vars = peek_vars(fn =
-  "starts_with"))
+starts_with(match, ignore.case = TRUE, vars = peek_vars(fn = "starts_with"))
 
-ends_with(match, ignore.case = TRUE, vars = peek_vars(fn =
-  "ends_with"))
+ends_with(match, ignore.case = TRUE, vars = peek_vars(fn = "ends_with"))
 
 contains(match, ignore.case = TRUE, vars = peek_vars(fn = "contains"))
 
-matches(match, ignore.case = TRUE, perl = FALSE, vars = peek_vars(fn
-  = "matches"))
+matches(
+  match,
+  ignore.case = TRUE,
+  perl = FALSE,
+  vars = peek_vars(fn = "matches")
+)
 
-num_range(prefix, range, width = NULL, vars = peek_vars(fn =
-  "num_range"))
+num_range(prefix, range, width = NULL, vars = peek_vars(fn = "num_range"))
 
 all_of(x)
 
@@ -84,16 +85,16 @@ for names that don't exist.
 \details{
 In selection context you can also use these operators:
 \itemize{
-\item \code{-} for selecting a selection.
-\item \code{:} for selecting a range of consecutive variables.
-\item \code{c} for selecting the union of sets of variables.
+\item \code{"-"} for taking the difference between two sets of variables.
+\item \code{":"} for selecting a range of consecutive variables.
+\item \code{"c"} for selecting the union of sets of variables.
 }
 
 The boolean operators were more recently overloaded to operate on
 selections:
 \itemize{
-\item \code{!} for negating a selection.
-\item \code{&} and \code{|} for selecting the intersection or the union of two
+\item \code{"!"} for taking the complement of a set of variables.
+\item \code{"&"} and \code{"|"} for selecting the intersection or the union of two
 sets of variables.
 }
 

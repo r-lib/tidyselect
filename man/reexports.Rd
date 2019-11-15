@@ -14,6 +14,6 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{rlang}{\code{\link[rlang]{quo}}, \code{\link[rlang]{quos}}, \code{\link[rlang]{enquo}}, \code{\link[rlang]{quo_name}}}
+  \item{rlang}{\code{\link[rlang]{enquo}}, \code{\link[rlang]{quo}}, \code{\link[rlang]{quo_name}}, \code{\link[rlang]{quos}}}
 }}
 

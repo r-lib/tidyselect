@@ -5,18 +5,32 @@
 \alias{eval_select}
 \title{Evaluate an expression with tidyselect semantics}
 \usage{
-eval_rename(expr, data, env = caller_env(), ..., strict = TRUE,
-  name_spec = NULL)
+eval_rename(
+  expr,
+  data,
+  env = caller_env(),
+  ...,
+  strict = TRUE,
+  name_spec = NULL
+)
 
-eval_select(expr, data, env = caller_env(), ..., include = NULL,
-  exclude = NULL, strict = TRUE, name_spec = NULL)
+eval_select(
+  expr,
+  data,
+  env = caller_env(),
+  ...,
+  include = NULL,
+  exclude = NULL,
+  strict = TRUE,
+  name_spec = NULL
+)
 }
 \arguments{
 \item{expr}{Defused R code describing a selection according to the
 tidyselect syntax.}
 
 \item{data}{A named list, data frame, or atomic vector.
-Technically, \code{data} can be any vector with \code{names()} and \code{[[}
+Technically, \code{data} can be any vector with \code{names()} and \code{"[["}
 implementations.}
 
 \item{env}{The environment in which to evaluate \code{expr}. Discarded

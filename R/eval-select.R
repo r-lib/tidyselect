@@ -17,7 +17,7 @@
 #' @param expr Defused R code describing a selection according to the
 #'   tidyselect syntax.
 #' @param data A named list, data frame, or atomic vector.
-#'   Technically, `data` can be any vector with `names()` and `[[`
+#'   Technically, `data` can be any vector with `names()` and `"[["`
 #'   implementations.
 #' @param env The environment in which to evaluate `expr`. Discarded
 #'   if `expr` is a [quosure][rlang::enquo].

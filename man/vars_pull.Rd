@@ -7,6 +7,8 @@
 vars_pull(vars, var = -1)
 }
 \arguments{
+\item{vars}{A character vector of existing column names.}
+
 \item{var}{A variable specified as:
 \itemize{
 \item a literal variable name

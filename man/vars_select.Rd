@@ -5,8 +5,13 @@
 \alias{vars_rename}
 \title{Select or rename variables (questioning)}
 \usage{
-vars_select(.vars, ..., .include = character(), .exclude = character(),
-  .strict = TRUE)
+vars_select(
+  .vars,
+  ...,
+  .include = character(),
+  .exclude = character(),
+  .strict = TRUE
+)
 
 vars_rename(.vars, ..., .strict = TRUE)
 }

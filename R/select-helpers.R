@@ -16,15 +16,15 @@
 #'
 #' In selection context you can also use these operators:
 #'
-#' - `-` for selecting a selection.
-#' - `:` for selecting a range of consecutive variables.
-#' - `c` for selecting the union of sets of variables.
+#' - `"-"` for taking the difference between two sets of variables.
+#' - `":"` for selecting a range of consecutive variables.
+#' - `"c"` for selecting the union of sets of variables.
 #'
 #' The boolean operators were more recently overloaded to operate on
 #' selections:
 #'
-#' - `!` for negating a selection.
-#' - `&` and `|` for selecting the intersection or the union of two
+#' - `"!"` for taking the complement of a set of variables.
+#' - `"&"` and `"|"` for selecting the intersection or the union of two
 #'   sets of variables.
 #'
 #' @param match A character vector. If length > 1, the union of the
