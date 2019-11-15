@@ -323,6 +323,82 @@
 </div>
 </div>
 </div>
+<div id="creating-selection-helpers" class="section level2">
+<h2 class="hasAnchor">
+<a href="#creating-selection-helpers" class="anchor"></a>Creating selection helpers</h2>
+<p>Tools like <code><a href="../reference/select_helpers.html">starts_with()</a></code> or <code><a href="../reference/select_helpers.html">contains()</a></code> are called <strong>selection helpers</strong>. These tools inspect the variable names currently available for selection with <code><a href="../reference/peek_vars.html">peek_vars()</a></code>. The variable names are registered automatically by <code><a href="../reference/eval_select.html">eval_select()</a></code> for the duration of the evaluation:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">x &lt;-<span class="st"> </span>rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/nse-defuse.html">expr</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="kw"><a href="../reference/peek_vars.html">peek_vars</a></span>()))</a>
+<a class="sourceLine" id="cb18-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb18-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span>(<span class="kw"><a href="../reference/eval_select.html">eval_select</a></span>(x, <span class="dt">data =</span> mtcars))</a>
+<a class="sourceLine" id="cb18-4" data-line-number="4"><span class="co">#&gt;  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"</span></a>
+<a class="sourceLine" id="cb18-5" data-line-number="5"><span class="co">#&gt; [11] "carb"</span></a></code></pre></div>
+<p>Such properties temporarily available by calling a function like <code><a href="../reference/peek_vars.html">peek_vars()</a></code> are called <strong>descriptors</strong>. Descriptors are useful because they are very easy to compose. For instance, a user could combine <code><a href="../reference/select_helpers.html">starts_with()</a></code> and <code><a href="../reference/select_helpers.html">ends_with()</a></code> without having to worry about passing the variables or the environment in which they can be found:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">my_selector &lt;-<span class="st"> </span><span class="cf">function</span>(prefix, suffix) {</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="kw"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span>(</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">    <span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(prefix),</a>
+<a class="sourceLine" id="cb19-4" data-line-number="4">    <span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(suffix)</a>
+<a class="sourceLine" id="cb19-5" data-line-number="5">  )</a>
+<a class="sourceLine" id="cb19-6" data-line-number="6">}</a>
+<a class="sourceLine" id="cb19-7" data-line-number="7"></a>
+<a class="sourceLine" id="cb19-8" data-line-number="8">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">my_selector</span>(<span class="st">"Sepal"</span>, <span class="st">"Length"</span>))</a>
+<a class="sourceLine" id="cb19-9" data-line-number="9"><span class="co">#&gt; # A tibble: 150 x 1</span></a>
+<a class="sourceLine" id="cb19-10" data-line-number="10"><span class="co">#&gt;   Sepal.Length</span></a>
+<a class="sourceLine" id="cb19-11" data-line-number="11"><span class="co">#&gt;          &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb19-12" data-line-number="12"><span class="co">#&gt; 1          5.1</span></a>
+<a class="sourceLine" id="cb19-13" data-line-number="13"><span class="co">#&gt; 2          4.9</span></a>
+<a class="sourceLine" id="cb19-14" data-line-number="14"><span class="co">#&gt; 3          4.7</span></a>
+<a class="sourceLine" id="cb19-15" data-line-number="15"><span class="co">#&gt; 4          4.6</span></a>
+<a class="sourceLine" id="cb19-16" data-line-number="16"><span class="co">#&gt; # … with 146 more rows</span></a></code></pre></div>
+<p>To create a new selection helper:</p>
+<ol style="list-style-type: decimal">
+<li><p>Inspect the variables with <code><a href="../reference/peek_vars.html">peek_vars()</a></code>. By convention this should be done in an argument that the user can override.</p></li>
+<li><p>Return one of the supported data types: vector of names or positions (the latter is recommended, see section on handling duplicate variables), or a predicate function.</p></li>
+</ol>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">if_width &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">vars =</span> <span class="kw"><a href="../reference/peek_vars.html">peek_vars</a></span>(<span class="dt">fn =</span> <span class="st">"if_width"</span>)) {</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">  vars[<span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(vars) <span class="op">==</span><span class="st"> </span>n]</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">}</a>
+<a class="sourceLine" id="cb20-4" data-line-number="4"></a>
+<a class="sourceLine" id="cb20-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">if_width</span>(<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb20-6" data-line-number="6"><span class="co">#&gt; # A tibble: 32 x 4</span></a>
+<a class="sourceLine" id="cb20-7" data-line-number="7"><span class="co">#&gt;      hp    wt    vs    am</span></a>
+<a class="sourceLine" id="cb20-8" data-line-number="8"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb20-9" data-line-number="9"><span class="co">#&gt; 1   110  2.62     0     1</span></a>
+<a class="sourceLine" id="cb20-10" data-line-number="10"><span class="co">#&gt; 2   110  2.88     0     1</span></a>
+<a class="sourceLine" id="cb20-11" data-line-number="11"><span class="co">#&gt; 3    93  2.32     1     1</span></a>
+<a class="sourceLine" id="cb20-12" data-line-number="12"><span class="co">#&gt; 4   110  3.22     1     0</span></a>
+<a class="sourceLine" id="cb20-13" data-line-number="13"><span class="co">#&gt; # … with 28 more rows</span></a></code></pre></div>
+<p>The <code>fn</code> argument makes the error message more informative when the helper is used in the wrong context:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">mtcars[<span class="kw">if_width</span>(<span class="dv">2</span>)]</a>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; Error: `if_width()` must be used within a *selecting* function.</span></a></code></pre></div>
+<p>Because the variables are inspected in a default argument, it is easy to override. This is mostly useful in unit tests:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">if_width</span>(<span class="dv">2</span>, <span class="dt">vars =</span> <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(mtcars))</a>
+<a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#&gt; [1] "hp" "wt" "vs" "am"</span></a></code></pre></div>
+<div id="handling-duplicate-variables" class="section level3">
+<h3 class="hasAnchor">
+<a href="#handling-duplicate-variables" class="anchor"></a>Handling duplicate variables</h3>
+<p>However our current implementation of <code>if_width()</code> has a design flaw. It doesn’t work properly when the input has duplicate names:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">dups &lt;-<span class="st"> </span>vctrs<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/vctrs/man/new_data_frame.html">new_data_frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="dt">foo =</span> <span class="dv">1</span>, <span class="dt">quux =</span> <span class="dv">2</span>, <span class="dt">foo =</span> <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb23-2" data-line-number="2"></a>
+<a class="sourceLine" id="cb23-3" data-line-number="3">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">if_width</span>(<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb23-4" data-line-number="4"><span class="co">#&gt;   foo</span></a>
+<a class="sourceLine" id="cb23-5" data-line-number="5"><span class="co">#&gt; 1   1</span></a></code></pre></div>
+<p>Supporting duplicates is recommended because data frames in the wild don’t always have unique names. Also, tidyselect can be used with vectors that don’t require unique names, and it might be extended to allow recoding character vectors in the future. In these cases, handling duplicates is part of the normal usage for selection helpers.</p>
+<p>To support duplicates it is recommended to return vectors of positions from selection helpers rather than vector of names. Fixing <code>if_width()</code> is easy:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">if_width &lt;-<span class="st"> </span><span class="cf">function</span>(n, <span class="dt">vars =</span> <span class="kw"><a href="../reference/peek_vars.html">peek_vars</a></span>(<span class="dt">fn =</span> <span class="st">"if_width"</span>)) {</a>
+<a class="sourceLine" id="cb24-2" data-line-number="2">  <span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/nchar.html">nchar</a></span>(vars) <span class="op">==</span><span class="st"> </span>n)</a>
+<a class="sourceLine" id="cb24-3" data-line-number="3">}</a></code></pre></div>
+<p>If the input is a data frame, the user is now informed that their selection should not contain duplicates:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">if_width</span>(<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt; Error: Names must be unique.</span></a></code></pre></div>
+<p>And all the duplicates are selected if the input is not a data frame, as expected:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(dups) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw">if_width</span>(<span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb26-2" data-line-number="2"><span class="co">#&gt; $foo</span></a>
+<a class="sourceLine" id="cb26-3" data-line-number="3"><span class="co">#&gt; [1] 1</span></a>
+<a class="sourceLine" id="cb26-4" data-line-number="4"><span class="co">#&gt; </span></a>
+<a class="sourceLine" id="cb26-5" data-line-number="5"><span class="co">#&gt; $foo</span></a>
+<a class="sourceLine" id="cb26-6" data-line-number="6"><span class="co">#&gt; [1] 3</span></a></code></pre></div>
+</div>
+</div>
 <div class="footnotes">
 <hr>
 <ol>
@@ -338,6 +414,7 @@
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#before-we-start">Before we start</a></li>
       <li><a href="#the-selection-evaluators">The selection evaluators</a></li>
+      <li><a href="#creating-selection-helpers">Creating selection helpers</a></li>
       </ul>
 </div>
       </div>

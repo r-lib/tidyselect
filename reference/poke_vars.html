@@ -163,7 +163,7 @@ context.</p></li>
 set of variables. It returns the previous variables invisibly and
 it is your responsibility to restore them after you are
 done. This is for expert use only.</p></li>
-<li><p><code>peek_vars()</code> returns the variables currently registered.</p></li>
+<li><p><code><a href='peek_vars.html'>peek_vars()</a></code> returns the variables currently registered.</p></li>
 <li><p><code>has_vars()</code> returns <code>TRUE</code> if a variable context has been set,
 <code>FALSE</code> otherwise.</p></li>
 </ul>
@@ -172,8 +172,6 @@ done. This is for expert use only.</p></li>
     </div>
 
     <pre class="usage"><span class='fu'>poke_vars</span>(<span class='no'>vars</span>)
-
-<span class='fu'>peek_vars</span>(<span class='no'>...</span>, <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>scoped_vars</span>(<span class='no'>vars</span>, <span class='kw'>frame</span> <span class='kw'>=</span> <span class='fu'>caller_env</span>())
 
@@ -187,16 +185,6 @@ done. This is for expert use only.</p></li>
     <tr>
       <th>vars</th>
       <td><p>A character vector of variable names.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>These dots are for future extensions and must be empty.</p></td>
-    </tr>
-    <tr>
-      <th>fn</th>
-      <td><p>The name of the function to use in error messages when
-the helper is used in the wrong context. If not supplied, a
-generic error message is used instead.</p></td>
     </tr>
     <tr>
       <th>frame</th>
@@ -213,13 +201,17 @@ context.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>For <code>poke_vars()</code> and <code>scoped_vars()</code>, the old variables
-invisibly. For <code>peek_vars()</code>, the variables currently
+invisibly. For <code><a href='peek_vars.html'>peek_vars()</a></code>, the variables currently
 registered.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p>peek_vars</p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>poke_vars</span>(<span class='no'>letters</span>)
-<span class='fu'>peek_vars</span>()</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+<span class='fu'><a href='peek_vars.html'>peek_vars</a></span>()</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 #&gt; [20] "t" "u" "v" "w" "x" "y" "z"</div><div class='input'>
 <span class='co'># Now that the variables are registered, the helpers can figure out</span>
 <span class='co'># the positions of elements within the variable vector:</span>
@@ -235,7 +227,7 @@ registered.</p>
 <span class='fu'>fn</span>(<span class='no'>letters</span>)</div><div class='output co'>#&gt; [1] 4</div><div class='input'><span class='fu'>fn</span>(<span class='no'>letters</span>[<span class='fl'>3</span>:<span class='fl'>5</span>])</div><div class='output co'>#&gt; [1] 2</div><div class='input'>
 <span class='co'># The previous variables are still registered after fn() was</span>
 <span class='co'># called:</span>
-<span class='fu'>peek_vars</span>()</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
+<span class='fu'><a href='peek_vars.html'>peek_vars</a></span>()</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 #&gt; [20] "t" "u" "v" "w" "x" "y" "z"</div><div class='input'>
 
 <span class='co'># It is recommended to use the scoped variant as it restores the</span>
@@ -261,6 +253,8 @@ registered.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • tidyselect</title>
+<title>Peek at variables in the selection context — peek_vars • tidyselect</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,17 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Peek at variables in the selection context — peek_vars" />
+
+<meta property="og:description" content="peek_vars() returns the vector of names of the variables
+currently available for selection. Read the Get started for
+examples of how to create selection helpers with peek_vars().
+The variable names in a selection context are registered
+automatically by eval_select() and eval_rename() for the
+duration of the evaluation. peek_vars() is the glue that connects
+selection helpers to the current selection
+context." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -50,7 +60,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -125,78 +135,51 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Peek at variables in the selection context</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/tidyselect/blob/master/R/vars.R'><code>R/vars.R</code></a></small>
+    <div class="hidden name"><code>peek_vars.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p><code>peek_vars()</code> returns the vector of names of the variables
+currently available for selection. Read the <a href='https://tidyselect.r-lib.org/articles/tidyselect.html'>Get started</a> for
+examples of how to create selection helpers with <code>peek_vars()</code>.</p>
+<p>The variable names in a selection context are registered
+automatically by <code><a href='eval_select.html'>eval_select()</a></code> and <code><a href='eval_select.html'>eval_rename()</a></code> for the
+duration of the evaluation. <code>peek_vars()</code> is the glue that connects
+<a href='select_helpers.html'>selection helpers</a> to the current selection
+context.</p>
+    
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
-
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-selection-helpers" class="hasAnchor"><a href="#section-selection-helpers" class="anchor"></a>Selection helpers</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="select_helpers.html">starts_with()</a></code> <code><a href="select_helpers.html">ends_with()</a></code> <code><a href="select_helpers.html">contains()</a></code> <code><a href="select_helpers.html">matches()</a></code> <code><a href="select_helpers.html">num_range()</a></code> <code><a href="select_helpers.html">all_of()</a></code> <code><a href="select_helpers.html">any_of()</a></code> <code><a href="select_helpers.html">everything()</a></code> <code><a href="select_helpers.html">last_col()</a></code> </p>
-        </td>
-        <td><p>Select helpers</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-evaluate-expressions-with-tidyselect-rules" class="hasAnchor"><a href="#section-evaluate-expressions-with-tidyselect-rules" class="anchor"></a>Evaluate expressions with tidyselect rules</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="eval_select.html">eval_rename()</a></code> <code><a href="eval_select.html">eval_select()</a></code> </p>
-        </td>
-        <td><p>Evaluate an expression with tidyselect semantics</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-register-tidyselect-variables" class="hasAnchor"><a href="#section-register-tidyselect-variables" class="anchor"></a>Register tidyselect variables</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="poke_vars.html">poke_vars()</a></code> <code><a href="poke_vars.html">scoped_vars()</a></code> <code><a href="poke_vars.html">with_vars()</a></code> <code><a href="poke_vars.html">has_vars()</a></code> </p>
-        </td>
-        <td><p>Replace or get current variables</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="peek_vars.html">peek_vars()</a></code> </p>
-        </td>
-        <td><p>Peek at variables in the selection context</p></td>
-      </tr>
-    </tbody>
+    <pre class="usage"><span class='fu'>peek_vars</span>(<span class='no'>...</span>, <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>...</th>
+      <td><p>These dots are for future extensions and must be empty.</p></td>
+    </tr>
+    <tr>
+      <th>fn</th>
+      <td><p>The name of the function to use in error messages when
+the helper is used in the wrong context. If not supplied, a
+generic error message is used instead.</p></td>
+    </tr>
     </table>
-  </div>
+    
 
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-selection-helpers">Selection helpers</a></li>
-      <li><a href="#section-evaluate-expressions-with-tidyselect-rules">Evaluate expressions with tidyselect rules</a></li>
-      <li><a href="#section-register-tidyselect-variables">Register tidyselect variables</a></li>
-    </ul>
+      <li><a href="#arguments">Arguments</a></li>
+                </ul>
+
   </div>
 </div>
 
