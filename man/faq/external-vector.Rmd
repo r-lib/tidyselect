@@ -4,7 +4,7 @@
 
 ## Ambiguity between columns and external variables
 
-In selecting functions like `dplyr::select()` or `tidyr::pivot_longer()`,
+With selecting functions like `dplyr::select()` or `tidyr::pivot_longer()`,
 you can refer to variables by name:
 
 ```{r}
@@ -30,7 +30,7 @@ result <- mtcars %>% select(vars)
 
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
-vectors because they introduce an ambiguity. Imagine that the data
+vectors because they introduce ambiguity. Imagine that the data
 frame contains a column with the same name as your external variable.
 
 ```{r}

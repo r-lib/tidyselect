@@ -7,7 +7,7 @@
 \description{
 \subsection{Ambiguity between columns and external variables}{
 
-In selecting functions like \code{dplyr::select()} or
+With selecting functions like \code{dplyr::select()} or
 \code{tidyr::pivot_longer()}, you can refer to variables by name:\if{html}{\out{<div class="r">}}\preformatted{mtcars \%>\% select(cyl, am, vs)
 #> # A tibble: 32 x 3
 #>     cyl    am    vs
@@ -41,7 +41,7 @@ result <- mtcars \%>\% select(vars)
 
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
-vectors because they introduce an ambiguity. Imagine that the data frame
+vectors because they introduce ambiguity. Imagine that the data frame
 contains a column with the same name as your external variable.\if{html}{\out{<div class="r">}}\preformatted{some_df <- mtcars
 some_df$vars <- 1:nrow(mtcars)
 }\if{html}{\out{</div>}}
