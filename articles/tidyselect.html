@@ -369,7 +369,8 @@
 <a class="sourceLine" id="cb20-13" data-line-number="13"><span class="co">#&gt; # … with 28 more rows</span></a></code></pre></div>
 <p>The <code>fn</code> argument makes the error message more informative when the helper is used in the wrong context:</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">mtcars[<span class="kw">if_width</span>(<span class="dv">2</span>)]</a>
-<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; Error: `if_width()` must be used within a *selecting* function.</span></a></code></pre></div>
+<a class="sourceLine" id="cb21-2" data-line-number="2"><span class="co">#&gt; Error: `if_width()` must be used within a *selecting* function.</span></a>
+<a class="sourceLine" id="cb21-3" data-line-number="3"><span class="co">#&gt; ℹ See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span></a></code></pre></div>
 <p>Because the variables are inspected in a default argument, it is easy to override. This is mostly useful in unit tests:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw">if_width</span>(<span class="dv">2</span>, <span class="dt">vars =</span> <span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(mtcars))</a>
 <a class="sourceLine" id="cb22-2" data-line-number="2"><span class="co">#&gt; [1] "hp" "wt" "vs" "am"</span></a></code></pre></div>

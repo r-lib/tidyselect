@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • tidyselect</title>
+<title>FAQ - Error: Must be used within a <em>selecting</em> function — faq-selection-context • tidyselect</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,31 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="FAQ - Error: Must be used within a <em>selecting</em> function — faq-selection-context" />
+
+<meta property="og:description" content="Functions like starts_with(), contains() or matches() are
+selection helpers that only work in a selection context.
+Examples of valid selection contexts are:
+Inside dplyr::select().
+The cols argument of tidyr::pivot_longer().
+
+
+Using a selection helper anywhere else results in an error:starts_with(&quot;foo&quot;)
+#&amp;gt; Error: `starts_with()` must be used within a *selecting* function.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.
+
+mtcars[contains(&quot;foo&quot;)]
+#&amp;gt; Error: `contains()` must be used within a *selecting* function.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.
+
+subset(mtcars, select = matches(&quot;foo&quot;))
+#&amp;gt; Error: `matches()` must be used within a *selecting* function.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.
+
+If you see this error, you’ve probably used a selection helper in the
+wrong place, possibly as the result of a typo (e.g. misplaced comma or
+wrong argument name)." />
+<meta name="twitter:card" content="summary" />
 
 
 
@@ -50,7 +74,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -125,93 +149,48 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>FAQ - Error: Must be used within a <em>selecting</em> function</h1>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/tidyselect/blob/master/R/faq.R'><code>R/faq.R</code></a></small>
+    <div class="hidden name"><code>faq-selection-context.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    
+    <p>Functions like <code><a href='select_helpers.html'>starts_with()</a></code>, <code><a href='select_helpers.html'>contains()</a></code> or <code><a href='select_helpers.html'>matches()</a></code> are
+<strong>selection helpers</strong> that only work in a selection context.</p>
+<p>Examples of valid selection contexts are:</p><ul>
+<li><p>Inside <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>.</p></li>
+<li><p>The <code>cols</code> argument of <code>tidyr::pivot_longer()</code>.</p></li>
+</ul>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+<p>Using a selection helper anywhere else results in an error:<div class="r"></p><pre>starts_with("foo")
+#&gt; Error: `starts_with()` must be used within a *selecting* function.
+#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-selection-helpers" class="hasAnchor"><a href="#section-selection-helpers" class="anchor"></a>Selection helpers</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
+mtcars[contains("foo")]
+#&gt; Error: `contains()` must be used within a *selecting* function.
+#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.
+
+subset(mtcars, select = matches("foo"))
+#&gt; Error: `matches()` must be used within a *selecting* function.
+#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.
+</pre><p></div></p>
+<p>If you see this error, you’ve probably used a selection helper in the
+wrong place, possibly as the result of a typo (e.g. misplaced comma or
+wrong argument name).</p>
+    
+    </div>
+
         
-        <td>
-          <p><code><a href="select_helpers.html">starts_with()</a></code> <code><a href="select_helpers.html">ends_with()</a></code> <code><a href="select_helpers.html">contains()</a></code> <code><a href="select_helpers.html">matches()</a></code> <code><a href="select_helpers.html">num_range()</a></code> <code><a href="select_helpers.html">all_of()</a></code> <code><a href="select_helpers.html">any_of()</a></code> <code><a href="select_helpers.html">everything()</a></code> <code><a href="select_helpers.html">last_col()</a></code> </p>
-        </td>
-        <td><p>Select helpers</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-evaluate-expressions-with-tidyselect-rules" class="hasAnchor"><a href="#section-evaluate-expressions-with-tidyselect-rules" class="anchor"></a>Evaluate expressions with tidyselect rules</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="eval_select.html">eval_rename()</a></code> <code><a href="eval_select.html">eval_select()</a></code> </p>
-        </td>
-        <td><p>Evaluate an expression with tidyselect semantics</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-peek-at-current-selection-variables" class="hasAnchor"><a href="#section-peek-at-current-selection-variables" class="anchor"></a>Peek at current selection variables</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="peek_vars.html">peek_vars()</a></code> </p>
-        </td>
-        <td><p>Peek at variables in the selection context</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-faq" class="hasAnchor"><a href="#section-faq" class="anchor"></a>FAQ</h2>
-          <p class="section-desc"></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="faq-external-vector.html">faq-external-vector</a></code> </p>
-        </td>
-        <td><p>FAQ - Note: Using an external vector in selections is brittle</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="faq-selection-context.html">faq-selection-context</a></code> </p>
-        </td>
-        <td><p>FAQ - Error: Must be used within a <em>selecting</em> function</p></td>
-      </tr>
-    </tbody>
-    </table>
+
   </div>
-
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-selection-helpers">Selection helpers</a></li>
-      <li><a href="#section-evaluate-expressions-with-tidyselect-rules">Evaluate expressions with tidyselect rules</a></li>
-      <li><a href="#section-peek-at-current-selection-variables">Peek at current selection variables</a></li>
-      <li><a href="#section-faq">FAQ</a></li>
-    </ul>
+                </ul>
+
   </div>
 </div>
 

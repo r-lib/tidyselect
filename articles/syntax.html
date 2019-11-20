@@ -412,8 +412,8 @@
 <p>Note that currently, env-vars are still allowed in some data-expressions, for compatibility. However this is in the process of being deprecated and you should see a note recommending to use <code><a href="../reference/select_helpers.html">all_of()</a></code> instead. This note will become a deprecation warning in the future, and then an error.</p>
 <div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_pos</span>(cyl_pos)</a>
 <a class="sourceLine" id="cb33-2" data-line-number="2"><span class="co">#&gt; Note: Using an external vector in selections is brittle.</span></a>
-<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">#&gt; ℹ If the data contains `cyl_pos` it will be selected instead.</span></a>
-<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; ℹ Use `all_of(cyl_pos)` instead of `cyl_pos` to silence this message.</span></a>
+<a class="sourceLine" id="cb33-3" data-line-number="3"><span class="co">#&gt; ℹ Use `all_of(cyl_pos)` instead of `cyl_pos` to silence this message.</span></a>
+<a class="sourceLine" id="cb33-4" data-line-number="4"><span class="co">#&gt; ℹ See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></a>
 <a class="sourceLine" id="cb33-5" data-line-number="5"><span class="co">#&gt; This message is displayed once per session.</span></a>
 <a class="sourceLine" id="cb33-6" data-line-number="6"><span class="co">#&gt; cyl </span></a>
 <a class="sourceLine" id="cb33-7" data-line-number="7"><span class="co">#&gt;   2</span></a></code></pre></div>

@@ -7,6 +7,12 @@
     <loc>https://tidyselect.r-lib.org/reference/eval_select.html</loc>
   </url>
   <url>
+    <loc>https://tidyselect.r-lib.org/reference/faq-external-vector.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/reference/faq-selection-context.html</loc>
+  </url>
+  <url>
     <loc>https://tidyselect.r-lib.org/reference/one_of.html</loc>
   </url>
   <url>
