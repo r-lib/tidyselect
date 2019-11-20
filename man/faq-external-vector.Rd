@@ -31,7 +31,8 @@ mtcars \%>\% select(mpg:disp)
 
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
-you that selecting with an external variable is brittle.\if{html}{\out{<div class="r">}}\preformatted{vars <- c("cyl", "am", "vs")
+you that selecting with an external variable is ambiguous because it is
+not clear whether you want a data frame column or an external object.\if{html}{\out{<div class="r">}}\preformatted{vars <- c("cyl", "am", "vs")
 result <- mtcars \%>\% select(vars)
 #> Note: Using an external vector in selections is brittle.
 #> i Use `all_of(vars)` instead of `vars` to silence this message.

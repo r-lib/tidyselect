@@ -15,7 +15,9 @@ mtcars %>% select(mpg:disp)
 
 For historical reasons, it is also possible to refer an external
 vector of variable names. You get the correct result, but with a note
-informing you that selecting with an external variable is brittle.
+informing you that selecting with an external variable is ambiguous
+because it is not clear whether you want a data frame column or an
+external object.
 
 ```{r, echo = FALSE}
 # Work around roxygen not evaluating in global
