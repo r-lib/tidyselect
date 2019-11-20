@@ -267,10 +267,11 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   }
 
   if (needs_advice(env)) {
+    # Please keep in sync with faq.R.
     msg <- glue_c(
       "Note: Using an external vector in selections is brittle.",
-      i = "If the data contains `{name}` it will be selected instead.",
-      i = "Use `all_of({name})` instead of `{name}` to silence this message."
+      i = "Use `all_of({name})` instead of `{name}` to silence this message.",
+      i = "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
     )
     id <- paste0("strict_lookup_", name)
     inform_once(msg, id)

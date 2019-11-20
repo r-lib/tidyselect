@@ -27,3 +27,7 @@ reference:
 - title: Peek at current selection variables
   contents:
   - peek_vars
+
+- title: FAQ
+  contents:
+  - starts_with("faq")

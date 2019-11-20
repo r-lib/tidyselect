@@ -1,0 +1,25 @@
+
+```{r, child = "setup.Rmd", include = FALSE}
+```
+
+Functions like `starts_with()`, `contains()` or `matches()` are
+__selection helpers__ that only work in a selection context.
+
+Examples of valid selection contexts are:
+
+- Inside `dplyr::select()`.
+- The `cols` argument of `tidyr::pivot_longer()`.
+
+Using a selection helper anywhere else results in an error:
+
+```{r, error = TRUE}
+starts_with("foo")
+
+mtcars[contains("foo")]
+
+subset(mtcars, select = matches("foo"))
+```
+
+If you see this error, you've probably used a selection helper in the
+wrong place, possibly as the result of a typo (e.g. misplaced comma or
+wrong argument name).
