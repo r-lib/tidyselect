@@ -62,20 +62,20 @@ stop_index <- function(..., .subclass = NULL) {
 }
 
 #' @export
-cnd_issue.tidyselect_error_index_bad_type <- function(cnd, ...) {
+cnd_header.tidyselect_error_index_bad_type <- function(cnd, ...) {
   switch(tidyselect_type(cnd),
-    select = cnd_issue_index_bad_type_select(cnd, ...),
-    rename = cnd_issue_index_bad_type_rename(cnd, ...)
+    select = cnd_header_index_bad_type_select(cnd, ...),
+    rename = cnd_header_index_bad_type_rename(cnd, ...)
   )
 }
-cnd_issue_index_bad_type_select <- function(cnd, ...) {
+cnd_header_index_bad_type_select <- function(cnd, ...) {
   if (cnd$allow_positions) {
     "Must select with column names or positions."
   } else {
     "Must select with column names."
   }
 }
-cnd_issue_index_bad_type_rename <- function(cnd, ...) {
+cnd_header_index_bad_type_rename <- function(cnd, ...) {
   if (cnd$allow_positions) {
     "Must rename with column names or positions."
   } else {
@@ -84,20 +84,20 @@ cnd_issue_index_bad_type_rename <- function(cnd, ...) {
 }
 
 #' @export
-cnd_bullets.tidyselect_error_index_bad_type <- function(cnd, ...) {
-  cnd_bullets(cnd$parent)
+cnd_body.tidyselect_error_index_bad_type <- function(cnd, ...) {
+  cnd_body(cnd$parent)
 }
 
 #' @export
-cnd_issue.tidyselect_error_index_oob <- function(cnd, ...) {
+cnd_header.tidyselect_error_index_oob <- function(cnd, ...) {
   switch(tidyselect_type(cnd),
     select = "Must select existing columns.",
     rename = "Must rename existing columns."
   )
 }
 #' @export
-cnd_bullets.tidyselect_error_index_oob <- function(cnd, ...) {
-  cnd_bullets(cnd$parent)
+cnd_body.tidyselect_error_index_oob <- function(cnd, ...) {
+  cnd_body(cnd$parent)
 }
 
 stop_names_must_be_unique <- function(..., class = NULL) {
@@ -107,7 +107,7 @@ stop_names_must_be_unique <- function(..., class = NULL) {
   )
 }
 #' @export
-cnd_issue.tidyselect_error_names_must_be_unique <- function(cnd, ...) {
+cnd_header.tidyselect_error_names_must_be_unique <- function(cnd, ...) {
   "Names must be unique."
 }
 

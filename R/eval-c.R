@@ -62,9 +62,9 @@ combine_names <- function(x, tag, name_spec, uniquely_named) {
   if (uniquely_named && is_data_dups(x)) {
     bullets <- function(cnd, ...) {
       name <- as_string(tag)
-      glue_c(x = "Can't rename duplicate variables to `{name}`.")
+      glue_bullet(x = "Can't rename duplicate variables to `{name}`.")
     }
-    stop_names_must_be_unique(cnd_bullets = bullets)
+    stop_names_must_be_unique(body = bullets)
   }
 
   vctrs::vec_c(!!tag := x, .name_spec = name_spec)

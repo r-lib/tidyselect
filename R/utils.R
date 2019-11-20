@@ -133,6 +133,9 @@ glue_c <- function(..., env = caller_env()) {
 glue_line <- function(..., env = caller_env()) {
   paste(glue_c(..., env = env), collapse = "\n")
 }
+glue_bullet <- function(..., .env = caller_env()) {
+  format_error_bullets(glue_c(..., env = .env))
+}
 
 flat_map_int <- function(.x, .fn, ...) {
   out <- map(.x, .fn, ...)
@@ -268,7 +271,7 @@ inform_once <- function(msg, id = msg) {
 
   msg <- issue
   if (length(bullets)) {
-    bullets <- format_bullets(bullets)
+    bullets <- format_error_bullets(bullets)
     msg <- paste_line(msg, bullets)
   }
 
