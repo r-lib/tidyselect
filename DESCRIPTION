@@ -28,7 +28,7 @@ Suggests:
     testthat (>= 2.3.0),
     tibble (>= 2.1.3)
 remotes:
-    r-lib/vctrs
+    r-lib/vctrs,
     r-lib/rlang
 License: GPL-3
 Encoding: UTF-8
