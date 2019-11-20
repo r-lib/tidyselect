@@ -269,7 +269,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   if (needs_advice(env)) {
     # Please keep in sync with faq.R.
     msg <- glue_c(
-      "Note: Using an external vector in selections is brittle.",
+      "Note: Using an external vector in selections is ambiguous.",
       i = "Use `all_of({name})` instead of `{name}` to silence this message.",
       i = "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
     )

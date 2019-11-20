@@ -6,7 +6,7 @@
 #' @encoding UTF-8
 NULL
 
-#' FAQ - Note: Using an external vector in selections is brittle
+#' FAQ - Note: Using an external vector in selections is ambiguous
 #'
 #' @includeRmd man/faq/external-vector.Rmd
 #'

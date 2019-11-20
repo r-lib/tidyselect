@@ -129,7 +129,7 @@ test_that("symbol lookup outside data informs caller about better practice", {
 test_that("symbol evaluation only informs once", {
   scoped_options(tidyselect_verbosity = "verbose")
   `_identifier` <- 1
-  expect_message(select_pos(iris, `_identifier`), "brittle")
+  expect_message(select_pos(iris, `_identifier`), "ambiguous")
   expect_message(select_pos(iris, `_identifier`), regexp = NA)
 })
 
@@ -140,7 +140,7 @@ test_that("symbol evaluation informs from global environment but not packages", 
   }
 
   environment(fn) <- env(global_env())
-  expect_message(fn("from-global-env", select_pos), "brittle")
+  expect_message(fn("from-global-env", select_pos), "ambiguous")
 
   environment(fn) <- ns_env("rlang")
   expect_message(fn("from-ns-env", select_pos), NA)
