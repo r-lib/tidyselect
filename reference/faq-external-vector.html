@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FAQ - Note: Using an external vector in selections is brittle — faq-external-vector • tidyselect</title>
+<title>FAQ - Note: Using an external vector in selections is ambiguous — faq-external-vector • tidyselect</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -32,7 +32,7 @@
 
 
 
-<meta property="og:title" content="FAQ - Note: Using an external vector in selections is brittle — faq-external-vector" />
+<meta property="og:title" content="FAQ - Note: Using an external vector in selections is ambiguous — faq-external-vector" />
 
 <meta property="og:description" content="
 Ambiguity between columns and external variables
@@ -64,7 +64,7 @@ of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
 not clear whether you want a data frame column or an external object.vars &amp;lt;- c(&quot;cyl&quot;, &quot;am&quot;, &quot;vs&quot;)
 result &amp;lt;- mtcars %&amp;gt;% select(vars)
-#&amp;gt; Note: Using an external vector in selections is brittle.
+#&amp;gt; Note: Using an external vector in selections is ambiguous.
 #&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
 #&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
 #&amp;gt; This message is displayed once per session.
@@ -207,7 +207,7 @@ the deprecation process.
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>FAQ - Note: Using an external vector in selections is brittle</h1>
+    <h1>FAQ - Note: Using an external vector in selections is ambiguous</h1>
     <small class="dont-index">Source: <a href='https://github.com/r-lib/tidyselect/blob/master/R/faq.R'><code>R/faq.R</code></a></small>
     <div class="hidden name"><code>faq-external-vector.Rd</code></div>
     </div>
@@ -244,7 +244,7 @@ of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
 not clear whether you want a data frame column or an external object.<div class="r"></p><pre>vars &lt;- c("cyl", "am", "vs")
 result &lt;- mtcars %&gt;% select(vars)
-#&gt; Note: Using an external vector in selections is brittle.
+#&gt; Note: Using an external vector in selections is ambiguous.
 #&gt; i Use `all_of(vars)` instead of `vars` to silence this message.
 #&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.
 #&gt; This message is displayed once per session.
