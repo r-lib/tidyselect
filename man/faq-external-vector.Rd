@@ -3,7 +3,7 @@
 \encoding{UTF-8}
 \name{faq-external-vector}
 \alias{faq-external-vector}
-\title{Note: Using an external vector in selections is brittle}
+\title{FAQ - Note: Using an external vector in selections is brittle}
 \description{
 \subsection{Ambiguity between columns and external variables}{
 

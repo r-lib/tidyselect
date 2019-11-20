@@ -1,4 +1,4 @@
-#' Error: Must be used within a *selecting* function
+#' FAQ - Error: Must be used within a *selecting* function
 #'
 #' @includeRmd man/faq/selection-context.Rmd
 #'
@@ -6,7 +6,7 @@
 #' @encoding UTF-8
 NULL
 
-#' Note: Using an external vector in selections is brittle
+#' FAQ - Note: Using an external vector in selections is brittle
 #'
 #' @includeRmd man/faq/external-vector.Rmd
 #'
