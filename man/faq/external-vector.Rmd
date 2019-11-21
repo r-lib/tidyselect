@@ -19,12 +19,6 @@ informing you that selecting with an external variable is ambiguous
 because it is not clear whether you want a data frame column or an
 external object.
 
-```{r, echo = FALSE}
-# Work around roxygen not evaluating in global
-# https://github.com/r-lib/roxygen2/issues/972
-options(tidyselect_verbosity = "verbose")
-```
-
 ```{r}
 vars <- c("cyl", "am", "vs")
 result <- mtcars %>% select(vars)
