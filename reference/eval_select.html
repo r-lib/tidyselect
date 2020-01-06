@@ -221,14 +221,14 @@ include or exclude from the selection.</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A named vector of positions, one for each of the selected
-elements.</p>
+    <p>A named vector of numeric locations, one for each of the
+selected elements.</p>
 <p>The names are normally the same as in the input data, except when
 the user supplied named selections with <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>. In the latter
 case, the names reflect the new names chosen by the user.</p>
 <p>A given element may be selected multiple times under different
 names, in which case the vector might contain duplicate
-positions.</p>
+locations.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -259,8 +259,8 @@ description of the rules of evaluation.</p></div>
 <span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>eval_rename</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='no'>mpg</span>), <span class='no'>mtcars</span>))</div><div class='output co'>#&gt; Error : All renaming inputs must be named.</div><div class='input'><span class='fu'>eval_rename</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>foo</span> <span class='kw'>=</span> <span class='no'>mpg</span>)), <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; foo 
 #&gt;   1 </div><div class='input'>
 
-<span class='co'># The evaluators return a named vector of positions. Here are</span>
-<span class='co'># examples of using these position vectors to implement `select()`</span>
+<span class='co'># The evaluators return a named vector of locations. Here are</span>
+<span class='co'># examples of using these location vectors to implement `select()`</span>
 <span class='co'># and `rename()`:</span>
 <span class='no'>select</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>.x</span>, <span class='no'>...</span>) {
   <span class='no'>pos</span> <span class='kw'>&lt;-</span> <span class='fu'>eval_select</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>...</span>)), <span class='no'>.x</span>)

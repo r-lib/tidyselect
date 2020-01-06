@@ -80,8 +80,8 @@ forces you to be specific about where to find vars:vars
 #&amp;gt; [1] &quot;cyl&quot; &quot;am&quot;  &quot;vs&quot;
 
 some_df$vars
-#&amp;gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-#&amp;gt; [24] 24 25 26 27 28 29 30 31 32
+#&amp;gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
+#&amp;gt; [29] 29 30 31 32
 
 In a selection context however, the column wins:some_df %&amp;gt;% select(vars)
 #&amp;gt; # A tibble: 32 x 1
@@ -260,8 +260,8 @@ forces you to be specific about where to find <code>vars</code>:<div class="r"><
 #&gt; [1] "cyl" "am"  "vs"
 
 some_df$vars
-#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-#&gt; [24] 24 25 26 27 28 29 30 31 32
+#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
+#&gt; [29] 29 30 31 32
 </pre><p></div></p>
 <p>In a selection context however, the column wins:<div class="r"></p><pre>some_df %&gt;% select(vars)
 #&gt; # A tibble: 32 x 1
