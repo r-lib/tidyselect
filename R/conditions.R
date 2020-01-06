@@ -1,26 +1,26 @@
 
-subclass_index_errors <- function(expr, allow_positions = TRUE, type = "select") {
+subclass_index_errors <- function(expr, allow_scalar_location = TRUE, type = "select") {
   tryCatch(
     sanitise_base_errors(expr),
-    vctrs_error_index_oob_names = function(cnd) {
-      stop_index_oob(
+    vctrs_error_subscript_oob_name = function(cnd) {
+      stop_subscript_oob(
         tidyselect_type = type,
         parent = cnd,
-        .subclass = "tidyselect_error_index_oob_names"
+        .subclass = "tidyselect_error_subscript_oob_name"
       )
     },
-    vctrs_error_index_oob_positions = function(cnd) {
-      stop_index_oob(
+    vctrs_error_subscript_oob_location = function(cnd) {
+      stop_subscript_oob(
         tidyselect_type = type,
         parent = cnd,
-        .subclass = "tidyselect_error_index_oob_positions"
+        .subclass = "tidyselect_error_subscript_oob_location"
       )
     },
-    vctrs_error_index = function(cnd) {
-      stop_index_bad_type(
+    vctrs_error_subscript = function(cnd) {
+      stop_subscript_bad_type(
         tidyselect_type = type,
         parent = cnd,
-        allow_positions = allow_positions
+        allow_scalar_location = allow_scalar_location
       )
     },
     vctrs_error_names_must_be_unique = function(cnd) {
@@ -41,42 +41,42 @@ sanitise_base_errors <- function(expr) {
   )
 }
 
-stop_index_bad_type <- function(..., allow_positions = TRUE, .subclass = NULL) {
-  stop_index(
-    allow_positions = allow_positions,
+stop_subscript_bad_type <- function(..., allow_scalar_location = TRUE, .subclass = NULL) {
+  stop_subscript(
+    allow_scalar_location = allow_scalar_location,
     ...,
-    .subclass = c(.subclass, "tidyselect_error_index_bad_type")
+    .subclass = c(.subclass, "tidyselect_error_subscript_bad_type")
   )
 }
-stop_index_oob <- function(..., .subclass = NULL) {
-  stop_index(
+stop_subscript_oob <- function(..., .subclass = NULL) {
+  stop_subscript(
     ...,
-    .subclass = c(.subclass, "tidyselect_error_index_oob")
+    .subclass = c(.subclass, "tidyselect_error_subscript_oob")
   )
 }
-stop_index <- function(..., .subclass = NULL) {
+stop_subscript <- function(..., .subclass = NULL) {
   abort(
     ...,
-    .subclass = c(.subclass, "tidyselect_error_index")
+    .subclass = c(.subclass, "tidyselect_error_subscript")
   )
 }
 
 #' @export
-cnd_header.tidyselect_error_index_bad_type <- function(cnd, ...) {
+cnd_header.tidyselect_error_subscript_bad_type <- function(cnd, ...) {
   switch(tidyselect_type(cnd),
     select = cnd_header_index_bad_type_select(cnd, ...),
     rename = cnd_header_index_bad_type_rename(cnd, ...)
   )
 }
 cnd_header_index_bad_type_select <- function(cnd, ...) {
-  if (cnd$allow_positions) {
+  if (cnd$allow_scalar_location) {
     "Must select with column names or positions."
   } else {
     "Must select with column names."
   }
 }
 cnd_header_index_bad_type_rename <- function(cnd, ...) {
-  if (cnd$allow_positions) {
+  if (cnd$allow_scalar_location) {
     "Must rename with column names or positions."
   } else {
     "Must rename with column names."
@@ -84,19 +84,19 @@ cnd_header_index_bad_type_rename <- function(cnd, ...) {
 }
 
 #' @export
-cnd_body.tidyselect_error_index_bad_type <- function(cnd, ...) {
+cnd_body.tidyselect_error_subscript_bad_type <- function(cnd, ...) {
   cnd_body(cnd$parent)
 }
 
 #' @export
-cnd_header.tidyselect_error_index_oob <- function(cnd, ...) {
+cnd_header.tidyselect_error_subscript_oob <- function(cnd, ...) {
   switch(tidyselect_type(cnd),
     select = "Must select existing columns.",
     rename = "Must rename existing columns."
   )
 }
 #' @export
-cnd_body.tidyselect_error_index_oob <- function(cnd, ...) {
+cnd_body.tidyselect_error_subscript_oob <- function(cnd, ...) {
   cnd_body(cnd$parent)
 }
 

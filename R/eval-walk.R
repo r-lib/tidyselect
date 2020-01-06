@@ -143,7 +143,7 @@ as_indices_impl <- function(x, vars, strict) {
     return(int())
   }
 
-  x <- vctrs::vec_coerce_index(x, allow_types = c("position", "name"))
+  x <- vctrs::vec_as_subscript(x, allow_types = c("location", "name"))
 
   if (!strict) {
     # Remove out-of-bounds elements if non-strict. We do this eagerly
@@ -165,13 +165,13 @@ as_indices_impl <- function(x, vars, strict) {
 }
 
 chr_as_positions <- function(x, vars) {
-  out <- vctrs::vec_as_index(x, n = length(vars), names = vars)
+  out <- vctrs::vec_as_location(x, n = length(vars), names = vars)
   set_names(out, names(x))
 }
 
 as_indices <- function(x, vars, strict = TRUE) {
   inds <- subclass_index_errors(as_indices_impl(x, vars, strict))
-  vctrs::vec_as_index(inds, length(vars), vars, convert_values = NULL)
+  vctrs::vec_as_location(inds, length(vars), vars, convert_values = NULL)
 }
 
 expr_kind <- function(expr) {

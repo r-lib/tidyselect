@@ -27,7 +27,7 @@ test_that("failed match removes all columns", {
 })
 
 
-test_that("matches return integer positions", {
+test_that("matches return integer locations", {
   scoped_vars(c("abc", "acd", "bbc", "bbd", "eee"))
 
   expect_equal(starts_with("a"), c(1L, 2L))
@@ -78,14 +78,14 @@ test_that("num_range selects numeric ranges", {
   expect_equal(select_pos(vars, num_range("x", 10:11, width = 2)), c(x10 = 5L, x11 = 6L))
 })
 
-test_that("position must resolve to numeric variables throws error", {
+test_that("location must resolve to numeric variables throws error", {
   expect_error(
     select_pos(letters2, !!list()),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
   expect_error(
     select_pos(letters2, !!env()),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
 })
 
@@ -122,7 +122,7 @@ test_that("one_of tolerates but warns for unknown columns", {
 
 })
 
-test_that("one_of converts names to positions", {
+test_that("one_of converts names to locations", {
   expect_equal(one_of("a", "z", .vars = letters), c(1L, 26L))
 })
 
@@ -175,8 +175,8 @@ test_that("initial (single) selector defaults correctly (issue #2275)", {
   expect_equal(select_pos(cn, -contains("x")), c(y = 2L, z = 3L))
 
   # single columns (not present), explicit
-  expect_error(select_pos(cn, foo), class = "tidyselect_error_index_oob_names")
-  expect_error(select_pos(cn, -foo), class = "tidyselect_error_index_oob_names")
+  expect_error(select_pos(cn, foo), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_pos(cn, -foo), class = "tidyselect_error_subscript_oob_name")
 
   # single columns (not present), matched
   expect_equal(select_pos(cn, contains("foo")), named(int()))
@@ -207,10 +207,10 @@ test_that("initial (of multiple) selectors default correctly (issue #2275)", {
   expect_equal(select_pos(cn, c(-contains("x"), -y)), c(z = 3L))
 
   # matched(not present) + explicit(not present)
-  expect_error(select_pos(cn, c(contains("foo"), bar)), class = "tidyselect_error_index_oob_names")
-  expect_error(select_pos(cn, c(contains("foo"), -bar)), class = "tidyselect_error_index_oob_names")
-  expect_error(select_pos(cn, c(-contains("foo"), bar)), class = "tidyselect_error_index_oob_names")
-  expect_error(select_pos(cn, c(-contains("foo"), -bar)), class = "tidyselect_error_index_oob_names")
+  expect_error(select_pos(cn, c(contains("foo"), bar)), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_pos(cn, c(contains("foo"), -bar)), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_pos(cn, c(-contains("foo"), bar)), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_pos(cn, c(-contains("foo"), -bar)), class = "tidyselect_error_subscript_oob_name")
 
   # matched(present) + matched(present)
   expect_equal(select_pos(cn, c(contains("x"), contains("y"))), c(x = 1L, y = 2L))
@@ -265,7 +265,7 @@ test_that("all_of() and any_of() handle named vectors", {
 })
 
 test_that("all_of() is strict", {
-  expect_error(select_pos(letters2, all_of(c("a", "foo"))), class = "tidyselect_error_index_oob_names")
+  expect_error(select_pos(letters2, all_of(c("a", "foo"))), class = "tidyselect_error_subscript_oob_name")
 })
 
 test_that("any_of() is lax", {
@@ -284,8 +284,8 @@ test_that("all_of() and any_of() check their inputs", {
   expect_error(select_pos(letters2, any_of(NA)), "missing")
   expect_error(select_pos(letters2, all_of(na_chr)), "missing")
   expect_error(select_pos(letters2, any_of(na_chr)), "missing")
-  expect_error(select_pos(letters2, all_of(TRUE)), class = "tidyselect_error_index_bad_type")
-  expect_error(select_pos(letters2, any_of(TRUE)), class = "tidyselect_error_index_bad_type")
+  expect_error(select_pos(letters2, all_of(TRUE)), class = "tidyselect_error_subscript_bad_type")
+  expect_error(select_pos(letters2, any_of(TRUE)), class = "tidyselect_error_subscript_bad_type")
 })
 
 test_that("matchers accept length > 1 vectors (#50)", {
@@ -317,10 +317,10 @@ test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
 test_that("`all_of()` and `any_of()` require indices", {
   expect_error(
     select(iris, all_of(is.factor)),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
   expect_error(
     select(iris, any_of(is.factor)),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
 })

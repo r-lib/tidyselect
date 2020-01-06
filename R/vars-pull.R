@@ -36,7 +36,7 @@ vars_pull <- function(vars, var = -1) {
   pos <- eval_tidy(enquo(var), set_names(seq_along(vars), vars))
 
   pos <- subclass_index_errors(
-    vctrs::vec_as_position(
+    vctrs::vec_as_location2(
       pos,
       n = n,
       names = vars,

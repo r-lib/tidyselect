@@ -1,7 +1,7 @@
 > vars_rename(letters, A = TRUE)
 Error: Must rename with column names or positions.
 x `i` has the wrong type `logical`.
-i These indices must be positions or names.
+i These indices must be locations or names.
 
 > vars_rename(letters, A = 1.5)
 Error: Must rename with column names or positions.
@@ -10,5 +10,5 @@ x Lossy cast from `i` <double> to <integer>.
 > vars_rename(letters, A = list())
 Error: Must rename with column names or positions.
 x `i` has the wrong type `list`.
-i These indices must be positions or names.
+i These indices must be locations or names.
 

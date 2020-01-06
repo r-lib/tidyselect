@@ -52,8 +52,8 @@ valid name specs.}
 include or exclude from the selection.}
 }
 \value{
-A named vector of positions, one for each of the selected
-elements.
+A named vector of numeric locations, one for each of the
+selected elements.
 
 The names are normally the same as in the input data, except when
 the user supplied named selections with \code{c()}. In the latter
@@ -61,7 +61,7 @@ case, the names reflect the new names chosen by the user.
 
 A given element may be selected multiple times under different
 names, in which case the vector might contain duplicate
-positions.
+locations.
 }
 \description{
 \code{eval_select()} and \code{eval_rename()} evaluate defused R code
@@ -96,8 +96,8 @@ try(eval_rename(expr(mpg), mtcars))
 eval_rename(expr(c(foo = mpg)), mtcars)
 
 
-# The evaluators return a named vector of positions. Here are
-# examples of using these position vectors to implement `select()`
+# The evaluators return a named vector of locations. Here are
+# examples of using these location vectors to implement `select()`
 # and `rename()`:
 select <- function(.x, ...) {
   pos <- eval_select(expr(c(...)), .x)
