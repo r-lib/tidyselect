@@ -29,8 +29,8 @@ test_that("can select with character vectors", {
 })
 
 test_that("abort on unknown columns", {
-  expect_error(vars_select(letters, "foo"), class = "tidyselect_error_index_oob_names")
-  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(letters, "foo"), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), class = "tidyselect_error_subscript_oob_name")
 })
 
 test_that("data mask is not isolated from context (for now)", {
@@ -53,9 +53,9 @@ test_that("can select with unnamed elements", {
 
 test_that("can customise error messages", {
   vars <- structure(letters, type = c("variable", "variables"))
-  expect_error(vars_select(vars, "foo"), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(vars, "foo"), class = "tidyselect_error_subscript_oob_name")
   expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
-  expect_error(vars_rename(vars, A = "foo"), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_rename(vars, A = "foo"), class = "tidyselect_error_subscript_oob_name")
 })
 
 test_that("can supply empty inputs", {
@@ -87,7 +87,7 @@ test_that("unknown variables errors are ignored if `.strict` is FALSE", {
 
 test_that("`:` handles strings", {
   expect_identical(vars_select(letters, "b":"d"), vars_select(letters, b:d))
-  expect_error(vars_select(letters, "b":"Z"), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(letters, "b":"Z"), class = "tidyselect_error_subscript_oob_name")
 })
 
 test_that("`-` handles strings", {
@@ -96,7 +96,7 @@ test_that("`-` handles strings", {
 
 test_that("`-` handles character vectors (#35)", {
   expect_identical(vars_select(letters, - (!! letters[1:20])), vars_select(letters, -(1:20)))
-  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "tidyselect_error_index_oob_names")
+  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "tidyselect_error_subscript_oob_name")
 })
 
 test_that("can select `c` despite overscoped c()", {
@@ -115,7 +115,7 @@ test_that("can select with length > 1 double vectors (#43)", {
 test_that("missing values are detected in vars_select() (#72)", {
   expect_error(
     vars_select("foo", na_cpl),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
   expect_error(
     vars_select(letters, NA),
@@ -153,15 +153,15 @@ test_that("vars_select() supports S3 vectors (#109)", {
 test_that("vars_select() type-checks inputs", {
   expect_error(
     vars_select(letters, TRUE),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
   expect_error(
     vars_select(letters, 2.5),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
   expect_error(
     vars_select(letters, structure(1:3, class = "tidysel_foobar")),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
 
   verify_output(test_path("outputs", "vars-select-index-type.txt"), {
@@ -202,7 +202,7 @@ test_that("vars_select() uses unique name spec", {
   )
 })
 
-test_that("vars_select() can drop duplicate names by position (#94)", {
+test_that("vars_select() can drop duplicate names by location (#94)", {
   expect_identical(vars_select(c("a", "b", "a"), 2), c(b = "b"))
   expect_identical(vars_select(c("a", "b", "a"), -3), c(a = "a", b = "b"))
   expect_identical(vars_select(c("a", "b", "a"), -1), c(b = "b", a = "a"))
@@ -244,12 +244,12 @@ test_that("vars_select() fails informatively when renaming to same", {
   })
 })
 
-test_that("vars_select() has consistent position errors", {
-  expect_error(vars_select(letters, foo), class = "tidyselect_error_index_oob_names")
-  expect_error(vars_select(letters, -foo), class = "tidyselect_error_index_oob_names")
-  expect_error(vars_select(letters, 100), class = "tidyselect_error_index_oob_positions")
-  expect_error(vars_select(letters, -100), class = "tidyselect_error_index_oob_positions")
-  expect_error(vars_select(letters, !100), class = "tidyselect_error_index_oob_positions")
+test_that("vars_select() has consistent location errors", {
+  expect_error(vars_select(letters, foo), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_select(letters, -foo), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_select(letters, 100), class = "tidyselect_error_subscript_oob_location")
+  expect_error(vars_select(letters, -100), class = "tidyselect_error_subscript_oob_location")
+  expect_error(vars_select(letters, !100), class = "tidyselect_error_subscript_oob_location")
 
   verify_output(test_path("outputs", "vars-select-oob-errors.txt"), {
     "Bare names"
@@ -260,7 +260,7 @@ test_that("vars_select() has consistent position errors", {
     vars_select(letters, "foo")
     vars_select(letters, a:"foo")
 
-    "Positions"
+    "Locations"
     vars_select(letters, 30, 50, 100)
     vars_select(letters, -100)
     vars_select(letters, !100)
@@ -281,12 +281,12 @@ test_that("vars_select() consistently handles nested negated arguments", {
 test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
-    class = "tidyselect_error_index_oob_names"
+    class = "tidyselect_error_subscript_oob_name"
   )
 
   expect_error(
     vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE),
-    class = "tidyselect_error_index_oob_names"
+    class = "tidyselect_error_subscript_oob_name"
   )
 
   expect_equal(
@@ -301,7 +301,7 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
 
   expect_error(
     vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE),
-    class = "tidyselect_error_index_oob_names"
+    class = "tidyselect_error_subscript_oob_name"
   )
 
   expect_identical(
@@ -316,9 +316,9 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
   })
 })
 
-test_that("vars_rename() works with positions", {
+test_that("vars_rename() works with locations", {
   expect_identical(vars_rename(letters[1:4], new1 = 2, new2 = 4), c(a = "a", new1 = "b", c = "c", new2 = "d"))
-  expect_error(vars_rename(letters, new = 1.5), class = "tidyselect_error_index_bad_type")
+  expect_error(vars_rename(letters, new = 1.5), class = "tidyselect_error_subscript_bad_type")
 })
 
 test_that("vars_rename() sets variable context", {
@@ -340,7 +340,7 @@ test_that("vars_rename() unquotes named character vectors", {
 test_that("missing values are detected in vars_rename() (#72)", {
   expect_error(
     vars_rename(letters, A = na_cpl),
-    class = "tidyselect_error_index_bad_type"
+    class = "tidyselect_error_subscript_bad_type"
   )
   expect_error(
     vars_rename(letters, A = NA),
@@ -431,14 +431,14 @@ test_that("vars_rename() can't rename existing duplicates in bulk", {
   )
 })
 
-test_that("vars_rename() can fix duplicates by position", {
+test_that("vars_rename() can fix duplicates by location", {
   expect_identical(
     vars_rename(c("a", "b", "a"), foo = 3),
     c(a = "a", b = "b", foo = "a")
   )
 })
 
-test_that("vars_rename() can fix duplicates by supplying positions", {
+test_that("vars_rename() can fix duplicates by supplying locations", {
   # Will be useful when we return indices
   expect_identical(vars_rename(c("a", "b", "a"), c = 3), c(a = "a", b = "b", c = "a"))
 })
@@ -450,9 +450,9 @@ test_that("vars_rename() handles empty inputs", {
 })
 
 test_that("vars_rename() type-checks arguments", {
-  expect_error(vars_rename(letters, A = TRUE), class = "tidyselect_error_index_bad_type")
-  expect_error(vars_rename(letters, A = 1.5), class = "tidyselect_error_index_bad_type")
-  expect_error(vars_rename(letters, A = !!list()), class = "tidyselect_error_index_bad_type")
+  expect_error(vars_rename(letters, A = TRUE), class = "tidyselect_error_subscript_bad_type")
+  expect_error(vars_rename(letters, A = 1.5), class = "tidyselect_error_subscript_bad_type")
+  expect_error(vars_rename(letters, A = !!list()), class = "tidyselect_error_subscript_bad_type")
 
   verify_output(test_path("outputs", "vars-rename-type-checking.txt"), {
     vars_rename(letters, A = TRUE)

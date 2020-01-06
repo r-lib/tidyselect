@@ -146,10 +146,10 @@ pos_validate <- function(pos, vars) {
   check_missing(pos)
   check_negative(pos)
 
-  pos <- vctrs::vec_as_index(
+  pos <- vctrs::vec_as_location(
     pos,
     n = length(vars),
-    allow_types = "position"
+    allow_types = "location"
   )
 
   named(sel_unique(pos))

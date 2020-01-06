@@ -63,7 +63,7 @@ test_that("rename_pos() allows renaming to existing variable that is also rename
   )
 })
 
-test_that("rename_pos() allows fixing duplicates by position", {
+test_that("rename_pos() allows fixing duplicates by locations", {
   dups <- vctrs::new_data_frame(list(x = 1, x = 2))
   expect_identical(
     rename_pos(dups, c(foo = 2L)),

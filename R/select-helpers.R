@@ -179,7 +179,7 @@ num_range <- function(prefix,
 all_of <- function(x) {
   if (is.function(x)) {
     # Trigger bad type error
-    vctrs::vec_as_index(x, 0L)
+    vctrs::vec_as_location(x, 0L)
     abort("Internal error: `all_of()` should have failed sooner")
   }
 

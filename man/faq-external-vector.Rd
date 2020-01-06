@@ -51,8 +51,8 @@ forces you to be specific about where to find \code{vars}:\if{html}{\out{<div cl
 #> [1] "cyl" "am"  "vs"
 
 some_df$vars
-#>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
-#> [24] 24 25 26 27 28 29 30 31 32
+#>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
+#> [29] 29 30 31 32
 }\if{html}{\out{</div>}}
 
 In a selection context however, the column wins:\if{html}{\out{<div class="r">}}\preformatted{some_df \%>\% select(vars)

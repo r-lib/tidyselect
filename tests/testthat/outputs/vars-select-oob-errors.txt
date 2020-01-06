@@ -16,7 +16,7 @@ x Can't subset element with unknown name `foo`.
 Error: Must select existing columns.
 x Can't subset element with unknown name `foo`.
 
-> # Positions
+> # Locations
 > vars_select(letters, 30, 50, 100)
 Error: Must select existing columns.
 x Can't subset positions 30, 50 and 100.
