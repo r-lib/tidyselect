@@ -35,11 +35,7 @@ vars_select_eval <- function(vars,
   data_mask <- new_data_mask(bottom, top)
   data_mask$.data <- as_data_pronoun(data_mask)
 
-  # Add `.data` pronoun in the context mask even though it doesn't
-  # contain data. This way the pronoun can be used in any parts of the
-  # expression.
   context_mask <- new_data_mask(env(!!!vars_select_helpers))
-  context_mask$.data <- data_mask$.data
 
   if (is_null(name_spec)) {
     if (inherits(data, "data.frame")) {
@@ -113,6 +109,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `*` = stop_bad_arith_op("*"),
     `/` = stop_bad_arith_op("/"),
     `^` = stop_bad_arith_op("^"),
+    .data = eval(expr, data_mask),
     eval_context(expr, context_mask)
   )
 
@@ -188,6 +185,12 @@ call_kind <- function(expr) {
   }
 
   fn <- as_string(head)
+
+  if (fn %in% c("$", "[[") && identical(node_cadr(expr), quote(.data))) {
+    validate_dot_data(expr)
+    return(".data")
+  }
+
   switch(fn,
     `(` = ,
     `-` = ,
@@ -278,6 +281,15 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   }
 
   value
+}
+
+validate_dot_data <- function(expr) {
+  if (is_call(expr, "$") && !is_symbol(expr[[3]])) {
+    abort("The RHS of `.data$rhs` must be a symbol.")
+  }
+  if (is_call(expr, "[[") && is_symbolic(expr[[3]])) {
+    abort("The subscript of `.data[[subscript]]` must be a constant.")
+  }
 }
 
 mark_data_dups <- function(x) {

@@ -245,6 +245,14 @@ test_that("can select with .data pronoun (#2715)", {
   expect_identical(select_loc(letters2, .data[["a"]] : .data[["b"]]), c(a = 1L, b = 2L))
 })
 
+test_that(".data in env-expression has the lexical definition", {
+  quo <- local({
+    .data <- mtcars
+    quo({ stopifnot(identical(.data, mtcars)); NULL})
+  })
+  expect_error(select_loc(mtcars, !!quo), regexp = NA)
+})
+
 test_that("binary `-` is short for set difference", {
   expect_identical(
     select_loc(iris, starts_with("Sepal") - ends_with("Width")),
