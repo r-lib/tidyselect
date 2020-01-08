@@ -42,7 +42,7 @@
 |[dtplyr](problems.md#dtplyr)           |1.0.0   |__+1__ |        |     |
 |[jpndistrict](problems.md#jpndistrict) |0.3.4   |__+2__ |        |1    |
 |[mudata2](problems.md#mudata2)         |1.0.7   |__+1__ |        |     |
-|[plyranges](problems.md#plyranges)     |1.4.4   |__+2__ |        |     |
+|[plyranges](problems.md#plyranges)     |1.4.4   |__+1__ |        |     |
 |[probably](problems.md#probably)       |0.0.3   |__+1__ |        |1    |
 |[RSDA](problems.md#rsda)               |3.0     |__+2__ |        |     |
 |[tibbleOne](problems.md#tibbleone)     |0.1.0   |__+1__ |        |1    |

@@ -741,49 +741,23 @@ Run `revdep_details(,"plyranges")` for more info
 
 ## Newly broken
 
-*   checking examples ... ERROR
-    ```
-    ...
-    Error: Must select existing columns.
-    ✖ Can't subset elements with unknown names `start`, `end`, `width`, `strand` and `seqnames`.
-    <error/tidyselect_error_subscript_oob_name>
-    Must select existing columns.
-    ✖ Can't subset elements with unknown names `start`, `end`, `width`, `strand` and `seqnames`.
-    Backtrace:
-        █
-     1. ├─dplyr::select(rng, -gc)
-     2. └─plyranges:::select.Ranges(rng, -gc)
-     3.   └─plyranges:::select_rng(.data, .drop_ranges, dots) 00_pkg_src/plyranges/R/dplyr-select.R:85:2
-     4.     └─tidyselect::vars_select(var_names, !!!dots, .exclude = exclude) 00_pkg_src/plyranges/R/dplyr-select.R:16:4
-     5.       └─tidyselect:::eval_select_impl(...)
-     6.         └─tidyselect:::subclass_index_errors(...)
-    <parent: error/vctrs_error_subscript_oob_name>
-    Must index existing elements.
-    ✖ Can't subset elements with unknown names `start`, `end`, `width`, `strand` and `seqnames`.
-    Backtrace:
-         █
-      1. ├─tidyselect:::sanitise_base_errors(expr)
-      2. │ └─base::
-    Execution halted
-    ```
-
 *   checking tests ...
     ```
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-       5. tidyselect:::eval_select_impl(...)
-       6. tidyselect:::subclass_index_errors(...)
+      Attributes: < Component "elementMetadata": Lengths: 2, 1 >
+      Attributes: < Component "elementMetadata": names for target but not for current >
+      Attributes: < Component "elementMetadata": Attributes: < Modes: list, NULL > >
+      Attributes: < Component "elementMetadata": Attributes: < Lengths: 7, 0 > >
+      Attributes: < Component "elementMetadata": Attributes: < names for target but not for current > >
+      Attributes: < Component "elementMetadata": Attributes: < current is not list-like > >
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 278 | SKIPPED: 0 | WARNINGS: 8 | FAILED: 7 ]
-      1. Error: overlaps works as expected (@test-io-bam.R#16) 
-      2. Error: read_bed returns correct GRanges (@test-io-bed.R#50) 
-      3. Error: reading GFF files returns correct GRanges (@test-io-gff.R#106) 
-      4. Error: non-standard evaluation works as expected (@test-reduce.R#67) 
-      5. Error: reordering/dropping works as expected (@test-select.R#39) 
-      6. Error: dropping everything sets mcols slot to empty (@test-select.R#51) 
-      7. Error: expanding makes sense (@test-unnest.R#50) 
+      [ OK: 307 | SKIPPED: 0 | WARNINGS: 12 | FAILED: 3 ]
+      1. Failure: reordering/dropping works as expected (@test-select.R#40) 
+      2. Failure: dropping everything sets mcols slot to empty (@test-select.R#53) 
+      3. Failure: dropping everything sets mcols slot to empty (@test-select.R#55) 
       
       Error: testthat unit tests failed
       Execution halted
