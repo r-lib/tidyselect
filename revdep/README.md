@@ -2,73 +2,50 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.5.1 (2018-07-02) |
-|os       |macOS  10.14                 |
+|version  |R version 3.6.2 (2019-12-12) |
+|os       |macOS Catalina 10.15.2       |
 |system   |x86_64, darwin15.6.0         |
 |ui       |X11                          |
 |language |(EN)                         |
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |Europe/Brussels              |
-|date     |2018-10-11                   |
+|date     |2020-01-08                   |
 
 # Dependencies
 
-|package    |old     |new        |Δ  |
-|:----------|:-------|:----------|:--|
-|tidyselect |0.2.4   |0.2.4.9000 |*  |
-|assertthat |0.2.0   |0.2.0      |   |
-|cli        |1.0.1   |1.0.1      |   |
-|crayon     |1.3.4   |1.3.4      |   |
-|fansi      |0.4.0   |0.4.0      |   |
-|glue       |1.3.0   |1.3.0      |   |
-|magrittr   |1.5     |1.5        |   |
-|pillar     |1.3.0   |1.3.0      |   |
-|purrr      |0.2.5   |0.2.5      |   |
-|Rcpp       |0.12.19 |0.12.19    |   |
-|rlang      |0.2.2   |0.2.2      |   |
-|tibble     |1.4.2   |1.4.2      |   |
-|utf8       |1.1.4   |1.1.4      |   |
+|package    |old   |new         |Δ  |
+|:----------|:-----|:-----------|:--|
+|tidyselect |0.2.5 |0.2.99.9000 |*  |
+|digest     |NA    |0.6.23      |*  |
+|purrr      |NA    |0.3.3       |*  |
+|rlang      |NA    |0.4.2       |*  |
+|vctrs      |NA    |0.2.99.9001 |*  |
 
 # Revdeps
 
-## Couldn't check (1)
+## Failed to check (1)
 
-|package              |version |error |warning |note |
-|:--------------------|:-------|:-----|:-------|:----|
-|[sf](problems.md#sf) |0.6-3   |1     |        |     |
+|package                    |version  |error  |warning |note |
+|:--------------------------|:--------|:------|:-------|:----|
+|[arrow](failures.md#arrow) |0.15.1.1 |__+1__ |        |-1   |
 
-## All (29)
+## New problems (14)
 
-|package                                  |version |error |warning |note |
-|:----------------------------------------|:-------|:-----|:-------|:----|
-|cattonum                                 |0.0.2   |      |        |     |
-|[condformat](problems.md#condformat)     |0.7.0   |1     |        |1    |
-|dbplyr                                   |1.2.2   |      |        |     |
-|[dlookr](problems.md#dlookr)             |0.3.2   |      |        |2    |
-|[dplyr](problems.md#dplyr)               |0.7.6   |      |        |2    |
-|drake                                    |6.0.0   |      |        |     |
-|ggalluvial                               |0.9.0   |      |        |     |
-|ggperiodic                               |0.1.0   |      |        |     |
-|[heatmaply](problems.md#heatmaply)       |0.15.2  |      |        |2    |
-|huxtable                                 |4.2.0   |      |        |     |
-|[implyr](problems.md#implyr)             |0.2.4   |1     |        |     |
-|mudata2                                  |1.0.3   |      |        |     |
-|[pivot](problems.md#pivot)               |18.4.17 |      |        |2    |
-|[plyranges](problems.md#plyranges)       |1.0.3   |1     |        |1    |
-|recipes                                  |0.1.3   |      |        |     |
-|[rscorecard](problems.md#rscorecard)     |0.10.0  |      |        |1    |
-|[RSDA](problems.md#rsda)                 |2.0.8   |      |        |1    |
-|[sf](problems.md#sf)                     |0.6-3   |1     |        |     |
-|[SingleCaseES](problems.md#singlecasees) |0.4.0   |      |1       |     |
-|skimr                                    |1.0.3   |      |        |     |
-|tfdatasets                               |1.9     |      |        |     |
-|tfestimators                             |1.9.0   |      |        |     |
-|tfruns                                   |1.4     |      |        |     |
-|[tidybayes](problems.md#tidybayes)       |1.0.1   |1     |        |     |
-|[tidyinftheo](problems.md#tidyinftheo)   |0.2.1   |1     |1       |1    |
-|[tidyr](problems.md#tidyr)               |0.8.1   |      |        |1    |
-|tidytidbits                              |0.1.0   |      |        |     |
-|[tsibble](problems.md#tsibble)           |0.5.3   |      |1       |     |
-|yardstick                                |0.0.1   |      |        |     |
+|package                                |version |error  |warning |note |
+|:--------------------------------------|:-------|:------|:-------|:----|
+|[AzureKusto](problems.md#azurekusto)   |1.0.4   |__+1__ |        |1    |
+|[cattonum](problems.md#cattonum)       |0.0.3   |__+1__ |        |1    |
+|[cheese](problems.md#cheese)           |0.0.1   |__+1__ |        |     |
+|[cursory](problems.md#cursory)         |1.0.0   |__+2__ |        |1    |
+|[dplyr](problems.md#dplyr)             |0.8.3   |2      |__+1__  |4    |
+|[dtplyr](problems.md#dtplyr)           |1.0.0   |__+1__ |        |     |
+|[jpndistrict](problems.md#jpndistrict) |0.3.4   |__+2__ |        |1    |
+|[mudata2](problems.md#mudata2)         |1.0.7   |__+1__ |        |     |
+|[plyranges](problems.md#plyranges)     |1.4.4   |__+2__ |        |     |
+|[probably](problems.md#probably)       |0.0.3   |__+1__ |        |1    |
+|[RSDA](problems.md#rsda)               |3.0     |__+2__ |        |     |
+|[tibbleOne](problems.md#tibbleone)     |0.1.0   |__+1__ |        |1    |
+|[tidyr](problems.md#tidyr)             |1.0.0   |__+1__ |        |1    |
+|[tsibble](problems.md#tsibble)         |0.8.5   |__+1__ |        |     |
 
