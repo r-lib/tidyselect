@@ -128,7 +128,7 @@ as_indices_sel_impl <- function(x, vars, strict, data = NULL) {
     if (is_null(data)) {
       abort(c(
         "This tidyselect interface doesn't support predicates yet.",
-        i = "Contact the package author and suggest using `select_pos()`."
+        i = "Contact the package author and suggest using `eval_select()`."
       ))
     }
     predicate <- x
