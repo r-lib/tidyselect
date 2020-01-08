@@ -37,7 +37,7 @@ To illustrate the semantics of tidyselect, we'll use variants of
 of positions for the selected or renamed elements:
 
 ```{r}
-select_pos <- function(data, ...) {
+select_loc <- function(data, ...) {
   eval_select(rlang::expr(c(...)), data)
 }
 
@@ -73,9 +73,9 @@ represent their own positions, i.e. a set of size 1. The following
 expressions are equivalent:
 
 ```{r}
-mtcars %>% select_pos(mpg:hp, -cyl, vs)
+mtcars %>% select_loc(mpg:hp, -cyl, vs)
 
-mtcars %>% select_pos(1:4, -2, 8)
+mtcars %>% select_loc(1:4, -2, 8)
 ```
 
 
@@ -85,14 +85,14 @@ mtcars %>% select_pos(1:4, -2, 8)
 It returns the corresponding sequence of positions.
 
 ```{r}
-mtcars %>% select_pos(2:4)
+mtcars %>% select_loc(2:4)
 ```
 
 Because bare names represent their own positions, it is easy to select
 a range of variables:
 
 ```{r}
-mtcars %>% select_pos(cyl:hp)
+mtcars %>% select_loc(cyl:hp)
 ```
 
 
@@ -108,32 +108,32 @@ considered in terms of the logical representation of sets.
 The `|` operator takes the __union__ of two sets:
 
 ```{r}
-iris %>% select_pos(starts_with("Sepal") | ends_with("Width"))
+iris %>% select_loc(starts_with("Sepal") | ends_with("Width"))
 ```
 
 The `&` operator takes the __intersection__ of two sets:
 
 ```{r}
-iris %>% select_pos(starts_with("Sepal") & ends_with("Width"))
+iris %>% select_loc(starts_with("Sepal") & ends_with("Width"))
 ```
 
 The `!` operator takes the __complement__ of a set:
 
 ```{r}
-iris %>% select_pos(!ends_with("Width"))
+iris %>% select_loc(!ends_with("Width"))
 ```
 
 Taking the intersection with a complement produces a set
 __difference__:
 
 ```{r}
-iris %>% select_pos(starts_with("Sepal") & !ends_with("Width"))
+iris %>% select_loc(starts_with("Sepal") & !ends_with("Width"))
 ```
 
 Another way of expressing set difference is binary `-`:
 
 ```{r}
-iris %>% select_pos(starts_with("Sepal") - ends_with("Width"))
+iris %>% select_loc(starts_with("Sepal") - ends_with("Width"))
 ```
 
 
@@ -145,9 +145,9 @@ syntax is accessible via `c()`. In fact `...` syntax is implemented
 through `c(...)` and is thus completely equivalent.
 
 ```{r}
-mtcars %>% select_pos(mpg, disp:hp)
+mtcars %>% select_loc(mpg, disp:hp)
 
-mtcars %>% select_pos(c(mpg, disp:hp))
+mtcars %>% select_loc(c(mpg, disp:hp))
 ```
 
 Dots and `c()` are syntax for:
@@ -160,56 +160,56 @@ precedence is left-associative, just like with boolean operators.
 These expressions are all syntax for _set union_:
 
 ```{r}
-iris %>% select_pos(starts_with("Sepal"), ends_with("Width"), Species)
+iris %>% select_loc(starts_with("Sepal"), ends_with("Width"), Species)
 
-iris %>% select_pos(starts_with("Sepal") | ends_with("Width") | Species)
+iris %>% select_loc(starts_with("Sepal") | ends_with("Width") | Species)
 
-iris %>% select_pos(union(union(starts_with("Sepal"), ends_with("Width")), 5L))
+iris %>% select_loc(union(union(starts_with("Sepal"), ends_with("Width")), 5L))
 ```
 
 Unary `-` is normally syntax for _set difference_:
 
 ```{r}
-iris %>% select_pos(starts_with("Sepal"), -ends_with("Width"), -Sepal.Length)
+iris %>% select_loc(starts_with("Sepal"), -ends_with("Width"), -Sepal.Length)
 
-iris %>% select_pos(setdiff(setdiff(starts_with("Sepal"), ends_with("Width")), 1L))
+iris %>% select_loc(setdiff(setdiff(starts_with("Sepal"), ends_with("Width")), 1L))
 ```
 
 If the first `...` or `c()` input is negative, an implicit
 `everything()` is appended.
 
 ```{r}
-iris %>% select_pos(-starts_with("Sepal"))
+iris %>% select_loc(-starts_with("Sepal"))
 
-iris %>% select_pos(everything(), -starts_with("Sepal"))
+iris %>% select_loc(everything(), -starts_with("Sepal"))
 
-iris %>% select_pos(setdiff(everything(), starts_with("Sepal")))
+iris %>% select_loc(setdiff(everything(), starts_with("Sepal")))
 ```
 
 In this case, unary `-` is syntax for _set complement_. Unary `-` and
 `!` are equivalent:
 
 ```{r}
-iris %>% select_pos(-starts_with("Sepal"))
+iris %>% select_loc(-starts_with("Sepal"))
 
-iris %>% select_pos(!starts_with("Sepal"))
+iris %>% select_loc(!starts_with("Sepal"))
 ```
 
 Each level of `c()` is independent. In particular, a nested `c()`
 starting with `-` always stands for set complement:
 
 ```{r}
-iris %>% select_pos(c(starts_with("Sepal"), -Sepal.Length))
+iris %>% select_loc(c(starts_with("Sepal"), -Sepal.Length))
 
-iris %>% select_pos(c(starts_with("Sepal"), c(-Sepal.Length)))
+iris %>% select_loc(c(starts_with("Sepal"), c(-Sepal.Length)))
 ```
 
 In boolean terms, these expressions are equivalent to:
 
 ```{r}
-iris %>% select_pos(starts_with("Sepal") & !Sepal.Length)
+iris %>% select_loc(starts_with("Sepal") & !Sepal.Length)
 
-iris %>% select_pos(starts_with("Sepal") | !Sepal.Length)
+iris %>% select_loc(starts_with("Sepal") | !Sepal.Length)
 ```
 
 In general, when unary `-` is used alone outside `...` or `c()`, it
@@ -225,7 +225,7 @@ renamed. If the inputs are already named, the outer and inner names
 are __combined__ with a `...` separator:
 
 ```{r}
-mtcars %>% select_pos(foo = c(bar = mpg, baz = cyl))
+mtcars %>% select_loc(foo = c(bar = mpg, baz = cyl))
 ```
 
 Otherwise the outer names is __propagated__ to the selected elements
@@ -235,20 +235,20 @@ according to the following rules:
   must be uniquely named.
 
     ```{r}
-    mtcars %>% select_pos(foo = c(mpg, cyl))
+    mtcars %>% select_loc(foo = c(mpg, cyl))
     ```
 
 - With normal vectors, the name is simply assigned to all selected
   inputs.
 
     ```{r}
-    as.list(mtcars) %>% select_pos(foo = c(mpg, cyl))
+    as.list(mtcars) %>% select_loc(foo = c(mpg, cyl))
     ```
 
 Combination and propagation can be composed by using nested `c()`:
 
 ```{r}
-mtcars %>% select_pos(foo = c(bar = c(mpg, cyl)))
+mtcars %>% select_loc(foo = c(bar = c(mpg, cyl)))
 ```
 
 
@@ -269,7 +269,7 @@ Because unnamed elements match any named ones, it is possible to
 select multiple elements and rename one of them:
 
 ```{r}
-iris %>% select_pos(!Species, foo = Sepal.Width)
+iris %>% select_loc(!Species, foo = Sepal.Width)
 ```
 
 
@@ -281,13 +281,13 @@ indicate inclusion. Predicates in data-expressions are effectively
 expanded to the set of variables that they represent:
 
 ```{r}
-iris %>% select_pos(is.numeric)
+iris %>% select_loc(is.numeric)
 
-iris %>% select_pos(is.factor)
+iris %>% select_loc(is.factor)
 
-iris %>% select_pos(is.numeric | is.factor)
+iris %>% select_loc(is.numeric | is.factor)
 
-iris %>% select_pos(is.numeric & is.factor)
+iris %>% select_loc(is.numeric & is.factor)
 ```
 
 Predicate functions supplied as symbols are ambiguous with column
@@ -319,20 +319,20 @@ it is treated as an env-expression, see Evaluation section):
 - Vectors of positions:
 
     ```{r}
-    iris %>% select_pos(force(c(1, 3)))
+    iris %>% select_loc(force(c(1, 3)))
     ```
 
 - Vectors of names. These are matched and transformed to positions.
 
     ```{r}
-    iris %>% select_pos(force(c("Sepal.Length", "Petal.Length")))
+    iris %>% select_loc(force(c("Sepal.Length", "Petal.Length")))
     ```
 
 - Predicate functions. These are applied to all elements to determine
   inclusion.
 
     ```{r}
-    iris %>% select_pos(force(is.numeric))
+    iris %>% select_loc(force(is.numeric))
     ```
 
 
@@ -376,7 +376,7 @@ on the kind of expression:
 
     ```{r, error = TRUE}
     cyl_pos <- 2
-    mtcars %>% select_pos(mpg | cyl_pos)
+    mtcars %>% select_loc(mpg | cyl_pos)
     ```
 
 2.  __env-expressions__ are evaluated in the environment. This
@@ -385,7 +385,7 @@ on the kind of expression:
     data-variables in a data-expression:
 
     ```{r, error = TRUE}
-    mtcars %>% select_pos(all_of(mpg))
+    mtcars %>% select_loc(all_of(mpg))
     ```
 
 Because the scoping is unambiguous, you can safely refer to env-vars
@@ -397,7 +397,7 @@ x <- data.frame(x = 1:3, y = 4:6, z = 7:9)
 
 # `ncol(x)` is an env-expression, so `x` represents the data frame in
 # the environment rather than the column in the data frame
-x %>% select_pos(2:ncol(x))
+x %>% select_loc(2:ncol(x))
 ```
 
 If you have variable names in a character vector, it is safe to refer
@@ -406,7 +406,7 @@ env-expression:
 
 ```{r}
 y <- c("y", "z")
-x %>% select_pos(all_of(y))
+x %>% select_loc(all_of(y))
 ```
 
 Note that currently, env-vars are still allowed in some
@@ -416,7 +416,7 @@ being deprecated and you should see a note recommending to use
 future, and then an error.
 
 ```{r}
-mtcars %>% select_pos(cyl_pos)
+mtcars %>% select_loc(cyl_pos)
 ```
 
 
@@ -442,10 +442,10 @@ Species <- function(x) is.numeric(x)
 
 # Since `Species` is defined as a function, you won't get an error
 # even though the data-var doesn't exist:
-mtcars %>% select_pos(Species)
+mtcars %>% select_loc(Species)
 
 # Use `all_of()` to be explicit that you want a data-var, not an env-var:
-mtcars %>% select_pos(all_of("Species"))
+mtcars %>% select_loc(all_of("Species"))
 ```
 
 Similarly, you can be explicit about finding predicate functions in
@@ -453,13 +453,13 @@ the environment by forcing the symbols:
 
 ```{r}
 # By default the data-var has precedence over the env-var:
-iris %>% select_pos(Species)
+iris %>% select_loc(Species)
 
 # Use the force operator `!!` to force the env-var `Species`:
-iris %>% select_pos(!!Species)
+iris %>% select_loc(!!Species)
 
 # Use the env-expression `force()` to force the env-var `Species`:
-iris %>% select_pos(force(Species))
+iris %>% select_loc(force(Species))
 ```
 
 
@@ -471,9 +471,9 @@ from normal data masking usage where variables can be transformed on
 the fly:
 
 ```{r, error = TRUE}
-mtcars %>% select_pos(cyl^2)
+mtcars %>% select_loc(cyl^2)
 
-mtcars %>% select_pos(mpg * wt)
+mtcars %>% select_loc(mpg * wt)
 ```
 
 
@@ -491,7 +491,7 @@ Unlike `eval_select()` which can select without renaming,
 names are missing, an error is thrown.
 
 ```{r, error = TRUE}
-mtcars %>% select_pos(mpg)
+mtcars %>% select_loc(mpg)
 
 mtcars %>% rename_pos(mpg)
 ```
@@ -505,19 +505,19 @@ the invariant of unique column names.
 
 ```{r, error = TRUE}
 # Lists can have duplicates
-as.list(mtcars) %>% select_pos(foo = mpg, foo = cyl)
+as.list(mtcars) %>% select_loc(foo = mpg, foo = cyl)
 
 # Data frames cannot
-mtcars %>% select_pos(foo = mpg, foo = cyl)
+mtcars %>% select_loc(foo = mpg, foo = cyl)
 ```
 
 A selection can rename a variable to an existing name if the latter is
 not part of the selection:
 
 ```{r, error = TRUE}
-mtcars %>% select_pos(cyl, cyl = mpg)
+mtcars %>% select_loc(cyl, cyl = mpg)
 
-mtcars %>% select_pos(disp, cyl = mpg)
+mtcars %>% select_loc(disp, cyl = mpg)
 ```
 
 This is not possible when renaming.
@@ -532,7 +532,7 @@ However, the name conflict can be solved by renaming the existing
 variable to another name:
 
 ```{r}
-mtcars %>% select_pos(foo = cyl, cyl = mpg)
+mtcars %>% select_loc(foo = cyl, cyl = mpg)
 
 mtcars %>% rename_pos(foo = cyl, cyl = mpg)
 ```
@@ -555,19 +555,19 @@ If the duplicates are not part of the selection, they are simply
 ignored:
 
 ```{r}
-dups %>% select_pos(y)
+dups %>% select_loc(y)
 ```
 
 If the duplicates are selected, this is an error:
 
 ```{r, error = TRUE}
-dups %>% select_pos(x)
+dups %>% select_loc(x)
 ```
 
 The duplicate names can be repaired by renaming chosen positions:
 
 ```{r}
-dups %>% select_pos(x, foo = 3)
+dups %>% select_loc(x, foo = 3)
 
 dups %>% rename_pos(foo = 3)
 ```

@@ -3,7 +3,7 @@ scoped_options(
   lifecycle_verbosity = "quiet"
 )
 
-# Once defunct, don't delete the tests, port them to `select_pos()`.
+# Once defunct, don't delete the tests, port them to `select_loc()`.
 # Better have some redundancy than accidentally losing coverage.
 
 test_that("vars_select can rename variables", {

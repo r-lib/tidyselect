@@ -1,7 +1,7 @@
 
 letters2 <- set_names(letters)
 
-select_pos <- function(x,
+select_loc <- function(x,
                        sel,
                        ...,
                        include = NULL,

@@ -49,10 +49,10 @@ test_that("can use a variable", {
   vars <- "x"
   names(vars) <- vars
 
-  expect_equal(select_pos(vars, starts_with(vars)), c(x = 1L))
-  expect_equal(select_pos(vars, ends_with(vars)), c(x = 1L))
-  expect_equal(select_pos(vars, contains(vars)), c(x = 1L))
-  expect_equal(select_pos(vars, matches(vars)), c(x = 1L))
+  expect_equal(select_loc(vars, starts_with(vars)), c(x = 1L))
+  expect_equal(select_loc(vars, ends_with(vars)), c(x = 1L))
+  expect_equal(select_loc(vars, contains(vars)), c(x = 1L))
+  expect_equal(select_loc(vars, matches(vars)), c(x = 1L))
 })
 
 test_that("can use a variable even if it exists in the data (#2266)", {
@@ -62,40 +62,40 @@ test_that("can use a variable even if it exists in the data (#2266)", {
   y <- "x"
   expected_result <- c(x = 1L)
 
-  expect_equal(select_pos(vars, starts_with(y)), expected_result)
-  expect_equal(select_pos(vars, ends_with(y)), expected_result)
-  expect_equal(select_pos(vars, contains(y)), expected_result)
-  expect_equal(select_pos(vars, matches(y)), expected_result)
+  expect_equal(select_loc(vars, starts_with(y)), expected_result)
+  expect_equal(select_loc(vars, ends_with(y)), expected_result)
+  expect_equal(select_loc(vars, contains(y)), expected_result)
+  expect_equal(select_loc(vars, matches(y)), expected_result)
 })
 
 test_that("num_range selects numeric ranges", {
   vars <- c("x1", "x2", "x01", "x02", "x10", "x11")
   names(vars) <- vars
 
-  expect_equal(select_pos(vars, num_range("x", 1:2)), c(x1 = 1L, x2 = 2L))
-  expect_equal(select_pos(vars, num_range("x", 1:2, width = 2)), c(x01 = 3L, x02 = 4L))
-  expect_equal(select_pos(vars, num_range("x", 10:11)), c(x10 = 5L, x11 = 6L))
-  expect_equal(select_pos(vars, num_range("x", 10:11, width = 2)), c(x10 = 5L, x11 = 6L))
+  expect_equal(select_loc(vars, num_range("x", 1:2)), c(x1 = 1L, x2 = 2L))
+  expect_equal(select_loc(vars, num_range("x", 1:2, width = 2)), c(x01 = 3L, x02 = 4L))
+  expect_equal(select_loc(vars, num_range("x", 10:11)), c(x10 = 5L, x11 = 6L))
+  expect_equal(select_loc(vars, num_range("x", 10:11, width = 2)), c(x10 = 5L, x11 = 6L))
 })
 
 test_that("location must resolve to numeric variables throws error", {
   expect_error(
-    select_pos(letters2, !!list()),
+    select_loc(letters2, !!list()),
     class = "tidyselect_error_subscript_bad_type"
   )
   expect_error(
-    select_pos(letters2, !!env()),
+    select_loc(letters2, !!env()),
     class = "tidyselect_error_subscript_bad_type"
   )
 })
 
 test_that("order is determined from inputs (#53)", {
   expect_identical(
-    select_pos(mtcars, c(starts_with("c"), starts_with("d"))),
+    select_loc(mtcars, c(starts_with("c"), starts_with("d"))),
     c(cyl = 2L, carb = 11L, disp = 3L, drat = 5L)
   )
   expect_identical(
-    select_pos(mtcars, one_of(c("carb", "mpg"))),
+    select_loc(mtcars, one_of(c("carb", "mpg"))),
     c(carb = 11L, mpg = 1L)
   )
 })
@@ -128,32 +128,32 @@ test_that("one_of converts names to locations", {
 
 test_that("one_of works with variables", {
   var <- "x"
-  expect_equal(select_pos(letters2, one_of(var)), c(x = 24L))
+  expect_equal(select_loc(letters2, one_of(var)), c(x = 24L))
   # error messages from rlang
-  expect_error(select_pos(letters2, one_of(`_x`)), "not found")
-  expect_error(select_pos(letters2, one_of(`_y`)), "not found")
+  expect_error(select_loc(letters2, one_of(`_x`)), "not found")
+  expect_error(select_loc(letters2, one_of(`_y`)), "not found")
 })
 
 test_that("one_of works when passed variable name matches the column name (#2266)", {
   x <- "x"
   y <- "x"
-  expect_equal(select_pos(letters2, one_of(!!x)), c(x = 24L))
-  expect_equal(select_pos(letters2, one_of(!!y)), c(x = 24L))
-  expect_equal(select_pos(letters2, one_of(y)), c(x = 24L))
+  expect_equal(select_loc(letters2, one_of(!!x)), c(x = 24L))
+  expect_equal(select_loc(letters2, one_of(!!y)), c(x = 24L))
+  expect_equal(select_loc(letters2, one_of(y)), c(x = 24L))
 })
 
 test_that("one_of() supports S3 vectors", {
-  expect_identical(select_pos(letters2, one_of(factor(c("a", "c")))), c(a = 1L, c = 3L))
+  expect_identical(select_loc(letters2, one_of(factor(c("a", "c")))), c(a = 1L, c = 3L))
 })
 
 test_that("one_of() compacts inputs (#110)", {
   letters_seq <- set_names(seq_along(letters2), letters2)
   expect_identical(
-    select_pos(letters2, -one_of()),
+    select_loc(letters2, -one_of()),
     letters_seq
   )
   expect_identical(
-    select_pos(letters2, -one_of(NULL)),
+    select_loc(letters2, -one_of(NULL)),
     letters_seq
   )
 })
@@ -167,20 +167,20 @@ test_that("initial (single) selector defaults correctly (issue #2275)", {
   ### Single Column Selected
 
   # single columns (present), explicit
-  expect_equal(select_pos(cn, x), c(x = 1L))
-  expect_equal(select_pos(cn, -x), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, x), c(x = 1L))
+  expect_equal(select_loc(cn, -x), c(y = 2L, z = 3L))
 
   # single columns (present), matched
-  expect_equal(select_pos(cn, contains("x")), c(x = 1L))
-  expect_equal(select_pos(cn, -contains("x")), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, contains("x")), c(x = 1L))
+  expect_equal(select_loc(cn, -contains("x")), c(y = 2L, z = 3L))
 
   # single columns (not present), explicit
-  expect_error(select_pos(cn, foo), class = "tidyselect_error_subscript_oob_name")
-  expect_error(select_pos(cn, -foo), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(cn, foo), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(cn, -foo), class = "tidyselect_error_subscript_oob_name")
 
   # single columns (not present), matched
-  expect_equal(select_pos(cn, contains("foo")), named(int()))
-  expect_equal(select_pos(cn, -contains("foo")), set_names(seq_along(cn), cn))
+  expect_equal(select_loc(cn, contains("foo")), named(int()))
+  expect_equal(select_loc(cn, -contains("foo")), set_names(seq_along(cn), cn))
 })
 
 test_that("initial (of multiple) selectors default correctly (issue #2275)", {
@@ -189,63 +189,63 @@ test_that("initial (of multiple) selectors default correctly (issue #2275)", {
   ### Multiple Columns Selected
 
   # explicit(present) + matched(present)
-  expect_equal(select_pos(cn, c(x, contains("y"))), c(x = 1L, y = 2L))
-  expect_equal(select_pos(cn, c(x, -contains("y"))), c(x = 1L))
-  expect_equal(select_pos(cn, c(-x, contains("y"))), c(y = 2L, z = 3L))
-  expect_equal(select_pos(cn, c(-x, -contains("y"))), c(z = 3L))
+  expect_equal(select_loc(cn, c(x, contains("y"))), c(x = 1L, y = 2L))
+  expect_equal(select_loc(cn, c(x, -contains("y"))), c(x = 1L))
+  expect_equal(select_loc(cn, c(-x, contains("y"))), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(-x, -contains("y"))), c(z = 3L))
 
   # explicit(present) + matched(not present)
-  expect_equal(select_pos(cn, c(x, contains("foo"))), c(x = 1L))
-  expect_equal(select_pos(cn, c(x, -contains("foo"))), c(x = 1L))
-  expect_equal(select_pos(cn, c(-x, contains("foo"))), c(y = 2L, z = 3L))
-  expect_equal(select_pos(cn, c(-x, -contains("foo"))), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(x, contains("foo"))), c(x = 1L))
+  expect_equal(select_loc(cn, c(x, -contains("foo"))), c(x = 1L))
+  expect_equal(select_loc(cn, c(-x, contains("foo"))), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(-x, -contains("foo"))), c(y = 2L, z = 3L))
 
   # matched(present) + explicit(present)
-  expect_equal(select_pos(cn, c(contains("x"), y)), c(x = 1L, y = 2L))
-  expect_equal(select_pos(cn, c(contains("x"), -y)), c(x = 1L))
-  expect_equal(select_pos(cn, c(-contains("x"), y)), c(y = 2L, z = 3L))
-  expect_equal(select_pos(cn, c(-contains("x"), -y)), c(z = 3L))
+  expect_equal(select_loc(cn, c(contains("x"), y)), c(x = 1L, y = 2L))
+  expect_equal(select_loc(cn, c(contains("x"), -y)), c(x = 1L))
+  expect_equal(select_loc(cn, c(-contains("x"), y)), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(-contains("x"), -y)), c(z = 3L))
 
   # matched(not present) + explicit(not present)
-  expect_error(select_pos(cn, c(contains("foo"), bar)), class = "tidyselect_error_subscript_oob_name")
-  expect_error(select_pos(cn, c(contains("foo"), -bar)), class = "tidyselect_error_subscript_oob_name")
-  expect_error(select_pos(cn, c(-contains("foo"), bar)), class = "tidyselect_error_subscript_oob_name")
-  expect_error(select_pos(cn, c(-contains("foo"), -bar)), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(cn, c(contains("foo"), bar)), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(cn, c(contains("foo"), -bar)), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(cn, c(-contains("foo"), bar)), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(cn, c(-contains("foo"), -bar)), class = "tidyselect_error_subscript_oob_name")
 
   # matched(present) + matched(present)
-  expect_equal(select_pos(cn, c(contains("x"), contains("y"))), c(x = 1L, y = 2L))
-  expect_equal(select_pos(cn, c(contains("x"), -contains("y"))), c(x = 1L))
-  expect_equal(select_pos(cn, c(-contains("x"), contains("y"))), c(y = 2L, z = 3L))
-  expect_equal(select_pos(cn, c(-contains("x"), -contains("y"))), c(z = 3L))
+  expect_equal(select_loc(cn, c(contains("x"), contains("y"))), c(x = 1L, y = 2L))
+  expect_equal(select_loc(cn, c(contains("x"), -contains("y"))), c(x = 1L))
+  expect_equal(select_loc(cn, c(-contains("x"), contains("y"))), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(-contains("x"), -contains("y"))), c(z = 3L))
 
   # matched(present) + matched(not present)
-  expect_equal(select_pos(cn, c(contains("x"), contains("foo"))), c(x = 1L))
-  expect_equal(select_pos(cn, c(contains("x"), -contains("foo"))), c(x = 1L))
-  expect_equal(select_pos(cn, c(-contains("x"), contains("foo"))), c(y = 2L, z = 3L))
-  expect_equal(select_pos(cn, c(-contains("x"), -contains("foo"))), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(contains("x"), contains("foo"))), c(x = 1L))
+  expect_equal(select_loc(cn, c(contains("x"), -contains("foo"))), c(x = 1L))
+  expect_equal(select_loc(cn, c(-contains("x"), contains("foo"))), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(-contains("x"), -contains("foo"))), c(y = 2L, z = 3L))
 
   # matched(not present) + matched(present)
-  expect_equal(select_pos(cn, c(contains("foo"), contains("x"))), c(x = 1L))
-  expect_equal(select_pos(cn, c(contains("foo"), -contains("x"))), named(int()))
-  expect_equal(select_pos(cn, c(-contains("foo"), contains("x"))), c(x = 1L, y = 2L, z = 3L))
-  expect_equal(select_pos(cn, c(-contains("foo"), -contains("x"))), c(y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(contains("foo"), contains("x"))), c(x = 1L))
+  expect_equal(select_loc(cn, c(contains("foo"), -contains("x"))), named(int()))
+  expect_equal(select_loc(cn, c(-contains("foo"), contains("x"))), c(x = 1L, y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(-contains("foo"), -contains("x"))), c(y = 2L, z = 3L))
 
   # matched(not present) + matched(not present)
-  expect_equal(select_pos(cn, c(contains("foo"), contains("bar"))), named(int()))
-  expect_equal(select_pos(cn, c(contains("foo"), -contains("bar"))), named(int()))
-  expect_equal(select_pos(cn, c(-contains("foo"), contains("bar"))), c(x = 1L, y = 2L, z = 3L))
-  expect_equal(select_pos(cn, c(-contains("foo"), -contains("bar"))), c(x = 1L, y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(contains("foo"), contains("bar"))), named(int()))
+  expect_equal(select_loc(cn, c(contains("foo"), -contains("bar"))), named(int()))
+  expect_equal(select_loc(cn, c(-contains("foo"), contains("bar"))), c(x = 1L, y = 2L, z = 3L))
+  expect_equal(select_loc(cn, c(-contains("foo"), -contains("bar"))), c(x = 1L, y = 2L, z = 3L))
 })
 
 test_that("middle (no-match) selector should not clear previous selectors (issue #2275)", {
   cn <- setNames(nm = c("x", "y", "z"))
 
   expect_equal(
-    select_pos(cn, c(contains("x"), contains("foo"), contains("z"))),
+    select_loc(cn, c(contains("x"), contains("foo"), contains("z"))),
     c(x = 1L, z = 3L)
   )
   expect_equal(
-    select_pos(cn, c(contains("x"), -contains("foo"), contains("z"))),
+    select_loc(cn, c(contains("x"), -contains("foo"), contains("z"))),
     c(x = 1L, z = 3L)
   )
 })
@@ -260,56 +260,56 @@ test_that("last_col() selects last argument with offset", {
 })
 
 test_that("all_of() and any_of() handle named vectors", {
-  expect_identical(select_pos(letters2, all_of(c("a", foo = "b"))), c(a = 1L, foo = 2L))
-  expect_identical(select_pos(letters2, any_of(c("a", foo = "b", "bar"))), c(a = 1L, foo = 2L))
+  expect_identical(select_loc(letters2, all_of(c("a", foo = "b"))), c(a = 1L, foo = 2L))
+  expect_identical(select_loc(letters2, any_of(c("a", foo = "b", "bar"))), c(a = 1L, foo = 2L))
 })
 
 test_that("all_of() is strict", {
-  expect_error(select_pos(letters2, all_of(c("a", "foo"))), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(letters2, all_of(c("a", "foo"))), class = "tidyselect_error_subscript_oob_name")
 })
 
 test_that("any_of() is lax", {
   expect_identical(
-    select_pos(letters2, any_of(c("a", "foo"))),
-    select_pos(letters2, a)
+    select_loc(letters2, any_of(c("a", "foo"))),
+    select_loc(letters2, a)
   )
   expect_identical(
-    select_pos(letters2, -any_of(c("a", "foo"))),
-    select_pos(letters2, -a)
+    select_loc(letters2, -any_of(c("a", "foo"))),
+    select_loc(letters2, -a)
   )
 })
 
 test_that("all_of() and any_of() check their inputs", {
-  expect_error(select_pos(letters2, all_of(NA)), "missing")
-  expect_error(select_pos(letters2, any_of(NA)), "missing")
-  expect_error(select_pos(letters2, all_of(na_chr)), "missing")
-  expect_error(select_pos(letters2, any_of(na_chr)), "missing")
-  expect_error(select_pos(letters2, all_of(TRUE)), class = "tidyselect_error_subscript_bad_type")
-  expect_error(select_pos(letters2, any_of(TRUE)), class = "tidyselect_error_subscript_bad_type")
+  expect_error(select_loc(letters2, all_of(NA)), "missing")
+  expect_error(select_loc(letters2, any_of(NA)), "missing")
+  expect_error(select_loc(letters2, all_of(na_chr)), "missing")
+  expect_error(select_loc(letters2, any_of(na_chr)), "missing")
+  expect_error(select_loc(letters2, all_of(TRUE)), class = "tidyselect_error_subscript_bad_type")
+  expect_error(select_loc(letters2, any_of(TRUE)), class = "tidyselect_error_subscript_bad_type")
 })
 
 test_that("matchers accept length > 1 vectors (#50)", {
   expect_identical(
-    select_pos(iris, starts_with(c("Sep", "Petal"))),
-    select_pos(iris, starts_with("Sep") | starts_with("Petal"))
+    select_loc(iris, starts_with(c("Sep", "Petal"))),
+    select_loc(iris, starts_with("Sep") | starts_with("Petal"))
   )
   expect_identical(
-    select_pos(iris, ends_with(c("gth", "Width"))),
-    select_pos(iris, ends_with("gth") | ends_with("Width"))
+    select_loc(iris, ends_with(c("gth", "Width"))),
+    select_loc(iris, ends_with("gth") | ends_with("Width"))
   )
   expect_identical(
-    select_pos(iris, contains(c("epal", "eta"))),
-    select_pos(iris, contains("epal") | contains("eta")),
+    select_loc(iris, contains(c("epal", "eta"))),
+    select_loc(iris, contains("epal") | contains("eta")),
   )
   expect_identical(
-    select_pos(iris, matches(c("epal", "eta"))),
-    select_pos(iris, matches("epal") | contains("eta")),
+    select_loc(iris, matches(c("epal", "eta"))),
+    select_loc(iris, matches("epal") | contains("eta")),
   )
 })
 
 test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
   expect_identical(
-    select_pos(letters2, all_of(c("a", "bar", "c")), strict = FALSE),
+    select_loc(letters2, all_of(c("a", "bar", "c")), strict = FALSE),
     c(a = 1L, c = 3L)
   )
 })

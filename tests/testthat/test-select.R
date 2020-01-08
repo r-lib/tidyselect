@@ -16,23 +16,23 @@ test_that("select() supports existing duplicates", {
   expect_identical(select(x, A = a), list(A = 1, A = 3))
 })
 
-test_that("can call `select_pos()` without arguments", {
-  expect_identical(select_pos(mtcars), set_names(int(), chr()))
+test_that("can call `select_loc()` without arguments", {
+  expect_identical(select_loc(mtcars), set_names(int(), chr()))
 })
 
 test_that("can specify inclusion and exclusion", {
   x <- list(a = 1, b = 2, c = 3)
-  expect_identical(select_pos(x, int(), include = "b"), c(b = 2L))
-  expect_identical(select_pos(x, -int(), exclude = c("a", "c")), c(b = 2L))
+  expect_identical(select_loc(x, int(), include = "b"), c(b = 2L))
+  expect_identical(select_loc(x, -int(), exclude = c("a", "c")), c(b = 2L))
 })
 
-test_that("select_pos() checks inputs", {
-  expect_error(select_pos(function() NULL), class = "vctrs_error_scalar_type")
+test_that("select_loc() checks inputs", {
+  expect_error(select_loc(function() NULL), class = "vctrs_error_scalar_type")
 })
 
-test_that("select_pos() accepts name spec", {
+test_that("select_loc() accepts name spec", {
   expect_identical(
-    select_pos(mtcars, c(foo = c(mpg, cyl)), name_spec = "{outer}_{inner}"),
+    select_loc(mtcars, c(foo = c(mpg, cyl)), name_spec = "{outer}_{inner}"),
     c(foo_1 = 1L, foo_2 = 2L)
   )
 })
