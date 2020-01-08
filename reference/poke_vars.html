@@ -8,11 +8,13 @@
 
 <title>Replace or get current variables — poke_vars • tidyselect</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -32,8 +34,8 @@
 
 
 
-<meta property="og:title" content="Replace or get current variables — poke_vars" />
 
+<meta property="og:title" content="Replace or get current variables — poke_vars" />
 <meta property="og:description" content="Variables are made available to select helpers by
 registering them in a special placeholder.
 scoped_vars() changes the current variables and sets up a
@@ -51,6 +53,7 @@ FALSE otherwise.
 
 " />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -109,7 +112,6 @@ FALSE otherwise.
   <a href="../articles/tidyselect.html">Get started</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="../reference/index.html">Reference</a>
@@ -151,7 +153,6 @@ FALSE otherwise.
     </div>
 
     <div class="ref-description">
-    
     <p>Variables are made available to <a href='select_helpers.html'>select helpers</a> by
 registering them in a special placeholder.</p><ul>
 <li><p><code>scoped_vars()</code> changes the current variables and sets up a
@@ -168,7 +169,6 @@ done. This is for expert use only.</p></li>
 <code>FALSE</code> otherwise.</p></li>
 </ul>
 
-    
     </div>
 
     <pre class="usage"><span class='fu'>poke_vars</span>(<span class='no'>vars</span>)
@@ -178,7 +178,7 @@ done. This is for expert use only.</p></li>
 <span class='fu'>with_vars</span>(<span class='no'>vars</span>, <span class='no'>expr</span>)
 
 <span class='fu'>has_vars</span>()</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -197,17 +197,15 @@ restoring the old variables should be registered.</p></td>
 context.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>For <code>poke_vars()</code> and <code>scoped_vars()</code>, the old variables
 invisibly. For <code><a href='peek_vars.html'>peek_vars()</a></code>, the variables currently
 registered.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>peek_vars</p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>poke_vars</span>(<span class='no'>letters</span>)
@@ -251,11 +249,8 @@ registered.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
