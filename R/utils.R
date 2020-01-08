@@ -142,7 +142,7 @@ flat_map_int <- function(.x, .fn, ...) {
   vctrs::vec_c(!!!out, .ptype = int())
 }
 
-pos_validate <- function(pos, vars) {
+loc_validate <- function(pos, vars) {
   check_missing(pos)
   check_negative(pos)
 

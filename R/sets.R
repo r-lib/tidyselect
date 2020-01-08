@@ -27,7 +27,7 @@ sel_unique <- function(x) {
 # otherwise OOB elements might be selected out and go unnoticed
 sel_diff <- function(x, y, vars = NULL) {
   if (!is_null(vars)) {
-    y <- pos_validate(y, vars)
+    y <- loc_validate(y, vars)
   }
   if (is_null(names(x)) || is_null(names(y))) {
     set_diff(x, y)

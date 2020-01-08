@@ -13,7 +13,7 @@ vars_select_eval <- function(vars,
   }
   if (!is_symbolic(wrapped)) {
     pos <- as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data)
-    return(pos_validate(pos, vars))
+    return(loc_validate(pos, vars))
   }
 
   vars <- peek_vars()
@@ -60,7 +60,7 @@ vars_select_eval <- function(vars,
   data_mask$.__tidyselect__.$internal <- internal
 
   pos <- walk_data_tree(expr, data_mask, context_mask)
-  pos <- pos_validate(pos, vars)
+  pos <- loc_validate(pos, vars)
 
   if (type == "rename" && !is_named(pos)) {
     abort("All renaming inputs must be named.")
