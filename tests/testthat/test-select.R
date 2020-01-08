@@ -26,6 +26,13 @@ test_that("can specify inclusion and exclusion", {
   expect_identical(select_loc(x, -int(), exclude = c("a", "c")), c(b = 2L))
 })
 
+test_that("variables are excluded with non-strict `any_of()`", {
+  expect_identical(
+    select_loc(iris, 1:3, exclude = "foo"),
+    select_loc(iris, 1:3)
+  )
+})
+
 test_that("select_loc() checks inputs", {
   expect_error(select_loc(function() NULL), class = "vctrs_error_scalar_type")
 })

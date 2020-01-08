@@ -132,7 +132,7 @@ eval_select_impl <- function(x,
     expr <- quo(all_of(include) | !!expr)
   }
   if (length(exclude)) {
-    expr <- quo(!!expr & !all_of(exclude))
+    expr <- quo(!!expr & !any_of(exclude))
   }
 
   subclass_index_errors(
