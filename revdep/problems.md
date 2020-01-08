@@ -979,18 +979,18 @@ Run `revdep_details(,"tsibble")` for more info
      ERROR
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-        4. tidyr::nest(., data = c(Date, Count))
-       13. tsibble::build_tsibble(...) revdep/checks.noindex/tsibble/new/tsibble.Rcheck/00_pkg_src/tsibble/R/tidyr-verbs.R:72:4
-       14. tsibble:::use_id(x, !!enquo(key)) revdep/checks.noindex/tsibble/new/tsibble.Rcheck/00_pkg_src/tsibble/R/as-tsibble.R:258:2
-       15. tidyselect::vars_select(names(x), !!key_quo) revdep/checks.noindex/tsibble/new/tsibble.Rcheck/00_pkg_src/tsibble/R/deprecated.R:65:2
-       16. tidyselect:::eval_select_impl(...)
-       17. tidyselect:::subclass_index_errors(...)
-       18. testthat::expect_is(...)
+      Expected match: "Unknown column"
+      Actual message: "Must select existing columns.\n✖ Can't subset element with unknown name `value1`."
+      Backtrace:
+        1. testthat::expect_error(fill_gaps(tsbl, value1 = value), "Unknown column")
+        7. tsibble:::fill_gaps.tbl_ts(tsbl, value1 = value) revdep/checks.noindex/tsibble/new/tsibble.Rcheck/00_pkg_src/tsibble/R/gaps.R:66:2
+        8. tidyselect::vars_select(measured_vars(.data), !!!names(lst_exprs)) revdep/checks.noindex/tsibble/new/tsibble.Rcheck/00_pkg_src/tsibble/R/gaps.R:85:4
+        9. tidyselect:::eval_select_impl(...)
+       10. tidyselect:::subclass_index_errors(...)
       
       ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 783 | SKIPPED: 2 | WARNINGS: 1 | FAILED: 2 ]
+      [ OK: 789 | SKIPPED: 2 | WARNINGS: 1 | FAILED: 1 ]
       1. Failure: a tbl_ts of 4 day interval with bad names (@test-gaps.R#74) 
-      2. Error: nest() (@test-tidyr.R#70) 
       
       Error: testthat unit tests failed
       Execution halted
