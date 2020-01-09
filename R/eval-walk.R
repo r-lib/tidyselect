@@ -105,7 +105,6 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `c` = eval_c(expr, data_mask, context_mask),
     `||` = stop_bad_bool_op("||", "|"),
     `&&` = stop_bad_bool_op("&&", "&"),
-    `+` = stop_bad_arith_op("+"),
     `*` = stop_bad_arith_op("*"),
     `/` = stop_bad_arith_op("/"),
     `^` = stop_bad_arith_op("^"),

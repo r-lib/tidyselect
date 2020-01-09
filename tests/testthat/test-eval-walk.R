@@ -96,14 +96,18 @@ test_that("scalar boolean operators fail informatively", {
   })
 })
 
+test_that("can use `+` in env context", {
+  foo <- 1
+  expect_identical(select_loc(letters2, foo + 2), c(c = 3L))
+  expect_error(select_loc(letters2, a + 2), "not found")
+})
+
 test_that("can't use arithmetic operators in data context", {
-  expect_error(select_loc(letters2, a + 2), "arithmetic")
   expect_error(select_loc(letters2, a * 2), "arithmetic")
   expect_error(select_loc(letters2, a / 2), "arithmetic")
   expect_error(select_loc(letters2, a^2), "arithmetic")
 
   verify_output(test_path("outputs", "vars-select-num-ops.txt"), {
-    select_loc(letters2, a + 2)
     select_loc(letters2, a * 2)
     select_loc(letters2, a / 2)
     select_loc(letters2, a^2)
