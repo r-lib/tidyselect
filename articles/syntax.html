@@ -149,9 +149,9 @@
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  cyl disp   hp </span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;    2    3    4</span></a></code></pre></div>
 </div>
-<div id="boolean-operators-and-binary--" class="section level3">
+<div id="boolean-operators-and" class="section level3">
 <h3 class="hasAnchor">
-<a href="#boolean-operators-and-binary--" class="anchor"></a>Boolean operators and binary <code>-</code>
+<a href="#boolean-operators-and" class="anchor"></a>Boolean operators and <code>/</code>
 </h3>
 <p>Boolean operators provide a more intuitive approach to set combination. Though sets are internally represented with vectors of locations, they could equally be represented with a full logical vector of inclusion indicators (taking the <code><a href="https://rdrr.io/r/base/which.html">which()</a></code> of this vector would then recover the locations). The boolean operators should be considered in terms of the logical representation of sets.</p>
 <p>The <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> operator takes the <strong>union</strong> of two sets:</p>
@@ -170,8 +170,8 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2"><span class="co">#&gt; Sepal.Length </span></a>
 <a class="sourceLine" id="cb9-3" data-line-number="3"><span class="co">#&gt;            1</span></a></code></pre></div>
-<p>Another way of expressing set difference is binary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>:</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">-</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
+<p>Another way of expressing set difference is <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code>:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
 <a class="sourceLine" id="cb10-2" data-line-number="2"><span class="co">#&gt; Sepal.Length </span></a>
 <a class="sourceLine" id="cb10-3" data-line-number="3"><span class="co">#&gt;            1</span></a></code></pre></div>
 </div>
