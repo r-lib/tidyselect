@@ -116,7 +116,7 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw"><a href="../reference/eval_select.html">eval_select</a></span>(rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/nse-defuse.html">expr</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(...)), data)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">}</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb2-5" data-line-number="5">rename_pos &lt;-<span class="st"> </span><span class="cf">function</span>(data, ...) {</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">rename_loc &lt;-<span class="st"> </span><span class="cf">function</span>(data, ...) {</a>
 <a class="sourceLine" id="cb2-6" data-line-number="6">  <span class="kw"><a href="../reference/eval_select.html">eval_rename</a></span>(rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/nse-defuse.html">expr</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(...)), data)</a>
 <a class="sourceLine" id="cb2-7" data-line-number="7">}</a></code></pre></div>
 <div id="sets-of-variables" class="section level2">
@@ -478,7 +478,7 @@
 <a class="sourceLine" id="cb37-2" data-line-number="2"><span class="co">#&gt; mpg </span></a>
 <a class="sourceLine" id="cb37-3" data-line-number="3"><span class="co">#&gt;   1</span></a>
 <a class="sourceLine" id="cb37-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb37-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(mpg)</a>
+<a class="sourceLine" id="cb37-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_loc</span>(mpg)</a>
 <a class="sourceLine" id="cb37-6" data-line-number="6"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a></code></pre></div>
 </div>
 <div id="renaming-to-an-existing-variable-name" class="section level3">
@@ -501,17 +501,17 @@
 <a class="sourceLine" id="cb39-5" data-line-number="5"><span class="co">#&gt; disp  cyl </span></a>
 <a class="sourceLine" id="cb39-6" data-line-number="6"><span class="co">#&gt;    3    1</span></a></code></pre></div>
 <p>This is not possible when renaming.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(cyl, <span class="dt">cyl =</span> mpg)</a>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_loc</span>(cyl, <span class="dt">cyl =</span> mpg)</a>
 <a class="sourceLine" id="cb40-2" data-line-number="2"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a>
 <a class="sourceLine" id="cb40-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb40-4" data-line-number="4">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(disp, <span class="dt">cyl =</span> mpg)</a>
+<a class="sourceLine" id="cb40-4" data-line-number="4">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_loc</span>(disp, <span class="dt">cyl =</span> mpg)</a>
 <a class="sourceLine" id="cb40-5" data-line-number="5"><span class="co">#&gt; Error: All renaming inputs must be named.</span></a></code></pre></div>
 <p>However, the name conflict can be solved by renaming the existing variable to another name:</p>
 <div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(<span class="dt">foo =</span> cyl, <span class="dt">cyl =</span> mpg)</a>
 <a class="sourceLine" id="cb41-2" data-line-number="2"><span class="co">#&gt; foo cyl </span></a>
 <a class="sourceLine" id="cb41-3" data-line-number="3"><span class="co">#&gt;   2   1</span></a>
 <a class="sourceLine" id="cb41-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb41-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(<span class="dt">foo =</span> cyl, <span class="dt">cyl =</span> mpg)</a>
+<a class="sourceLine" id="cb41-5" data-line-number="5">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_loc</span>(<span class="dt">foo =</span> cyl, <span class="dt">cyl =</span> mpg)</a>
 <a class="sourceLine" id="cb41-6" data-line-number="6"><span class="co">#&gt; foo cyl </span></a>
 <a class="sourceLine" id="cb41-7" data-line-number="7"><span class="co">#&gt;   2   1</span></a></code></pre></div>
 </div>
@@ -534,7 +534,7 @@
 <a class="sourceLine" id="cb45-2" data-line-number="2"><span class="co">#&gt;   x foo </span></a>
 <a class="sourceLine" id="cb45-3" data-line-number="3"><span class="co">#&gt;   1   3</span></a>
 <a class="sourceLine" id="cb45-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb45-5" data-line-number="5">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_pos</span>(<span class="dt">foo =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb45-5" data-line-number="5">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">rename_loc</span>(<span class="dt">foo =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb45-6" data-line-number="6"><span class="co">#&gt; foo </span></a>
 <a class="sourceLine" id="cb45-7" data-line-number="7"><span class="co">#&gt;   3</span></a></code></pre></div>
 </div>
