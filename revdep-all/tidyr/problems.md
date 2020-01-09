@@ -1,42 +1,3 @@
-# cvms
-
-<details>
-
-* Version: 0.3.2
-* Source code: https://github.com/cran/cvms
-* URL: https://github.com/ludvigolsen/cvms
-* BugReports: https://github.com/ludvigolsen/cvms/issues
-* Date/Publication: 2019-12-01 23:10:02 UTC
-* Number of recursive dependencies: 114
-
-Run `revdep_details(,"cvms")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-       16. dplyr::select(., -c(.data$Predictions, .data$ROC))
-       23. cvms:::legacy_nest(., 1:(ncol(fold_col_results) - 2))
-       25. tidyr:::nest_legacy.data.frame(...)
-       26. tidyr:::nest_legacy.tbl_df(data, ..., .key = !!.key)
-       28. tidyselect::vars_select(names(data), ...)
-       29. tidyselect:::eval_select_impl(...)
-       30. tidyselect:::subclass_index_errors(...)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 1530 | SKIPPED: 12 | WARNINGS: 0 | FAILED: 2 ]
-      1. Error: binomial models work with repeated cross_validate() (@test_cross_validate.R#484) 
-      2. Error: binomial models work with positive as.character in cross_validate() (@test_cross_validate.R#608) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 # DEP
 
 <details>
@@ -87,42 +48,6 @@ Run `revdep_details(,"DEP")` for more info
       sub-directories of 1Mb or more:
         data   1.4Mb
         doc    3.1Mb
-    ```
-
-# ERSA
-
-<details>
-
-* Version: 0.1.1
-* Source code: https://github.com/cran/ERSA
-* Date/Publication: 2018-07-24 11:10:03 UTC
-* Number of recursive dependencies: 99
-
-Run `revdep_details(,"ERSA")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘ERSA-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: pcpPlot
-    > ### Title: A PCP plot of the data, residuals or hat values from regression
-    > ###   fits
-    > ### Aliases: pcpPlot
-    > 
-    > ### ** Examples
-    > 
-    > f <- lm(mpg ~ wt+hp+disp, data=mtcars)
-    > pcpPlot(mtcars, f, type="Residuals")
-    Warning: attributes are not identical across measure variables;
-    they will be dropped
-    Error in FUN(X[[i]], ...) : object 'case' not found
-    Calls: <Anonymous> ... <Anonymous> -> f -> scales_add_defaults -> lapply -> FUN
-    Execution halted
     ```
 
 # GerminaR
@@ -434,47 +359,5 @@ Run `revdep_details(,"sjPlot")` for more info
 *   checking Rd cross-references ... NOTE
     ```
     Package unavailable to check Rd xrefs: ‘snakecase’
-    ```
-
-# virtualPollen
-
-<details>
-
-* Version: 1.0.0
-* Source code: https://github.com/cran/virtualPollen
-* URL: https://github.com/BlasBenito/virtualPollen
-* Date/Publication: 2019-05-16 13:40:03 UTC
-* Number of recursive dependencies: 114
-
-Run `revdep_details(,"virtualPollen")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-    The error most likely occurred in:
-    
-    > ### Name: compareSimulations
-    > ### Title: Compares different simulations produced by 'simulatePopulation'.
-    > ### Aliases: compareSimulations
-    > 
-    > ### ** Examples
-    > 
-    > 
-    > #getting example data
-    > data(simulation)
-    > 
-    > #compare taxa 1, 2, and 3.
-    > compareSimulations(simulation.output = simulation,
-    +  species = c(1, 2, 3),
-    +  columns = c("Pollen", "Suitability"),
-    +  time.zoom = c(1000, 2000)
-    + )
-    Error in FUN(X[[i]], ...) : object 'Species' not found
-    Calls: compareSimulations ... <Anonymous> -> f -> scales_add_defaults -> lapply -> FUN
-    Execution halted
     ```
 
