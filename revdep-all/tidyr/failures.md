@@ -7,7 +7,7 @@
 * URL: https://github.com/koalaverse/anomalyDetection
 * BugReports: https://github.com/koalaverse/anomalyDetection/issues
 * Date/Publication: 2018-03-07 16:18:12 UTC
-* Number of recursive dependencies: 97
+* Number of recursive dependencies: 0
 
 Run `revdep_details(,"anomalyDetection")` for more info
 

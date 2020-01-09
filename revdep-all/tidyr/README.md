@@ -50,14 +50,12 @@
 |vlad             |0.2.0   |1     |        |     |
 |activPAL         |?       |      |        |     |
 
-## New problems (14)
+## New problems (11)
 
 |package                                    |version |error     |warning |note |
 |:------------------------------------------|:-------|:---------|:-------|:----|
 |[cvms](problems.md#cvms)                   |0.3.2   |__+1__    |        |     |
-|[dbplot](problems.md#dbplot)               |0.3.2   |__+2__    |        |     |
 |[DEP](problems.md#dep)                     |1.6.1   |-1 __+1__ |        |1    |
-|[embed](problems.md#embed)                 |0.0.5   |__+2__    |        |     |
 |[ERSA](problems.md#ersa)                   |0.1.1   |__+1__    |        |     |
 |[GerminaR](problems.md#germinar)           |1.3     |__+1__    |        |1    |
 |[irteQ](problems.md#irteq)                 |1.0.0   |__+1__    |        |1    |
@@ -65,7 +63,6 @@
 |[mnreadR](problems.md#mnreadr)             |2.1.3   |__+1__    |        |     |
 |[nationwider](problems.md#nationwider)     |1.0.0   |__+1__    |        |     |
 |[pammtools](problems.md#pammtools)         |0.1.14  |__+1__    |        |     |
-|[sitar](problems.md#sitar)                 |1.1.1   |__+1__    |        |     |
 |[sjPlot](problems.md#sjplot)               |2.8.1   |__+1__    |        |1    |
 |[virtualPollen](problems.md#virtualpollen) |1.0.0   |__+1__    |        |     |
 

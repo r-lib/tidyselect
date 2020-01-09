@@ -37,71 +37,6 @@ Run `revdep_details(,"cvms")` for more info
       Execution halted
     ```
 
-# dbplot
-
-<details>
-
-* Version: 0.3.2
-* Source code: https://github.com/cran/dbplot
-* URL: https://github.com/edgararuiz/dbplot
-* BugReports: https://github.com/edgararuiz/dbplot/issues
-* Date/Publication: 2019-07-02 04:20:05 UTC
-* Number of recursive dependencies: 69
-
-Run `revdep_details(,"dbplot")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-    +   dbplot_bar(am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
-    Error: object 'am' not found
-    <error/rlang_error>
-    object 'am' not found
-    Backtrace:
-         █
-      1. └─mtcars %>% dbplot_bar(am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
-      2.   ├─base::withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
-      3.   └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
-      4.     └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
-      5.       └─`_fseq`(`_lhs`)
-      6.         └─magrittr::freduce(value, `_function_list`)
-      7.           ├─base::withVisible(function_list[[k]](value))
-      8.           └─function_list[[k]](value)
-      9.             └─dbplot::dbplot_bar(., am, avg_mpg = mean(mpg), sum_mpg = sum(mpg))
-     10.               ├─dplyr::select(df, -!!x) 00_pkg_src/dbplot/R/discrete.R:107:4
-     11.               └─dplyr:::select.data.frame(df, -!!x)
-     12.                 └─tidyselect::vars_select(tbl_vars(.data), !!!enquos(...))
-     13.                   └─tidyselect:::eval_select_impl(...)
-     14.                     └─tidyselect:::subc
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      object 'am' not found
-      Backtrace:
-       1. dbplot::dbplot_line(mtcars, am, sum_wt = sum(wt), sum_mpg = sum(mpg))
-       3. dplyr:::select.data.frame(df, -!!x)
-       4. tidyselect::vars_select(tbl_vars(.data), !!!enquos(...))
-       5. tidyselect:::eval_select_impl(...)
-       6. tidyselect:::subclass_index_errors(...)
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 20 | SKIPPED: 0 | WARNINGS: 0 | FAILED: 2 ]
-      1. Error: Multiple aggregations work with bar plots (@test-discrete.R#15) 
-      2. Error: Multiple aggregations work with line plots (@test-discrete.R#24) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 # DEP
 
 <details>
@@ -152,71 +87,6 @@ Run `revdep_details(,"DEP")` for more info
       sub-directories of 1Mb or more:
         data   1.4Mb
         doc    3.1Mb
-    ```
-
-# embed
-
-<details>
-
-* Version: 0.0.5
-* Source code: https://github.com/cran/embed
-* URL: https://tidymodels.github.io/embed, https://github.com/tidymodels/embed
-* BugReports: https://github.com/tidymodels/embed/issues
-* Date/Publication: 2020-01-07 17:20:04 UTC
-* Number of recursive dependencies: 146
-
-Run `revdep_details(,"embed")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-    > mtcars %>% add_woe(am, cyl, gear:carb)
-    Error: object 'am' not found
-    <error/rlang_error>
-    object 'am' not found
-    Backtrace:
-         █
-      1. └─mtcars %>% add_woe(am, cyl, gear:carb)
-      2.   ├─base::withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
-      3.   └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
-      4.     └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
-      5.       └─`_fseq`(`_lhs`)
-      6.         └─magrittr::freduce(value, `_function_list`)
-      7.           ├─base::withVisible(function_list[[k]](value))
-      8.           └─function_list[[k]](value)
-      9.             └─embed::add_woe(., am, cyl, gear:carb)
-     10.               └─embed::dictionary(.data, !!outcome, ...) 00_pkg_src/embed/R/woe.R:297:4
-     11.                 └─`%>%`(...) 00_pkg_src/embed/R/woe.R:251:2
-     12.                   ├─base::withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
-     13.                   └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
-     14.                     └─base::eval(quote(`_fseq`(`_lhs`)), env, en
-    Execution halted
-    ```
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 131 | SKIPPED: 10 | WARNINGS: 0 | FAILED: 10 ]
-      1.  Error: dictionary returns a proper tibble (@woe.R#251) 
-      2.  Error: dictionary accepts numeric, logical and character predictor variables (@test_woe.R#71) 
-      3.  Error: dictionary returns no messages nor warnings nor errors (@test_woe.R#77) 
-      4.  Error: add_woe returns a proper tibble (@woe.R#297) 
-      5.  Error: add_woe ruturns no messages nor warnings nor errors (@test_woe.R#96) 
-      6.  Error: add_woe accepts numeric, logical and character predictor variables (@woe.R#297) 
-      7.  Error: add_woe returns woe only for those variables that exists in both data and dictionary (@test_woe.R#106) 
-      8.  Error: add_woe warns user if the variable has too many levels (@test_woe.R#118) 
-      9.  Error: step_woe (@test_woe.R#129) 
-      10. Error: printing (@test_woe.R#179) 
-      
-      Error: testthat unit tests failed
-      Execution halted
     ```
 
 # ERSA
@@ -316,7 +186,7 @@ Run `revdep_details(,"GerminaR")` for more info
 * URL: https://github.com/hwangQ/irteQ
 * BugReports: https://github.com/hwangQ/irteQ/issues
 * Date/Publication: 2018-11-19 18:30:08 UTC
-* Number of recursive dependencies: 55
+* Number of recursive dependencies: 0
 
 Run `revdep_details(,"irteQ")` for more info
 
@@ -381,7 +251,7 @@ Run `revdep_details(,"janitor")` for more info
     Last 13 lines of output:
         1. testthat::expect_error(mtcars %>% tabyl(moose), "object 'moose' not found")
         6. janitor::tabyl(., moose)
-       15. janitor:::tabyl_1way(...) revdep/checks.noindex/janitor/new/janitor.Rcheck/00_pkg_src/janitor/R/tabyl.R:150:4
+       15. janitor:::tabyl_1way(...) revdep-all/tidyr/checks.noindex/janitor/new/janitor.Rcheck/00_pkg_src/janitor/R/tabyl.R:150:4
        16. dplyr:::select.data.frame(dat, !!var1)
        18. tidyselect::vars_select(tbl_vars(.data), !!!enquos(...))
        19. tidyselect:::eval_select_impl(...)
@@ -514,48 +384,6 @@ Run `revdep_details(,"pammtools")` for more info
       
       Error: testthat unit tests failed
       Execution halted
-    ```
-
-# sitar
-
-<details>
-
-* Version: 1.1.1
-* Source code: https://github.com/cran/sitar
-* URL: https://github.com/statist7/sitar
-* Date/Publication: 2019-03-12 16:30:03 UTC
-* Number of recursive dependencies: 52
-
-Run `revdep_details(,"sitar")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-    Error: object 'id' not found
-    <error/rlang_error>
-    object 'id' not found
-    Backtrace:
-         █
-      1. └─sitar::apv_se(model, nboot = 3, seed = 111, plot = TRUE)
-      2.   └─getData(object) %>% nest(-!!id) %>% bootstraps(times = nboot) 00_pkg_src/sitar/R/apv_se.R:40:2
-      3.     ├─base::withVisible(eval(quote(`_fseq`(`_lhs`)), env, env))
-      4.     └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
-      5.       └─base::eval(quote(`_fseq`(`_lhs`)), env, env)
-      6.         └─sitar:::`_fseq`(`_lhs`)
-      7.           └─magrittr::freduce(value, `_function_list`)
-      8.             └─function_list[[i]](value)
-      9.               └─tidyr::nest(., -!!id)
-     10.                 ├─base::unname(tidyselect::vars_select(tbl_vars(.data), !!!cols))
-     11.                 └─tidyselect::vars_select(tbl_vars(.data), !!!cols)
-     12.                   └─tidyselect:::eval_select_impl(...)
-     13.                     └─tidyselect:::subclass_index_errors(...)
-    <parent: error/simpleError>
-    obj
-    Execution halted
     ```
 
 # sjPlot
