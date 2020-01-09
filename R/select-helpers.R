@@ -16,7 +16,7 @@
 #'
 #' In selection context you can also use these operators:
 #'
-#' - `"-"` for taking the difference between two sets of variables.
+#' - `"/"` for taking the difference between two sets of variables.
 #' - `":"` for selecting a range of consecutive variables.
 #' - `"c"` for selecting the union of sets of variables.
 #'
@@ -67,6 +67,9 @@
 #' # `&` and `|` take the intersection or the union of two selections:
 #' vars_select(nms, starts_with("Petal") & ends_with("Width"))
 #' vars_select(nms, starts_with("Petal") | ends_with("Width"))
+#'
+#' # `/` takes the difference of two selections
+#' vars_select(nms, starts_with("Petal") / ends_with("Width"))
 #'
 #' # `all_of()` selects the variables in a character vector:
 #' vars <- c("Petal.Length", "Petal.Width")

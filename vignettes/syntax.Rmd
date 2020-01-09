@@ -96,7 +96,7 @@ mtcars %>% select_loc(cyl:hp)
 ```
 
 
-### Boolean operators and binary `-`
+### Boolean operators and `/`
 
 Boolean operators provide a more intuitive approach to set
 combination. Though sets are internally represented with vectors of
@@ -130,10 +130,10 @@ __difference__:
 iris %>% select_loc(starts_with("Sepal") & !ends_with("Width"))
 ```
 
-Another way of expressing set difference is binary `-`:
+Another way of expressing set difference is `/`:
 
 ```{r}
-iris %>% select_loc(starts_with("Sepal") - ends_with("Width"))
+iris %>% select_loc(starts_with("Sepal") / ends_with("Width"))
 ```
 
 

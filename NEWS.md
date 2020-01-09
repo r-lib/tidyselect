@@ -1,11 +1,11 @@
 
 # tidyselect (development)
 
-* Binary `-` is now short for set difference. These expressions are
+* Binary `/` is now short for set difference. These expressions are
   now equivalent:
 
   ```{r}
-  iris %>% select(starts_with("Sepal") - ends_with("Width"))
+  iris %>% select(starts_with("Sepal") / ends_with("Width"))
   iris %>% select(starts_with("Sepal"), -ends_with("Width"))
   ```
 

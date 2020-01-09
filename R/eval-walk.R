@@ -106,7 +106,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `||` = stop_bad_bool_op("||", "|"),
     `&&` = stop_bad_bool_op("&&", "&"),
     `*` = stop_bad_arith_op("*"),
-    `/` = stop_bad_arith_op("/"),
+    `/` = eval_slash(expr, data_mask, context_mask),
     `^` = stop_bad_arith_op("^"),
     .data = eval(expr, data_mask),
     eval_context(expr, context_mask)
@@ -217,9 +217,13 @@ eval_colon <- function(expr, data_mask, context_mask) {
 
 eval_minus <- function(expr, data_mask, context_mask) {
   if (length(expr) == 2) {
-    return(eval_bang(expr, data_mask, context_mask))
+    eval_bang(expr, data_mask, context_mask)
+  } else {
+    eval_context(expr, context_mask)
   }
+}
 
+eval_slash <- function(expr, data_mask, context_mask) {
   lhs <- walk_data_tree(expr[[2]], data_mask, context_mask)
   rhs <- walk_data_tree(expr[[3]], data_mask, context_mask)
   vars <- data_mask$.__tidyselect__.$internal$vars

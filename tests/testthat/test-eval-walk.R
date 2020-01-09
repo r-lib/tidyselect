@@ -102,14 +102,19 @@ test_that("can use `+` in env context", {
   expect_error(select_loc(letters2, a + 2), "not found")
 })
 
-test_that("can't use arithmetic operators in data context", {
+test_that("can use `-` in env context", {
+  expect_identical(
+    select_loc(iris, 1:(ncol(iris) - 2)),
+    select_loc(iris, 1:3)
+  )
+})
+
+test_that("can't use `*` and `^` in data context", {
   expect_error(select_loc(letters2, a * 2), "arithmetic")
-  expect_error(select_loc(letters2, a / 2), "arithmetic")
   expect_error(select_loc(letters2, a^2), "arithmetic")
 
   verify_output(test_path("outputs", "vars-select-num-ops.txt"), {
     select_loc(letters2, a * 2)
-    select_loc(letters2, a / 2)
     select_loc(letters2, a^2)
   })
 })
@@ -257,9 +262,9 @@ test_that(".data in env-expression has the lexical definition", {
   expect_error(select_loc(mtcars, !!quo), regexp = NA)
 })
 
-test_that("binary `-` is short for set difference", {
+test_that("binary `/` is short for set difference", {
   expect_identical(
-    select_loc(iris, starts_with("Sepal") - ends_with("Width")),
+    select_loc(iris, starts_with("Sepal") / ends_with("Width")),
     select_loc(iris, c(starts_with("Sepal"), -ends_with("Width")))
   )
 })
