@@ -70,14 +70,14 @@ cnd_header.tidyselect_error_subscript_bad_type <- function(cnd, ...) {
 }
 cnd_header_index_bad_type_select <- function(cnd, ...) {
   if (cnd$allow_scalar_location) {
-    "Must select with column names or positions."
+    "Must select with column names or locations."
   } else {
     "Must select with column names."
   }
 }
 cnd_header_index_bad_type_rename <- function(cnd, ...) {
   if (cnd$allow_scalar_location) {
-    "Must rename with column names or positions."
+    "Must rename with column names or locations."
   } else {
     "Must rename with column names."
   }

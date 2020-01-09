@@ -82,7 +82,7 @@ peek_vars <- function(..., fn = NULL) {
 #' peek_vars()
 #'
 #' # Now that the variables are registered, the helpers can figure out
-#' # the positions of elements within the variable vector:
+#' # the locations of elements within the variable vector:
 #' one_of(c("d", "z"))
 #'
 #' # In a function be sure to restore the previous variables. An exit

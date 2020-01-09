@@ -1,14 +1,14 @@
 > vars_select(letters, TRUE)
-Error: Must select with column names or positions.
+Error: Must select with column names or locations.
 x `i` has the wrong type `logical`.
 i These indices must be locations or names.
 
 > vars_select(letters, 2.5)
-Error: Must select with column names or positions.
+Error: Must select with column names or locations.
 x Lossy cast from `i` <double> to <integer>.
 
 > vars_select(letters, structure(1:3, class = "tidysel_foobar"))
-Error: Must select with column names or positions.
+Error: Must select with column names or locations.
 x `i` has the wrong type `tidysel_foobar`.
 i These indices must be locations or names.
 

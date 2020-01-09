@@ -56,7 +56,7 @@ automatically set to the names of the table.}
 \item{width}{Optionally, the "width" of the numeric range. For example,
 a range of 2 gives "01", a range of three "001", etc.}
 
-\item{x}{An index vector of names or positions.}
+\item{x}{An index vector of names or locations.}
 
 \item{...}{These dots are for future extensions and must be empty.}
 

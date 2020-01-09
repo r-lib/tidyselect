@@ -144,7 +144,7 @@ as_indices_impl <- function(x, vars, strict) {
 
   if (!strict) {
     # Remove out-of-bounds elements if non-strict. We do this eagerly
-    # because names vectors must be converted to positions here.
+    # because names vectors must be converted to locations here.
     x <- switch(typeof(x),
       character = set_intersect(x, c(vars, na_chr)),
       double = ,
@@ -154,14 +154,14 @@ as_indices_impl <- function(x, vars, strict) {
   }
 
   switch(typeof(x),
-    character = chr_as_positions(x, vars),
+    character = chr_as_locations(x, vars),
     double = ,
     integer = x,
     abort("Internal error: Unexpected type in `as_indices()`.")
   )
 }
 
-chr_as_positions <- function(x, vars) {
+chr_as_locations <- function(x, vars) {
   out <- vctrs::vec_as_location(x, n = length(vars), names = vars)
   set_names(out, names(x))
 }

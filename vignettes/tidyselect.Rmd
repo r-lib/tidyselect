@@ -119,8 +119,8 @@ mtcars %>% toupper_arg(c(mpg:disp, vs))
 
 The main advantage of the lower level tidyselect tools is that they
 offer a bit more information and flexibility. Instead of returning the
-selected data, they return the __positions__ of selected elements
-inside the input data. If you don't need the selected positions and
+selected data, they return the __locations__ of selected elements
+inside the input data. If you don't need the selected locations and
 can afford the dependency, you may consider wrapping dplyr instead.
 
 
@@ -195,7 +195,7 @@ Taking tidyselect selections in your functions follows the same
 principles. First defuse an expression, then resume its evaluation.
 Instead of `eval_tidy()`, we need the special interpreters
 `eval_select()` and `eval_rename()`. Like `eval_tidy()`, they take a
-defused expression and some data. They return a vector of positions
+defused expression and some data. They return a vector of locations
 for the selected elements:
 
 ```{r}
@@ -205,7 +205,7 @@ eval_select(rlang::expr(c(mpg:disp, vs)), mtcars)
 ```
 
 If the user has renamed some of the selected elements, the names of
-the vector of positions reflect the new names.
+the vector of locations reflect the new names.
 
 ```{r}
 eval_select(rlang::expr(c(foo = mpg, bar = disp)), mtcars)
@@ -226,7 +226,7 @@ If your selecting function takes dots:
 2. Resume evaluation of the defused `c()` expression with
    `eval_select()`.
 
-3. Use the vector of positions returned by `eval_select()` to subset
+3. Use the vector of locations returned by `eval_select()` to subset
    and rename the input data.
 
 Here is how to reimplement `dplyr::select()` in 3 lines representing
@@ -301,7 +301,7 @@ wrapper <- function(data, ...) {
 mtcars %>% wrapper(foo = mpg, bar = hp:wt)
 ```
 
-As an example of how to use the vector of positions returned by
+As an example of how to use the vector of locations returned by
 `eval_rename()`, here is how to implement `dplyr::rename()`:
 
 ```{r}
@@ -353,7 +353,7 @@ To create a new selection helper:
    be done in an argument that the user can override.
 
 2. Return one of the supported data types: vector of names or
-   positions (the latter is recommended, see section on handling
+   locations (the latter is recommended, see section on handling
    duplicate variables), or a predicate function.
 
 ```{r}
@@ -396,7 +396,7 @@ vectors that don't require unique names, and it might be extended to
 allow recoding character vectors in the future. In these cases,
 handling duplicates is part of the normal usage for selection helpers.
 
-To support duplicates it is recommended to return vectors of positions
+To support duplicates it is recommended to return vectors of locations
 from selection helpers rather than vector of names. Fixing `if_width()`
 is easy:
 

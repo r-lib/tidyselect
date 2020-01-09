@@ -173,7 +173,7 @@ num_range <- function(prefix,
 }
 
 #' @rdname select_helpers
-#' @param x An index vector of names or positions.
+#' @param x An index vector of names or locations.
 #' @inheritParams ellipsis::dots_empty
 #' @export
 all_of <- function(x) {

@@ -21,7 +21,7 @@ column you've created most recently).
 
 This argument is taken by expression and supports
 \link[rlang:quasiquotation]{quasiquotation} (you can unquote column
-names and column positions).}
+names and column locations).}
 }
 \value{
 The selected column name as an unnamed string.

@@ -16,7 +16,7 @@
 #'
 #'   This argument is taken by expression and supports
 #'   [quasiquotation][rlang::quasiquotation] (you can unquote column
-#'   names and column positions).
+#'   names and column locations).
 #' @return The selected column name as an unnamed string.
 #' @seealso [dplyr::pull()], [vars_select()]
 #' @export
