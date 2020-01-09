@@ -55,7 +55,7 @@ is_negated <- function(x) {
 unnegate <- function(x) {
   expr <- quo_get_expr2(x, x)
   expr <- node_cadr(expr)
-  quo_set_expr2(x, expr, expr)
+  as_quosure(expr, env = quo_get_env(x))
 }
 
 combine_names <- function(x, tag, name_spec, uniquely_named) {

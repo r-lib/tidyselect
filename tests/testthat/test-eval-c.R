@@ -69,3 +69,11 @@ test_that("uniquely-named inputs can't rename duplicates", {
 test_that("can select with c() (#2685)", {
   expect_identical(select_loc(letters2, c(a, z)), c(a = 1L, z = 26L))
 })
+
+test_that("unnegate() flattens quosures properly", {
+  expr <- quo(-!!local(quo(am)))
+  expect_identical(
+    select_loc(mtcars, c(!!expr)),
+    select_loc(mtcars, -am)
+  )
+})
