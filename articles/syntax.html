@@ -111,7 +111,7 @@
 <a class="sourceLine" id="cb1-4" data-line-number="4"><span class="co"># For better printing</span></a>
 <a class="sourceLine" id="cb1-5" data-line-number="5">mtcars &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span>(mtcars)</a>
 <a class="sourceLine" id="cb1-6" data-line-number="6">iris &lt;-<span class="st"> </span>tibble<span class="op">::</span><span class="kw"><a href="https://tibble.tidyverse.org/reference/as_tibble.html">as_tibble</a></span>(iris)</a></code></pre></div>
-<p>To illustrate the semantics of tidyselect, we’ll use variants of <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::rename()</a></code> that return the named vector of positions for the selected or renamed elements:</p>
+<p>To illustrate the semantics of tidyselect, we’ll use variants of <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::rename()</a></code> that return the named vector of locations for the selected or renamed elements:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">select_loc &lt;-<span class="st"> </span><span class="cf">function</span>(data, ...) {</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">  <span class="kw"><a href="../reference/eval_select.html">eval_select</a></span>(rlang<span class="op">::</span><span class="kw"><a href="https://rlang.r-lib.org/reference/nse-defuse.html">expr</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(...)), data)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">}</a>
@@ -122,13 +122,13 @@
 <div id="sets-of-variables" class="section level2">
 <h2 class="hasAnchor">
 <a href="#sets-of-variables" class="anchor"></a>Sets of variables</h2>
-<p>The tidyselect syntax is all about <strong>sets</strong> of variables, internally represented by integer vectors of <strong>positions</strong>. For example, <code><a href="https://rdrr.io/r/base/c.html">c(1L, 2L)</a></code> represents the set of the first and second variables, as does <code><a href="https://rdrr.io/r/base/c.html">c(1L, 2L, 1L)</a></code>.</p>
-<p>If a vector of positions contains duplicates, they are normally treated as the same element, since they represent sets. An exception to this occurs with named elements whose names differ. If the names don’t match, they are treated as different elements in order to allow renaming a variable to multiple names (see section on Renaming variables).</p>
+<p>The tidyselect syntax is all about <strong>sets</strong> of variables, internally represented by integer vectors of <strong>locations</strong>. For example, <code><a href="https://rdrr.io/r/base/c.html">c(1L, 2L)</a></code> represents the set of the first and second variables, as does <code><a href="https://rdrr.io/r/base/c.html">c(1L, 2L, 1L)</a></code>.</p>
+<p>If a vector of locations contains duplicates, they are normally treated as the same element, since they represent sets. An exception to this occurs with named elements whose names differ. If the names don’t match, they are treated as different elements in order to allow renaming a variable to multiple names (see section on Renaming variables).</p>
 <p>The syntax of tidyselect is generally designed for set combination. For instance, <code><a href="https://rdrr.io/r/base/c.html">c(foo(), bar())</a></code> represents the union of the variables in <code>foo()</code> and those in <code><a href="https://rdrr.io/r/grDevices/plotmath.html">bar()</a></code>.</p>
 <div id="bare-names" class="section level3">
 <h3 class="hasAnchor">
 <a href="#bare-names" class="anchor"></a>Bare names</h3>
-<p>Within <em>data-expressions</em> (see Evaluation section), bare names represent their own positions, i.e. a set of size 1. The following expressions are equivalent:</p>
+<p>Within <em>data-expressions</em> (see Evaluation section), bare names represent their own locations, i.e. a set of size 1. The following expressions are equivalent:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(mpg<span class="op">:</span>hp, <span class="op">-</span>cyl, vs)</a>
 <a class="sourceLine" id="cb3-2" data-line-number="2"><span class="co">#&gt;  mpg disp   hp   vs </span></a>
 <a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt;    1    3    4    8</span></a>
@@ -140,11 +140,11 @@
 <div id="the-operator" class="section level3">
 <h3 class="hasAnchor">
 <a href="#the-operator" class="anchor"></a>The <code>:</code> operator</h3>
-<p><code>:</code> can be used to select consecutive variables between two positions. It returns the corresponding sequence of positions.</p>
+<p><code>:</code> can be used to select consecutive variables between two locations. It returns the corresponding sequence of locations.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(<span class="dv">2</span><span class="op">:</span><span class="dv">4</span>)</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2"><span class="co">#&gt;  cyl disp   hp </span></a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt;    2    3    4</span></a></code></pre></div>
-<p>Because bare names represent their own positions, it is easy to select a range of variables:</p>
+<p>Because bare names represent their own locations, it is easy to select a range of variables:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(cyl<span class="op">:</span>hp)</a>
 <a class="sourceLine" id="cb5-2" data-line-number="2"><span class="co">#&gt;  cyl disp   hp </span></a>
 <a class="sourceLine" id="cb5-3" data-line-number="3"><span class="co">#&gt;    2    3    4</span></a></code></pre></div>
@@ -153,7 +153,7 @@
 <h3 class="hasAnchor">
 <a href="#boolean-operators-and-binary--" class="anchor"></a>Boolean operators and binary <code>-</code>
 </h3>
-<p>Boolean operators provide a more intuitive approach to set combination. Though sets are internally represented with vectors of positions, they could equally be represented with a full logical vector of inclusion indicators (taking the <code><a href="https://rdrr.io/r/base/which.html">which()</a></code> of this vector would then recover the positions). The boolean operators should be considered in terms of the logical representation of sets.</p>
+<p>Boolean operators provide a more intuitive approach to set combination. Though sets are internally represented with vectors of locations, they could equally be represented with a full logical vector of inclusion indicators (taking the <code><a href="https://rdrr.io/r/base/which.html">which()</a></code> of this vector would then recover the locations). The boolean operators should be considered in terms of the logical representation of sets.</p>
 <p>The <code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> operator takes the <strong>union</strong> of two sets:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">|</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
 <a class="sourceLine" id="cb6-2" data-line-number="2"><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width </span></a>
@@ -339,13 +339,13 @@
 <p>The following data types can be returned from selection helpers or forced via <code>!!</code> or <code><a href="https://rdrr.io/r/base/force.html">force()</a></code> (the latter works in tidyselect because it is treated as an env-expression, see Evaluation section):</p>
 <ul>
 <li>
-<p>Vectors of positions:</p>
+<p>Vectors of locations:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">3</span>)))</a>
 <a class="sourceLine" id="cb24-2" data-line-number="2"><span class="co">#&gt; Sepal.Length Petal.Length </span></a>
 <a class="sourceLine" id="cb24-3" data-line-number="3"><span class="co">#&gt;            1            3</span></a></code></pre></div>
 </li>
 <li>
-<p>Vectors of names. These are matched and transformed to positions.</p>
+<p>Vectors of names. These are matched and transformed to locations.</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(<span class="kw"><a href="https://rdrr.io/r/base/force.html">force</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Length"</span>)))</a>
 <a class="sourceLine" id="cb25-2" data-line-number="2"><span class="co">#&gt; Sepal.Length Petal.Length </span></a>
 <a class="sourceLine" id="cb25-3" data-line-number="3"><span class="co">#&gt;            1            3</span></a></code></pre></div>
@@ -529,7 +529,7 @@
 <p>If the duplicates are selected, this is an error:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(x)</a>
 <a class="sourceLine" id="cb44-2" data-line-number="2"><span class="co">#&gt; Error: Names must be unique.</span></a></code></pre></div>
-<p>The duplicate names can be repaired by renaming chosen positions:</p>
+<p>The duplicate names can be repaired by renaming chosen locations:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" data-line-number="1">dups <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select_loc</span>(x, <span class="dt">foo =</span> <span class="dv">3</span>)</a>
 <a class="sourceLine" id="cb45-2" data-line-number="2"><span class="co">#&gt;   x foo </span></a>
 <a class="sourceLine" id="cb45-3" data-line-number="3"><span class="co">#&gt;   1   3</span></a>
@@ -541,7 +541,7 @@
 <div id="acknowledgements" class="section level2">
 <h2 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
-<p>The tidyselect syntax was inspired by the <code><a href="https://rdrr.io/r/base/subset.html">base::subset()</a></code> function written by Peter Dalgaard. The <code>select</code> parameter of <code><a href="https://rdrr.io/r/base/subset.html">subset.data.frame()</a></code> is evaluated in a data mask where the column names are bound to their positions in the data frame. This allows <code>:</code> to create sequences of variable positions. The positions can be combined with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. This selection interface set the tone for the development of the tidyselect syntax.</p>
+<p>The tidyselect syntax was inspired by the <code><a href="https://rdrr.io/r/base/subset.html">base::subset()</a></code> function written by Peter Dalgaard. The <code>select</code> parameter of <code><a href="https://rdrr.io/r/base/subset.html">subset.data.frame()</a></code> is evaluated in a data mask where the column names are bound to their locations in the data frame. This allows <code>:</code> to create sequences of variable locations. The locations can be combined with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. This selection interface set the tone for the development of the tidyselect syntax.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1">mtcars <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="dt">select =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(cyl, hp<span class="op">:</span>wt))</a>
 <a class="sourceLine" id="cb46-2" data-line-number="2"><span class="co">#&gt; # A tibble: 32 x 4</span></a>
 <a class="sourceLine" id="cb46-3" data-line-number="3"><span class="co">#&gt;     cyl    hp  drat    wt</span></a>

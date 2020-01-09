@@ -212,7 +212,7 @@ registered.</p>
 <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>()</div><div class='output co'>#&gt;  [1] "a" "b" "c" "d" "e" "f" "g" "h" "i" "j" "k" "l" "m" "n" "o" "p" "q" "r" "s"
 #&gt; [20] "t" "u" "v" "w" "x" "y" "z"</div><div class='input'>
 <span class='co'># Now that the variables are registered, the helpers can figure out</span>
-<span class='co'># the positions of elements within the variable vector:</span>
+<span class='co'># the locations of elements within the variable vector:</span>
 <span class='fu'><a href='one_of.html'>one_of</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"d"</span>, <span class='st'>"z"</span>))</div><div class='output co'>#&gt; [1]  4 26</div><div class='input'>
 <span class='co'># In a function be sure to restore the previous variables. An exit</span>
 <span class='co'># hook is the best way to do it:</span>
