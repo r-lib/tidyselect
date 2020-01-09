@@ -4,6 +4,7 @@
 ^\.travis\.yml$
 ^cran-comments\.md$
 ^revdep$
+^revdep-all$
 ^codecov\.yml$
 ^\.github$
 ^_pkgdown\.yml$
