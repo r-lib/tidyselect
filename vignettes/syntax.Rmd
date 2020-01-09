@@ -41,7 +41,7 @@ select_loc <- function(data, ...) {
   eval_select(rlang::expr(c(...)), data)
 }
 
-rename_pos <- function(data, ...) {
+rename_loc <- function(data, ...) {
   eval_rename(rlang::expr(c(...)), data)
 }
 ```
@@ -493,7 +493,7 @@ names are missing, an error is thrown.
 ```{r, error = TRUE}
 mtcars %>% select_loc(mpg)
 
-mtcars %>% rename_pos(mpg)
+mtcars %>% rename_loc(mpg)
 ```
 
 
@@ -523,9 +523,9 @@ mtcars %>% select_loc(disp, cyl = mpg)
 This is not possible when renaming.
 
 ```{r, error = TRUE}
-mtcars %>% rename_pos(cyl, cyl = mpg)
+mtcars %>% rename_loc(cyl, cyl = mpg)
 
-mtcars %>% rename_pos(disp, cyl = mpg)
+mtcars %>% rename_loc(disp, cyl = mpg)
 ```
 
 However, the name conflict can be solved by renaming the existing
@@ -534,7 +534,7 @@ variable to another name:
 ```{r}
 mtcars %>% select_loc(foo = cyl, cyl = mpg)
 
-mtcars %>% rename_pos(foo = cyl, cyl = mpg)
+mtcars %>% rename_loc(foo = cyl, cyl = mpg)
 ```
 
 
@@ -569,7 +569,7 @@ The duplicate names can be repaired by renaming chosen positions:
 ```{r}
 dups %>% select_loc(x, foo = 3)
 
-dups %>% rename_pos(foo = 3)
+dups %>% rename_loc(foo = 3)
 ```
 
 

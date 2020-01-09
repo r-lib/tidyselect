@@ -20,7 +20,7 @@ select_loc <- function(x,
   )
 }
 
-rename_pos <- function(x,
+rename_loc <- function(x,
                        sel,
                        ...,
                        strict = TRUE,
