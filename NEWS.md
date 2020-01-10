@@ -1,67 +1,55 @@
 
-# tidyselect (development)
+# tidyselect 1.0.0 (development)
 
-* Binary `/` is now short for set difference. These expressions are
-  now equivalent:
+This is the 1.0.0 release of tidyselect. It features a more solidly
+defined and implemented syntax, support for predicate functions, new
+boolean operators, and much more.
 
-  ```{r}
-  iris %>% select(starts_with("Sepal") / ends_with("Width"))
-  iris %>% select(starts_with("Sepal"), -ends_with("Width"))
-  ```
 
-* New `eval_select()` and `eval_rename()` functions for client
-  packages. These replace `vars_select()` and `vars_rename()`, which
-  are now deprecated.
+## Documentation
 
 * New Get started vignette for client packages. Read it with
   `vignette("tidyselect")` or at
   <https://tidyselect.r-lib.org/articles/tidyselect.html>.
 
-* Unary `-` inside nested `c()` is now consistently syntax for set
-  difference (#130).
+* The definition of the tidyselect language has been consolidated. A
+  technical description is now available:
+  <https://tidyselect.r-lib.org/articles/syntax.html>.
 
-* Improved support for named elements. It is now possible to assign
-  the same name to multiple elements, if the input data structure
-  doesn't require unique names (i.e. anything but a data frame).
 
-* The `.strict` argument of `vars_select()` now works more robustly
-  and consistently.
-
-* `starts_with()`, `ends_with()`, `contains()`, and `matches()` now
-  accept vector inputs (#50). For instance these are now equivalent
-  ways of selecting all variables that start with either `"a"` or `"b"`:
-
-  ```{r}
-  starts_with(c("a", "b"))
-  starts_with("a") | starts_with("b")
-  ```
-
-* Selection helpers like `all_of()` and `starts_with()` are now
-  available in all selection contexts, even when they haven't been
-  attached to the search path. The most visible consequence of this
-  change is that it is now easier to use selection functions without
-  attaching the host package:
-
-  ```r
-  # Before
-  dplyr::select(mtcars, dplyr::starts_with("c"))
-
-  # After
-  dplyr::select(mtcars, starts_with("c"))
-  ```
-
-  It is still recommended to export the helpers from your package so
-  that users can easily look up the documentation with `?`.
+## Breaking changes
 
 * Selecting non-column variables with bare names now triggers an
   informative message suggesting to use `all_of()` instead. Referring
   to contextual objects with a bare name is brittle because it might
   be masked by a data frame column. Using `all_of()` is safe (#76).
 
-* Using arithmetic operators in selection context now fails more
-  informatively (#84).
+tidyselect now uses vctrs for validating inputs. These changes may
+reveal programming errors that were previously silent. They may also
+cause failures if your unit tests make faulty assumptions about the
+content of error messages created in tidyselect:
 
-* Selection contexts now interpret the boolean operators specially (#106).
+* Out-of-bounds errors are thrown when a name doesn't exist or a
+  location is too large for the input.
+
+* Logical vectors now fail properly.
+
+* Selected variables now must be unique. It was previously possible to
+  return duplicate selections in some circumstances.
+
+* The input names can no longer contain `NA` values.
+
+Note that we recommend `testthat::verify_output()` for monitoring
+error messages thrown from packages that you don't control. Unlike
+`expect_error()`, `verify_output()` does not cause CMD check failures
+when error messages have changed. See
+<https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/> for more
+information.
+
+
+## Syntax
+
+* The boolean operators can now be used to create selections (#106).
 
   - `!` negates a selection.
   - `|` takes the union of two selections.
@@ -73,25 +61,35 @@
 
   Many thanks to Irene Steves (@isteves) for suggesting this UI.
 
-* The new selection helpers `all_of()` and `any_of()` are strict
-  variants of `one_of()`. The former always fails if some variables
-  are unknown, while the latter does not. `all_of()` is safer to use
-  when you expect all selected variables to exist. `any_of()` is
-  useful in other cases, for instance to ensure variables are selected
-  out:
+* Binary `/` is now short for set difference. These expressions are
+  now equivalent:
 
-  ```
-  vars <- c("Species", "Genus")
-  iris %>% dplyr::select(-any_of(vars))
+  ```r
+  iris %>% select(starts_with("Sepal") / ends_with("Width"))
+  iris %>% select(starts_with("Sepal"), -ends_with("Width"))
   ```
 
-  Note that `all_of()` and `any_of()` are a bit more conservative in
-  their function signature than `one_of()`: they do not accept dots.
-  The equivalent of `one_of("a", "b")` is `all_of(c("a", "b"))`.
+* You can now use predicate functions in selection contexts:
 
-* `vars_select()` has been rewritten to support a clearer separation
-  between data expressions (calls to `:`, `-`, and `c`) and context
-  expressions (anything else). This means you can now safely use
+  ```r
+  iris %>% select(is.factor)
+  iris %>% select(is.factor | is.numeric)
+  ```
+
+  This feature is not available in functions that use the legacy
+  interface of tidyselect. These need to be updated to use
+  the new `eval_select()` function instead of `vars_select()`.
+
+* Unary `-` inside nested `c()` is now consistently syntax for set
+  difference (#130).
+
+* Improved support for named elements. It is now possible to assign
+  the same name to multiple elements, if the input data structure
+  doesn't require unique names (i.e. anything but a data frame).
+
+* The selection engine has been rewritten to support a clearer
+  separation between data-expressions (calls to `:`, `-`, and `c`) and
+  env-expressions (anything else). This means you can now safely use
   expressions of the type:
 
   ```r
@@ -127,38 +125,106 @@
   #> 1     2     3
   ```
 
+
+## User-facing improvements
+
+* The new selection helpers `all_of()` and `any_of()` are strict
+  variants of `one_of()`. The former always fails if some variables
+  are unknown, while the latter does not. `all_of()` is safer to use
+  when you expect all selected variables to exist. `any_of()` is
+  useful in other cases, for instance to ensure variables are selected
+  out:
+
+  ```
+  vars <- c("Species", "Genus")
+  iris %>% dplyr::select(-any_of(vars))
+  ```
+
+  Note that `all_of()` and `any_of()` are a bit more conservative in
+  their function signature than `one_of()`: they do not accept dots.
+  The equivalent of `one_of("a", "b")` is `all_of(c("a", "b"))`.
+
+* Selection helpers like `all_of()` and `starts_with()` are now
+  available in all selection contexts, even when they haven't been
+  attached to the search path. The most visible consequence of this
+  change is that it is now easier to use selection functions without
+  attaching the host package:
+
+  ```r
+  # Before
+  dplyr::select(mtcars, dplyr::starts_with("c"))
+
+  # After
+  dplyr::select(mtcars, starts_with("c"))
+  ```
+
+  It is still recommended to export the helpers from your package so
+  that users can easily look up the documentation with `?`.
+
+* `starts_with()`, `ends_with()`, `contains()`, and `matches()` now
+  accept vector inputs (#50). For instance these are now equivalent
+  ways of selecting all variables that start with either `"a"` or `"b"`:
+
+  ```{r}
+  starts_with(c("a", "b"))
+  starts_with("a") | starts_with("b")
+  ```
+
+* `matches()` has new argument `perl` to allow for Perl-like regular
+  expressions (@fmichonneau, #71)
+
+* Better support for selecting with S3 vectors. For instance, factors
+  are treated as characters.
+
+
+## API
+
+New `eval_select()` and `eval_rename()` functions for client
+packages. These replace `vars_select()` and `vars_rename()`, which are
+now deprecated. These functions:
+
+* Take the full data rather than just names. This makes it possible to
+  use function predicates in selection context.
+
+* Return a numeric vector of locations rather than a vector of
+  names. This makes it possible to use tidyselect with inputs that
+  support duplicate names, like regular vectors.
+
+
+## Other features and fixes
+
+* The `.strict` argument of `vars_select()` now works more robustly
+  and consistently.
+
+* Using arithmetic operators in selection context now fails more
+  informatively (#84).
+
 * It is now possible to select columns in data frames containing
   duplicate variables (#94). However, the duplicates can't be part of
   the final selection.
 
-* `one_of()` now always coerces its input to a character, or fails. Similary,
-  `vars_select()` now supports unquoting S3 vectors.
-
-* `vars_rename()` no longer ignore the names of unquoted character
+* `eval_rename()` no longer ignore the names of unquoted character
   vectors of length 1 (#79).
 
-* `vars_rename()` now fails when a variable is renamed to an existing
+* `eval_rename()` now fails when a variable is renamed to an existing
   name (#70).
 
-* `vars_rename()` has better support for existing duplicates (but
+* `eval_rename()` has better support for existing duplicates (but
   creating new duplicates is an error).
 
-* `vars_select()`, `vars_rename()` and `vars_pull()` now detect
+* `eval_select()`, `eval_rename()` and `vars_pull()` now detect
   missing values uniformly (#72).
 
 * `vars_pull()` now includes the faulty expression in error messages.
 
-* The performance issues of `vars_rename()` with many arguments have
+* The performance issues of `eval_rename()` with many arguments have
   been fixed. This make `dplyr::rename_all()` with many columns much
   faster (@zkamvar, #92).
 
-* tidyselect is now much faster, thanks to a performance fix in
-  `rlang::env_bind()` as well as internal fixes.
+* tidyselect is now much faster with many columns, thanks to a
+  performance fix in `rlang::env_bind()` as well as internal fixes.
 
 * `vars_select()` ignores vectors with only zeros (#82).
-
-* `matches()` has new argument `perl` to allow for Perl-like regular
-  expressions (@fmichonneau, #71)
 
 
 # tidyselect 0.2.5
