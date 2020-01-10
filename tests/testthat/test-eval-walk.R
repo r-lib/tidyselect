@@ -280,3 +280,14 @@ test_that("can select names with unrepresentable characters", {
     )
   })
 })
+
+test_that("`-1:-2` is syntax for `-(1:2)` for compatibility", {
+  expect_identical(
+    select_loc(iris, -1:-2),
+    select_loc(iris, -(1:2))
+  )
+  expect_identical(
+    select_loc(iris, -Sepal.Length:-Sepal.Width),
+    select_loc(iris, -(Sepal.Length:Sepal.Width))
+  )
+})
