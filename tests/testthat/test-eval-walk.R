@@ -268,3 +268,15 @@ test_that("binary `/` is short for set difference", {
     select_loc(iris, c(starts_with("Sepal"), -ends_with("Width")))
   )
 })
+
+test_that("can select names with unrepresentable characters", {
+  skip_if_not_installed("rlang", "0.4.2.9000")
+  withr::with_locale(c(LC_CTYPE = "C"), {
+    name <- "\u4e2d"
+    tbl <- setNames(data.frame(a = 1), name)
+    expect_identical(
+      select_loc(tbl, !!sym(name)),
+      set_names(1L, name)
+    )
+  })
+})

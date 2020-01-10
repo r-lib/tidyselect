@@ -26,7 +26,8 @@ Suggests:
     magrittr,
     rmarkdown,
     testthat (>= 2.3.0),
-    tibble (>= 2.1.3)
+    tibble (>= 2.1.3),
+    withr
 remotes:
     r-lib/vctrs
 License: GPL-3
