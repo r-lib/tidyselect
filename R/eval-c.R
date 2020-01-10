@@ -20,10 +20,12 @@ reduce_sels <- function(node, data_mask, context_mask) {
   car <- node_car(node)
   cdr <- node_cdr(node)
 
-  neg <- is_negated(car)
-  if (neg) {
-    car <- unnegate(car)
-  }
+  kind <- c_arg_kind(car)
+  car <- switch(kind,
+    diff = unnegate(car),
+    diff_colon = unnegate_colon(car),
+    car
+  )
 
   out <- walk_data_tree(car, data_mask, context_mask)
 
@@ -40,18 +42,26 @@ reduce_sels <- function(node, data_mask, context_mask) {
   # The left operands are in the CDR because the pairlist has been reversed
   lhs <- reduce_sels(cdr, data_mask, context_mask)
 
-  if (neg) {
+  if (kind == "union") {
+    sel_union(lhs, out)
+  } else {
     vars <- data_mask$.__tidyselect__.$internal$vars
     sel_diff(lhs, out, vars)
-  } else {
-    sel_union(lhs, out)
   }
 }
 
-is_negated <- function(x) {
-  x <- quo_get_expr2(x, x)
-  is_call(x, "-", n = 1)
+c_arg_kind <- function(x) {
+  expr <- quo_get_expr2(x, x)
+
+  if (is_negated(x)) {
+    "diff"
+  } else if (is_negated_colon(x)) {
+    "diff_colon"
+  } else {
+    "union"
+  }
 }
+
 unnegate <- function(x) {
   expr <- quo_get_expr2(x, x)
   expr <- node_cadr(expr)
@@ -63,6 +73,23 @@ unnegate <- function(x) {
   } else {
     expr
   }
+}
+unnegate_colon <- function(x) {
+  expr <- quo_get_expr2(x, x)
+
+  expr[[2]] <- unnegate(expr[[2]])
+  expr[[3]] <- unnegate(expr[[3]])
+
+  quo_set_expr2(x, expr, expr)
+}
+
+is_negated <- function(x) {
+  expr <- quo_get_expr2(x, x)
+  is_call(expr, "-", n = 1)
+}
+is_negated_colon <- function(x) {
+  expr <- quo_get_expr2(x, x)
+  is_call(expr, ":") && is_negated(expr[[2]]) && is_negated(expr[[3]])
 }
 
 combine_names <- function(x, tag, name_spec, uniquely_named) {

@@ -209,23 +209,14 @@ call_kind <- function(expr) {
 }
 
 eval_colon <- function(expr, data_mask, context_mask) {
-  lhs <- expr[[2]]
-  rhs <- expr[[3]]
-
-  if (is_negated(lhs) && is_negated(rhs)) {
+  if (is_negated_colon(expr)) {
     # Compatibility syntax for `-1:-2`. We interpret it as `-(1:2)`.
-    lhs <- unnegate(lhs)
-    rhs <- unnegate(rhs)
-
-    x <- walk_data_tree(lhs, data_mask, context_mask, colon = TRUE)
-    y <- walk_data_tree(rhs, data_mask, context_mask, colon = TRUE)
-
+    out <- eval_colon(unnegate_colon(expr), data_mask, context_mask)
     vars <- data_mask$.__tidyselect__.$internal$vars
-    sel_complement(x:y, vars)
+    sel_complement(out, vars)
   } else {
-    x <- walk_data_tree(lhs, data_mask, context_mask, colon = TRUE)
-    y <- walk_data_tree(rhs, data_mask, context_mask, colon = TRUE)
-
+    x <- walk_data_tree(expr[[2]], data_mask, context_mask, colon = TRUE)
+    y <- walk_data_tree(expr[[3]], data_mask, context_mask, colon = TRUE)
     x:y
   }
 }
