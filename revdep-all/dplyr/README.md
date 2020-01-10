@@ -79,7 +79,7 @@
 |weibulltools   |1.0.1    |1     |        |     |
 |XBSeq          |1.16.0   |1     |        |2    |
 
-## New problems (9)
+## New problems (8)
 
 |package                              |version |error    |warning |note |
 |:------------------------------------|:-------|:--------|:-------|:----|
@@ -89,7 +89,6 @@
 |[disk.frame](problems.md#diskframe)  |0.3.1   |__+1__   |        |     |
 |[levi](problems.md#levi)             |1.2.0   |__+1__   |        |1    |
 |[Mapinguari](problems.md#mapinguari) |1.0.0   |__+1__   |        |1    |
-|[rrr](problems.md#rrr)               |1.0.0   |__+1__   |        |1    |
 |[SemNeT](problems.md#semnet)         |1.1.2   |__+1__   |        |1    |
 |[teamcolors](problems.md#teamcolors) |0.0.3   |__+1__   |        |     |
 

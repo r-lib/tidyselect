@@ -272,45 +272,6 @@ Run `revdep_details(,"nationwider")` for more info
       Execution halted
     ```
 
-# pammtools
-
-<details>
-
-* Version: 0.1.14
-* Source code: https://github.com/cran/pammtools
-* URL: https://github.com/adibender/pammtools
-* BugReports: https://github.com/adibender/pammtools/issues
-* Date/Publication: 2019-09-08 14:40:02 UTC
-* Number of recursive dependencies: 96
-
-Run `revdep_details(,"pammtools")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ...
-    ```
-     ERROR
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      ── 1. Failure: LL helpers and as_ped produce equivalent LL windows (@test-cumula
-      `LL1` not equal to `LL1.2`.
-      Types not compatible: double is not character
-      
-      ── 2. Failure: LL helpers and as_ped produce equivalent LL windows (@test-cumula
-      `LL2` not equal to `LL2.2`.
-      Types not compatible: double is not character
-      
-      ══ testthat results  ═══════════════════════════════════════════════════════════
-      [ OK: 284 | SKIPPED: 0 | WARNINGS: 4 | FAILED: 2 ]
-      1. Failure: LL helpers and as_ped produce equivalent LL windows (@test-cumulative-effect.R#55) 
-      2. Failure: LL helpers and as_ped produce equivalent LL windows (@test-cumulative-effect.R#56) 
-      
-      Error: testthat unit tests failed
-      Execution halted
-    ```
-
 # sjPlot
 
 <details>

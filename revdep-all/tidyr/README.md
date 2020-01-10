@@ -10,7 +10,7 @@
 |collate  |en_US.UTF-8                  |
 |ctype    |en_US.UTF-8                  |
 |tz       |Europe/Brussels              |
-|date     |2020-01-09                   |
+|date     |2020-01-10                   |
 
 # Dependencies
 
@@ -50,7 +50,7 @@
 |vlad             |0.2.0   |1     |        |     |
 |activPAL         |?       |      |        |     |
 
-## New problems (8)
+## New problems (7)
 
 |package                                |version |error     |warning |note |
 |:--------------------------------------|:-------|:---------|:-------|:----|
@@ -60,6 +60,5 @@
 |[janitor](problems.md#janitor)         |1.2.0   |__+1__    |        |     |
 |[mnreadR](problems.md#mnreadr)         |2.1.3   |__+1__    |        |     |
 |[nationwider](problems.md#nationwider) |1.0.0   |__+1__    |        |     |
-|[pammtools](problems.md#pammtools)     |0.1.14  |__+1__    |        |     |
 |[sjPlot](problems.md#sjplot)           |2.8.1   |__+1__    |        |1    |
 

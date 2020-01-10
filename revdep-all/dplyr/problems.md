@@ -327,56 +327,6 @@ Run `revdep_details(,"Mapinguari")` for more info
       All declared Imports should be used.
     ```
 
-# rrr
-
-<details>
-
-* Version: 1.0.0
-* Source code: https://github.com/cran/rrr
-* URL: http://github.com/chrisaddy/rrr
-* Date/Publication: 2016-12-09 15:15:55
-* Number of recursive dependencies: 91
-
-Run `revdep_details(,"rrr")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    ...
-        intersect, setdiff, setequal, union
-    
-    > data(COMBO17)
-    > galaxy <- as_data_frame(COMBO17)
-    > galaxy <- select(galaxy, -starts_with("e."), -Nr, -UFS:-IFD)
-    Warning in x:y :
-      numerical expression has 64 elements: only the first used
-    Warning in x:y :
-      numerical expression has 64 elements: only the first used
-    > galaxy <- na.omit(galaxy)
-    > galaxy_x <- select(galaxy, -Rmag:-chi2red)
-    Warning in x:y :
-      numerical expression has 34 elements: only the first used
-    Warning in x:y :
-      numerical expression has 34 elements: only the first used
-    > galaxy_y <- select(galaxy, Rmag:chi2red)
-    > scores(galaxy_x, galaxy_y, type = "cva", rank = 4)
-    Error in reduce_rank_regression(x, y, gamma, rank, k) : 
-      rank out of bounds
-    Calls: scores -> cva_scores -> cva -> reduce_rank_regression
-    Execution halted
-    ```
-
-## In both
-
-*   checking dependencies in R code ... NOTE
-    ```
-    Namespace in Imports field not imported from: ‘Rcpp’
-      All declared Imports should be used.
-    ```
-
 # SemNeT
 
 <details>
