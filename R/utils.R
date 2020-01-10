@@ -146,11 +146,8 @@ loc_validate <- function(pos, vars) {
   check_missing(pos)
   check_negative(pos)
 
-  pos <- vctrs::vec_as_location(
-    pos,
-    n = length(vars),
-    allow_types = "location"
-  )
+  pos <- vctrs::vec_as_subscript(pos, indicator = "error", name = "error")
+  pos <- vctrs::vec_as_location(pos, n = length(vars))
 
   named(sel_unique(pos))
 }

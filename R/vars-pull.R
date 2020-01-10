@@ -33,21 +33,36 @@
 #' vars_pull(letters, !! var)
 vars_pull <- function(vars, var = -1) {
   n <- length(vars)
-  pos <- eval_tidy(enquo(var), set_names(seq_along(vars), vars))
 
-  pos <- subclass_index_errors(
-    vctrs::vec_as_location2(
-      pos,
-      n = n,
-      names = vars,
-      allow_values = "negative",
-      arg = "var"
-    )
-  )
+  loc <- eval_tidy(enquo(var), set_names(seq_along(vars), vars))
+  loc <- pull_as_location2(loc, n, vars)
 
-  if (pos < 0L) {
-    pos <- n + 1L + pos
+  if (loc < 0L) {
+    loc <- n + 1L + loc
   }
 
-  vars[[pos]]
+  vars[[loc]]
+}
+
+pull_as_location2 <- function(i, n, names) {
+  subclass_index_errors({
+    i <- vctrs::vec_as_subscript2(i, arg = "var", indicator = "error")
+
+    if (is.numeric(i)) {
+      vctrs::num_as_location2(
+        i,
+        n = n,
+        names = names,
+        negative = "ignore",
+        arg = "var"
+      )
+    } else {
+      vctrs::vec_as_location2(
+        i,
+        n = n,
+        names = names,
+        arg = "var"
+      )
+    }
+  })
 }
