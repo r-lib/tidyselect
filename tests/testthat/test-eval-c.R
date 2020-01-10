@@ -87,4 +87,8 @@ test_that("`-x:-y` is syntax for `-(x:y)` for compatibility", {
     select_loc(iris, c(-Sepal.Length, -Sepal.Width:-Petal.Length)),
     select_loc(iris, c(-Sepal.Length, -(Sepal.Width:Petal.Length)))
   )
+  expect_identical(
+    select_loc(iris, c(-1:-2)),
+    select_loc(iris, -(1:2))
+  )
 })

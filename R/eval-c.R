@@ -5,7 +5,7 @@ eval_c <- function(expr, data_mask, context_mask) {
 
   # If the first selector is exclusive (negative), start with all
   # columns. `-foo` is syntax for `everything() - foo`.
-  if (is_negated(node_car(node))) {
+  if (c_arg_kind(node_car(node)) %in% c("diff", "diff_colon")) {
     node <- new_node(quote(everything()), node)
     expr <- node_poke_cdr(expr, node)
   }
