@@ -139,7 +139,7 @@ as_indices_impl <- function(x, vars, strict) {
     return(int())
   }
 
-  x <- vctrs::vec_as_subscript(x, allow_types = c("location", "name"))
+  x <- vctrs::vec_as_subscript(x, indicator = "error")
 
   if (!strict) {
     # Remove out-of-bounds elements if non-strict. We do this eagerly
