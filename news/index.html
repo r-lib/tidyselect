@@ -134,6 +134,142 @@
       <small>Source: <a href='https://github.com/r-lib/tidyselect/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="tidyselect-1-0-0-development" class="section level1">
+<h1 class="page-header">
+<a href="#tidyselect-1-0-0-development" class="anchor"></a>tidyselect 1.0.0 (development)<small> Unreleased </small>
+</h1>
+<p>This is the 1.0.0 release of tidyselect. It features a more solidly defined and implemented syntax, support for predicate functions, new boolean operators, and much more.</p>
+<div id="documentation" class="section level2">
+<h2 class="hasAnchor">
+<a href="#documentation" class="anchor"></a>Documentation</h2>
+<ul>
+<li><p>New Get started vignette for client packages. Read it with <code><a href="../articles/tidyselect.html">vignette("tidyselect")</a></code> or at <a href="https://tidyselect.r-lib.org/articles/tidyselect.html" class="uri">https://tidyselect.r-lib.org/articles/tidyselect.html</a>.</p></li>
+<li><p>The definition of the tidyselect language has been consolidated. A technical description is now available: <a href="https://tidyselect.r-lib.org/articles/syntax.html" class="uri">https://tidyselect.r-lib.org/articles/syntax.html</a>.</p></li>
+</ul>
+</div>
+<div id="breaking-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
+<ul>
+<li>Selecting non-column variables with bare names now triggers an informative message suggesting to use <code><a href="../reference/select_helpers.html">all_of()</a></code> instead. Referring to contextual objects with a bare name is brittle because it might be masked by a data frame column. Using <code><a href="../reference/select_helpers.html">all_of()</a></code> is safe (<a href='https://github.com/r-lib/tidyselect/issues/76'>#76</a>).</li>
+</ul>
+<p>tidyselect now uses vctrs for validating inputs. These changes may reveal programming errors that were previously silent. They may also cause failures if your unit tests make faulty assumptions about the content of error messages created in tidyselect:</p>
+<ul>
+<li><p>Out-of-bounds errors are thrown when a name doesn’t exist or a location is too large for the input.</p></li>
+<li><p>Logical vectors now fail properly.</p></li>
+<li><p>Selected variables now must be unique. It was previously possible to return duplicate selections in some circumstances.</p></li>
+<li><p>The input names can no longer contain <code>NA</code> values.</p></li>
+</ul>
+<p>Note that we recommend <code><a href="https://rdrr.io/pkg/testthat/man/verify_output.html">testthat::verify_output()</a></code> for monitoring error messages thrown from packages that you don’t control. Unlike <code>expect_error()</code>, <code>verify_output()</code> does not cause CMD check failures when error messages have changed. See <a href="https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/" class="uri">https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/</a> for more information.</p>
+</div>
+<div id="syntax" class="section level2">
+<h2 class="hasAnchor">
+<a href="#syntax" class="anchor"></a>Syntax</h2>
+<ul>
+<li>
+<p>The boolean operators can now be used to create selections (<a href='https://github.com/r-lib/tidyselect/issues/106'>#106</a>).</p>
+<ul>
+<li>
+<code>!</code> negates a selection.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/Logic.html">|</a></code> takes the union of two selections.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/Logic.html">&amp;</a></code> takes the intersection of two selections.</li>
+</ul>
+<p>These patterns can currently be achieved using <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> and <code><a href="https://rdrr.io/r/base/sets.html">intersect()</a></code> respectively. The boolean operators should be more intuitive to use.</p>
+<p>Many thanks to Irene Steves (<a href='https://github.com/isteves'>@isteves</a>) for suggesting this UI.</p>
+</li>
+<li>
+<p>Binary <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code> is now short for set difference. These expressions are now equivalent:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a></code></pre></div>
+</li>
+<li>
+<p>You can now use predicate functions in selection contexts:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(is.factor)</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(is.factor <span class="op">|</span><span class="st"> </span>is.numeric)</a></code></pre></div>
+<p>This feature is not available in functions that use the legacy interface of tidyselect. These need to be updated to use the new <code><a href="../reference/eval_select.html">eval_select()</a></code> function instead of <code><a href="../reference/vars_select.html">vars_select()</a></code>.</p>
+</li>
+<li><p>Unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> inside nested <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> is now consistently syntax for set difference (<a href='https://github.com/r-lib/tidyselect/issues/130'>#130</a>).</p></li>
+<li><p>Improved support for named elements. It is now possible to assign the same name to multiple elements, if the input data structure doesn’t require unique names (i.e. anything but a data frame).</p></li>
+<li>
+<p>The selection engine has been rewritten to support a clearer separation between data-expressions (calls to <code>:</code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, and <code>c</code>) and env-expressions (anything else). This means you can now safely use expressions of the type:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a></code></pre></div>
+<p>Even if the data frame <code>data</code> contains a column also named <code>data</code>, the subexpression <code><a href="https://rdrr.io/r/base/nrow.html">ncol(data)</a></code> is still correctly evaluated. The <code>data:ncol(data)</code> expression is equivalent to <code>2:3</code> because <code>data</code> is looked up in the relevant context without ambiguity:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">foo =</span> <span class="dv">1</span>, <span class="dt">data =</span> <span class="dv">2</span>, <span class="dt">bar =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(data<span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; # A tibble: 1 x 2</span></a>
+<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;    data   bar</span></a>
+<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 1     2     3</span></a></code></pre></div>
+<p>While this example above is a bit contrived, there are many realistic cases where these changes make it easier to write safe code:</p>
+<pre class="{r}"><code>select_from &lt;- function(data, var) {
+  data %&gt;% dplyr::select({{ var }} : ncol(data))
+}
+data %&gt;% select_from(data)
+#&gt; # A tibble: 1 x 2
+#&gt;    data   bar
+#&gt;   &lt;dbl&gt; &lt;dbl&gt;
+#&gt; 1     2     3</code></pre>
+</li>
+</ul>
+</div>
+<div id="user-facing-improvements" class="section level2">
+<h2 class="hasAnchor">
+<a href="#user-facing-improvements" class="anchor"></a>User-facing improvements</h2>
+<ul>
+<li>
+<p>The new selection helpers <code><a href="../reference/select_helpers.html">all_of()</a></code> and <code><a href="../reference/select_helpers.html">any_of()</a></code> are strict variants of <code><a href="../reference/one_of.html">one_of()</a></code>. The former always fails if some variables are unknown, while the latter does not. <code><a href="../reference/select_helpers.html">all_of()</a></code> is safer to use when you expect all selected variables to exist. <code><a href="../reference/select_helpers.html">any_of()</a></code> is useful in other cases, for instance to ensure variables are selected out:</p>
+<pre><code>vars &lt;- c("Species", "Genus")
+iris %&gt;% dplyr::select(-any_of(vars))</code></pre>
+<p>Note that <code><a href="../reference/select_helpers.html">all_of()</a></code> and <code><a href="../reference/select_helpers.html">any_of()</a></code> are a bit more conservative in their function signature than <code><a href="../reference/one_of.html">one_of()</a></code>: they do not accept dots. The equivalent of <code><a href="../reference/one_of.html">one_of("a", "b")</a></code> is <code><a href="../reference/select_helpers.html">all_of(c("a", "b"))</a></code>.</p>
+</li>
+<li>
+<p>Selection helpers like <code><a href="../reference/select_helpers.html">all_of()</a></code> and <code><a href="../reference/select_helpers.html">starts_with()</a></code> are now available in all selection contexts, even when they haven’t been attached to the search path. The most visible consequence of this change is that it is now easier to use selection functions without attaching the host package:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Before</span></a>
+<a class="sourceLine" id="cb7-2" data-line-number="2">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mtcars, dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">starts_with</a></span>(<span class="st">"c"</span>))</a>
+<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># After</span></a>
+<a class="sourceLine" id="cb7-5" data-line-number="5">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mtcars, <span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"c"</span>))</a></code></pre></div>
+<p>It is still recommended to export the helpers from your package so that users can easily look up the documentation with <code>?</code>.</p>
+</li>
+<li>
+<p><code><a href="../reference/select_helpers.html">starts_with()</a></code>, <code><a href="../reference/select_helpers.html">ends_with()</a></code>, <code><a href="../reference/select_helpers.html">contains()</a></code>, and <code><a href="../reference/select_helpers.html">matches()</a></code> now accept vector inputs (<a href='https://github.com/r-lib/tidyselect/issues/50'>#50</a>). For instance these are now equivalent ways of selecting all variables that start with either <code>"a"</code> or <code>"b"</code>:</p>
+<pre class="{r}"><code><a href="../reference/select_helpers.html">starts_with(c("a", "b"))
+starts_with("a") | starts_with("b")</a></code></pre>
+</li>
+<li><p><code><a href="../reference/select_helpers.html">matches()</a></code> has new argument <code>perl</code> to allow for Perl-like regular expressions (<a href='https://github.com/fmichonneau'>@fmichonneau</a>, <a href='https://github.com/r-lib/tidyselect/issues/71'>#71</a>)</p></li>
+<li><p>Better support for selecting with S3 vectors. For instance, factors are treated as characters.</p></li>
+</ul>
+</div>
+<div id="api" class="section level2">
+<h2 class="hasAnchor">
+<a href="#api" class="anchor"></a>API</h2>
+<p>New <code><a href="../reference/eval_select.html">eval_select()</a></code> and <code><a href="../reference/eval_select.html">eval_rename()</a></code> functions for client packages. These replace <code><a href="../reference/vars_select.html">vars_select()</a></code> and <code><a href="../reference/vars_select.html">vars_rename()</a></code>, which are now deprecated. These functions:</p>
+<ul>
+<li><p>Take the full data rather than just names. This makes it possible to use function predicates in selection context.</p></li>
+<li><p>Return a numeric vector of locations rather than a vector of names. This makes it possible to use tidyselect with inputs that support duplicate names, like regular vectors.</p></li>
+</ul>
+</div>
+<div id="other-features-and-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#other-features-and-fixes" class="anchor"></a>Other features and fixes</h2>
+<ul>
+<li><p>The <code>.strict</code> argument of <code><a href="../reference/vars_select.html">vars_select()</a></code> now works more robustly and consistently.</p></li>
+<li><p>Using arithmetic operators in selection context now fails more informatively (<a href='https://github.com/r-lib/tidyselect/issues/84'>#84</a>).</p></li>
+<li><p>It is now possible to select columns in data frames containing duplicate variables (<a href='https://github.com/r-lib/tidyselect/issues/94'>#94</a>). However, the duplicates can’t be part of the final selection.</p></li>
+<li><p><code><a href="../reference/eval_select.html">eval_rename()</a></code> no longer ignore the names of unquoted character vectors of length 1 (<a href='https://github.com/r-lib/tidyselect/issues/79'>#79</a>).</p></li>
+<li><p><code><a href="../reference/eval_select.html">eval_rename()</a></code> now fails when a variable is renamed to an existing name (<a href='https://github.com/r-lib/tidyselect/issues/70'>#70</a>).</p></li>
+<li><p><code><a href="../reference/eval_select.html">eval_rename()</a></code> has better support for existing duplicates (but creating new duplicates is an error).</p></li>
+<li><p><code><a href="../reference/eval_select.html">eval_select()</a></code>, <code><a href="../reference/eval_select.html">eval_rename()</a></code> and <code><a href="../reference/vars_pull.html">vars_pull()</a></code> now detect missing values uniformly (<a href='https://github.com/r-lib/tidyselect/issues/72'>#72</a>).</p></li>
+<li><p><code><a href="../reference/vars_pull.html">vars_pull()</a></code> now includes the faulty expression in error messages.</p></li>
+<li><p>The performance issues of <code><a href="../reference/eval_select.html">eval_rename()</a></code> with many arguments have been fixed. This make <code><a href="https://dplyr.tidyverse.org/reference/select_all.html">dplyr::rename_all()</a></code> with many columns much faster (<a href='https://github.com/zkamvar'>@zkamvar</a>, <a href='https://github.com/r-lib/tidyselect/issues/92'>#92</a>).</p></li>
+<li><p>tidyselect is now much faster with many columns, thanks to a performance fix in <code><a href="https://rlang.r-lib.org/reference/env_bind.html">rlang::env_bind()</a></code> as well as internal fixes.</p></li>
+<li><p><code><a href="../reference/vars_select.html">vars_select()</a></code> ignores vectors with only zeros (<a href='https://github.com/r-lib/tidyselect/issues/82'>#82</a>).</p></li>
+</ul>
+</div>
+</div>
     <div id="tidyselect-0-2-5" class="section level1">
 <h1 class="page-header">
 <a href="#tidyselect-0-2-5" class="anchor"></a>tidyselect 0.2.5<small> 2018-10-11 </small>
@@ -272,6 +408,7 @@ vars_select(letters, 1:n)</code></pre>
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#tidyselect-1-0-0-development">1.0.0</a></li>
         <li><a href="#tidyselect-0-2-5">0.2.5</a></li>
         <li><a href="#tidyselect-0-2-4">0.2.4</a></li>
         <li><a href="#tidyselect-0-2-3">0.2.3</a></li>
