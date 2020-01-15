@@ -13,12 +13,12 @@ i This subscript must be a positive integer.
 
 > vars_pull(letters, 100)
 Error: Must select existing columns.
-x Can't subset position 100.
+x Can't subset location 100.
 i There are only 26 elements.
 
 > vars_pull(letters, -100)
 Error: Must select existing columns.
-x Can't subset position 100.
+x Can't subset location 100.
 i There are only 26 elements.
 
 > vars_pull(letters, -Inf)
