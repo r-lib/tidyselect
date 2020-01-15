@@ -52,7 +52,6 @@ pull_as_location2 <- function(i, n, names) {
       vctrs::num_as_location2(
         i,
         n = n,
-        names = names,
         negative = "ignore",
         arg = "var"
       )
