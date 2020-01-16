@@ -29,8 +29,8 @@ test_that("can select with character vectors", {
 })
 
 test_that("abort on unknown columns", {
-  expect_error(vars_select(letters, "foo"), class = "tidyselect_error_subscript_oob_name")
-  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_select(letters, "foo"), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), class = "tidyselect_error_subscript_oob")
 })
 
 test_that("data mask is not isolated from context (for now)", {
@@ -53,9 +53,9 @@ test_that("can select with unnamed elements", {
 
 test_that("can customise error messages", {
   vars <- structure(letters, type = c("variable", "variables"))
-  expect_error(vars_select(vars, "foo"), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_select(vars, "foo"), class = "tidyselect_error_subscript_oob")
   expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
-  expect_error(vars_rename(vars, A = "foo"), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_rename(vars, A = "foo"), class = "tidyselect_error_subscript_oob")
 })
 
 test_that("can supply empty inputs", {
@@ -87,7 +87,7 @@ test_that("unknown variables errors are ignored if `.strict` is FALSE", {
 
 test_that("`:` handles strings", {
   expect_identical(vars_select(letters, "b":"d"), vars_select(letters, b:d))
-  expect_error(vars_select(letters, "b":"Z"), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_select(letters, "b":"Z"), class = "tidyselect_error_subscript_oob")
 })
 
 test_that("`-` handles strings", {
@@ -96,7 +96,7 @@ test_that("`-` handles strings", {
 
 test_that("`-` handles character vectors (#35)", {
   expect_identical(vars_select(letters, - (!! letters[1:20])), vars_select(letters, -(1:20)))
-  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "tidyselect_error_subscript_oob")
 })
 
 test_that("can select `c` despite overscoped c()", {
@@ -245,11 +245,11 @@ test_that("vars_select() fails informatively when renaming to same", {
 })
 
 test_that("vars_select() has consistent location errors", {
-  expect_error(vars_select(letters, foo), class = "tidyselect_error_subscript_oob_name")
-  expect_error(vars_select(letters, -foo), class = "tidyselect_error_subscript_oob_name")
-  expect_error(vars_select(letters, 100), class = "tidyselect_error_subscript_oob_location")
-  expect_error(vars_select(letters, -100), class = "tidyselect_error_subscript_oob_location")
-  expect_error(vars_select(letters, !100), class = "tidyselect_error_subscript_oob_location")
+  expect_error(vars_select(letters, foo), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, -foo), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, 100), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, -100), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, !100), class = "tidyselect_error_subscript_oob")
 
   verify_output(test_path("outputs", "vars-select-oob-errors.txt"), {
     "Bare names"
@@ -281,12 +281,12 @@ test_that("vars_select() consistently handles nested negated arguments", {
 test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
-    class = "tidyselect_error_subscript_oob_name"
+    class = "tidyselect_error_subscript_oob"
   )
 
   expect_error(
     vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE),
-    class = "tidyselect_error_subscript_oob_name"
+    class = "tidyselect_error_subscript_oob"
   )
 
   expect_equal(
@@ -301,7 +301,7 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
 
   expect_error(
     vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE),
-    class = "tidyselect_error_subscript_oob_name"
+    class = "tidyselect_error_subscript_oob"
   )
 
   expect_identical(

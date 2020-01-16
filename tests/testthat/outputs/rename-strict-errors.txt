@@ -1,12 +1,12 @@
 > vars_rename(c("a", "b"), d = e, .strict = TRUE)
 Error: Must rename existing columns.
-x Can't subset element with unknown name `e`.
+x Can't rename column with unknown name `e`.
 
 > vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
 Error: Must rename existing columns.
-x Can't subset element with unknown name `g`.
+x Can't rename column with unknown name `g`.
 
 > vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
 Error: Must rename existing columns.
-x Can't subset element with unknown name `g`.
+x Can't rename column with unknown name `g`.
 

@@ -13,13 +13,13 @@ i This subscript must be a positive integer.
 
 > vars_pull(letters, 100)
 Error: Must select existing columns.
-x Can't subset location 100.
-i There are only 26 elements.
+x Can't select location 100.
+i There are only 26 columns.
 
 > vars_pull(letters, -100)
 Error: Must select existing columns.
-x Can't subset location 100.
-i There are only 26 elements.
+x Can't select location 100.
+i There are only 26 columns.
 
 > vars_pull(letters, -Inf)
 Error: Must select with column names or locations.
@@ -42,7 +42,7 @@ i This subscript can't be missing.
 
 > vars_pull(letters, "foo")
 Error: Must select existing columns.
-x Can't subset element with unknown name `foo`.
+x Can't select column with unknown name `foo`.
 
 > vars_pull(letters, !!c("a", "b"))
 Error: Must select with column names or locations.

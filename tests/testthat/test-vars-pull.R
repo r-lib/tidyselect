@@ -14,7 +14,7 @@ test_that("errors for bad inputs", {
   )
   expect_error(
     vars_pull(letters, "foo"),
-    class = "tidyselect_error_subscript_oob_name"
+    class = "tidyselect_error_subscript_oob"
   )
 
   expect_error(
@@ -23,11 +23,11 @@ test_that("errors for bad inputs", {
   )
   expect_error(
     vars_pull(letters, 100),
-    class = "tidyselect_error_subscript_oob_location"
+    class = "tidyselect_error_subscript_oob"
   )
   expect_error(
     vars_pull(letters, -100),
-    class = "tidyselect_error_subscript_oob_location"
+    class = "tidyselect_error_subscript_oob"
   )
   expect_error(
     vars_pull(letters, -Inf),
@@ -80,7 +80,7 @@ test_that("missing values are detected in vars_pull() (#72)", {
 
 test_that("can pull with strings", {
   expect_identical(vars_pull(letters, "b"), vars_pull(letters, b))
-  expect_error(vars_pull(letters, "foo"), class = "tidyselect_error_subscript_oob_name")
+  expect_error(vars_pull(letters, "foo"), class = "tidyselect_error_subscript_oob")
 })
 
 test_that("can pull with negative values", {

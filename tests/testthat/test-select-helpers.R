@@ -175,8 +175,8 @@ test_that("initial (single) selector defaults correctly (issue #2275)", {
   expect_equal(select_loc(cn, -contains("x")), c(y = 2L, z = 3L))
 
   # single columns (not present), explicit
-  expect_error(select_loc(cn, foo), class = "tidyselect_error_subscript_oob_name")
-  expect_error(select_loc(cn, -foo), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(cn, foo), class = "tidyselect_error_subscript_oob")
+  expect_error(select_loc(cn, -foo), class = "tidyselect_error_subscript_oob")
 
   # single columns (not present), matched
   expect_equal(select_loc(cn, contains("foo")), named(int()))
@@ -207,10 +207,10 @@ test_that("initial (of multiple) selectors default correctly (issue #2275)", {
   expect_equal(select_loc(cn, c(-contains("x"), -y)), c(z = 3L))
 
   # matched(not present) + explicit(not present)
-  expect_error(select_loc(cn, c(contains("foo"), bar)), class = "tidyselect_error_subscript_oob_name")
-  expect_error(select_loc(cn, c(contains("foo"), -bar)), class = "tidyselect_error_subscript_oob_name")
-  expect_error(select_loc(cn, c(-contains("foo"), bar)), class = "tidyselect_error_subscript_oob_name")
-  expect_error(select_loc(cn, c(-contains("foo"), -bar)), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(cn, c(contains("foo"), bar)), class = "tidyselect_error_subscript_oob")
+  expect_error(select_loc(cn, c(contains("foo"), -bar)), class = "tidyselect_error_subscript_oob")
+  expect_error(select_loc(cn, c(-contains("foo"), bar)), class = "tidyselect_error_subscript_oob")
+  expect_error(select_loc(cn, c(-contains("foo"), -bar)), class = "tidyselect_error_subscript_oob")
 
   # matched(present) + matched(present)
   expect_equal(select_loc(cn, c(contains("x"), contains("y"))), c(x = 1L, y = 2L))
@@ -265,7 +265,7 @@ test_that("all_of() and any_of() handle named vectors", {
 })
 
 test_that("all_of() is strict", {
-  expect_error(select_loc(letters2, all_of(c("a", "foo"))), class = "tidyselect_error_subscript_oob_name")
+  expect_error(select_loc(letters2, all_of(c("a", "foo"))), class = "tidyselect_error_subscript_oob")
 })
 
 test_that("any_of() is lax", {

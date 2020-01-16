@@ -1,11 +1,11 @@
 > # Unknown names
 > select_loc(mtcars, foobar & contains("am"))
 Error: Must select existing columns.
-x Can't subset element with unknown name `foobar`.
+x Can't select column with unknown name `foobar`.
 
 > select_loc(mtcars, contains("am") | foobar)
 Error: Must select existing columns.
-x Can't subset element with unknown name `foobar`.
+x Can't select column with unknown name `foobar`.
 
 > # Empty intersection
 > select_loc(mtcars, cyl & am)
@@ -16,5 +16,5 @@ i `cyl & am` is always an empty selection.
 > foo <- 1:2
 > select_loc(iris, Species | foo)
 Error: Must select existing columns.
-x Can't subset element with unknown name `foo`.
+x Can't select column with unknown name `foo`.
 

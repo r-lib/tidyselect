@@ -2,20 +2,18 @@
 subclass_index_errors <- function(expr, allow_scalar_location = TRUE, type = "select") {
   tryCatch(
     sanitise_base_errors(expr),
-    vctrs_error_subscript_oob_name = function(cnd) {
+
+    vctrs_error_subscript_oob = function(cnd) {
+      cnd$subscript_action <- type
+      cnd$subscript_elt <- c("column", "columns")
+
       stop_subscript_oob(
         tidyselect_type = type,
         parent = cnd,
-        .subclass = "tidyselect_error_subscript_oob_name"
+        .subclass = "tidyselect_error_subscript_oob"
       )
     },
-    vctrs_error_subscript_oob_location = function(cnd) {
-      stop_subscript_oob(
-        tidyselect_type = type,
-        parent = cnd,
-        .subclass = "tidyselect_error_subscript_oob_location"
-      )
-    },
+
     vctrs_error_subscript = function(cnd) {
       stop_subscript_bad_type(
         tidyselect_type = type,
@@ -23,6 +21,7 @@ subclass_index_errors <- function(expr, allow_scalar_location = TRUE, type = "se
         allow_scalar_location = allow_scalar_location
       )
     },
+
     vctrs_error_names_must_be_unique = function(cnd) {
       stop_names_must_be_unique(
         tidyselect_type = type,
@@ -90,10 +89,7 @@ cnd_body.tidyselect_error_subscript_bad_type <- function(cnd, ...) {
 
 #' @export
 cnd_header.tidyselect_error_subscript_oob <- function(cnd, ...) {
-  switch(tidyselect_type(cnd),
-    select = "Must select existing columns.",
-    rename = "Must rename existing columns."
-  )
+  cnd_header(cnd$parent)
 }
 #' @export
 cnd_body.tidyselect_error_subscript_oob <- function(cnd, ...) {
