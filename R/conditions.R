@@ -4,8 +4,8 @@ subclass_index_errors <- function(expr, allow_scalar_location = TRUE, type = "se
     sanitise_base_errors(expr),
 
     vctrs_error_subscript_oob = function(cnd) {
-      cnd$subscript_action <- type
-      cnd$subscript_elt <- c("column", "columns")
+      cnd$subscript_action <- subscript_action(type)
+      cnd$subscript_elt <- "column"
 
       stop_subscript_oob(
         tidyselect_type = type,
@@ -44,7 +44,7 @@ stop_subscript_bad_type <- function(..., allow_scalar_location = TRUE, .subclass
   stop_subscript(
     allow_scalar_location = allow_scalar_location,
     ...,
-    .subclass = c(.subclass, "tidyselect_error_subscript_bad_type")
+    .subclass = c(.subclass, "tidyselect_error_subscript_type")
   )
 }
 stop_subscript_oob <- function(..., .subclass = NULL) {
@@ -61,7 +61,7 @@ stop_subscript <- function(..., .subclass = NULL) {
 }
 
 #' @export
-cnd_header.tidyselect_error_subscript_bad_type <- function(cnd, ...) {
+cnd_header.tidyselect_error_subscript_type <- function(cnd, ...) {
   switch(tidyselect_type(cnd),
     select = cnd_header_index_bad_type_select(cnd, ...),
     rename = cnd_header_index_bad_type_rename(cnd, ...)
@@ -83,7 +83,7 @@ cnd_header_index_bad_type_rename <- function(cnd, ...) {
 }
 
 #' @export
-cnd_body.tidyselect_error_subscript_bad_type <- function(cnd, ...) {
+cnd_body.tidyselect_error_subscript_type <- function(cnd, ...) {
   cnd_body(cnd$parent)
 }
 
@@ -108,12 +108,18 @@ cnd_header.tidyselect_error_names_must_be_unique <- function(cnd, ...) {
 }
 
 tidyselect_type <- function(cnd) {
-  type <- cnd$tidyselect_type
-
+  validate_type(cnd$tidyselect_type)
+}
+subscript_action <- function(type) {
+  switch(validate_type(type),
+    select = "subset",
+    rename = "rename"
+  )
+}
+validate_type <- function(type) {
   # We might add `recode` in the future
   if (!is_string(type, c("select", "rename"))) {
     abort("Internal error: unexpected value for `tidyselect_type`")
   }
-
   type
 }

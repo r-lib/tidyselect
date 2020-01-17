@@ -81,11 +81,11 @@ test_that("num_range selects numeric ranges", {
 test_that("location must resolve to numeric variables throws error", {
   expect_error(
     select_loc(letters2, !!list()),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     select_loc(letters2, !!env()),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
 })
 
@@ -284,8 +284,8 @@ test_that("all_of() and any_of() check their inputs", {
   expect_error(select_loc(letters2, any_of(NA)), "missing")
   expect_error(select_loc(letters2, all_of(na_chr)), "missing")
   expect_error(select_loc(letters2, any_of(na_chr)), "missing")
-  expect_error(select_loc(letters2, all_of(TRUE)), class = "tidyselect_error_subscript_bad_type")
-  expect_error(select_loc(letters2, any_of(TRUE)), class = "tidyselect_error_subscript_bad_type")
+  expect_error(select_loc(letters2, all_of(TRUE)), class = "tidyselect_error_subscript_type")
+  expect_error(select_loc(letters2, any_of(TRUE)), class = "tidyselect_error_subscript_type")
 })
 
 test_that("matchers accept length > 1 vectors (#50)", {
@@ -317,10 +317,10 @@ test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
 test_that("`all_of()` and `any_of()` require indices", {
   expect_error(
     select(iris, all_of(is.factor)),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     select(iris, any_of(is.factor)),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
 })

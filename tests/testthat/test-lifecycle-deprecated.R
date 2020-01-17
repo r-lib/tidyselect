@@ -115,7 +115,7 @@ test_that("can select with length > 1 double vectors (#43)", {
 test_that("missing values are detected in vars_select() (#72)", {
   expect_error(
     vars_select("foo", na_cpl),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     vars_select(letters, NA),
@@ -153,15 +153,15 @@ test_that("vars_select() supports S3 vectors (#109)", {
 test_that("vars_select() type-checks inputs", {
   expect_error(
     vars_select(letters, TRUE),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     vars_select(letters, 2.5),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     vars_select(letters, structure(1:3, class = "tidysel_foobar")),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
 
   verify_output(test_path("outputs", "vars-select-index-type.txt"), {
@@ -318,7 +318,7 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
 
 test_that("vars_rename() works with locations", {
   expect_identical(vars_rename(letters[1:4], new1 = 2, new2 = 4), c(a = "a", new1 = "b", c = "c", new2 = "d"))
-  expect_error(vars_rename(letters, new = 1.5), class = "tidyselect_error_subscript_bad_type")
+  expect_error(vars_rename(letters, new = 1.5), class = "tidyselect_error_subscript_type")
 })
 
 test_that("vars_rename() sets variable context", {
@@ -340,7 +340,7 @@ test_that("vars_rename() unquotes named character vectors", {
 test_that("missing values are detected in vars_rename() (#72)", {
   expect_error(
     vars_rename(letters, A = na_cpl),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     vars_rename(letters, A = NA),
@@ -450,9 +450,9 @@ test_that("vars_rename() handles empty inputs", {
 })
 
 test_that("vars_rename() type-checks arguments", {
-  expect_error(vars_rename(letters, A = TRUE), class = "tidyselect_error_subscript_bad_type")
-  expect_error(vars_rename(letters, A = 1.5), class = "tidyselect_error_subscript_bad_type")
-  expect_error(vars_rename(letters, A = !!list()), class = "tidyselect_error_subscript_bad_type")
+  expect_error(vars_rename(letters, A = TRUE), class = "tidyselect_error_subscript_type")
+  expect_error(vars_rename(letters, A = 1.5), class = "tidyselect_error_subscript_type")
+  expect_error(vars_rename(letters, A = !!list()), class = "tidyselect_error_subscript_type")
 
   verify_output(test_path("outputs", "vars-rename-type-checking.txt"), {
     vars_rename(letters, A = TRUE)

@@ -3,7 +3,7 @@ context("pull var")
 test_that("errors for bad inputs", {
   expect_error(
     vars_pull(letters, letters),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
 
   # FIXME
@@ -19,7 +19,7 @@ test_that("errors for bad inputs", {
 
   expect_error(
     vars_pull(letters, 0),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     vars_pull(letters, 100),
@@ -31,25 +31,25 @@ test_that("errors for bad inputs", {
   )
   expect_error(
     vars_pull(letters, -Inf),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
 
   expect_error(
     vars_pull(letters, TRUE),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     vars_pull(letters, NA),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
   expect_error(
     vars_pull(letters, na_int),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
 
   expect_error(
     vars_pull(letters, !!c("a", "b")),
-    class = "tidyselect_error_subscript_bad_type"
+    class = "tidyselect_error_subscript_type"
   )
 
   verify_output(test_path("outputs", "vars-pull-input-checking.txt"), {
@@ -74,7 +74,7 @@ test_that("can pull variables with missing elements", {
 
 test_that("missing values are detected in vars_pull() (#72)", {
   lapply(list(NA_character_, NA_integer_, NA_real_, NA, NA_complex_), function(x) {
-    expect_error(vars_pull(c("a", "b"), !!x), class = "tidyselect_error_subscript_bad_type")
+    expect_error(vars_pull(c("a", "b"), !!x), class = "tidyselect_error_subscript_type")
   })
 })
 

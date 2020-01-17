@@ -1,24 +1,22 @@
 > vars_pull(letters, letters)
 Error: Must select with column names or locations.
-x `var` has the wrong size 26.
-i This subscript must be size 1.
+x The subscript `var` has size 26 but must be size 1.
 
 > vars_pull(letters, aa)
 Error in eval_tidy(enquo(var), set_names(seq_along(vars), vars)): object 'aa' not found
 
 > vars_pull(letters, 0)
 Error: Must select with column names or locations.
-x `var` can't be zero.
-i This subscript must be a positive integer.
+x The subscript `var` has value 0 but must be a positive location.
 
 > vars_pull(letters, 100)
-Error: Must select existing columns.
-x Can't select location 100.
+Error: Must subset existing columns in `var`.
+x Can't subset location 100.
 i There are only 26 columns.
 
 > vars_pull(letters, -100)
-Error: Must select existing columns.
-x Can't select location 100.
+Error: Must subset existing columns in `var`.
+x Can't subset location 100.
 i There are only 26 columns.
 
 > vars_pull(letters, -Inf)
@@ -27,25 +25,22 @@ x Lossy cast from `var` <double> to <integer>.
 
 > vars_pull(letters, TRUE)
 Error: Must select with column names or locations.
-x `var` has the wrong type `logical`.
-i This subscript must be a location or a name.
+x The subscript `var` has the wrong type `logical`.
+i It must contain locations or names.
 
 > vars_pull(letters, NA)
 Error: Must select with column names or locations.
-x `var` can't be `NA`.
-i This subscript can't be missing.
+x The subscript `var` can't be `NA`.
 
 > vars_pull(letters, na_int)
 Error: Must select with column names or locations.
-x `var` can't be `NA`.
-i This subscript can't be missing.
+x The subscript `var` can't be `NA`.
 
 > vars_pull(letters, "foo")
-Error: Must select existing columns.
-x Can't select column with unknown name `foo`.
+Error: Must subset existing columns in `var`.
+x Can't subset column with unknown name `foo`.
 
 > vars_pull(letters, !!c("a", "b"))
 Error: Must select with column names or locations.
-x `var` has the wrong size 2.
-i This subscript must be size 1.
+x The subscript `var` has size 2 but must be size 1.
 
