@@ -92,3 +92,9 @@ test_that("`-x:-y` is syntax for `-(x:y)` for compatibility", {
     select_loc(iris, -(1:2))
   )
 })
+
+test_that("`c()` compacts missing arguments (#147)", {
+  expect_identical(eval_select(quote(c(NULL, NULL)), mtcars), named(int()))
+  expect_identical(eval_select(quote(c(, )), mtcars), named(int()))
+  expect_identical(eval_select(quote(c(, 2, , )), mtcars), c(cyl = 2L))
+})

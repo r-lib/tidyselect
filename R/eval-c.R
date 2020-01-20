@@ -1,6 +1,7 @@
 
 eval_c <- function(expr, data_mask, context_mask) {
   expr <- call_expand_dots(expr, context_mask$.__current__.)
+  expr <- node_compact_missing(expr)
   node <- node_cdr(expr)
 
   # If the first selector is exclusive (negative), start with all

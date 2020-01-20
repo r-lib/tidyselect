@@ -211,6 +211,26 @@ call_expand_dots <- function(call, env) {
   call
 }
 
+node_compact_missing <- function(node) {
+  first <- new_node(NULL, node)
+  prev <- first
+
+  while (!is_null(node)) {
+    car <- node_car(node)
+    cdr <- node_cdr(node)
+
+    if (is_missing(car) || (is_quosure(car) && quo_is_missing(car))) {
+      node_poke_cdr(prev, cdr)
+    } else {
+      prev <- node
+    }
+
+    node <- cdr
+  }
+
+  node_cdr(first)
+}
+
 node_tail <- function(node) {
   rest <- node_cdr(node)
 
