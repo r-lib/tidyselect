@@ -36,8 +36,15 @@
 
 
 <meta property="og:title" content="Peek at variables in the selection context — peek_vars" />
-<meta property="og:description" content="peek_vars() returns the vector of names of the variables
-currently available for selection. Read the Get started for
+<meta property="og:description" content="
+
+peek_vars() returns the vector of names of the variables
+currently available for selection.
+peek_data() returns the whole input vector (only available with
+eval_select()).
+
+
+Read the Get started for
 examples of how to create selection helpers with peek_vars().
 The variable names in a selection context are registered
 automatically by eval_select() and eval_rename() for the
@@ -145,8 +152,15 @@ context." />
     </div>
 
     <div class="ref-description">
-    <p><code>peek_vars()</code> returns the vector of names of the variables
-currently available for selection. Read the <a href='https://tidyselect.r-lib.org/articles/tidyselect.html'>Get started</a> for
+    
+<ul>
+<li><p><code>peek_vars()</code> returns the vector of names of the variables
+currently available for selection.</p></li>
+<li><p><code>peek_data()</code> returns the whole input vector (only available with
+<code><a href='eval_select.html'>eval_select()</a></code>).</p></li>
+</ul>
+
+<p>Read the <a href='https://tidyselect.r-lib.org/articles/tidyselect.html'>Get started</a> for
 examples of how to create selection helpers with <code>peek_vars()</code>.</p>
 <p>The variable names in a selection context are registered
 automatically by <code><a href='eval_select.html'>eval_select()</a></code> and <code><a href='eval_select.html'>eval_rename()</a></code> for the
@@ -155,7 +169,9 @@ duration of the evaluation. <code>peek_vars()</code> is the glue that connects
 context.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>peek_vars</span>(<span class='no'>...</span>, <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>peek_vars</span>(<span class='no'>...</span>, <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>peek_data</span>(<span class='no'>...</span>, <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
