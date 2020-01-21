@@ -57,7 +57,7 @@ test_that("with minimally-named inputs names are propagated without disambiguati
 test_that("uniquely-named inputs can't rename duplicates", {
   df <- vctrs::new_data_frame(list(a = 1, b = 2, a = 3))
 
-  expect_error(select_loc(df, c(foo = a)), class = "tidyselect_error_names_must_be_unique")
+  expect_error(select_loc(df, c(foo = a)), "rename duplicate")
   expect_identical(select_loc(unclass(df), c(foo = a)), c(foo = 1L, foo = 3L))
 
   verify_output(test_path("outputs", "c-rename-duplicates.txt"), {

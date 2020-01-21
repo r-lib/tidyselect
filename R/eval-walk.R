@@ -166,7 +166,7 @@ chr_as_locations <- function(x, vars) {
 }
 
 as_indices <- function(x, vars, strict = TRUE) {
-  inds <- subclass_index_errors(as_indices_impl(x, vars, strict))
+  inds <- with_subscript_errors(as_indices_impl(x, vars, strict))
   vctrs::vec_as_location(inds, length(vars), vars, convert_values = NULL)
 }
 

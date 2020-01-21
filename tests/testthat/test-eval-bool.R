@@ -19,18 +19,18 @@ test_that("symbol operands are evaluated in strict mode", {
   foo <- 1:2
   expect_error(
     select(iris, Species | foo),
-    class = "tidyselect_error_subscript_oob"
+    class = "vctrs_error_subscript_oob"
   )
 })
 
 test_that("boolean operators throw relevant errors", {
   expect_error(
     select_loc(mtcars, foobar & contains("am")),
-    class = "tidyselect_error_subscript_oob"
+    class = "vctrs_error_subscript_oob"
   )
   expect_error(
     select_loc(mtcars, contains("am") | foobar),
-    class = "tidyselect_error_subscript_oob"
+    class = "vctrs_error_subscript_oob"
   )
   expect_error(
     select_loc(mtcars, cyl & am),

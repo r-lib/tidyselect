@@ -258,7 +258,7 @@ one_of <- function(..., .vars = peek_vars(fn = "one_of")) {
   if (bad_input) {
     type <- friendly_type_of(keep[[bad_input]])
     msg <- glue::glue("Input { bad_input } must be a vector of column names, not {type}.")
-    abort(msg, "tidyselect_error_incompatible_index_type")
+    abort(msg, "vctrs_error_incompatible_index_type")
   }
 
   keep <- vctrs::vec_c(!!!keep, .ptype = character())

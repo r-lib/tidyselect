@@ -135,7 +135,7 @@ eval_select_impl <- function(x,
     expr <- quo(!!expr & !any_of(exclude))
   }
 
-  subclass_index_errors(
+  with_subscript_errors(
     vars_select_eval(
       vars,
       expr,

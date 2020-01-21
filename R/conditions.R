@@ -1,32 +1,12 @@
 
-subclass_index_errors <- function(expr, allow_scalar_location = TRUE, type = "select") {
+with_subscript_errors <- function(expr, type = "select") {
   tryCatch(
     instrument_base_errors(expr),
 
-    vctrs_error_subscript_oob = function(cnd) {
+    vctrs_error_subscript = function(cnd) {
       cnd$subscript_action <- subscript_action(type)
       cnd$subscript_elt <- "column"
-
-      stop_subscript_oob(
-        tidyselect_type = type,
-        parent = cnd,
-        .subclass = "tidyselect_error_subscript_oob"
-      )
-    },
-
-    vctrs_error_subscript = function(cnd) {
-      stop_subscript_bad_type(
-        tidyselect_type = type,
-        parent = cnd,
-        allow_scalar_location = allow_scalar_location
-      )
-    },
-
-    vctrs_error_names_must_be_unique = function(cnd) {
-      stop_names_must_be_unique(
-        tidyselect_type = type,
-        parent = cnd
-      )
+      cnd_signal(cnd)
     }
   )
 }
@@ -40,85 +20,16 @@ instrument_base_errors <- function(expr) {
   )
 }
 
-stop_subscript_bad_type <- function(..., allow_scalar_location = TRUE, .subclass = NULL) {
-  stop_subscript(
-    allow_scalar_location = allow_scalar_location,
-    ...,
-    .subclass = c(.subclass, "tidyselect_error_subscript_type")
-  )
-}
-stop_subscript_oob <- function(..., .subclass = NULL) {
-  stop_subscript(
-    ...,
-    .subclass = c(.subclass, "tidyselect_error_subscript_oob")
-  )
-}
-stop_subscript <- function(..., .subclass = NULL) {
-  abort(
-    ...,
-    .subclass = c(.subclass, "tidyselect_error_subscript")
-  )
-}
-
-#' @export
-cnd_header.tidyselect_error_subscript_type <- function(cnd, ...) {
-  switch(tidyselect_type(cnd),
-    select = cnd_header_index_bad_type_select(cnd, ...),
-    rename = cnd_header_index_bad_type_rename(cnd, ...)
-  )
-}
-cnd_header_index_bad_type_select <- function(cnd, ...) {
-  if (cnd$allow_scalar_location) {
-    "Must select with column names or locations."
-  } else {
-    "Must select with column names."
-  }
-}
-cnd_header_index_bad_type_rename <- function(cnd, ...) {
-  if (cnd$allow_scalar_location) {
-    "Must rename with column names or locations."
-  } else {
-    "Must rename with column names."
-  }
-}
-
-#' @export
-cnd_body.tidyselect_error_subscript_type <- function(cnd, ...) {
-  cnd_body(cnd$parent)
-}
-
-#' @export
-cnd_header.tidyselect_error_subscript_oob <- function(cnd, ...) {
-  cnd_header(cnd$parent)
-}
-#' @export
-cnd_body.tidyselect_error_subscript_oob <- function(cnd, ...) {
-  cnd_body(cnd$parent)
-}
-
-stop_names_must_be_unique <- function(..., class = NULL) {
-  abort(
-    .subclass = c(class, "tidyselect_error_names_must_be_unique"),
-    ...
-  )
-}
-#' @export
-cnd_header.tidyselect_error_names_must_be_unique <- function(cnd, ...) {
-  "Names must be unique."
-}
-
-tidyselect_type <- function(cnd) {
-  validate_type(cnd$tidyselect_type)
-}
 subscript_action <- function(type) {
   switch(validate_type(type),
     select = "subset",
-    rename = "rename"
+    rename = "rename",
+    pull = "extract"
   )
 }
 validate_type <- function(type) {
   # We might add `recode` in the future
-  if (!is_string(type, c("select", "rename"))) {
+  if (!is_string(type, c("select", "rename", "pull"))) {
     abort("Internal error: unexpected value for `tidyselect_type`")
   }
   type

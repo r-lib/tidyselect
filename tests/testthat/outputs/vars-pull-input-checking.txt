@@ -1,46 +1,46 @@
 > vars_pull(letters, letters)
-Error: Must select with column names or locations.
+Error: Must extract column with a single subscript.
 x The subscript `var` has size 26 but must be size 1.
 
 > vars_pull(letters, aa)
 Error: object 'aa' not found
 
 > vars_pull(letters, 0)
-Error: Must select with column names or locations.
+Error: Must extract column with a single subscript.
 x The subscript `var` has value 0 but must be a positive location.
 
 > vars_pull(letters, 100)
-Error: Can't subset columns that don't exist.
+Error: Can't extract columns that don't exist.
 x The location 100 doesn't exist.
 i There are only 26 columns.
 
 > vars_pull(letters, -100)
-Error: Can't subset columns that don't exist.
+Error: Can't extract columns that don't exist.
 x The location 100 doesn't exist.
 i There are only 26 columns.
 
 > vars_pull(letters, -Inf)
-Error: Must select with column names or locations.
+Error: Must extract column with a single subscript.
 x Lossy cast from `var` <double> to <integer>.
 
 > vars_pull(letters, TRUE)
-Error: Must select with column names or locations.
+Error: Must extract column with a single subscript.
 x The subscript `var` has the wrong type `logical`.
 i It must be numeric or character.
 
 > vars_pull(letters, NA)
-Error: Must select with column names or locations.
+Error: Must extract column with a single subscript.
 x The subscript `var` can't be `NA`.
 
 > vars_pull(letters, na_int)
-Error: Must select with column names or locations.
+Error: Must extract column with a single subscript.
 x The subscript `var` can't be `NA`.
 
 > vars_pull(letters, "foo")
-Error: Can't subset columns that don't exist.
+Error: Can't extract columns that don't exist.
 x The column `foo` doesn't exist.
 
 > vars_pull(letters, !!c("a", "b"))
-Error: Must select with column names or locations.
+Error: Must extract column with a single subscript.
 x The subscript `var` has size 2 but must be size 1.
 

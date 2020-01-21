@@ -37,11 +37,11 @@ test_that("rename_loc() partially renames", {
 test_that("rename_loc() requires unique names", {
   expect_error(
     rename_loc(mtcars, c(foo = cyl, foo = disp)),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
   expect_error(
     rename_loc(mtcars, c(cyl = mpg, foo = disp)),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
 })
 

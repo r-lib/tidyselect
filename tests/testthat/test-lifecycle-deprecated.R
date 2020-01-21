@@ -29,8 +29,8 @@ test_that("can select with character vectors", {
 })
 
 test_that("abort on unknown columns", {
-  expect_error(vars_select(letters, "foo"), class = "tidyselect_error_subscript_oob")
-  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, "foo"), class = "vctrs_error_subscript_oob")
+  expect_error(vars_select(letters, c("a", "bar", "foo", "d")), class = "vctrs_error_subscript_oob")
 })
 
 test_that("data mask is not isolated from context (for now)", {
@@ -53,9 +53,9 @@ test_that("can select with unnamed elements", {
 
 test_that("can customise error messages", {
   vars <- structure(letters, type = c("variable", "variables"))
-  expect_error(vars_select(vars, "foo"), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(vars, "foo"), class = "vctrs_error_subscript_oob")
   expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
-  expect_error(vars_rename(vars, A = "foo"), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_rename(vars, A = "foo"), class = "vctrs_error_subscript_oob")
 })
 
 test_that("can supply empty inputs", {
@@ -87,7 +87,7 @@ test_that("unknown variables errors are ignored if `.strict` is FALSE", {
 
 test_that("`:` handles strings", {
   expect_identical(vars_select(letters, "b":"d"), vars_select(letters, b:d))
-  expect_error(vars_select(letters, "b":"Z"), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, "b":"Z"), class = "vctrs_error_subscript_oob")
 })
 
 test_that("`-` handles strings", {
@@ -96,7 +96,7 @@ test_that("`-` handles strings", {
 
 test_that("`-` handles character vectors (#35)", {
   expect_identical(vars_select(letters, - (!! letters[1:20])), vars_select(letters, -(1:20)))
-  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "vctrs_error_subscript_oob")
 })
 
 test_that("can select `c` despite overscoped c()", {
@@ -115,7 +115,7 @@ test_that("can select with length > 1 double vectors (#43)", {
 test_that("missing values are detected in vars_select() (#72)", {
   expect_error(
     vars_select("foo", na_cpl),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
   expect_error(
     vars_select(letters, NA),
@@ -153,15 +153,15 @@ test_that("vars_select() supports S3 vectors (#109)", {
 test_that("vars_select() type-checks inputs", {
   expect_error(
     vars_select(letters, TRUE),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
   expect_error(
     vars_select(letters, 2.5),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
   expect_error(
     vars_select(letters, structure(1:3, class = "tidysel_foobar")),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
 
   verify_output(test_path("outputs", "vars-select-index-type.txt"), {
@@ -177,18 +177,18 @@ test_that("can rename and select at the same time", {
 
 test_that("vars_select() supports redundantly named vectors", {
   expect_identical(vars_select(c("a", "b", "a"), b), c(b = "b"))
-  expect_error(vars_select(c("a", "b", "a"), a), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), a, b), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), b, a), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), c(b, a)), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), a), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), a, b), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), b, a), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), c(b, a)), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), !!c(2, 1, 3)), class = "vctrs_error_names_must_be_unique")
 })
 
 test_that("select helpers support redundantly named vectors", {
-  expect_error(vars_select(c("a", "b", "a"), everything()), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), starts_with("a")), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), everything()), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), starts_with("a")), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), one_of(c("b", "a"))), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(c("a1", "b", "a1", "a2"), b, num_range("a", 1:2)), class = "vctrs_error_names_must_be_unique")
 })
 
 test_that("vars_select() uses unique name spec", {
@@ -220,17 +220,17 @@ test_that("vars_select() can select out existing duplicates", {
 })
 
 test_that("vars_select() cannot rename existing duplicates", {
-  expect_error(vars_select(c("a", "b", "a"), b = a, a = b), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(c("a", "b", "a"), a = b, b = a), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(c("a", "b", "a"), b = a, a = b), "rename duplicate")
+  expect_error(vars_select(c("a", "b", "a"), a = b, b = a), "rename duplicate")
 })
 
 test_that("vars_select() fails when renaming to existing name", {
-  expect_error(vars_select(letters[1:2], a, a = b), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(letters[1:2], a, a = b), class = "vctrs_error_names_must_be_unique")
 })
 
 test_that("vars_select() fails when renaming to same name", {
-  expect_error(vars_select(letters[1:3], a = b, a = c), class = "tidyselect_error_names_must_be_unique")
-  expect_error(vars_select(letters[1:2], A = a, A = b), class = "tidyselect_error_names_must_be_unique")
+  expect_error(vars_select(letters[1:3], a = b, a = c), class = "vctrs_error_names_must_be_unique")
+  expect_error(vars_select(letters[1:2], A = a, A = b), class = "vctrs_error_names_must_be_unique")
 })
 
 test_that("vars_select() fails informatively when renaming to same", {
@@ -245,11 +245,11 @@ test_that("vars_select() fails informatively when renaming to same", {
 })
 
 test_that("vars_select() has consistent location errors", {
-  expect_error(vars_select(letters, foo), class = "tidyselect_error_subscript_oob")
-  expect_error(vars_select(letters, -foo), class = "tidyselect_error_subscript_oob")
-  expect_error(vars_select(letters, 100), class = "tidyselect_error_subscript_oob")
-  expect_error(vars_select(letters, -100), class = "tidyselect_error_subscript_oob")
-  expect_error(vars_select(letters, !100), class = "tidyselect_error_subscript_oob")
+  expect_error(vars_select(letters, foo), class = "vctrs_error_subscript_oob")
+  expect_error(vars_select(letters, -foo), class = "vctrs_error_subscript_oob")
+  expect_error(vars_select(letters, 100), class = "vctrs_error_subscript_oob")
+  expect_error(vars_select(letters, -100), class = "vctrs_error_subscript_oob")
+  expect_error(vars_select(letters, !100), class = "vctrs_error_subscript_oob")
 
   verify_output(test_path("outputs", "vars-select-oob-errors.txt"), {
     "Bare names"
@@ -281,12 +281,12 @@ test_that("vars_select() consistently handles nested negated arguments", {
 test_that("when .strict = FALSE, vars_rename always succeeds", {
   expect_error(
     vars_rename(c("a", "b"), d = e, .strict = TRUE),
-    class = "tidyselect_error_subscript_oob"
+    class = "vctrs_error_subscript_oob"
   )
 
   expect_error(
     vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE),
-    class = "tidyselect_error_subscript_oob"
+    class = "vctrs_error_subscript_oob"
   )
 
   expect_equal(
@@ -301,7 +301,7 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
 
   expect_error(
     vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE),
-    class = "tidyselect_error_subscript_oob"
+    class = "vctrs_error_subscript_oob"
   )
 
   expect_identical(
@@ -318,7 +318,7 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
 
 test_that("vars_rename() works with locations", {
   expect_identical(vars_rename(letters[1:4], new1 = 2, new2 = 4), c(a = "a", new1 = "b", c = "c", new2 = "d"))
-  expect_error(vars_rename(letters, new = 1.5), class = "tidyselect_error_subscript_type")
+  expect_error(vars_rename(letters, new = 1.5), class = "vctrs_error_subscript_type")
 })
 
 test_that("vars_rename() sets variable context", {
@@ -340,7 +340,7 @@ test_that("vars_rename() unquotes named character vectors", {
 test_that("missing values are detected in vars_rename() (#72)", {
   expect_error(
     vars_rename(letters, A = na_cpl),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
   expect_error(
     vars_rename(letters, A = NA),
@@ -371,15 +371,15 @@ test_that("vars_rename() allows consecutive renames", {
 test_that("vars_rename() disallows renaming to same column", {
   expect_error(
     vars_rename(letters, A = 1:2),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "c"), foo = a, foo = b),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "c"), c = a, c = b),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
 
   verify_output(test_path("outputs", "vars-rename-error-rename-to-same.txt"), {
@@ -398,15 +398,15 @@ test_that("vars_rename() allows overlapping renames", {
 test_that("vars_rename() disallows renaming to existing columns (#70)", {
   expect_error(
     vars_rename(c("a", "b", "c"), b = a),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "c", "d"), c = a, d = b),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "c"), b = a, c = b),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
   verify_output(test_path("outputs", "vars-rename-error-rename-to-existing.txt"), {
     "One column"
@@ -423,11 +423,11 @@ test_that("vars_rename() disallows renaming to existing columns (#70)", {
 test_that("vars_rename() can't rename existing duplicates in bulk", {
   expect_error(
     vars_rename(c("a", "b", "a"), foo = b),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
   expect_error(
     vars_rename(c("a", "b", "a"), a = b, b = a),
-    class = "tidyselect_error_names_must_be_unique"
+    class = "vctrs_error_names_must_be_unique"
   )
 })
 
@@ -450,9 +450,9 @@ test_that("vars_rename() handles empty inputs", {
 })
 
 test_that("vars_rename() type-checks arguments", {
-  expect_error(vars_rename(letters, A = TRUE), class = "tidyselect_error_subscript_type")
-  expect_error(vars_rename(letters, A = 1.5), class = "tidyselect_error_subscript_type")
-  expect_error(vars_rename(letters, A = !!list()), class = "tidyselect_error_subscript_type")
+  expect_error(vars_rename(letters, A = TRUE), class = "vctrs_error_subscript_type")
+  expect_error(vars_rename(letters, A = 1.5), class = "vctrs_error_subscript_type")
+  expect_error(vars_rename(letters, A = !!list()), class = "vctrs_error_subscript_type")
 
   verify_output(test_path("outputs", "vars-rename-type-checking.txt"), {
     vars_rename(letters, A = TRUE)

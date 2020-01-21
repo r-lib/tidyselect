@@ -81,11 +81,11 @@ test_that("num_range selects numeric ranges", {
 test_that("location must resolve to numeric variables throws error", {
   expect_error(
     select_loc(letters2, !!list()),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
   expect_error(
     select_loc(letters2, !!env()),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
 })
 
@@ -108,7 +108,7 @@ test_that("one_of gives useful errors", {
     one_of(1L, .vars = c("x", "y")),
     "Input 1 must be a vector of column names, not an integer vector",
     fixed = TRUE,
-    class = "tidyselect_error_incompatible_index_type"
+    class = "vctrs_error_incompatible_index_type"
   )
 })
 
@@ -175,8 +175,8 @@ test_that("initial (single) selector defaults correctly (issue #2275)", {
   expect_equal(select_loc(cn, -contains("x")), c(y = 2L, z = 3L))
 
   # single columns (not present), explicit
-  expect_error(select_loc(cn, foo), class = "tidyselect_error_subscript_oob")
-  expect_error(select_loc(cn, -foo), class = "tidyselect_error_subscript_oob")
+  expect_error(select_loc(cn, foo), class = "vctrs_error_subscript_oob")
+  expect_error(select_loc(cn, -foo), class = "vctrs_error_subscript_oob")
 
   # single columns (not present), matched
   expect_equal(select_loc(cn, contains("foo")), named(int()))
@@ -207,10 +207,10 @@ test_that("initial (of multiple) selectors default correctly (issue #2275)", {
   expect_equal(select_loc(cn, c(-contains("x"), -y)), c(z = 3L))
 
   # matched(not present) + explicit(not present)
-  expect_error(select_loc(cn, c(contains("foo"), bar)), class = "tidyselect_error_subscript_oob")
-  expect_error(select_loc(cn, c(contains("foo"), -bar)), class = "tidyselect_error_subscript_oob")
-  expect_error(select_loc(cn, c(-contains("foo"), bar)), class = "tidyselect_error_subscript_oob")
-  expect_error(select_loc(cn, c(-contains("foo"), -bar)), class = "tidyselect_error_subscript_oob")
+  expect_error(select_loc(cn, c(contains("foo"), bar)), class = "vctrs_error_subscript_oob")
+  expect_error(select_loc(cn, c(contains("foo"), -bar)), class = "vctrs_error_subscript_oob")
+  expect_error(select_loc(cn, c(-contains("foo"), bar)), class = "vctrs_error_subscript_oob")
+  expect_error(select_loc(cn, c(-contains("foo"), -bar)), class = "vctrs_error_subscript_oob")
 
   # matched(present) + matched(present)
   expect_equal(select_loc(cn, c(contains("x"), contains("y"))), c(x = 1L, y = 2L))
@@ -265,7 +265,7 @@ test_that("all_of() and any_of() handle named vectors", {
 })
 
 test_that("all_of() is strict", {
-  expect_error(select_loc(letters2, all_of(c("a", "foo"))), class = "tidyselect_error_subscript_oob")
+  expect_error(select_loc(letters2, all_of(c("a", "foo"))), class = "vctrs_error_subscript_oob")
 })
 
 test_that("any_of() is lax", {
@@ -284,8 +284,8 @@ test_that("all_of() and any_of() check their inputs", {
   expect_error(select_loc(letters2, any_of(NA)), "missing")
   expect_error(select_loc(letters2, all_of(na_chr)), "missing")
   expect_error(select_loc(letters2, any_of(na_chr)), "missing")
-  expect_error(select_loc(letters2, all_of(TRUE)), class = "tidyselect_error_subscript_type")
-  expect_error(select_loc(letters2, any_of(TRUE)), class = "tidyselect_error_subscript_type")
+  expect_error(select_loc(letters2, all_of(TRUE)), class = "vctrs_error_subscript_type")
+  expect_error(select_loc(letters2, any_of(TRUE)), class = "vctrs_error_subscript_type")
 })
 
 test_that("matchers accept length > 1 vectors (#50)", {
@@ -317,10 +317,10 @@ test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
 test_that("`all_of()` and `any_of()` require indices", {
   expect_error(
     select(iris, all_of(is.factor)),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
   expect_error(
     select(iris, any_of(is.factor)),
-    class = "tidyselect_error_subscript_type"
+    class = "vctrs_error_subscript_type"
   )
 })

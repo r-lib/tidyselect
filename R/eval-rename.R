@@ -38,7 +38,7 @@ rename_impl <- function(x,
   # Check for unique names only if input is a data frame
   if (is.data.frame(x) || is_null(x)) {
     names[pos] <- names(pos)
-    subclass_index_errors(
+    with_subscript_errors(
       vctrs::vec_as_names(names, repair = "check_unique")
     )
   }
