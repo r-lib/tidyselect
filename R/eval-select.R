@@ -125,7 +125,7 @@ eval_select_impl <- function(x,
   }
 
   # Put vars in scope and peek validated vars
-  scoped_vars(names)
+  local_vars(names)
   vars <- peek_vars()
 
   if (length(include)) {

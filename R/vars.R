@@ -142,12 +142,13 @@ scoped_vars <- function(vars, frame = caller_env()) {
 
   invisible(old)
 }
+local_vars <- scoped_vars
 #' @rdname poke_vars
 #' @param expr An expression to be evaluated within the variable
 #'   context.
 #' @export
 with_vars <- function(vars, expr) {
-  scoped_vars(vars)
+  local_vars(vars)
   expr
 }
 

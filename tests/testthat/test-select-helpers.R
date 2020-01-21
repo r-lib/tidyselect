@@ -17,7 +17,7 @@ test_that("custom error message is thrown if `fn` is supplied", {
 })
 
 test_that("failed match removes all columns", {
-  scoped_vars(c("x", "y"))
+  local_vars(c("x", "y"))
 
   expect_equal(starts_with("z"), integer(0))
   expect_equal(ends_with("z"), integer(0))
@@ -28,7 +28,7 @@ test_that("failed match removes all columns", {
 
 
 test_that("matches return integer locations", {
-  scoped_vars(c("abc", "acd", "bbc", "bbd", "eee"))
+  local_vars(c("abc", "acd", "bbc", "bbd", "eee"))
 
   expect_equal(starts_with("a"), c(1L, 2L))
   expect_equal(ends_with("d"),   c(2L, 4L))
