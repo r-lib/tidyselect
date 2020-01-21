@@ -2,9 +2,12 @@
 % Please edit documentation in R/vars.R
 \name{peek_vars}
 \alias{peek_vars}
+\alias{peek_data}
 \title{Peek at variables in the selection context}
 \usage{
 peek_vars(..., fn = NULL)
+
+peek_data(..., fn = NULL)
 }
 \arguments{
 \item{...}{These dots are for future extensions and must be empty.}
@@ -14,8 +17,14 @@ the helper is used in the wrong context. If not supplied, a
 generic error message is used instead.}
 }
 \description{
-\code{peek_vars()} returns the vector of names of the variables
-currently available for selection. Read the \href{https://tidyselect.r-lib.org/articles/tidyselect.html}{Get started} for
+\itemize{
+\item \code{peek_vars()} returns the vector of names of the variables
+currently available for selection.
+\item \code{peek_data()} returns the whole input vector (only available with
+\code{\link[=eval_select]{eval_select()}}).
+}
+
+Read the \href{https://tidyselect.r-lib.org/articles/tidyselect.html}{Get started} for
 examples of how to create selection helpers with \code{peek_vars()}.
 
 The variable names in a selection context are registered
