@@ -87,3 +87,16 @@ test_that("can pull with negative values", {
   expect_identical(vars_pull(letters, -1), "z")
   expect_identical(vars_pull(letters, -3), "x")
 })
+
+test_that("vars_pull() instruments base errors", {
+  verify_errors({
+    expect_error(vars_pull(letters, foobar), "")
+  })
+})
+
+test_that("vars_pull() has informative errors", {
+  verify_output(test_path("error", "test-vars-pull.txt"), {
+    "# vars_pull() instruments base errors"
+    vars_pull(letters, foobar)
+  })
+})

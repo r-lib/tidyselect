@@ -1,0 +1,7 @@
+
+vars_pull() instruments base errors
+===================================
+
+> vars_pull(letters, foobar)
+Error: object 'foobar' not found
+

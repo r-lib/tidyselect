@@ -3,7 +3,7 @@ Error: Must select with column names or locations.
 x The subscript `var` has size 26 but must be size 1.
 
 > vars_pull(letters, aa)
-Error in eval_tidy(enquo(var), set_names(seq_along(vars), vars)): object 'aa' not found
+Error: object 'aa' not found
 
 > vars_pull(letters, 0)
 Error: Must select with column names or locations.

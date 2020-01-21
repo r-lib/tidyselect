@@ -1,7 +1,7 @@
 
 subclass_index_errors <- function(expr, allow_scalar_location = TRUE, type = "select") {
   tryCatch(
-    sanitise_base_errors(expr),
+    instrument_base_errors(expr),
 
     vctrs_error_subscript_oob = function(cnd) {
       cnd$subscript_action <- subscript_action(type)
@@ -30,7 +30,7 @@ subclass_index_errors <- function(expr, allow_scalar_location = TRUE, type = "se
     }
   )
 }
-sanitise_base_errors <- function(expr) {
+instrument_base_errors <- function(expr) {
   withCallingHandlers(
     expr,
     simpleError = function(cnd) {
