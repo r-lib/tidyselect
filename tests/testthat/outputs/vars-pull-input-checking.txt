@@ -10,13 +10,13 @@ Error: Must select with column names or locations.
 x The subscript `var` has value 0 but must be a positive location.
 
 > vars_pull(letters, 100)
-Error: Must subset existing columns in `var`.
-x Can't subset location 100.
+Error: Can't subset columns that don't exist.
+x The location 100 doesn't exist.
 i There are only 26 columns.
 
 > vars_pull(letters, -100)
-Error: Must subset existing columns in `var`.
-x Can't subset location 100.
+Error: Can't subset columns that don't exist.
+x The location 100 doesn't exist.
 i There are only 26 columns.
 
 > vars_pull(letters, -Inf)
@@ -26,7 +26,7 @@ x Lossy cast from `var` <double> to <integer>.
 > vars_pull(letters, TRUE)
 Error: Must select with column names or locations.
 x The subscript `var` has the wrong type `logical`.
-i It must contain locations or names.
+i It must be numeric or character.
 
 > vars_pull(letters, NA)
 Error: Must select with column names or locations.
@@ -37,8 +37,8 @@ Error: Must select with column names or locations.
 x The subscript `var` can't be `NA`.
 
 > vars_pull(letters, "foo")
-Error: Must subset existing columns in `var`.
-x Can't subset column with unknown name `foo`.
+Error: Can't subset columns that don't exist.
+x The column `foo` doesn't exist.
 
 > vars_pull(letters, !!c("a", "b"))
 Error: Must select with column names or locations.

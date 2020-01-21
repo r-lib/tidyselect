@@ -1,7 +1,7 @@
 > vars_select(letters, TRUE)
 Error: Must select with column names or locations.
 x The subscript has the wrong type `logical`.
-i It must contain locations or names.
+i It must be numeric or character.
 
 > vars_select(letters, 2.5)
 Error: Must select with column names or locations.
@@ -10,5 +10,5 @@ x Lossy cast from <double> to <integer>.
 > vars_select(letters, structure(1:3, class = "tidysel_foobar"))
 Error: Must select with column names or locations.
 x The subscript has the wrong type `tidysel_foobar`.
-i It must contain locations or names.
+i It must be numeric or character.
 

@@ -1,12 +1,12 @@
 > vars_rename(c("a", "b"), d = e, .strict = TRUE)
-Error: Must rename existing columns.
-x Can't rename column with unknown name `e`.
+Error: Can't rename columns that don't exist.
+x The column `e` doesn't exist.
 
 > vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
-Error: Must rename existing columns.
-x Can't rename column with unknown name `g`.
+Error: Can't rename columns that don't exist.
+x The column `g` doesn't exist.
 
 > vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
-Error: Must rename existing columns.
-x Can't rename column with unknown name `g`.
+Error: Can't rename columns that don't exist.
+x The column `g` doesn't exist.
 

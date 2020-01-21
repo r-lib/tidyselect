@@ -46,7 +46,7 @@ vars_pull <- function(vars, var = -1) {
 
 pull_as_location2 <- function(i, n, names) {
   subclass_index_errors({
-    i <- vctrs::vec_as_subscript2(i, arg = "var", indicator = "error")
+    i <- vctrs::vec_as_subscript2(i, arg = "var", logical = "error")
 
     if (is.numeric(i)) {
       vctrs::num_as_location2(

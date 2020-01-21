@@ -1,7 +1,7 @@
 > vars_rename(letters, A = TRUE)
 Error: Must rename with column names or locations.
 x The subscript has the wrong type `logical`.
-i It must contain locations or names.
+i It must be numeric or character.
 
 > vars_rename(letters, A = 1.5)
 Error: Must rename with column names or locations.
@@ -10,5 +10,5 @@ x Lossy cast from <double> to <integer>.
 > vars_rename(letters, A = list())
 Error: Must rename with column names or locations.
 x The subscript has the wrong type `list`.
-i It must contain locations or names.
+i It must be numeric or character.
 

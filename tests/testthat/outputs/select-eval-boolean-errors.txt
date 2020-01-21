@@ -1,11 +1,11 @@
 > # Unknown names
 > select_loc(mtcars, foobar & contains("am"))
-Error: Must subset existing columns.
-x Can't subset column with unknown name `foobar`.
+Error: Can't subset columns that don't exist.
+x The column `foobar` doesn't exist.
 
 > select_loc(mtcars, contains("am") | foobar)
-Error: Must subset existing columns.
-x Can't subset column with unknown name `foobar`.
+Error: Can't subset columns that don't exist.
+x The column `foobar` doesn't exist.
 
 > # Empty intersection
 > select_loc(mtcars, cyl & am)
@@ -15,6 +15,6 @@ i `cyl & am` is always an empty selection.
 > # Symbol operands are evaluated in strict mode
 > foo <- 1:2
 > select_loc(iris, Species | foo)
-Error: Must subset existing columns.
-x Can't subset column with unknown name `foo`.
+Error: Can't subset columns that don't exist.
+x The column `foo` doesn't exist.
 

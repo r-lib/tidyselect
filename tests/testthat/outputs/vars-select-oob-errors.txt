@@ -1,34 +1,34 @@
 > # Bare names
 > vars_select(letters, foo)
-Error: Must subset existing columns.
-x Can't subset column with unknown name `foo`.
+Error: Can't subset columns that don't exist.
+x The column `foo` doesn't exist.
 
 > vars_select(letters, -foo)
-Error: Must subset existing columns.
-x Can't subset column with unknown name `foo`.
+Error: Can't subset columns that don't exist.
+x The column `foo` doesn't exist.
 
 > # Names
 > vars_select(letters, "foo")
-Error: Must subset existing columns.
-x Can't subset column with unknown name `foo`.
+Error: Can't subset columns that don't exist.
+x The column `foo` doesn't exist.
 
 > vars_select(letters, a:"foo")
-Error: Must subset existing columns.
-x Can't subset column with unknown name `foo`.
+Error: Can't subset columns that don't exist.
+x The column `foo` doesn't exist.
 
 > # Locations
 > vars_select(letters, 30, 50, 100)
-Error: Must subset existing columns.
-x Can't subset locations 30, 50, and 100.
+Error: Can't subset columns that don't exist.
+x The locations 30, 50, and 100 don't exist.
 i There are only 26 columns.
 
 > vars_select(letters, -100)
-Error: Must subset existing columns.
-x Can't subset location 100.
+Error: Can't subset columns that don't exist.
+x The location 100 doesn't exist.
 i There are only 26 columns.
 
 > vars_select(letters, !100)
-Error: Must subset existing columns.
-x Can't subset location 100.
+Error: Can't subset columns that don't exist.
+x The location 100 doesn't exist.
 i There are only 26 columns.
 
