@@ -45,3 +45,20 @@ test_that("Missing names are kept", {
   local_vars(c("", "bar"))
   expect_identical(peek_vars(), c("", "bar"))
 })
+
+test_that("full data is in scope", {
+  x <- structure(set_names(letters), class = c("foo", "character"))
+
+  identical <- FALSE
+  helper <- function(data = peek_data()) {
+    identical <<- identical(data, x)
+    1
+  }
+
+  select_loc(x, helper())
+  expect_true(identical)
+})
+
+test_that("peek_data() fails informatively", {
+  expect_error(peek_data(), "must be used within")
+})

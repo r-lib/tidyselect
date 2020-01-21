@@ -128,6 +128,8 @@ eval_select_impl <- function(x,
   local_vars(names)
   vars <- peek_vars()
 
+  local_data(x)
+
   if (length(include)) {
     expr <- quo(all_of(include) | !!expr)
   }

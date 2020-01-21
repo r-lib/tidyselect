@@ -1,9 +1,41 @@
+
+peeker <- function(what) {
+  function(..., fn = NULL) {
+    if (!missing(...)) {
+      ellipsis::check_dots_empty()
+    }
+
+    x <- vars_env[[what]]
+
+    if (is_null(x)) {
+      if (is_null(fn)) {
+        fn <- "Selection helpers"
+      } else {
+        fn <- glue::glue("`{fn}()`")
+      }
+
+      # Please keep in sync with faq.R.
+      abort(glue_c(
+        "{fn} must be used within a *selecting* function.",
+        i = "See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>."
+      ))
+    }
+
+    x
+  }
+}
+
 #' Peek at variables in the selection context
 #'
 #' @description
 #'
-#' `peek_vars()` returns the vector of names of the variables
-#' currently available for selection. Read the [Get
+#' * `peek_vars()` returns the vector of names of the variables
+#'   currently available for selection.
+#'
+#' * `peek_data()` returns the whole input vector (only available with
+#'   [eval_select()]).
+#'
+#' Read the [Get
 #' started](https://tidyselect.r-lib.org/articles/tidyselect.html) for
 #' examples of how to create selection helpers with `peek_vars()`.
 #'
@@ -19,30 +51,10 @@
 #'   generic error message is used instead.
 #'
 #' @export
-peek_vars <- function(..., fn = NULL) {
-  if (!missing(...)) {
-    ellipsis::check_dots_empty()
-  }
-
-  vars <- vars_env$selected
-
-  if (is_null(vars)) {
-    if (is_null(fn)) {
-      fn <- "Selection helpers"
-    } else {
-      fn <- glue::glue("`{fn}()`")
-    }
-
-    # Please keep in sync with faq.R.
-    abort(glue_c(
-      "{fn} must be used within a *selecting* function.",
-      i = "See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>."
-    ))
-  }
-
-  vars
-}
-
+peek_vars <- peeker("selected")
+#' @rdname peek_vars
+#' @export
+peek_data <- peeker("data")
 
 #' Replace or get current variables
 #'
@@ -128,6 +140,11 @@ poke_vars <- function(vars) {
 
   invisible(old)
 }
+poke_data <- function(data) {
+  old <- vars_env$data
+  vars_env$data <- data
+  invisible(old)
+}
 
 #' @rdname poke_vars
 #' @param frame The frame environment where the exit hook for
@@ -143,6 +160,17 @@ scoped_vars <- function(vars, frame = caller_env()) {
   invisible(old)
 }
 local_vars <- scoped_vars
+
+local_data <- function(data, frame = caller_env()) {
+  old <- poke_data(data)
+
+  # Inline everything so the call will succeed in any environment
+  expr <- call2(on.exit, call2(poke_data, old), add = TRUE)
+  eval_bare(expr, frame)
+
+  invisible(old)
+}
+
 #' @rdname poke_vars
 #' @param expr An expression to be evaluated within the variable
 #'   context.
