@@ -1,5 +1,9 @@
 url: https://tidyselect.r-lib.org
 
+template:
+  params:
+    ganalytics: UA-115082821-1
+
 navbar:
   structure:
     left:  [home, articles]
