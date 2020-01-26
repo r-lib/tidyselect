@@ -4,9 +4,9 @@ x The column `e` doesn't exist.
 
 > vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
 Error: Can't rename columns that don't exist.
-x The column `g` doesn't exist.
+x The column `e` doesn't exist.
 
 > vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
 Error: Can't rename columns that don't exist.
-x The column `g` doesn't exist.
+x The column `e` doesn't exist.
 

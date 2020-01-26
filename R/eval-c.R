@@ -7,48 +7,46 @@ eval_c <- function(expr, data_mask, context_mask) {
   # If the first selector is exclusive (negative), start with all
   # columns. `-foo` is syntax for `everything() - foo`.
   if (c_arg_kind(node_car(node)) %in% c("diff", "diff_colon")) {
-    node <- new_node(quote(everything()), node)
-    expr <- node_poke_cdr(expr, node)
+    init <- quote(everything())
+  } else {
+    init <- named(int())
   }
 
-  # Reduce over reversed list to produce left-associative precedence
-  node <- node_reverse(node)
-  reduce_sels(node, data_mask, context_mask)
+  reduce_sels(node, data_mask, context_mask, init = init)
 }
 
-reduce_sels <- function(node, data_mask, context_mask) {
-  tag <- node_tag(node)
-  car <- node_car(node)
-  cdr <- node_cdr(node)
+reduce_sels <- function(node, data_mask, context_mask, init) {
+  out <- walk_data_tree(init, data_mask, context_mask)
 
-  kind <- c_arg_kind(car)
-  car <- switch(kind,
-    diff = unnegate(car),
-    diff_colon = unnegate_colon(car),
-    car
-  )
+  while (!is_null(node)) {
+    tag <- node_tag(node)
+    car <- node_car(node)
+    cdr <- node_cdr(node)
 
-  out <- walk_data_tree(car, data_mask, context_mask)
+    kind <- c_arg_kind(car)
+    new <- switch(kind,
+      diff = unnegate(car),
+      diff_colon = unnegate_colon(car),
+      car
+    )
 
-  if (!is_null(tag)) {
-    internal <- data_mask$.__tidyselect__.$internal
-    out <- combine_names(out, tag, internal$name_spec, internal$strict)
+    new <- walk_data_tree(new, data_mask, context_mask)
+    if (!is_null(tag)) {
+      internal <- data_mask$.__tidyselect__.$internal
+      new <- combine_names(new, tag, internal$name_spec, internal$strict)
+    }
+
+    if (kind == "union") {
+      out <- sel_union(out, new)
+    } else {
+      vars <- data_mask$.__tidyselect__.$internal$vars
+      out <- sel_diff(out, new, vars)
+    }
+
+    node <- cdr
   }
 
-  # Base case of the reduction
-  if (is_null(cdr)) {
-    return(out)
-  }
-
-  # The left operands are in the CDR because the pairlist has been reversed
-  lhs <- reduce_sels(cdr, data_mask, context_mask)
-
-  if (kind == "union") {
-    sel_union(lhs, out)
-  } else {
-    vars <- data_mask$.__tidyselect__.$internal$vars
-    sel_diff(lhs, out, vars)
-  }
+  out
 }
 
 c_arg_kind <- function(x) {
