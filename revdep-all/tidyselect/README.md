@@ -2,42 +2,51 @@
 
 |field    |value                        |
 |:--------|:----------------------------|
-|version  |R version 3.6.2 (2019-12-12) |
-|os       |macOS Catalina 10.15.2       |
+|version  |R version 3.6.1 (2019-07-05) |
+|os       |macOS High Sierra 10.13.6    |
 |system   |x86_64, darwin15.6.0         |
 |ui       |X11                          |
 |language |(EN)                         |
-|collate  |en_US.UTF-8                  |
-|ctype    |en_US.UTF-8                  |
-|tz       |Europe/Brussels              |
-|date     |2020-01-10                   |
+|collate  |C                            |
+|ctype    |UTF-8                        |
+|tz       |America/Los_Angeles          |
+|date     |2020-01-27                   |
 
 # Dependencies
 
 |package    |old   |new         |Δ  |
 |:----------|:-----|:-----------|:--|
 |tidyselect |0.2.5 |0.2.99.9000 |*  |
+|Rcpp       |1.0.3 |NA          |*  |
 |digest     |NA    |0.6.23      |*  |
-|purrr      |NA    |0.3.3       |*  |
-|rlang      |NA    |0.4.2       |*  |
-|vctrs      |NA    |0.2.99.9002 |*  |
+|ellipsis   |NA    |0.3.0       |*  |
+|glue       |1.3.1 |1.3.1       |   |
+|magrittr   |1.5   |1.5         |   |
+|purrr      |0.3.3 |0.3.3       |   |
+|rlang      |0.4.3 |0.4.3       |   |
+|vctrs      |NA    |0.2.2       |*  |
 
 # Revdeps
 
-## New problems (12)
+## Failed to check (4)
 
-|package                              |version  |error  |warning |note   |
-|:------------------------------------|:--------|:------|:-------|:------|
-|[arrow](problems.md#arrow)           |0.15.1.1 |-1     |        |__+1__ |
-|[AzureKusto](problems.md#azurekusto) |1.0.4    |__+1__ |        |1      |
-|[cattonum](problems.md#cattonum)     |0.0.3    |__+1__ |        |1      |
-|[cheese](problems.md#cheese)         |0.0.1    |__+1__ |        |       |
-|[dplyr](problems.md#dplyr)           |0.8.3    |__+1__ |__+1__  |2      |
-|[dtplyr](problems.md#dtplyr)         |1.0.0    |__+1__ |        |       |
-|[mudata2](problems.md#mudata2)       |1.1.0    |__+1__ |        |1      |
-|[probably](problems.md#probably)     |0.0.3    |__+1__ |        |       |
-|[RSDA](problems.md#rsda)             |3.0      |__+1__ |        |       |
-|[tibbleOne](problems.md#tibbleone)   |0.1.0    |__+1__ |        |1      |
-|[tidyr](problems.md#tidyr)           |1.0.0    |__+1__ |        |1      |
-|[tsibble](problems.md#tsibble)       |0.8.5    |__+1__ |        |       |
+|package    |version  |error |warning |note |
+|:----------|:--------|:-----|:-------|:----|
+|arrow      |0.15.1.1 |1     |        |     |
+|ngsReports |1.0.1    |1     |        |1    |
+|plyranges  |?        |      |        |     |
+|rmdcev     |1.1.1    |1     |        |1    |
+
+## New problems (8)
+
+|package                              |version |error  |warning |note |
+|:------------------------------------|:-------|:------|:-------|:----|
+|[AzureKusto](problems.md#azurekusto) |1.0.4   |__+1__ |        |1    |
+|[cattonum](problems.md#cattonum)     |0.0.3   |__+1__ |        |1    |
+|[cheese](problems.md#cheese)         |0.0.2   |__+1__ |        |     |
+|[dplyr](problems.md#dplyr)           |0.8.3   |__+1__ |__+1__  |1    |
+|[EGAnet](problems.md#eganet)         |0.9.0   |__+1__ |        |-1   |
+|[mudata2](problems.md#mudata2)       |1.1.0   |__+1__ |        |1    |
+|[tibbleOne](problems.md#tibbleone)   |0.1.0   |__+1__ |        |1    |
+|[tsibble](problems.md#tsibble)       |0.8.5   |__+1__ |        |     |
 
