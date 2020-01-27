@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidyselect</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
       </span>
     </div>
 
@@ -144,6 +144,11 @@
       <small>Source: <a href='https://github.com/r-lib/tidyselect/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="tidyselect-development-version" class="section level1">
+<h1 class="page-header">
+<a href="#tidyselect-development-version" class="anchor"></a>tidyselect (development version)<small> Unreleased </small>
+</h1>
+</div>
     <div id="tidyselect-1-0-0" class="section level1">
 <h1 class="page-header">
 <a href="#tidyselect-1-0-0" class="anchor"></a>tidyselect 1.0.0<small> Unreleased </small>
@@ -190,29 +195,24 @@
 <p>Many thanks to Irene Steves (<a href='https://github.com/isteves'>@isteves</a>) for suggesting this UI.</p>
 </li>
 <li>
-<p>Binary <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code> is now short for set difference. These expressions are now equivalent:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>) <span class="op">/</span><span class="st"> </span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"Sepal"</span>), <span class="op">-</span><span class="kw"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="st">"Width"</span>))</a></code></pre></div>
-</li>
-<li>
 <p>You can now use predicate functions in selection contexts:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(is.factor)</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(is.factor <span class="op">|</span><span class="st"> </span>is.numeric)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(is.factor)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2">iris <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(is.factor <span class="op">|</span><span class="st"> </span>is.numeric)</a></code></pre></div>
 <p>This feature is not available in functions that use the legacy interface of tidyselect. These need to be updated to use the new <code><a href="../reference/eval_select.html">eval_select()</a></code> function instead of <code><a href="../reference/vars_select.html">vars_select()</a></code>.</p>
 </li>
 <li><p>Unary <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code> inside nested <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> is now consistently syntax for set difference (<a href='https://github.com/r-lib/tidyselect/issues/130'>#130</a>).</p></li>
 <li><p>Improved support for named elements. It is now possible to assign the same name to multiple elements, if the input data structure doesn’t require unique names (i.e. anything but a data frame).</p></li>
 <li>
 <p>The selection engine has been rewritten to support a clearer separation between data-expressions (calls to <code>:</code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, and <code>c</code>) and env-expressions (anything else). This means you can now safely use expressions of the type:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a>
+<a class="sourceLine" id="cb2-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a></code></pre></div>
 <p>Even if the data frame <code>data</code> contains a column also named <code>data</code>, the subexpression <code><a href="https://rdrr.io/r/base/nrow.html">ncol(data)</a></code> is still correctly evaluated. The <code>data:ncol(data)</code> expression is equivalent to <code>2:3</code> because <code>data</code> is looked up in the relevant context without ambiguity:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">foo =</span> <span class="dv">1</span>, <span class="dt">data =</span> <span class="dv">2</span>, <span class="dt">bar =</span> <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(data<span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="co">#&gt; # A tibble: 1 x 2</span></a>
-<a class="sourceLine" id="cb4-4" data-line-number="4"><span class="co">#&gt;    data   bar</span></a>
-<a class="sourceLine" id="cb4-5" data-line-number="5"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
-<a class="sourceLine" id="cb4-6" data-line-number="6"><span class="co">#&gt; 1     2     3</span></a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1">data &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">foo =</span> <span class="dv">1</span>, <span class="dt">data =</span> <span class="dv">2</span>, <span class="dt">bar =</span> <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb3-2" data-line-number="2">data <span class="op">%&gt;%</span><span class="st"> </span>dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(data<span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))</a>
+<a class="sourceLine" id="cb3-3" data-line-number="3"><span class="co">#&gt; # A tibble: 1 x 2</span></a>
+<a class="sourceLine" id="cb3-4" data-line-number="4"><span class="co">#&gt;    data   bar</span></a>
+<a class="sourceLine" id="cb3-5" data-line-number="5"><span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt;</span></a>
+<a class="sourceLine" id="cb3-6" data-line-number="6"><span class="co">#&gt; 1     2     3</span></a></code></pre></div>
 <p>While this example above is a bit contrived, there are many realistic cases where these changes make it easier to write safe code:</p>
 <pre class="{r}"><code>select_from &lt;- function(data, var) {
   data %&gt;% dplyr::select({{ var }} : ncol(data))
@@ -237,11 +237,11 @@ iris %&gt;% dplyr::select(-any_of(vars))</code></pre>
 </li>
 <li>
 <p>Selection helpers like <code><a href="../reference/select_helpers.html">all_of()</a></code> and <code><a href="../reference/select_helpers.html">starts_with()</a></code> are now available in all selection contexts, even when they haven’t been attached to the search path. The most visible consequence of this change is that it is now easier to use selection functions without attaching the host package:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="co"># Before</span></a>
-<a class="sourceLine" id="cb7-2" data-line-number="2">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mtcars, dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">starts_with</a></span>(<span class="st">"c"</span>))</a>
-<a class="sourceLine" id="cb7-3" data-line-number="3"></a>
-<a class="sourceLine" id="cb7-4" data-line-number="4"><span class="co"># After</span></a>
-<a class="sourceLine" id="cb7-5" data-line-number="5">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mtcars, <span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"c"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="co"># Before</span></a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mtcars, dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">starts_with</a></span>(<span class="st">"c"</span>))</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3"></a>
+<a class="sourceLine" id="cb6-4" data-line-number="4"><span class="co"># After</span></a>
+<a class="sourceLine" id="cb6-5" data-line-number="5">dplyr<span class="op">::</span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(mtcars, <span class="kw"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="st">"c"</span>))</a></code></pre></div>
 <p>It is still recommended to export the helpers from your package so that users can easily look up the documentation with <code>?</code>.</p>
 </li>
 <li>
@@ -418,6 +418,7 @@ vars_select(letters, 1:n)</code></pre>
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#tidyselect-development-version">development version</a></li>
         <li><a href="#tidyselect-1-0-0">1.0.0</a></li>
         <li><a href="#tidyselect-0-2-5">0.2.5</a></li>
         <li><a href="#tidyselect-0-2-4">0.2.4</a></li>
