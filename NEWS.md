@@ -61,14 +61,6 @@ information.
 
   Many thanks to Irene Steves (@isteves) for suggesting this UI.
 
-* Binary `/` is now short for set difference. These expressions are
-  now equivalent:
-
-  ```r
-  iris %>% select(starts_with("Sepal") / ends_with("Width"))
-  iris %>% select(starts_with("Sepal"), -ends_with("Width"))
-  ```
-
 * You can now use predicate functions in selection contexts:
 
   ```r
