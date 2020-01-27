@@ -1,5 +1,5 @@
 
-# tidyselect 1.0.0 (development)
+# tidyselect 1.0.0
 
 This is the 1.0.0 release of tidyselect. It features a more solidly
 defined and implemented syntax, support for predicate functions, new
