@@ -258,7 +258,6 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>In selection context you can also use these operators:</p><ul>
-<li><p><code><a href='https://rdrr.io/r/base/Arithmetic.html'>"/"</a></code> for taking the difference between two sets of variables.</p></li>
 <li><p><code>":"</code> for selecting a range of consecutive variables.</p></li>
 <li><p><code>"c"</code> for selecting the union of sets of variables.</p></li>
 </ul>
@@ -298,9 +297,6 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 <span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) <span class='kw'>&amp;</span> <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Width 
 #&gt; "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) <span class='kw'>|</span> <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width    Sepal.Width 
 #&gt; "Petal.Length"  "Petal.Width"  "Sepal.Width" </div><div class='input'>
-<span class='co'># `/` takes the difference of two selections</span>
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) / <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Length 
-#&gt; "Petal.Length" </div><div class='input'>
 <span class='co'># `all_of()` selects the variables in a character vector:</span>
 <span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal.Length"</span>, <span class='st'>"Petal.Width"</span>)
 <span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='no'>vars</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
