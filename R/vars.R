@@ -95,7 +95,7 @@ peek_data <- peeker("data")
 #'
 #' # Now that the variables are registered, the helpers can figure out
 #' # the locations of elements within the variable vector:
-#' one_of(c("d", "z"))
+#' all_of(c("d", "z"))
 #'
 #' # In a function be sure to restore the previous variables. An exit
 #' # hook is the best way to do it:
@@ -103,7 +103,7 @@ peek_data <- peeker("data")
 #'   old <- poke_vars(vars)
 #'   on.exit(poke_vars(old))
 #'
-#'   one_of("d")
+#'   all_of("d")
 #' }
 #' fn(letters)
 #' fn(letters[3:5])

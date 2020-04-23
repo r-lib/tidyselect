@@ -99,7 +99,7 @@ sets of variables.
 
 The order of selected columns is determined by the inputs.
 \itemize{
-\item \code{one_of(c("foo", "bar"))} selects \code{"foo"} first.
+\item \code{all_of(c("foo", "bar"))} selects \code{"foo"} first.
 \item \code{c(starts_with("c"), starts_with("d"))} selects all columns
 starting with \code{"c"} first, then all columns starting with \code{"d"}.
 }
@@ -140,5 +140,5 @@ vars_select(nms, -any_of(c("Species", "Genres")))
 
 # The order of selected columns is determined from the inputs
 vars_select(names(mtcars), starts_with("c"), starts_with("d"))
-vars_select(names(mtcars), one_of(c("carb", "mpg")))
+vars_select(names(mtcars), all_of(c("carb", "mpg")))
 }

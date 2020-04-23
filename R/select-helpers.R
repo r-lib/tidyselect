@@ -41,7 +41,7 @@
 #'
 #' The order of selected columns is determined by the inputs.
 #'
-#' * `one_of(c("foo", "bar"))` selects `"foo"` first.
+#' * `all_of(c("foo", "bar"))` selects `"foo"` first.
 #'
 #' * `c(starts_with("c"), starts_with("d"))` selects all columns
 #'   starting with `"c"` first, then all columns starting with `"d"`.
@@ -82,7 +82,7 @@
 #'
 #' # The order of selected columns is determined from the inputs
 #' vars_select(names(mtcars), starts_with("c"), starts_with("d"))
-#' vars_select(names(mtcars), one_of(c("carb", "mpg")))
+#' vars_select(names(mtcars), all_of(c("carb", "mpg")))
 NULL
 
 #' @export
