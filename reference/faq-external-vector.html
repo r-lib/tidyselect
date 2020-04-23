@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous" />
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,80 +45,73 @@ Ambiguity between columns and external variables
 
 
 With selecting functions like dplyr::select() or
-tidyr::pivot_longer(), you can refer to variables by name:mtcars %&amp;gt;% select(cyl, am, vs)
-#&amp;gt; # A tibble: 32 x 3
-#&amp;gt;     cyl    am    vs
-#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
-#&amp;gt; 1     6     1     0
-#&amp;gt; 2     6     1     0
-#&amp;gt; 3     4     1     1
-#&amp;gt; 4     6     0     1
-#&amp;gt; # ... with 28 more rows
+tidyr::pivot_longer(), you can refer to variables by name:mtcars %&amp;amp;gt;% select(cyl, am, vs)
+#&amp;amp;gt; # A tibble: 32 x 3
+#&amp;amp;gt;     cyl    am    vs
+#&amp;amp;gt;   &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt;
+#&amp;amp;gt; 1     6     1     0
+#&amp;amp;gt; 2     6     1     0
+#&amp;amp;gt; 3     4     1     1
+#&amp;amp;gt; 4     6     0     1
+#&amp;amp;gt; # ... with 28 more rows
 
-mtcars %&amp;gt;% select(mpg:disp)
-#&amp;gt; # A tibble: 32 x 3
-#&amp;gt;     mpg   cyl  disp
-#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
-#&amp;gt; 1  21       6   160
-#&amp;gt; 2  21       6   160
-#&amp;gt; 3  22.8     4   108
-#&amp;gt; 4  21.4     6   258
-#&amp;gt; # ... with 28 more rows
-
+mtcars %&amp;amp;gt;% select(mpg:disp)
+#&amp;amp;gt; # A tibble: 32 x 3
+#&amp;amp;gt;     mpg   cyl  disp
+#&amp;amp;gt;   &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt;
+#&amp;amp;gt; 1  21       6   160
+#&amp;amp;gt; 2  21       6   160
+#&amp;amp;gt; 3  22.8     4   108
+#&amp;amp;gt; 4  21.4     6   258
+#&amp;amp;gt; # ... with 28 more rows
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.vars &amp;lt;- c(&quot;cyl&quot;, &quot;am&quot;, &quot;vs&quot;)
-result &amp;lt;- mtcars %&amp;gt;% select(vars)
-#&amp;gt; Note: Using an external vector in selections is ambiguous.
-#&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
-#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
-#&amp;gt; This message is displayed once per session.
-
+not clear whether you want a data frame column or an external object.vars &amp;amp;lt;- c(&quot;cyl&quot;, &quot;am&quot;, &quot;vs&quot;)
+result &amp;amp;lt;- mtcars %&amp;amp;gt;% select(vars)
+#&amp;amp;gt; Note: Using an external vector in selections is ambiguous.
+#&amp;amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
+#&amp;amp;gt; i See &amp;amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;amp;gt;.
+#&amp;amp;gt; This message is displayed once per session.
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.some_df &amp;lt;- mtcars
-some_df$vars &amp;lt;- 1:nrow(mtcars)
-
+contains a column with the same name as your external variable.some_df &amp;amp;lt;- mtcars
+some_df$vars &amp;amp;lt;- 1:nrow(mtcars)
 These are very different objects but it isn’t a problem if the context
 forces you to be specific about where to find vars:vars
-#&amp;gt; [1] &quot;cyl&quot; &quot;am&quot;  &quot;vs&quot;
+#&amp;amp;gt; [1] &quot;cyl&quot; &quot;am&quot;  &quot;vs&quot;
 
 some_df$vars
-#&amp;gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
-#&amp;gt; [29] 29 30 31 32
-
-In a selection context however, the column wins:some_df %&amp;gt;% select(vars)
-#&amp;gt; # A tibble: 32 x 1
-#&amp;gt;    vars
-#&amp;gt;   &amp;lt;int&amp;gt;
-#&amp;gt; 1     1
-#&amp;gt; 2     2
-#&amp;gt; 3     3
-#&amp;gt; 4     4
-#&amp;gt; # ... with 28 more rows
-
+#&amp;amp;gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
+#&amp;amp;gt; [26] 26 27 28 29 30 31 32
+In a selection context however, the column wins:some_df %&amp;amp;gt;% select(vars)
+#&amp;amp;gt; # A tibble: 32 x 1
+#&amp;amp;gt;    vars
+#&amp;amp;gt;   &amp;amp;lt;int&amp;amp;gt;
+#&amp;amp;gt; 1     1
+#&amp;amp;gt; 2     2
+#&amp;amp;gt; 3     3
+#&amp;amp;gt; 4     4
+#&amp;amp;gt; # ... with 28 more rows
 
 Fixing the ambiguity
 
 
 To make your selection code more robust and silence the message, use
-all_of() to force the external vector:some_df %&amp;gt;% select(all_of(vars))
-#&amp;gt; # A tibble: 32 x 3
-#&amp;gt;     cyl    am    vs
-#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
-#&amp;gt; 1     6     1     0
-#&amp;gt; 2     6     1     0
-#&amp;gt; 3     4     1     1
-#&amp;gt; 4     6     0     1
-#&amp;gt; # ... with 28 more rows
-
+all_of() to force the external vector:some_df %&amp;amp;gt;% select(all_of(vars))
+#&amp;amp;gt; # A tibble: 32 x 3
+#&amp;amp;gt;     cyl    am    vs
+#&amp;amp;gt;   &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt;
+#&amp;amp;gt; 1     6     1     0
+#&amp;amp;gt; 2     6     1     0
+#&amp;amp;gt; 3     4     1     1
+#&amp;amp;gt; 4     6     0     1
+#&amp;amp;gt; # ... with 28 more rows
 For more information or if you have comments about this, please see the
 Github issue tracking
 the deprecation process.
 " />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -142,7 +139,7 @@ the deprecation process.
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -201,7 +198,7 @@ the deprecation process.
   </ul>
 </li>
 <li>
-  <a href="https://github.com/r-lib/tidyselect">
+  <a href="https://github.com/r-lib/tidyselect/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -230,75 +227,69 @@ the deprecation process.
 
 
 <p>With selecting functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> or
-<code>tidyr::pivot_longer()</code>, you can refer to variables by name:<div class="r"></p><pre>mtcars %&gt;% select(cyl, am, vs)
-#&gt; # A tibble: 32 x 3
-#&gt;     cyl    am    vs
-#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1     6     1     0
-#&gt; 2     6     1     0
-#&gt; 3     4     1     1
-#&gt; 4     6     0     1
-#&gt; # ... with 28 more rows
+<code>tidyr::pivot_longer()</code>, you can refer to variables by name:<div class="r"></p><pre><span class='no'>mtcars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>cyl</span>, <span class='no'>am</span>, <span class='no'>vs</span>)
+<span class='co'>#&amp;gt; # A tibble: 32 x 3</span>
+<span class='co'>#&amp;gt;     cyl    am    vs</span>
+<span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
+<span class='co'>#&amp;gt; 1     6     1     0</span>
+<span class='co'>#&amp;gt; 2     6     1     0</span>
+<span class='co'>#&amp;gt; 3     4     1     1</span>
+<span class='co'>#&amp;gt; 4     6     0     1</span>
+<span class='co'>#&amp;gt; # ... with 28 more rows</span>
 
-mtcars %&gt;% select(mpg:disp)
-#&gt; # A tibble: 32 x 3
-#&gt;     mpg   cyl  disp
-#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1  21       6   160
-#&gt; 2  21       6   160
-#&gt; 3  22.8     4   108
-#&gt; 4  21.4     6   258
-#&gt; # ... with 28 more rows
-</pre><p></div></p>
+<span class='no'>mtcars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>mpg</span>:<span class='no'>disp</span>)
+<span class='co'>#&amp;gt; # A tibble: 32 x 3</span>
+<span class='co'>#&amp;gt;     mpg   cyl  disp</span>
+<span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
+<span class='co'>#&amp;gt; 1  21       6   160</span>
+<span class='co'>#&amp;gt; 2  21       6   160</span>
+<span class='co'>#&amp;gt; 3  22.8     4   108</span>
+<span class='co'>#&amp;gt; 4  21.4     6   258</span>
+<span class='co'>#&amp;gt; # ... with 28 more rows</span></pre><p></div></p>
 <p>For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.<div class="r"></p><pre>vars &lt;- c("cyl", "am", "vs")
-result &lt;- mtcars %&gt;% select(vars)
-#&gt; Note: Using an external vector in selections is ambiguous.
-#&gt; i Use `all_of(vars)` instead of `vars` to silence this message.
-#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.
-#&gt; This message is displayed once per session.
-</pre><p></div></p>
+not clear whether you want a data frame column or an external object.<div class="r"></p><pre><span class='no'>vars</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"am"</span>, <span class='st'>"vs"</span>)
+<span class='no'>result</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>mtcars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
+<span class='co'>#&amp;gt; Note: Using an external vector in selections is ambiguous.</span>
+<span class='co'>#&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.</span>
+<span class='co'>#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.</span>
+<span class='co'>#&amp;gt; This message is displayed once per session.</span></pre><p></div></p>
 <p>This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.<div class="r"></p><pre>some_df &lt;- mtcars
-some_df$vars &lt;- 1:nrow(mtcars)
-</pre><p></div></p>
+contains a column with the same name as your external variable.<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>mtcars</span>
+<span class='no'>some_df</span>$<span class='no'>vars</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>mtcars</span>)</pre><p></div></p>
 <p>These are very different objects but it isn’t a problem if the context
-forces you to be specific about where to find <code>vars</code>:<div class="r"></p><pre>vars
-#&gt; [1] "cyl" "am"  "vs"
+forces you to be specific about where to find <code>vars</code>:<div class="r"></p><pre><span class='no'>vars</span>
+<span class='co'>#&amp;gt; [1] "cyl" "am"  "vs"</span>
 
-some_df$vars
-#&gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26 27 28
-#&gt; [29] 29 30 31 32
-</pre><p></div></p>
-<p>In a selection context however, the column wins:<div class="r"></p><pre>some_df %&gt;% select(vars)
-#&gt; # A tibble: 32 x 1
-#&gt;    vars
-#&gt;   &lt;int&gt;
-#&gt; 1     1
-#&gt; 2     2
-#&gt; 3     3
-#&gt; 4     4
-#&gt; # ... with 28 more rows
-</pre><p></div></p>
+<span class='no'>some_df</span>$<span class='no'>vars</span>
+<span class='co'>#&amp;gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25</span>
+<span class='co'>#&amp;gt; [26] 26 27 28 29 30 31 32</span></pre><p></div></p>
+<p>In a selection context however, the column wins:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
+<span class='co'>#&amp;gt; # A tibble: 32 x 1</span>
+<span class='co'>#&amp;gt;    vars</span>
+<span class='co'>#&amp;gt;   &amp;lt;int&amp;gt;</span>
+<span class='co'>#&amp;gt; 1     1</span>
+<span class='co'>#&amp;gt; 2     2</span>
+<span class='co'>#&amp;gt; 3     3</span>
+<span class='co'>#&amp;gt; 4     4</span>
+<span class='co'>#&amp;gt; # ... with 28 more rows</span></pre><p></div></p>
 
 <h3>Fixing the ambiguity</h3>
 
 
 <p>To make your selection code more robust and silence the message, use
-<code><a href='select_helpers.html'>all_of()</a></code> to force the external vector:<div class="r"></p><pre>some_df %&gt;% select(all_of(vars))
-#&gt; # A tibble: 32 x 3
-#&gt;     cyl    am    vs
-#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
-#&gt; 1     6     1     0
-#&gt; 2     6     1     0
-#&gt; 3     4     1     1
-#&gt; 4     6     0     1
-#&gt; # ... with 28 more rows
-</pre><p></div></p>
+<code><a href='select_helpers.html'>all_of()</a></code> to force the external vector:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'><a href='select_helpers.html'>all_of</a></span>(<span class='no'>vars</span>))
+<span class='co'>#&amp;gt; # A tibble: 32 x 3</span>
+<span class='co'>#&amp;gt;     cyl    am    vs</span>
+<span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
+<span class='co'>#&amp;gt; 1     6     1     0</span>
+<span class='co'>#&amp;gt; 2     6     1     0</span>
+<span class='co'>#&amp;gt; 3     4     1     1</span>
+<span class='co'>#&amp;gt; 4     6     0     1</span>
+<span class='co'>#&amp;gt; # ... with 28 more rows</span></pre><p></div></p>
 <p>For more information or if you have comments about this, please see the
 <a href='https://github.com/r-lib/tidyselect/issues/76'>Github issue</a> tracking
 the deprecation process.</p>
@@ -309,11 +300,10 @@ the deprecation process.</p>
 
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-    </ul>
-
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -324,7 +314,7 @@ the deprecation process.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

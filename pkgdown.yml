@@ -1,9 +1,10 @@
 pandoc: '2.2'
-pkgdown: 1.4.1
+pkgdown: 1.5.1
 pkgdown_sha: ~
 articles:
   syntax: syntax.html
   tidyselect: tidyselect.html
+last_built: 2020-04-23T20:58Z
 urls:
   reference: https://tidyselect.r-lib.org/reference
   article: https://tidyselect.r-lib.org/articles
