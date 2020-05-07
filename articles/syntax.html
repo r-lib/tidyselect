@@ -389,7 +389,7 @@
 <div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="no">cyl_pos</span> <span class="kw">&lt;-</span> <span class="fl">2</span>
 <span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">mpg</span> <span class="kw">|</span> <span class="no">cyl_pos</span>)
 <span class="co">#&gt; Error: Can't subset columns that don't exist.</span>
-<span class="co">#&gt; ✖ The column `cyl_pos` doesn't exist.</span></pre></body></html></div>
+<span class="co">#&gt; ✖ Column `cyl_pos` doesn't exist.</span></pre></body></html></div>
 </li>
 <li>
 <p><strong>env-expressions</strong> are evaluated in the environment. This includes all calls other than those mentioned above, as well as symbols that are part of those calls. You can’t refer to data-variables in a data-expression:</p>
@@ -439,7 +439,7 @@
 <span class="co"># Use `all_of()` to be explicit that you want a data-var, not an env-var:</span>
 <span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="fu"><a href="../reference/select_helpers.html">all_of</a></span>(<span class="st">"Species"</span>))
 <span class="co">#&gt; Error: Can't subset columns that don't exist.</span>
-<span class="co">#&gt; ✖ The column `Species` doesn't exist.</span></pre></body></html></div>
+<span class="co">#&gt; ✖ Column `Species` doesn't exist.</span></pre></body></html></div>
 <p>Similarly, you can be explicit about finding predicate functions in the environment by forcing the symbols:</p>
 <div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="co"># By default the data-var has precedence over the env-var:</span>
 <span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">Species</span>)
@@ -493,10 +493,14 @@
 
 <span class="co"># Data frames cannot</span>
 <span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="kw">foo</span> <span class="kw">=</span> <span class="no">mpg</span>, <span class="kw">foo</span> <span class="kw">=</span> <span class="no">cyl</span>)
-<span class="co">#&gt; Error: Names must be unique.</span></pre></body></html></div>
+<span class="co">#&gt; Error: Names must be unique.</span>
+<span class="co">#&gt; ✖ These names are duplicated:</span>
+<span class="co">#&gt;   * "foo" at locations 1 and 2.</span></pre></body></html></div>
 <p>A selection can rename a variable to an existing name if the latter is not part of the selection:</p>
 <div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">cyl</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
 <span class="co">#&gt; Error: Names must be unique.</span>
+<span class="co">#&gt; ✖ These names are duplicated:</span>
+<span class="co">#&gt;   * "cyl" at locations 1 and 2.</span>
 
 <span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">disp</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
 <span class="co">#&gt; disp  cyl </span>
@@ -522,14 +526,16 @@
 <a href="#duplicate-columns-in-data-frames" class="anchor"></a>Duplicate columns in data frames</h2>
 <p>Normally a data frame shouldn’t have duplicate names. However, the real world is messy and duplicates do happen in the wild. tidyselect tries to be as permissive as it can with these duplicates so that users can restore unique names with <code>select()</code> or <code>rename()</code>.</p>
 <p>First let’s create a data frame with duplicate names:</p>
-<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">&lt;-</span> <span class="kw pkg">vctrs</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/vctrs/man/new_data_frame.html">new_data_frame</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="fl">3</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">&lt;-</span> <span class="kw pkg">vctrs</span><span class="kw ns">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/new_data_frame.html">new_data_frame</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="fl">3</span>))</pre></body></html></div>
 <p>If the duplicates are not part of the selection, they are simply ignored:</p>
 <div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">y</span>)
 <span class="co">#&gt; y </span>
 <span class="co">#&gt; 2</span></pre></body></html></div>
 <p>If the duplicates are selected, this is an error:</p>
 <div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">x</span>)
-<span class="co">#&gt; Error: Names must be unique.</span></pre></body></html></div>
+<span class="co">#&gt; Error: Names must be unique.</span>
+<span class="co">#&gt; ✖ These names are duplicated:</span>
+<span class="co">#&gt;   * "x" at locations 1 and 2.</span></pre></body></html></div>
 <p>The duplicate names can be repaired by renaming chosen locations:</p>
 <div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">x</span>, <span class="kw">foo</span> <span class="kw">=</span> <span class="fl">3</span>)
 <span class="co">#&gt;   x foo </span>

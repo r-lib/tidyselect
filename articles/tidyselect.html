@@ -384,7 +384,7 @@
 <h3 class="hasAnchor">
 <a href="#handling-duplicate-variables" class="anchor"></a>Handling duplicate variables</h3>
 <p>However our current implementation of <code>if_width()</code> has a design flaw. It doesn’t work properly when the input has duplicate names:</p>
-<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">&lt;-</span> <span class="kw pkg">vctrs</span><span class="kw ns">::</span><span class="fu"><a href="https://rdrr.io/pkg/vctrs/man/new_data_frame.html">new_data_frame</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">foo</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">quux</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">foo</span> <span class="kw">=</span> <span class="fl">3</span>))
+<div class="sourceCode" id="cb23"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">&lt;-</span> <span class="kw pkg">vctrs</span><span class="kw ns">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/new_data_frame.html">new_data_frame</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">foo</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">quux</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">foo</span> <span class="kw">=</span> <span class="fl">3</span>))
 
 <span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="fu">if_width</span>(<span class="fl">3</span>))
 <span class="co">#&gt;   foo</span>
@@ -396,7 +396,9 @@
 }</pre></body></html></div>
 <p>If the input is a data frame, the user is now informed that their selection should not contain duplicates:</p>
 <div class="sourceCode" id="cb25"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="fu">if_width</span>(<span class="fl">3</span>))
-<span class="co">#&gt; Error: Names must be unique.</span></pre></body></html></div>
+<span class="co">#&gt; Error: Names must be unique.</span>
+<span class="co">#&gt; ✖ These names are duplicated:</span>
+<span class="co">#&gt;   * "foo" at locations 1 and 2.</span></pre></body></html></div>
 <p>And all the duplicates are selected if the input is not a data frame, as expected:</p>
 <div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(<span class="no">dups</span>) <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="fu">if_width</span>(<span class="fl">3</span>))
 <span class="co">#&gt; $foo</span>
