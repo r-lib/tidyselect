@@ -43,3 +43,10 @@ test_that("select_loc() accepts name spec", {
     c(foo_1 = 1L, foo_2 = 2L)
   )
 })
+
+test_that("result is named even with constant inputs (#173)", {
+  expect_identical(
+    eval_select("Sepal.Width", iris),
+    c(Sepal.Width = 2L)
+  )
+})

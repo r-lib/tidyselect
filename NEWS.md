@@ -1,6 +1,9 @@
 
 # tidyselect (development version)
 
+* The return value of `eval_select()` is now always named, even when
+  inputs are constant (#173).
+
 
 # tidyselect 1.0.0
 

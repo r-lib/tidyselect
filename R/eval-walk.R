@@ -11,9 +11,14 @@ vars_select_eval <- function(vars,
   if (is_missing(wrapped)) {
     return(named(int()))
   }
+
+  uniquely_named <- uniquely_named %||% is.data.frame(data)
+
   if (!is_symbolic(wrapped)) {
     pos <- as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data)
-    return(loc_validate(pos, vars))
+    pos <- loc_validate(pos, vars)
+    pos <- ensure_named(pos, vars, uniquely_named)
+    return(pos)
   }
 
   vars <- peek_vars()
@@ -22,7 +27,6 @@ vars_select_eval <- function(vars,
 
   # Mark data duplicates so we can fail instead of disambiguating them
   # when renaming
-  uniquely_named <- uniquely_named %||% is.data.frame(data)
   if (uniquely_named) {
     vars_split$val <- map(vars_split$val, mark_data_dups)
   }
@@ -62,7 +66,10 @@ vars_select_eval <- function(vars,
     abort("All renaming inputs must be named.")
   }
 
-  # Ensure position vector is fully named
+  ensure_named(pos, vars, uniquely_named)
+}
+
+ensure_named <- function(pos, vars, uniquely_named) {
   nms <- names(pos) <- names2(pos)
   nms_missing <- nms == ""
   names(pos)[nms_missing] <- vars[pos[nms_missing]]

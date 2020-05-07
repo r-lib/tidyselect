@@ -234,7 +234,7 @@ test_that("negative indices are disallowed", {
 
 test_that("unique elements are returned", {
   x <- list(a = 1L, b = 2L)
-  expect_identical(select_loc(x, !!c(1L, 1L)), named(1L))
+  expect_identical(select_loc(x, !!c(1L, 1L)), c(a = 1L))
   expect_identical(select_loc(x, !!c(1L, foo = 1L)), c(foo = 1L))
   expect_identical(select_loc(x, !!c(foo = 1L, 1L)), c(foo = 1L))
   expect_identical(select_loc(x, !!c(foo = 1L, 1L, bar = 1L)), c(foo = 1L, bar = 1L))
