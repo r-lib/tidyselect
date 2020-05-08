@@ -1,6 +1,9 @@
 
 # tidyselect (development version)
 
+* Fixed issue preventing repeated deprecation messages when
+  `tidyselect_verbosity` is set to `"verbose"` (#184).
+
 * `any_of()` now preserves the order of the input variables (#186).
 
 * The return value of `eval_select()` is now always named, even when

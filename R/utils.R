@@ -297,16 +297,23 @@ inform_once <- function(msg, id = msg) {
   ))
 }
 
-needs_advice <- function(env) {
-  opt <- peek_option("tidyselect_verbosity")
-  if (is_string(opt)) {
-    return(switch(opt,
-      quiet = FALSE,
-      verbose = TRUE,
-      abort("`tidyselect_verbosity` must be `\"quiet\"` or `\"verbose\"`.")
+verbosity <- function(default = "default") {
+  opt <- peek_option("tidyselect_verbosity") %||% default
+
+  if (!is_string(opt, c("default", "quiet", "verbose"))) {
+    options(tidyselect_verbosity = NULL)
+    warn(c(
+      "`tidyselect_verbosity` must be `\"quiet\"` or `\"verbose\"`.",
+      i = "Resetting to NULL."
     ))
+
+    opt <- default
   }
 
+  opt
+}
+
+env_needs_advice <- function(env) {
   if (is_reference(topenv(env), global_env())) {
     return(TRUE)
   }

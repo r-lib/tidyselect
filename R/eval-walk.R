@@ -285,7 +285,9 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     return(name)
   }
 
-  if (needs_advice(env)) {
+  verbosity <- verbosity()
+
+  if (!is_string(verbosity, "quiet") && env_needs_advice(env)) {
     # Please keep in sync with faq.R.
     msg <- glue_c(
       "Note: Using an external vector in selections is ambiguous.",
@@ -293,7 +295,12 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
       i = "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
     )
     id <- paste0("strict_lookup_", name)
-    inform_once(msg, id)
+
+    if (is_string(verbosity, "verbose")) {
+      inform(msg)
+    } else {
+      inform_once(msg, id)
+    }
   }
 
   value

@@ -135,11 +135,32 @@ test_that("symbol lookup outside data informs caller about better practice", {
   })
 })
 
-test_that("symbol evaluation only informs once", {
-  scoped_options(tidyselect_verbosity = "verbose")
-  `_identifier` <- 1
-  expect_message(select_loc(iris, `_identifier`), "ambiguous")
-  expect_message(select_loc(iris, `_identifier`), regexp = NA)
+test_that("symbol evaluation only informs once (#184)", {
+  verify_output(test_path("outputs", "eval-sym-verbosity.txt"), {
+    "Default"
+    with_options(tidyselect_verbosity = NULL, {
+      `_vars_default` <- "cyl"
+      select_loc(mtcars, `_vars_default`)
+      select_loc(mtcars, `_vars_default`)
+      invisible(NULL)
+    })
+
+    "Verbose"
+    with_options(tidyselect_verbosity = "verbose", {
+      `_vars_verbose` <- "cyl"
+      select_loc(mtcars, `_vars_verbose`)
+      select_loc(mtcars, `_vars_verbose`)
+      invisible(NULL)
+    })
+
+    "Quiet"
+    with_options(tidyselect_verbosity = "quiet", {
+      `_vars_quiet` <- "cyl"
+      select_loc(mtcars, `_vars_quiet`)
+      select_loc(mtcars, `_vars_quiet`)
+      invisible(NULL)
+    })
+  })
 })
 
 test_that("symbol evaluation informs from global environment but not packages", {
