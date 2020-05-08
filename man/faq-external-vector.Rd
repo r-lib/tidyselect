@@ -42,8 +42,8 @@ result <- mtcars \%>\% select(vars)
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.\if{html}{\out{<div class="r">}}\preformatted{some_df <- mtcars
-some_df$vars <- 1:nrow(mtcars)
+contains a column with the same name as your external variable.\if{html}{\out{<div class="r">}}\preformatted{some_df <- mtcars[1:4, ]
+some_df$vars <- 1:nrow(some_df)
 }\if{html}{\out{</div>}}
 
 These are very different objects but it isn’t a problem if the context
@@ -51,19 +51,17 @@ forces you to be specific about where to find \code{vars}:\if{html}{\out{<div cl
 #> [1] "cyl" "am"  "vs"
 
 some_df$vars
-#>  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-#> [26] 26 27 28 29 30 31 32
+#> [1] 1 2 3 4
 }\if{html}{\out{</div>}}
 
 In a selection context however, the column wins:\if{html}{\out{<div class="r">}}\preformatted{some_df \%>\% select(vars)
-#> # A tibble: 32 x 1
+#> # A tibble: 4 x 1
 #>    vars
 #>   <int>
 #> 1     1
 #> 2     2
 #> 3     3
 #> 4     4
-#> # ... with 28 more rows
 }\if{html}{\out{</div>}}
 }
 
@@ -71,14 +69,13 @@ In a selection context however, the column wins:\if{html}{\out{<div class="r">}}
 
 To make your selection code more robust and silence the message, use
 \code{all_of()} to force the external vector:\if{html}{\out{<div class="r">}}\preformatted{some_df \%>\% select(all_of(vars))
-#> # A tibble: 32 x 3
+#> # A tibble: 4 x 3
 #>     cyl    am    vs
 #>   <dbl> <dbl> <dbl>
 #> 1     6     1     0
 #> 2     6     1     0
 #> 3     4     1     1
 #> 4     6     0     1
-#> # ... with 28 more rows
 }\if{html}{\out{</div>}}
 
 For more information or if you have comments about this, please see the

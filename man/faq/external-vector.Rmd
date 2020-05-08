@@ -30,8 +30,8 @@ vectors because they introduce ambiguity. Imagine that the data
 frame contains a column with the same name as your external variable.
 
 ```{r}
-some_df <- mtcars
-some_df$vars <- 1:nrow(mtcars)
+some_df <- mtcars[1:4, ]
+some_df$vars <- 1:nrow(some_df)
 ```
 
 These are very different objects but it isn't a problem if the context
