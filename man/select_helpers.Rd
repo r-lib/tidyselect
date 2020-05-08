@@ -2,32 +2,12 @@
 % Please edit documentation in R/select-helpers.R
 \name{select_helpers}
 \alias{select_helpers}
-\alias{starts_with}
-\alias{ends_with}
-\alias{contains}
-\alias{matches}
-\alias{num_range}
 \alias{all_of}
 \alias{any_of}
 \alias{everything}
 \alias{last_col}
 \title{Select helpers}
 \usage{
-starts_with(match, ignore.case = TRUE, vars = peek_vars(fn = "starts_with"))
-
-ends_with(match, ignore.case = TRUE, vars = peek_vars(fn = "ends_with"))
-
-contains(match, ignore.case = TRUE, vars = peek_vars(fn = "contains"))
-
-matches(
-  match,
-  ignore.case = TRUE,
-  perl = FALSE,
-  vars = peek_vars(fn = "matches")
-)
-
-num_range(prefix, range, width = NULL, vars = peek_vars(fn = "num_range"))
-
 all_of(x)
 
 any_of(x, ..., vars = peek_vars(fn = "any_of"))
@@ -37,30 +17,17 @@ everything(vars = peek_vars(fn = "everything"))
 last_col(offset = 0L, vars = peek_vars(fn = "last_col"))
 }
 \arguments{
-\item{match}{A character vector. If length > 1, the union of the
-matches is taken.}
+\item{x}{An index vector of names or locations.}
 
-\item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
-names.}
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{vars}{A character vector of variable names. When called
 from inside selecting functions like \code{\link[dplyr:select]{dplyr::select()}} these are
 automatically set to the names of the table.}
 
-\item{perl}{Should Perl-compatible regexps be used?}
-
-\item{prefix}{A prefix that starts the numeric range.}
-
-\item{range}{A sequence of integers, like \code{1:5}.}
-
-\item{width}{Optionally, the "width" of the numeric range. For example,
-a range of 2 gives "01", a range of three "001", etc.}
-
-\item{x}{An index vector of names or locations.}
-
-\item{...}{These dots are for future extensions and must be empty.}
-
 \item{offset}{Set it to \code{n} to select the nth var from the end.}
+
+\item{perl}{Should Perl-compatible regexps be used?}
 }
 \value{
 An integer vector giving the position of the matched variables.
@@ -68,11 +35,11 @@ An integer vector giving the position of the matched variables.
 \description{
 These functions allow you to select variables based on their names.
 \itemize{
-\item \code{starts_with()}: Starts with a prefix.
-\item \code{ends_with()}: Ends with a suffix.
-\item \code{contains()}: Contains a literal string.
-\item \code{matches()}: Matches a regular expression.
-\item \code{num_range()}: Matches a numerical range like x01, x02, x03.
+\item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
+\item \code{\link[=ends_with]{ends_with()}}: Ends with a suffix.
+\item \code{\link[=contains]{contains()}}: Contains a literal string.
+\item \code{\link[=matches]{matches()}}: Matches a regular expression.
+\item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
 \item \code{all_of()}: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
 thrown.
@@ -105,11 +72,6 @@ starting with \code{"c"} first, then all columns starting with \code{"d"}.
 }
 }
 \examples{
-nms <- names(iris)
-vars_select(nms, starts_with("Petal"))
-vars_select(nms, ends_with("Width"))
-vars_select(nms, contains("etal"))
-vars_select(nms, matches(".t."))
 vars_select(nms, Petal.Length, Petal.Width)
 vars_select(nms, everything())
 vars_select(nms, last_col())

@@ -1,11 +1,11 @@
 #' Select helpers
 #'
 #' These functions allow you to select variables based on their names.
-#' * `starts_with()`: Starts with a prefix.
-#' * `ends_with()`: Ends with a suffix.
-#' * `contains()`: Contains a literal string.
-#' * `matches()`: Matches a regular expression.
-#' * `num_range()`: Matches a numerical range like x01, x02, x03.
+#' * [starts_with()]: Starts with a prefix.
+#' * [ends_with()]: Ends with a suffix.
+#' * [contains()]: Contains a literal string.
+#' * [matches()]: Matches a regular expression.
+#' * [num_range()]: Matches a numerical range like x01, x02, x03.
 #' * `all_of()`: Matches variable names in a character vector. All
 #'   names must be present, otherwise an out-of-bounds error is
 #'   thrown.
@@ -26,19 +26,13 @@
 #' - `"&"` and `"|"` for selecting the intersection or the union of two
 #'   sets of variables.
 #'
-#' @param match A character vector. If length > 1, the union of the
-#'   matches is taken.
-#' @param ignore.case If `TRUE`, the default, ignores case when matching
-#'   names.
 #' @param perl Should Perl-compatible regexps be used?
 #' @param vars A character vector of variable names. When called
 #'   from inside selecting functions like [dplyr::select()] these are
 #'   automatically set to the names of the table.
-#' @name select_helpers
 #' @return An integer vector giving the position of the matched variables.
 #'
 #' @details
-#'
 #' The order of selected columns is determined by the inputs.
 #'
 #' * `all_of(c("foo", "bar"))` selects `"foo"` first.
@@ -46,12 +40,8 @@
 #' * `c(starts_with("c"), starts_with("d"))` selects all columns
 #'   starting with `"c"` first, then all columns starting with `"d"`.
 #'
+#' @name select_helpers
 #' @examples
-#' nms <- names(iris)
-#' vars_select(nms, starts_with("Petal"))
-#' vars_select(nms, ends_with("Width"))
-#' vars_select(nms, contains("etal"))
-#' vars_select(nms, matches(".t."))
 #' vars_select(nms, Petal.Length, Petal.Width)
 #' vars_select(nms, everything())
 #' vars_select(nms, last_col())
@@ -85,8 +75,88 @@
 #' vars_select(names(mtcars), all_of(c("carb", "mpg")))
 NULL
 
+#' Select variables that match a pattern
+#'
+#' @description
+#'
+#' These [selection helpers][select_helpers] match variables according
+#' to a given pattern.
+#'
+#' * [starts_with()]: Starts with a prefix.
+#' * [ends_with()]: Ends with a suffix.
+#' * [contains()]: Contains a literal string.
+#' * [matches()]: Matches a regular expression.
+#' * [num_range()]: Matches a numerical range like x01, x02, x03.
+#'
+#' @param match A character vector. If length > 1, the union of the
+#'   matches is taken.
+#' @param ignore.case If `TRUE`, the default, ignores case when matching
+#'   names.
+#'
+#' @section Examples:
+#'
+#' ```{r, include = FALSE}
+#' options(
+#'   tibble.print_min = 4,
+#'   digits = 2,
+#'   tibble.max_extra_cols = 8
+#' )
+#' library(tidyverse)
+#' ```
+#'
+#' Selection helpers can be used in functions like `dplyr::select()`
+#' or `tidyr::pivot_longer()`. Let's first attach the tidyverse:
+#'
+#' ```{r}
+#' #' library(tidyverse)
+#'
+#' # For better printing
+#' iris <- as_tibble(iris)
+#' ```
+#'
+#' `starts_with()` selects all variables matching a prefix and
+#' `ends_with()` matches a suffix:
+#'
+#' ```{r}
+#' iris %>% select(starts_with("Sepal"))
+#' iris %>% select(ends_with("Width"))
+#' ```
+#'
+#' You can supply multiple prefixes or suffixes. Note how the order of
+#' variables depends on the order of the suffixes and prefixes:
+#'
+#' ```{r}
+#' iris %>% select(starts_with(c("Petal", "Sepal")))
+#' iris %>% select(ends_with(c("Width", "Length")))
+#' ```
+#'
+#' `contains()` selects columns whose names contain a word:
+#'
+#' ```{r}
+#' iris %>% select(contains("al"))
+#' ```
+#'
+#' These helpers do not use regular expressions. To select with a
+#' regexp use `matches()`
+#'
+#' ```{r}
+#' # [pt] is matched literally:
+#' iris %>% select(contains("[pt]al"))
+#'
+#' # [pt] is interpreted as a regular expression
+#' iris %>% select(matches("[pt]al"))
+#' ```
+#'
+#' `starts_with()` selects all variables starting with a prefix. To
+#' select a range, use `num_range()`. Compare:
+#'
+#' ```{r}
+#' billboard %>% select(starts_with("wk"))
+#'
+#' billboard %>% select(num_range("wk", 10:15))
+#' ```
+#'
 #' @export
-#' @rdname select_helpers
 starts_with <- function(match,
                         ignore.case = TRUE,
                         vars = peek_vars(fn = "starts_with")) {
@@ -104,8 +174,8 @@ starts_with_impl <- function(x, vars) {
   which_vars(x, substr(vars, 1, n))
 }
 
+#' @rdname starts_with
 #' @export
-#' @rdname select_helpers
 ends_with <- function(match,
                       ignore.case = TRUE,
                       vars = peek_vars(fn = "ends_with")) {
@@ -124,8 +194,8 @@ ends_with_impl <- function(x, vars, length) {
   which_vars(x, substr(vars, pmax(1, length - n + 1), length))
 }
 
+#' @rdname starts_with
 #' @export
-#' @rdname select_helpers
 contains <- function(match,
                      ignore.case = TRUE,
                      vars = peek_vars(fn = "contains")) {
@@ -139,8 +209,8 @@ contains <- function(match,
   flat_map_int(match, grep_vars, vars, fixed = TRUE)
 }
 
+#' @rdname starts_with
 #' @export
-#' @rdname select_helpers
 matches <- function(match,
                     ignore.case = TRUE,
                     perl = FALSE,
@@ -155,12 +225,12 @@ check_match <- function(match) {
   }
 }
 
-#' @export
-#' @rdname select_helpers
+#' @rdname starts_with
 #' @param prefix A prefix that starts the numeric range.
 #' @param range A sequence of integers, like `1:5`.
 #' @param width Optionally, the "width" of the numeric range. For example,
 #'   a range of 2 gives "01", a range of three "001", etc.
+#' @export
 num_range <- function(prefix,
                       range,
                       width = NULL,
