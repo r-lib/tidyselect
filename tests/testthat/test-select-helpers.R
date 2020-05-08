@@ -329,4 +329,10 @@ test_that("any_of() and all_of() preserve order (#186)", {
   df <- data.frame(x = 1, y = 2)
   expect_identical(select_loc(df, any_of(c("y", "x"))), c(y = 2L, x = 1L))
   expect_identical(select_loc(df, all_of(c("y", "x"))), c(y = 2L, x = 1L))
+
+  df <- data.frame(x = 1, y = 2, z = 3)
+  expect_identical(
+    select_loc(df, any_of(c("y", "z", "y", "x", "d", "z"))),
+    c(y = 2L, z = 3L, x = 1L)
+  )
 })
