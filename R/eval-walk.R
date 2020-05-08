@@ -71,13 +71,16 @@ vars_select_eval <- function(vars,
 }
 
 ensure_named <- function(pos, vars, uniquely_named, allow_rename) {
+  if (!allow_rename) {
+    if (is_named(pos)) {
+      abort("Can't rename variables in this context.")
+    }
+    return(set_names(pos, NULL))
+  }
+
   nms <- names(pos) <- names2(pos)
   nms_missing <- nms == ""
   names(pos)[nms_missing] <- vars[pos[nms_missing]]
-
-  if (!allow_rename && !all(names(pos) == vars[pos])) {
-    abort("Can't rename variables in this context.")
-  }
 
   # Duplicates are not allowed for data frames
   if (uniquely_named) {
