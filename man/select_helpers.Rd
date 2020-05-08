@@ -2,58 +2,40 @@
 % Please edit documentation in R/select-helpers.R
 \name{select_helpers}
 \alias{select_helpers}
-\alias{everything}
-\alias{last_col}
 \title{Select helpers}
-\usage{
-everything(vars = peek_vars(fn = "everything"))
-
-last_col(offset = 0L, vars = peek_vars(fn = "last_col"))
-}
-\arguments{
-\item{vars}{A character vector of variable names. When called
-from inside selecting functions like \code{\link[dplyr:select]{dplyr::select()}} these are
-automatically set to the names of the table.}
-
-\item{offset}{Set it to \code{n} to select the nth var from the end.}
-
-\item{perl}{Should Perl-compatible regexps be used?}
-}
-\value{
-An integer vector giving the position of the matched variables.
-}
 \description{
+Tidyverse selections implement a dialect of R where operators make
+it easy to select variables:
 \itemize{
-\item \code{everything()}: Matches all variables.
-\item \code{last_col()}: Select last variable, possibly with an offset.
+\item \code{:} for selecting a \emph{range} of consecutive variables.
+\item \code{!} for taking the complement of a set of variables.
+\item \code{&} and \code{|} for selecting the intersection or the union of two
+sets of variables.
+\item \code{c()} for combining selections.
 }
 
-These functions allow you to select variables based on their names.
+In addition, you can use selection helpers such as:
+\itemize{
+\item \code{\link[=everything]{everything()}}: Matches all variables.
+\item \code{\link[=last_col]{last_col()}}: Select last variable, possibly with an offset.
+}
+
+These helpers select variables based on their names:
 \itemize{
 \item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
 \item \code{\link[=ends_with]{ends_with()}}: Ends with a suffix.
 \item \code{\link[=contains]{contains()}}: Contains a literal string.
 \item \code{\link[=matches]{matches()}}: Matches a regular expression.
 \item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
+}
+
+These functions select variables from a character vector.
+\itemize{
 \item \code{\link[=all_of]{all_of()}}: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
 thrown.
 \item \code{\link[=any_of]{any_of()}}: Same as \code{all_of()}, except that no error is thrown
 for names that don't exist.
-}
-
-In selection context you can also use these operators:
-\itemize{
-\item \code{":"} for selecting a range of consecutive variables.
-\item \code{"c"} for selecting the union of sets of variables.
-}
-
-The boolean operators were more recently overloaded to operate on
-selections:
-\itemize{
-\item \code{"!"} for taking the complement of a set of variables.
-\item \code{"&"} and \code{"|"} for selecting the intersection or the union of two
-sets of variables.
 }
 }
 \details{

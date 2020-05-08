@@ -2,39 +2,32 @@
 #'
 #' @description
 #'
-#' * `everything()`: Matches all variables.
-#' * `last_col()`: Select last variable, possibly with an offset.
+#' Tidyverse selections implement a dialect of R where operators make
+#' it easy to select variables:
 #'
-#' These functions allow you to select variables based on their names.
+#' - `:` for selecting a _range_ of consecutive variables.
+#' - `!` for taking the complement of a set of variables.
+#' - `&` and `|` for selecting the intersection or the union of two
+#'   sets of variables.
+#' - `c()` for combining selections.
+#'
+#' In addition, you can use selection helpers such as:
+#' * [everything()]: Matches all variables.
+#' * [last_col()]: Select last variable, possibly with an offset.
+#'
+#' These helpers select variables based on their names:
 #' * [starts_with()]: Starts with a prefix.
 #' * [ends_with()]: Ends with a suffix.
 #' * [contains()]: Contains a literal string.
 #' * [matches()]: Matches a regular expression.
 #' * [num_range()]: Matches a numerical range like x01, x02, x03.
 #'
+#' These functions select variables from a character vector.
 #' * [all_of()]: Matches variable names in a character vector. All
 #'   names must be present, otherwise an out-of-bounds error is
 #'   thrown.
 #' * [any_of()]: Same as `all_of()`, except that no error is thrown
 #'   for names that don't exist.
-#'
-#' In selection context you can also use these operators:
-#'
-#' - `":"` for selecting a range of consecutive variables.
-#' - `"c"` for selecting the union of sets of variables.
-#'
-#' The boolean operators were more recently overloaded to operate on
-#' selections:
-#'
-#' - `"!"` for taking the complement of a set of variables.
-#' - `"&"` and `"|"` for selecting the intersection or the union of two
-#'   sets of variables.
-#'
-#' @param perl Should Perl-compatible regexps be used?
-#' @param vars A character vector of variable names. When called
-#'   from inside selecting functions like [dplyr::select()] these are
-#'   automatically set to the names of the table.
-#' @return An integer vector giving the position of the matched variables.
 #'
 #' @details
 #' The order of selected columns is determined by the inputs.

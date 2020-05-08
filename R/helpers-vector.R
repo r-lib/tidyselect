@@ -16,6 +16,7 @@
 #' The order of selected columns is determined by the order in the
 #' vector.
 #'
+#' @inheritParams starts_with
 #' @param x A vector of character names or numeric locations.
 #'
 #' @section Usage:

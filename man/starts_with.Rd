@@ -30,6 +30,12 @@ matches is taken.}
 \item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}
 
+\item{vars}{A character vector of variable names. If not supplied,
+the variables are taken from the current selection context (as
+established by functions like \code{select()} or \code{pivot_longer()}).}
+
+\item{perl}{Should Perl-compatible regexps be used?}
+
 \item{prefix}{A prefix that starts the numeric range.}
 
 \item{range}{A sequence of integers, like \code{1:5}.}

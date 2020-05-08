@@ -10,6 +10,10 @@ everything(vars = peek_vars(fn = "everything"))
 last_col(offset = 0L, vars = peek_vars(fn = "last_col"))
 }
 \arguments{
+\item{vars}{A character vector of variable names. If not supplied,
+the variables are taken from the current selection context (as
+established by functions like \code{select()} or \code{pivot_longer()}).}
+
 \item{offset}{Set it to \code{n} to select the nth var from the end.}
 }
 \description{

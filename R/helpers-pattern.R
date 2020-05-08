@@ -15,6 +15,9 @@
 #'   matches is taken.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
+#' @param vars A character vector of variable names. If not supplied,
+#'   the variables are taken from the current selection context (as
+#'   established by functions like `select()` or `pivot_longer()`).
 #'
 #' @section Usage:
 #'
@@ -133,6 +136,7 @@ contains <- function(match,
 }
 
 #' @rdname starts_with
+#' @param perl Should Perl-compatible regexps be used?
 #' @export
 matches <- function(match,
                     ignore.case = TRUE,

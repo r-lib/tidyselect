@@ -9,6 +9,8 @@
 #'
 #' * [last_col()] selects the last variable.
 #'
+#' @inheritParams starts_with
+#'
 #' @section Usage:
 #'
 #' ```{r, include = FALSE}

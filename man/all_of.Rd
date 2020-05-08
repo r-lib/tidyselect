@@ -13,6 +13,10 @@ any_of(x, ..., vars = peek_vars(fn = "any_of"))
 \item{x}{A vector of character names or numeric locations.}
 
 \item{...}{These dots are for future extensions and must be empty.}
+
+\item{vars}{A character vector of variable names. If not supplied,
+the variables are taken from the current selection context (as
+established by functions like \code{select()} or \code{pivot_longer()}).}
 }
 \description{
 These \link[=select_helpers]{selection helpers} select variables
