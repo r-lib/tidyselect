@@ -235,9 +235,9 @@ which_vars <- function(needle, haystack) {
   which(needle == haystack)
 }
 
-#' Retired selection helpers
+#' Superseded selection helpers
 #'
-#' `one_of()` is retired in favour of the more precise [any_of()] and
+#' `one_of()` is superseded in favour of the more precise [any_of()] and
 #' [all_of()] selectors.
 #'
 #' @param ... One or more character vectors.

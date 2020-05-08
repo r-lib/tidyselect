@@ -2,7 +2,7 @@
 % Please edit documentation in R/select-helpers.R
 \name{one_of}
 \alias{one_of}
-\title{Retired selection helpers}
+\title{Superseded selection helpers}
 \usage{
 one_of(..., .vars = peek_vars(fn = "one_of"))
 }
@@ -14,7 +14,7 @@ from inside selecting functions like \code{\link[dplyr:select]{dplyr::select()}}
 automatically set to the names of the table.}
 }
 \description{
-\code{one_of()} is retired in favour of the more precise \code{\link[=any_of]{any_of()}} and
+\code{one_of()} is superseded in favour of the more precise \code{\link[=any_of]{any_of()}} and
 \code{\link[=all_of]{all_of()}} selectors.
 }
 \keyword{internal}
