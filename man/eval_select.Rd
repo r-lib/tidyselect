@@ -96,6 +96,27 @@ try(eval_rename(expr(mpg), mtcars))
 eval_rename(expr(c(foo = mpg)), mtcars)
 
 
+# Within a function, use `enquo()` to defuse one argument:
+my_function <- function(x, expr) {
+  eval_select(enquo(expr), x)
+}
+
+# If your function takes dots, evaluate a defused call to `c(...)`
+# with `expr(c(...))`:
+my_function <- function(.x, ...) {
+  eval_select(expr(c(...)), .x)
+}
+
+# If your function takes dots and a named argument, use `{{ }}`
+# inside the defused expression to tunnel it inside the tidyselect DSL:
+my_function <- function(.x, .expr, ...) {
+  eval_select(expr(c({{ .expr }}, ...)), .x)
+}
+
+# Note that the trick above works because `expr({{ arg }})` is the
+# same as `enquo(arg)`.
+
+
 # The evaluators return a named vector of locations. Here are
 # examples of using these location vectors to implement `select()`
 # and `rename()`:
