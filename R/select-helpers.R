@@ -270,8 +270,9 @@ one_of <- function(..., .vars = peek_vars(fn = "one_of")) {
 #' List of selection helpers
 #'
 #' This list contains all selection helpers exported in tidyselect. It
-#' is useful when you want to embed the helpers in your API without
-#' having to track addition of new helpers in tidyselect.
+#' was useful when you wanted to embed the helpers in your API without
+#' having to track addition of new helpers in tidyselect. However the
+#' selection helpers are now always embedded in the DSL.
 #'
 #' @export
 #' @keywords internal
