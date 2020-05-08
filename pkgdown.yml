@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   syntax: syntax.html
   tidyselect: tidyselect.html
-last_built: 2020-05-07T13:32Z
+last_built: 2020-05-08T09:46Z
 urls:
   reference: https://tidyselect.r-lib.org/reference
   article: https://tidyselect.r-lib.org/articles

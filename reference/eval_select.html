@@ -269,6 +269,27 @@ description of the rules of evaluation.</p></div>
 <span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'>eval_rename</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='no'>mpg</span>), <span class='no'>mtcars</span>))</div><div class='output co'>#&gt; Error : All renaming inputs must be named.</div><div class='input'><span class='fu'>eval_rename</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>foo</span> <span class='kw'>=</span> <span class='no'>mpg</span>)), <span class='no'>mtcars</span>)</div><div class='output co'>#&gt; foo 
 #&gt;   1 </div><div class='input'>
 
+<span class='co'># Within a function, use `enquo()` to defuse one argument:</span>
+<span class='no'>my_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>x</span>, <span class='no'>expr</span>) {
+  <span class='fu'>eval_select</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>enquo</a></span>(<span class='no'>expr</span>), <span class='no'>x</span>)
+}
+
+<span class='co'># If your function takes dots, evaluate a defused call to `c(...)`</span>
+<span class='co'># with `expr(c(...))`:</span>
+<span class='no'>my_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>.x</span>, <span class='no'>...</span>) {
+  <span class='fu'>eval_select</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>...</span>)), <span class='no'>.x</span>)
+}
+
+<span class='co'># If your function takes dots and a named argument, use `{{ }}`</span>
+<span class='co'># inside the defused expression to tunnel it inside the tidyselect DSL:</span>
+<span class='no'>my_function</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>.x</span>, <span class='no'>.expr</span>, <span class='no'>...</span>) {
+  <span class='fu'>eval_select</span>(<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>({{ <span class='no'>.expr</span> }}, <span class='no'>...</span>)), <span class='no'>.x</span>)
+}
+
+<span class='co'># Note that the trick above works because `expr({{ arg }})` is the</span>
+<span class='co'># same as `enquo(arg)`.</span>
+
+
 <span class='co'># The evaluators return a named vector of locations. Here are</span>
 <span class='co'># examples of using these location vectors to implement `select()`</span>
 <span class='co'># and `rename()`:</span>

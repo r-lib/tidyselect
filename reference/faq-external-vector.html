@@ -76,38 +76,35 @@ result &amp;amp;lt;- mtcars %&amp;amp;gt;% select(vars)
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.some_df &amp;amp;lt;- mtcars
-some_df$vars &amp;amp;lt;- 1:nrow(mtcars)
+contains a column with the same name as your external variable.some_df &amp;amp;lt;- mtcars[1:4, ]
+some_df$vars &amp;amp;lt;- 1:nrow(some_df)
 These are very different objects but it isn’t a problem if the context
 forces you to be specific about where to find vars:vars
 #&amp;amp;gt; [1] &quot;cyl&quot; &quot;am&quot;  &quot;vs&quot;
 
 some_df$vars
-#&amp;amp;gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25
-#&amp;amp;gt; [26] 26 27 28 29 30 31 32
+#&amp;amp;gt; [1] 1 2 3 4
 In a selection context however, the column wins:some_df %&amp;amp;gt;% select(vars)
-#&amp;amp;gt; # A tibble: 32 x 1
+#&amp;amp;gt; # A tibble: 4 x 1
 #&amp;amp;gt;    vars
 #&amp;amp;gt;   &amp;amp;lt;int&amp;amp;gt;
 #&amp;amp;gt; 1     1
 #&amp;amp;gt; 2     2
 #&amp;amp;gt; 3     3
 #&amp;amp;gt; 4     4
-#&amp;amp;gt; # ... with 28 more rows
 
 Fixing the ambiguity
 
 
 To make your selection code more robust and silence the message, use
 all_of() to force the external vector:some_df %&amp;amp;gt;% select(all_of(vars))
-#&amp;amp;gt; # A tibble: 32 x 3
+#&amp;amp;gt; # A tibble: 4 x 3
 #&amp;amp;gt;     cyl    am    vs
 #&amp;amp;gt;   &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt;
 #&amp;amp;gt; 1     6     1     0
 #&amp;amp;gt; 2     6     1     0
 #&amp;amp;gt; 3     4     1     1
 #&amp;amp;gt; 4     6     0     1
-#&amp;amp;gt; # ... with 28 more rows
 For more information or if you have comments about this, please see the
 Github issue tracking
 the deprecation process.
@@ -258,38 +255,35 @@ not clear whether you want a data frame column or an external object.<div class=
 <p>This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>mtcars</span>
-<span class='no'>some_df</span>$<span class='no'>vars</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>mtcars</span>)</pre><p></div></p>
+contains a column with the same name as your external variable.<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>mtcars</span>[<span class='fl'>1</span>:<span class='fl'>4</span>, ]
+<span class='no'>some_df</span>$<span class='no'>vars</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>some_df</span>)</pre><p></div></p>
 <p>These are very different objects but it isn’t a problem if the context
 forces you to be specific about where to find <code>vars</code>:<div class="r"></p><pre><span class='no'>vars</span>
 <span class='co'>#&amp;gt; [1] "cyl" "am"  "vs"</span>
 
 <span class='no'>some_df</span>$<span class='no'>vars</span>
-<span class='co'>#&amp;gt;  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25</span>
-<span class='co'>#&amp;gt; [26] 26 27 28 29 30 31 32</span></pre><p></div></p>
+<span class='co'>#&amp;gt; [1] 1 2 3 4</span></pre><p></div></p>
 <p>In a selection context however, the column wins:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
-<span class='co'>#&amp;gt; # A tibble: 32 x 1</span>
+<span class='co'>#&amp;gt; # A tibble: 4 x 1</span>
 <span class='co'>#&amp;gt;    vars</span>
 <span class='co'>#&amp;gt;   &amp;lt;int&amp;gt;</span>
 <span class='co'>#&amp;gt; 1     1</span>
 <span class='co'>#&amp;gt; 2     2</span>
 <span class='co'>#&amp;gt; 3     3</span>
-<span class='co'>#&amp;gt; 4     4</span>
-<span class='co'>#&amp;gt; # ... with 28 more rows</span></pre><p></div></p>
+<span class='co'>#&amp;gt; 4     4</span></pre><p></div></p>
 
 <h3>Fixing the ambiguity</h3>
 
 
 <p>To make your selection code more robust and silence the message, use
 <code><a href='select_helpers.html'>all_of()</a></code> to force the external vector:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'><a href='select_helpers.html'>all_of</a></span>(<span class='no'>vars</span>))
-<span class='co'>#&amp;gt; # A tibble: 32 x 3</span>
+<span class='co'>#&amp;gt; # A tibble: 4 x 3</span>
 <span class='co'>#&amp;gt;     cyl    am    vs</span>
 <span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
 <span class='co'>#&amp;gt; 1     6     1     0</span>
 <span class='co'>#&amp;gt; 2     6     1     0</span>
 <span class='co'>#&amp;gt; 3     4     1     1</span>
-<span class='co'>#&amp;gt; 4     6     0     1</span>
-<span class='co'>#&amp;gt; # ... with 28 more rows</span></pre><p></div></p>
+<span class='co'>#&amp;gt; 4     6     0     1</span></pre><p></div></p>
 <p>For more information or if you have comments about this, please see the
 <a href='https://github.com/r-lib/tidyselect/issues/76'>Github issue</a> tracking
 the deprecation process.</p>
