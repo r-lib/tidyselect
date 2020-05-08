@@ -1,9 +1,9 @@
 # tidyselect
 
 <!-- badges: start -->
-[![Travis build status](https://travis-ci.org/r-lib/tidyselect.svg?branch=master)](https://travis-ci.org/r-lib/tidyselect)
 [![Codecov test coverage](https://codecov.io/gh/r-lib/tidyselect/branch/master/graph/badge.svg)](https://codecov.io/gh/r-lib/tidyselect?branch=master)
 [![CRAN status](https://www.r-pkg.org/badges/version/tidyselect)](https://cran.r-project.org/package=tidyselect)
+[![R build status](https://github.com/r-lib/tidyselect/workflows/R-CMD-check/badge.svg)](https://github.com/r-lib/tidyselect/actions)
 <!-- badges: end -->
 
 
