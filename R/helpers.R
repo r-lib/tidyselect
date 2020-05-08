@@ -29,7 +29,88 @@
 #' * [any_of()]: Same as `all_of()`, except that no error is thrown
 #'   for names that don't exist.
 #'
-#' @details
+#' @section Basic usage:
+#'
+#' ```{r, include = FALSE}
+#' options(
+#'   tibble.print_min = 4,
+#'   digits = 2,
+#'   tibble.max_extra_cols = 8,
+#'   crayon.enabled = FALSE
+#' )
+#' library(tidyverse)
+#' ```
+#'
+#' Here we show the usage for the basic selection operators. See the
+#' specific help pages to learn about helpers like [starts_with()].
+#'
+#' The selection language can be used in functions like
+#' `dplyr::select()` or `tidyr::pivot_longer()`. Let's first attach
+#' the tidyverse:
+#'
+#' ```{r}
+#' library(tidyverse)
+#'
+#' # For better printing
+#' iris <- as_tibble(iris)
+#' ```
+#'
+#' Select variables by name:
+#'
+#' ```{r}
+#' starwars %>% select(height)
+#'
+#' iris %>% pivot_longer(Sepal.Length)
+#' ```
+#'
+#' Select multiple variables by separating them with commas. Note how
+#' the order of columns is determined by the order of inputs:
+#'
+#' ```{r}
+#' starwars %>% select(homeworld, height, mass)
+#' ```
+#'
+#' Functions like `tidyr::pivot_longer()` don't take variables with
+#' dots. In this case use `c()` to select multiple variables:
+#'
+#' ```{r}
+#' iris %>% pivot_longer(c(Sepal.Length, Petal.Length))
+#' ```
+#'
+#' @section Operator usage:
+#'
+#' The `:` operator selects a range of consecutive variables:
+#'
+#' ```{r}
+#' starwars %>% select(name:mass)
+#' ```
+#'
+#' The `!` operator negates a selection:
+#'
+#' ```{r}
+#' starwars %>% select(!(name:mass))
+#'
+#' iris %>% select(!c(Sepal.Length, Petal.Length))
+#'
+#' iris %>% select(!ends_with("Width"))
+#' ```
+#'
+#' `&` and `|` take the intersection or the union of two selections:
+#'
+#' ```{r}
+#' iris %>% select(starts_with("Petal") & ends_with("Width"))
+#'
+#' iris %>% select(starts_with("Petal") | ends_with("Width"))
+#' ```
+#'
+#' To take the difference between two selections, combine the `&` and
+#' `!` operators:
+#'
+#' ```{r}
+#' iris %>% select(starts_with("Petal") & !ends_with("Width"))
+#' ```
+#'
+#' @section Details:
 #' The order of selected columns is determined by the inputs.
 #'
 #' * `all_of(c("foo", "bar"))` selects `"foo"` first.
@@ -38,25 +119,6 @@
 #'   starting with `"c"` first, then all columns starting with `"d"`.
 #'
 #' @name select_helpers
-#' @examples
-#' vars_select(nms, Petal.Length, Petal.Width)
-#' vars_select(nms, everything())
-#' vars_select(nms, last_col())
-#' vars_select(nms, last_col(offset = 2))
-#'
-#' # With multiple matchers, the union of the matches is selected:
-#' vars_select(nms, starts_with(c("Petal", "Sepal")))
-#'
-#' # `!` negates a selection:
-#' vars_select(nms, !ends_with("Width"))
-#'
-#' # `&` and `|` take the intersection or the union of two selections:
-#' vars_select(nms, starts_with("Petal") & ends_with("Width"))
-#' vars_select(nms, starts_with("Petal") | ends_with("Width"))
-#'
-#' # The order of selected columns is determined from the inputs
-#' vars_select(names(mtcars), starts_with("c"), starts_with("d"))
-#' vars_select(names(mtcars), all_of(c("carb", "mpg")))
 NULL
 
 
