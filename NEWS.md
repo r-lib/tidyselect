@@ -1,6 +1,8 @@
 
 # tidyselect (development version)
 
+* `any_of()` now preserves the order of the input variables (#186).
+
 * The return value of `eval_select()` is now always named, even when
   inputs are constant (#173).
 

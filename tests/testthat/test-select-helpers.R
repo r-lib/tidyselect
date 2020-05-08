@@ -324,3 +324,9 @@ test_that("`all_of()` and `any_of()` require indices", {
     class = "vctrs_error_subscript_type"
   )
 })
+
+test_that("any_of() and all_of() preserve order (#186)", {
+  df <- data.frame(x = 1, y = 2)
+  expect_identical(select_loc(df, any_of(c("y", "x"))), c(y = 2L, x = 1L))
+  expect_identical(select_loc(df, all_of(c("y", "x"))), c(y = 2L, x = 1L))
+})

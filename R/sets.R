@@ -78,6 +78,7 @@ set_diff <- function(x, y) {
 set_intersect <- function(x, y) {
   pos <- vctrs::vec_match(y, x)
   pos <- vctrs::vec_unique(pos)
+  pos <- vctrs::vec_sort(pos)
   pos <- pos[!is.na(pos)]
   vctrs::vec_slice(x, pos)
 }
