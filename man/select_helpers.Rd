@@ -2,25 +2,15 @@
 % Please edit documentation in R/select-helpers.R
 \name{select_helpers}
 \alias{select_helpers}
-\alias{all_of}
-\alias{any_of}
 \alias{everything}
 \alias{last_col}
 \title{Select helpers}
 \usage{
-all_of(x)
-
-any_of(x, ..., vars = peek_vars(fn = "any_of"))
-
 everything(vars = peek_vars(fn = "everything"))
 
 last_col(offset = 0L, vars = peek_vars(fn = "last_col"))
 }
 \arguments{
-\item{x}{An index vector of names or locations.}
-
-\item{...}{These dots are for future extensions and must be empty.}
-
 \item{vars}{A character vector of variable names. When called
 from inside selecting functions like \code{\link[dplyr:select]{dplyr::select()}} these are
 automatically set to the names of the table.}
@@ -33,6 +23,11 @@ automatically set to the names of the table.}
 An integer vector giving the position of the matched variables.
 }
 \description{
+\itemize{
+\item \code{everything()}: Matches all variables.
+\item \code{last_col()}: Select last variable, possibly with an offset.
+}
+
 These functions allow you to select variables based on their names.
 \itemize{
 \item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
@@ -40,16 +35,13 @@ These functions allow you to select variables based on their names.
 \item \code{\link[=contains]{contains()}}: Contains a literal string.
 \item \code{\link[=matches]{matches()}}: Matches a regular expression.
 \item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
-\item \code{all_of()}: Matches variable names in a character vector. All
+\item \code{\link[=all_of]{all_of()}}: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
 thrown.
-\item \code{any_of()}: Same as \code{all_of()}, except that no error is thrown
+\item \code{\link[=any_of]{any_of()}}: Same as \code{all_of()}, except that no error is thrown
 for names that don't exist.
-\item \code{everything()}: Matches all variables.
-\item \code{last_col()}: Select last variable, possibly with an offset.
 }
-}
-\details{
+
 In selection context you can also use these operators:
 \itemize{
 \item \code{":"} for selecting a range of consecutive variables.
@@ -63,7 +55,8 @@ selections:
 \item \code{"&"} and \code{"|"} for selecting the intersection or the union of two
 sets of variables.
 }
-
+}
+\details{
 The order of selected columns is determined by the inputs.
 \itemize{
 \item \code{all_of(c("foo", "bar"))} selects \code{"foo"} first.
@@ -86,19 +79,6 @@ vars_select(nms, !ends_with("Width"))
 # `&` and `|` take the intersection or the union of two selections:
 vars_select(nms, starts_with("Petal") & ends_with("Width"))
 vars_select(nms, starts_with("Petal") | ends_with("Width"))
-
-# `all_of()` selects the variables in a character vector:
-vars <- c("Petal.Length", "Petal.Width")
-vars_select(nms, all_of(vars))
-
-# Whereas `all_of()` is strict, `any_of()` allows missing
-# variables.
-try(vars_select(nms, all_of(c("Species", "Genres"))))
-vars_select(nms, any_of(c("Species", "Genres")))
-
-# The lax variant is especially useful to make sure a variable is
-# selected out:
-vars_select(nms, -any_of(c("Species", "Genres")))
 
 # The order of selected columns is determined from the inputs
 vars_select(names(mtcars), starts_with("c"), starts_with("d"))

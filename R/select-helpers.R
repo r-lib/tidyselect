@@ -1,18 +1,22 @@
 #' Select helpers
 #'
+#' @description
+#'
+#' * `everything()`: Matches all variables.
+#' * `last_col()`: Select last variable, possibly with an offset.
+#'
 #' These functions allow you to select variables based on their names.
 #' * [starts_with()]: Starts with a prefix.
 #' * [ends_with()]: Ends with a suffix.
 #' * [contains()]: Contains a literal string.
 #' * [matches()]: Matches a regular expression.
 #' * [num_range()]: Matches a numerical range like x01, x02, x03.
-#' * `all_of()`: Matches variable names in a character vector. All
+#'
+#' * [all_of()]: Matches variable names in a character vector. All
 #'   names must be present, otherwise an out-of-bounds error is
 #'   thrown.
-#' * `any_of()`: Same as `all_of()`, except that no error is thrown
+#' * [any_of()]: Same as `all_of()`, except that no error is thrown
 #'   for names that don't exist.
-#' * `everything()`: Matches all variables.
-#' * `last_col()`: Select last variable, possibly with an offset.
 #'
 #' In selection context you can also use these operators:
 #'
@@ -56,19 +60,6 @@
 #' # `&` and `|` take the intersection or the union of two selections:
 #' vars_select(nms, starts_with("Petal") & ends_with("Width"))
 #' vars_select(nms, starts_with("Petal") | ends_with("Width"))
-#'
-#' # `all_of()` selects the variables in a character vector:
-#' vars <- c("Petal.Length", "Petal.Width")
-#' vars_select(nms, all_of(vars))
-#'
-#' # Whereas `all_of()` is strict, `any_of()` allows missing
-#' # variables.
-#' try(vars_select(nms, all_of(c("Species", "Genres"))))
-#' vars_select(nms, any_of(c("Species", "Genres")))
-#'
-#' # The lax variant is especially useful to make sure a variable is
-#' # selected out:
-#' vars_select(nms, -any_of(c("Species", "Genres")))
 #'
 #' # The order of selected columns is determined from the inputs
 #' vars_select(names(mtcars), starts_with("c"), starts_with("d"))
