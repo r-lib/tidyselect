@@ -36,7 +36,9 @@
 #'   tibble.print_min = 4,
 #'   digits = 2,
 #'   tibble.max_extra_cols = 8,
-#'   crayon.enabled = FALSE
+#'   cli = FALSE,
+#'   crayon.enabled = FALSE,
+#'   cli.unicode = FALSE
 #' )
 #' library(tidyverse)
 #' ```

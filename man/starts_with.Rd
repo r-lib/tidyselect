@@ -73,7 +73,7 @@ iris <- as_tibble(iris)
 ## 2          4.9         3  
 ## 3          4.7         3.2
 ## 4          4.6         3.1
-## # … with 146 more rows
+## # ... with 146 more rows
 }\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(ends_with("Width"))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 2
 ##   Sepal.Width Petal.Width
@@ -82,7 +82,7 @@ iris <- as_tibble(iris)
 ## 2         3           0.2
 ## 3         3.2         0.2
 ## 4         3.1         0.2
-## # … with 146 more rows
+## # ... with 146 more rows
 }
 
 You can supply multiple prefixes or suffixes. Note how the order of
@@ -94,7 +94,7 @@ variables depends on the order of the suffixes and prefixes:\if{html}{\out{<div 
 ## 2          1.4         0.2          4.9         3  
 ## 3          1.3         0.2          4.7         3.2
 ## 4          1.5         0.2          4.6         3.1
-## # … with 146 more rows
+## # ... with 146 more rows
 }\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(ends_with(c("Width", "Length")))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 4
 ##   Sepal.Width Petal.Width Sepal.Length Petal.Length
@@ -103,7 +103,7 @@ variables depends on the order of the suffixes and prefixes:\if{html}{\out{<div 
 ## 2         3           0.2          4.9          1.4
 ## 3         3.2         0.2          4.7          1.3
 ## 4         3.1         0.2          4.6          1.5
-## # … with 146 more rows
+## # ... with 146 more rows
 }
 
 \code{contains()} selects columns whose names contain a word:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(contains("al"))
@@ -114,7 +114,7 @@ variables depends on the order of the suffixes and prefixes:\if{html}{\out{<div 
 ## 2          4.9         3            1.4         0.2
 ## 3          4.7         3.2          1.3         0.2
 ## 4          4.6         3.1          1.5         0.2
-## # … with 146 more rows
+## # ... with 146 more rows
 }
 
 These helpers do not use regular expressions. To select with a
@@ -130,7 +130,7 @@ iris \%>\% select(matches("[pt]al"))
 ## 2          4.9         3            1.4         0.2
 ## 3          4.7         3.2          1.3         0.2
 ## 4          4.6         3.1          1.5         0.2
-## # … with 146 more rows
+## # ... with 146 more rows
 }
 
 \code{starts_with()} selects all variables starting with a prefix. To
@@ -142,8 +142,8 @@ select a range, use \code{num_range()}. Compare:\if{html}{\out{<div class="r">}}
 ## 2    91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
 ## 3    81    70    68    67    66    57    54    53    51    51    51    51    47
 ## 4    76    76    72    69    67    65    55    59    62    61    61    59    61
-## # … with 313 more rows, and 63 more variables: wk14 <dbl>, wk15 <dbl>,
-## #   wk16 <dbl>, wk17 <dbl>, wk18 <dbl>, wk19 <dbl>, wk20 <dbl>, wk21 <dbl>, …
+## # ... with 313 more rows, and 63 more variables: wk14 <dbl>, wk15 <dbl>,
+## #   wk16 <dbl>, wk17 <dbl>, wk18 <dbl>, wk19 <dbl>, wk20 <dbl>, wk21 <dbl>, ...
 }\if{html}{\out{<div class="r">}}\preformatted{billboard \%>\% select(num_range("wk", 10:15))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 317 x 6
 ##    wk10  wk11  wk12  wk13  wk14  wk15
@@ -152,7 +152,7 @@ select a range, use \code{num_range()}. Compare:\if{html}{\out{<div class="r">}}
 ## 2    NA    NA    NA    NA    NA    NA
 ## 3    51    51    51    47    44    38
 ## 4    61    61    59    61    66    72
-## # … with 313 more rows
+## # ... with 313 more rows
 }
 }
 

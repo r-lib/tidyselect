@@ -25,7 +25,9 @@
 #' options(
 #'   tibble.print_min = 4,
 #'   digits = 2,
-#'   tibble.max_extra_cols = 8
+#'   tibble.max_extra_cols = 8,
+#'   crayon.enabled = FALSE,
+#'   cli.unicode = FALSE
 #' )
 #' library(tidyverse)
 #' ```

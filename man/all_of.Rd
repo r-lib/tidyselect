@@ -53,7 +53,7 @@ iris[, vars]
 ## 2          4.9         3  
 ## 3          4.7         3.2
 ## 4          4.6         3.1
-## # … with 146 more rows
+## # ... with 146 more rows
 }
 
 To refer to these variables in selecting function, use \code{all_of()}:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(all_of(vars))
@@ -64,7 +64,7 @@ To refer to these variables in selecting function, use \code{all_of()}:\if{html}
 ## 2          4.9         3  
 ## 3          4.7         3.2
 ## 4          4.6         3.1
-## # … with 146 more rows
+## # ... with 146 more rows
 }\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% pivot_longer(all_of(vars))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 300 x 5
 ##   Petal.Length Petal.Width Species name         value
@@ -73,12 +73,12 @@ To refer to these variables in selecting function, use \code{all_of()}:\if{html}
 ## 2          1.4         0.2 setosa  Sepal.Width    3.5
 ## 3          1.4         0.2 setosa  Sepal.Length   4.9
 ## 4          1.4         0.2 setosa  Sepal.Width    3  
-## # … with 296 more rows
+## # ... with 296 more rows
 }
 
 If any of the variable is missing from the data frame, that's an error:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(all_of(vars))
 }\if{html}{\out{</div>}}\preformatted{## Error: Can't subset columns that don't exist.
-## ✖ Columns `Sepal.Length` and `Sepal.Width` don't exist.
+## x Columns `Sepal.Length` and `Sepal.Width` don't exist.
 }
 
 Use \code{any_of()} to allow missing variables:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(any_of(vars))
@@ -94,7 +94,7 @@ frame because calling it again does not cause an error:\if{html}{\out{<div class
 ## 2          1.4         0.2 setosa 
 ## 3          1.3         0.2 setosa 
 ## 4          1.5         0.2 setosa 
-## # … with 146 more rows
+## # ... with 146 more rows
 }\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
 }\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 3
 ##   Petal.Length Petal.Width Species
@@ -103,7 +103,7 @@ frame because calling it again does not cause an error:\if{html}{\out{<div class
 ## 2          1.4         0.2 setosa 
 ## 3          1.3         0.2 setosa 
 ## 4          1.5         0.2 setosa 
-## # … with 146 more rows
+## # ... with 146 more rows
 }
 }
 
