@@ -21,15 +21,7 @@
 #'
 #' @section Usage:
 #'
-#' ```{r, include = FALSE}
-#' options(
-#'   tibble.print_min = 4,
-#'   digits = 2,
-#'   tibble.max_extra_cols = 8,
-#'   crayon.enabled = FALSE,
-#'   cli.unicode = FALSE
-#' )
-#' library(tidyverse)
+#' ```{r, child = "man/rmd/setup.Rmd"}
 #' ```
 #'
 #' Selection helpers can be used in functions like `dplyr::select()`

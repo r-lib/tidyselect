@@ -32,16 +32,7 @@
 #'
 #' @section Basic usage:
 #'
-#' ```{r, include = FALSE}
-#' options(
-#'   tibble.print_min = 4,
-#'   digits = 2,
-#'   tibble.max_extra_cols = 8,
-#'   cli = FALSE,
-#'   crayon.enabled = FALSE,
-#'   cli.unicode = FALSE
-#' )
-#' library(tidyverse)
+#' ```{r, child = "man/rmd/setup.Rmd"}
 #' ```
 #'
 #' Here we show the usage for the basic selection operators. See the
