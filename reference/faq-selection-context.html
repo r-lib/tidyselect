@@ -171,22 +171,22 @@ wrong argument name)." />
     </div>
 
     <div class="ref-description">
-    <p>Functions like <code><a href='select_helpers.html'>starts_with()</a></code>, <code><a href='select_helpers.html'>contains()</a></code> or <code><a href='select_helpers.html'>matches()</a></code> are
+    <p>Functions like <code><a href='starts_with.html'>starts_with()</a></code>, <code><a href='starts_with.html'>contains()</a></code> or <code><a href='starts_with.html'>matches()</a></code> are
 <strong>selection helpers</strong> that only work in a selection context.</p>
 <p>Examples of valid selection contexts are:</p><ul>
 <li><p>Inside <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>.</p></li>
 <li><p>The <code>cols</code> argument of <code>tidyr::pivot_longer()</code>.</p></li>
 </ul>
 
-<p>Using a selection helper anywhere else results in an error:<div class="r"></p><pre><span class='fu'><a href='select_helpers.html'>starts_with</a></span>(<span class='st'>"foo"</span>)
+<p>Using a selection helper anywhere else results in an error:<div class="r"></p><pre><span class='fu'><a href='starts_with.html'>starts_with</a></span>(<span class='st'>"foo"</span>)
 <span class='co'>#&amp;gt; Error: `starts_with()` must be used within a *selecting* function.</span>
 <span class='co'>#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.</span>
 
-<span class='no'>mtcars</span>[<span class='fu'><a href='select_helpers.html'>contains</a></span>(<span class='st'>"foo"</span>)]
+<span class='no'>mtcars</span>[<span class='fu'><a href='starts_with.html'>contains</a></span>(<span class='st'>"foo"</span>)]
 <span class='co'>#&amp;gt; Error: `contains()` must be used within a *selecting* function.</span>
 <span class='co'>#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>mtcars</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='select_helpers.html'>matches</a></span>(<span class='st'>"foo"</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>mtcars</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='starts_with.html'>matches</a></span>(<span class='st'>"foo"</span>))
 <span class='co'>#&amp;gt; Error: `matches()` must be used within a *selecting* function.</span>
 <span class='co'>#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.</span></pre><p></div></p>
 <p>If you see this error, you’ve probably used a selection helper in the

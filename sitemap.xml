@@ -4,7 +4,13 @@
     <loc>https://tidyselect.r-lib.org/index.html</loc>
   </url>
   <url>
+    <loc>https://tidyselect.r-lib.org/reference/all_of.html</loc>
+  </url>
+  <url>
     <loc>https://tidyselect.r-lib.org/reference/eval_select.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/reference/everything.html</loc>
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/faq-external-vector.html</loc>
@@ -26,6 +32,9 @@
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/select_helpers.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/reference/starts_with.html</loc>
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/tidyselect-package.html</loc>

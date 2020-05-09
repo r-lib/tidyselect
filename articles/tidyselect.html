@@ -332,17 +332,17 @@
 <div id="creating-selection-helpers" class="section level2">
 <h2 class="hasAnchor">
 <a href="#creating-selection-helpers" class="anchor"></a>Creating selection helpers</h2>
-<p>Tools like <code><a href="../reference/select_helpers.html">starts_with()</a></code> or <code><a href="../reference/select_helpers.html">contains()</a></code> are called <strong>selection helpers</strong>. These tools inspect the variable names currently available for selection with <code><a href="../reference/peek_vars.html">peek_vars()</a></code>. The variable names are registered automatically by <code><a href="../reference/eval_select.html">eval_select()</a></code> for the duration of the evaluation:</p>
+<p>Tools like <code><a href="../reference/starts_with.html">starts_with()</a></code> or <code><a href="../reference/starts_with.html">contains()</a></code> are called <strong>selection helpers</strong>. These tools inspect the variable names currently available for selection with <code><a href="../reference/peek_vars.html">peek_vars()</a></code>. The variable names are registered automatically by <code><a href="../reference/eval_select.html">eval_select()</a></code> for the duration of the evaluation:</p>
 <div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">x</span> <span class="kw">&lt;-</span> <span class="kw pkg">rlang</span><span class="kw ns">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/nse-defuse.html">expr</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span>(<span class="fu"><a href="../reference/peek_vars.html">peek_vars</a></span>()))
 
 <span class="fu"><a href="https://rdrr.io/r/base/invisible.html">invisible</a></span>(<span class="fu"><a href="../reference/eval_select.html">eval_select</a></span>(<span class="no">x</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="no">mtcars</span>))
 <span class="co">#&gt;  [1] "mpg"  "cyl"  "disp" "hp"   "drat" "wt"   "qsec" "vs"   "am"   "gear"</span>
 <span class="co">#&gt; [11] "carb"</span></pre></body></html></div>
-<p>Such properties temporarily available by calling a function like <code><a href="../reference/peek_vars.html">peek_vars()</a></code> are called <strong>descriptors</strong>. Descriptors are useful because they are very easy to compose. For instance, a user could combine <code><a href="../reference/select_helpers.html">starts_with()</a></code> and <code><a href="../reference/select_helpers.html">ends_with()</a></code> without having to worry about passing the variables or the environment in which they can be found:</p>
+<p>Such properties temporarily available by calling a function like <code><a href="../reference/peek_vars.html">peek_vars()</a></code> are called <strong>descriptors</strong>. Descriptors are useful because they are very easy to compose. For instance, a user could combine <code><a href="../reference/starts_with.html">starts_with()</a></code> and <code><a href="../reference/starts_with.html">ends_with()</a></code> without having to worry about passing the variables or the environment in which they can be found:</p>
 <div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">my_selector</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">prefix</span>, <span class="no">suffix</span>) {
   <span class="fu"><a href="https://rdrr.io/r/base/sets.html">intersect</a></span>(
-    <span class="fu"><a href="../reference/select_helpers.html">starts_with</a></span>(<span class="no">prefix</span>),
-    <span class="fu"><a href="../reference/select_helpers.html">ends_with</a></span>(<span class="no">suffix</span>)
+    <span class="fu"><a href="../reference/starts_with.html">starts_with</a></span>(<span class="no">prefix</span>),
+    <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span>(<span class="no">suffix</span>)
   )
 }
 

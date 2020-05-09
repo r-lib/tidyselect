@@ -276,7 +276,7 @@ forces you to be specific about where to find <code>vars</code>:<div class="r"><
 
 
 <p>To make your selection code more robust and silence the message, use
-<code><a href='select_helpers.html'>all_of()</a></code> to force the external vector:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'><a href='select_helpers.html'>all_of</a></span>(<span class='no'>vars</span>))
+<code><a href='all_of.html'>all_of()</a></code> to force the external vector:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'><a href='all_of.html'>all_of</a></span>(<span class='no'>vars</span>))
 <span class='co'>#&amp;gt; # A tibble: 4 x 3</span>
 <span class='co'>#&amp;gt;     cyl    am    vs</span>
 <span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>

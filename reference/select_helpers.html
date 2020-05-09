@@ -40,19 +40,34 @@
 
 
 <meta property="og:title" content="Select helpers — select_helpers" />
-<meta property="og:description" content="These functions allow you to select variables based on their names.
+<meta property="og:description" content="Tidyverse selections implement a dialect of R where operators make
+it easy to select variables:
+: for selecting a range of consecutive variables.
+! for taking the complement of a set of variables.
+&amp;amp; and | for selecting the intersection or the union of two
+sets of variables.
+c() for combining selections.
+
+
+In addition, you can use selection helpers such as:
+everything(): Matches all variables.
+last_col(): Select last variable, possibly with an offset.
+
+
+These helpers select variables based on their names:
 starts_with(): Starts with a prefix.
 ends_with(): Ends with a suffix.
 contains(): Contains a literal string.
 matches(): Matches a regular expression.
 num_range(): Matches a numerical range like x01, x02, x03.
+
+
+These functions select variables from a character vector.
 all_of(): Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
 thrown.
 any_of(): Same as all_of(), except that no error is thrown
 for names that don't exist.
-everything(): Matches all variables.
-last_col(): Select last variable, possibly with an offset.
 
 " />
 
@@ -160,163 +175,188 @@ last_col(): Select last variable, possibly with an offset.
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Select helpers</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/tidyselect/blob/master/R/select-helpers.R'><code>R/select-helpers.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/r-lib/tidyselect/blob/master/R/helpers.R'><code>R/helpers.R</code></a></small>
     <div class="hidden name"><code>select_helpers.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>These functions allow you to select variables based on their names.</p><ul>
-<li><p><code>starts_with()</code>: Starts with a prefix.</p></li>
-<li><p><code>ends_with()</code>: Ends with a suffix.</p></li>
-<li><p><code>contains()</code>: Contains a literal string.</p></li>
-<li><p><code>matches()</code>: Matches a regular expression.</p></li>
-<li><p><code>num_range()</code>: Matches a numerical range like x01, x02, x03.</p></li>
-<li><p><code>all_of()</code>: Matches variable names in a character vector. All
+    <p>Tidyverse selections implement a dialect of R where operators make
+it easy to select variables:</p><ul>
+<li><p><code>:</code> for selecting a <em>range</em> of consecutive variables.</p></li>
+<li><p><code>!</code> for taking the complement of a set of variables.</p></li>
+<li><p><code>&amp;</code> and <code>|</code> for selecting the intersection or the union of two
+sets of variables.</p></li>
+<li><p><code><a href='https://rdrr.io/r/base/c.html'>c()</a></code> for combining selections.</p></li>
+</ul>
+
+<p>In addition, you can use selection helpers such as:</p><ul>
+<li><p><code><a href='everything.html'>everything()</a></code>: Matches all variables.</p></li>
+<li><p><code><a href='everything.html'>last_col()</a></code>: Select last variable, possibly with an offset.</p></li>
+</ul>
+
+<p>These helpers select variables based on their names:</p><ul>
+<li><p><code><a href='starts_with.html'>starts_with()</a></code>: Starts with a prefix.</p></li>
+<li><p><code><a href='starts_with.html'>ends_with()</a></code>: Ends with a suffix.</p></li>
+<li><p><code><a href='starts_with.html'>contains()</a></code>: Contains a literal string.</p></li>
+<li><p><code><a href='starts_with.html'>matches()</a></code>: Matches a regular expression.</p></li>
+<li><p><code><a href='starts_with.html'>num_range()</a></code>: Matches a numerical range like x01, x02, x03.</p></li>
+</ul>
+
+<p>These functions select variables from a character vector.</p><ul>
+<li><p><code><a href='all_of.html'>all_of()</a></code>: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
 thrown.</p></li>
-<li><p><code>any_of()</code>: Same as <code>all_of()</code>, except that no error is thrown
+<li><p><code><a href='all_of.html'>any_of()</a></code>: Same as <code><a href='all_of.html'>all_of()</a></code>, except that no error is thrown
 for names that don't exist.</p></li>
-<li><p><code>everything()</code>: Matches all variables.</p></li>
-<li><p><code>last_col()</code>: Select last variable, possibly with an offset.</p></li>
 </ul>
 
     </div>
 
-    <pre class="usage"><span class='fu'>starts_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"starts_with"</span>))
 
-<span class='fu'>ends_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"ends_with"</span>))
 
-<span class='fu'>contains</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"contains"</span>))
+    <h2 class="hasAnchor" id="basic-usage"><a class="anchor" href="#basic-usage"></a>Basic usage</h2>
 
-<span class='fu'>matches</span>(
-  <span class='no'>match</span>,
-  <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>perl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"matches"</span>)
-)
+    
 
-<span class='fu'>num_range</span>(<span class='no'>prefix</span>, <span class='no'>range</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"num_range"</span>))
 
-<span class='fu'>all_of</span>(<span class='no'>x</span>)
+<p>Here we show the usage for the basic selection operators. See the
+specific help pages to learn about helpers like <code><a href='starts_with.html'>starts_with()</a></code>.</p>
+<p>The selection language can be used in functions like
+<code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> or <code>tidyr::pivot_longer()</code>. Let's first attach
+the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyverse</span>)
 
-<span class='fu'>any_of</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"any_of"</span>))
+<span class='co'># For better printing</span>
+<span class='no'>iris</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'>as_tibble</span>(<span class='no'>iris</span>)</pre><p></div></p>
+<p>Select variables by name:<div class="r"></p><pre><span class='no'>starwars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>height</span>)</pre><p></div></p><pre>## # A tibble: 87 x 1
+##   height
+##    &amp;lt;int&amp;gt;
+## 1    172
+## 2    167
+## 3     96
+## 4    202
+## # ... with 83 more rows
+</pre><p><div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>pivot_longer</span>(<span class='no'>Sepal.Length</span>)</pre><p></div></p><pre>## # A tibble: 150 x 6
+##   Sepal.Width Petal.Length Petal.Width Species name         value
+##         &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;   &amp;lt;chr&amp;gt;        &amp;lt;dbl&amp;gt;
+## 1         3.5          1.4         0.2 setosa  Sepal.Length   5.1
+## 2         3            1.4         0.2 setosa  Sepal.Length   4.9
+## 3         3.2          1.3         0.2 setosa  Sepal.Length   4.7
+## 4         3.1          1.5         0.2 setosa  Sepal.Length   4.6
+## # ... with 146 more rows
+</pre>
 
-<span class='fu'>everything</span>(<span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"everything"</span>))
+<p>Select multiple variables by separating them with commas. Note how
+the order of columns is determined by the order of inputs:<div class="r"></p><pre><span class='no'>starwars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>homeworld</span>, <span class='no'>height</span>, <span class='no'>mass</span>)</pre><p></div></p><pre>## # A tibble: 87 x 3
+##   homeworld height  mass
+##   &amp;lt;chr&amp;gt;      &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 Tatooine     172    77
+## 2 Tatooine     167    75
+## 3 Naboo         96    32
+## 4 Tatooine     202   136
+## # ... with 83 more rows
+</pre>
 
-<span class='fu'>last_col</span>(<span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='fu'><a href='peek_vars.html'>peek_vars</a></span>(<span class='kw'>fn</span> <span class='kw'>=</span> <span class='st'>"last_col"</span>))</pre>
+<p>Functions like <code>tidyr::pivot_longer()</code> don't take variables with
+dots. In this case use <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code> to select multiple variables:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>pivot_longer</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Sepal.Length</span>, <span class='no'>Petal.Length</span>))</pre><p></div></p><pre>## # A tibble: 300 x 5
+##   Sepal.Width Petal.Width Species name         value
+##         &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;   &amp;lt;chr&amp;gt;        &amp;lt;dbl&amp;gt;
+## 1         3.5         0.2 setosa  Sepal.Length   5.1
+## 2         3.5         0.2 setosa  Petal.Length   1.4
+## 3         3           0.2 setosa  Sepal.Length   4.9
+## 4         3           0.2 setosa  Petal.Length   1.4
+## # ... with 296 more rows
+</pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>match</th>
-      <td><p>A character vector. If length &gt; 1, the union of the
-matches is taken.</p></td>
-    </tr>
-    <tr>
-      <th>ignore.case</th>
-      <td><p>If <code>TRUE</code>, the default, ignores case when matching
-names.</p></td>
-    </tr>
-    <tr>
-      <th>vars</th>
-      <td><p>A character vector of variable names. When called
-from inside selecting functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> these are
-automatically set to the names of the table.</p></td>
-    </tr>
-    <tr>
-      <th>perl</th>
-      <td><p>Should Perl-compatible regexps be used?</p></td>
-    </tr>
-    <tr>
-      <th>prefix</th>
-      <td><p>A prefix that starts the numeric range.</p></td>
-    </tr>
-    <tr>
-      <th>range</th>
-      <td><p>A sequence of integers, like <code>1:5</code>.</p></td>
-    </tr>
-    <tr>
-      <th>width</th>
-      <td><p>Optionally, the "width" of the numeric range. For example,
-a range of 2 gives "01", a range of three "001", etc.</p></td>
-    </tr>
-    <tr>
-      <th>x</th>
-      <td><p>An index vector of names or locations.</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>These dots are for future extensions and must be empty.</p></td>
-    </tr>
-    <tr>
-      <th>offset</th>
-      <td><p>Set it to <code>n</code> to select the nth var from the end.</p></td>
-    </tr>
-    </table>
+    <h2 class="hasAnchor" id="operator-usage"><a class="anchor" href="#operator-usage"></a>Operator usage</h2>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    
 
-    <p>An integer vector giving the position of the matched variables.</p>
+
+<p>The <code>:</code> operator selects a range of consecutive variables:<div class="r"></p><pre><span class='no'>starwars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>name</span>:<span class='no'>mass</span>)</pre><p></div></p><pre>## # A tibble: 87 x 3
+##   name           height  mass
+##   &amp;lt;chr&amp;gt;           &amp;lt;int&amp;gt; &amp;lt;dbl&amp;gt;
+## 1 Luke Skywalker    172    77
+## 2 C-3PO             167    75
+## 3 R2-D2              96    32
+## 4 Darth Vader       202   136
+## # ... with 83 more rows
+</pre>
+
+<p>The <code>!</code> operator negates a selection:<div class="r"></p><pre><span class='no'>starwars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(!(<span class='no'>name</span>:<span class='no'>mass</span>))</pre><p></div></p><pre>## # A tibble: 87 x 11
+##   hair_color skin_color eye_color birth_year sex   gender homeworld species
+##   &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;      &amp;lt;chr&amp;gt;          &amp;lt;dbl&amp;gt; &amp;lt;chr&amp;gt; &amp;lt;chr&amp;gt;  &amp;lt;chr&amp;gt;     &amp;lt;chr&amp;gt;  
+## 1 blond      fair       blue            19   male  mascu~ Tatooine  Human  
+## 2 &amp;lt;NA&amp;gt;       gold       yellow         112   none  mascu~ Tatooine  Droid  
+## 3 &amp;lt;NA&amp;gt;       white, bl~ red             33   none  mascu~ Naboo     Droid  
+## 4 none       white      yellow          41.9 male  mascu~ Tatooine  Human  
+## # ... with 83 more rows, and 3 more variables: films &amp;lt;list&amp;gt;, vehicles &amp;lt;list&amp;gt;,
+## #   starships &amp;lt;list&amp;gt;
+</pre><p><div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(!<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='no'>Sepal.Length</span>, <span class='no'>Petal.Length</span>))</pre><p></div></p><pre>## # A tibble: 150 x 3
+##   Sepal.Width Petal.Width Species
+##         &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;  
+## 1         3.5         0.2 setosa 
+## 2         3           0.2 setosa 
+## 3         3.2         0.2 setosa 
+## 4         3.1         0.2 setosa 
+## # ... with 146 more rows
+</pre><p><div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(!<span class='fu'><a href='starts_with.html'>ends_with</a></span>(<span class='st'>"Width"</span>))</pre><p></div></p><pre>## # A tibble: 150 x 3
+##   Sepal.Length Petal.Length Species
+##          &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt; &amp;lt;fct&amp;gt;  
+## 1          5.1          1.4 setosa 
+## 2          4.9          1.4 setosa 
+## 3          4.7          1.3 setosa 
+## 4          4.6          1.5 setosa 
+## # ... with 146 more rows
+</pre>
+
+<p><code>&amp;</code> and <code>|</code> take the intersection or the union of two selections:<div class="r"></p><pre>iris %&amp;gt;% select(starts_with("Petal") &amp;amp; ends_with("Width"))
+</pre><p></div></p><pre>## # A tibble: 150 x 1
+##   Petal.Width
+##         &amp;lt;dbl&amp;gt;
+## 1         0.2
+## 2         0.2
+## 3         0.2
+## 4         0.2
+## # ... with 146 more rows
+</pre><p><div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'><a href='starts_with.html'>starts_with</a></span>(<span class='st'>"Petal"</span>) <span class='kw'>|</span> <span class='fu'><a href='starts_with.html'>ends_with</a></span>(<span class='st'>"Width"</span>))</pre><p></div></p><pre>## # A tibble: 150 x 3
+##   Petal.Length Petal.Width Sepal.Width
+##          &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;
+## 1          1.4         0.2         3.5
+## 2          1.4         0.2         3  
+## 3          1.3         0.2         3.2
+## 4          1.5         0.2         3.1
+## # ... with 146 more rows
+</pre>
+
+<p>To take the difference between two selections, combine the <code>&amp;</code> and
+<code>!</code> operators:<div class="r"></p><pre>iris %&amp;gt;% select(starts_with("Petal") &amp;amp; !ends_with("Width"))
+</pre><p></div></p><pre>## # A tibble: 150 x 1
+##   Petal.Length
+##          &amp;lt;dbl&amp;gt;
+## 1          1.4
+## 2          1.4
+## 3          1.3
+## 4          1.5
+## # ... with 146 more rows
+</pre>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>In selection context you can also use these operators:</p><ul>
-<li><p><code>":"</code> for selecting a range of consecutive variables.</p></li>
-<li><p><code>"c"</code> for selecting the union of sets of variables.</p></li>
-</ul>
-
-<p>The boolean operators were more recently overloaded to operate on
-selections:</p><ul>
-<li><p><code>"!"</code> for taking the complement of a set of variables.</p></li>
-<li><p><code>"&amp;"</code> and <code><a href='https://rdrr.io/r/base/Logic.html'>"|"</a></code> for selecting the intersection or the union of two
-sets of variables.</p></li>
-</ul>
+    
 
 <p>The order of selected columns is determined by the inputs.</p><ul>
-<li><p><code>all_of(c("foo", "bar"))</code> selects <code>"foo"</code> first.</p></li>
+<li><p><code><a href='all_of.html'>all_of(c("foo", "bar"))</a></code> selects <code>"foo"</code> first.</p></li>
 <li><p><code><a href='https://rdrr.io/r/base/c.html'>c(starts_with("c"), starts_with("d"))</a></code> selects all columns
 starting with <code>"c"</code> first, then all columns starting with <code>"d"</code>.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>nms</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>iris</span>)
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
-#&gt; "Petal.Length"  "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Sepal.Width   Petal.Width 
-#&gt; "Sepal.Width" "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>contains</span>(<span class='st'>"etal"</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
-#&gt; "Petal.Length"  "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>matches</span>(<span class='st'>".t."</span>))</div><div class='output co'>#&gt;   Sepal.Length    Sepal.Width   Petal.Length    Petal.Width 
-#&gt; "Sepal.Length"  "Sepal.Width" "Petal.Length"  "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='no'>Petal.Length</span>, <span class='no'>Petal.Width</span>)</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
-#&gt; "Petal.Length"  "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>everything</span>())</div><div class='output co'>#&gt;   Sepal.Length    Sepal.Width   Petal.Length    Petal.Width        Species 
-#&gt; "Sepal.Length"  "Sepal.Width" "Petal.Length"  "Petal.Width"      "Species" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>last_col</span>())</div><div class='output co'>#&gt;   Species 
-#&gt; "Species" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>last_col</span>(<span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>2</span>))</div><div class='output co'>#&gt;   Petal.Length 
-#&gt; "Petal.Length" </div><div class='input'>
-<span class='co'># With multiple matchers, the union of the matches is selected:</span>
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal"</span>, <span class='st'>"Sepal"</span>)))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width   Sepal.Length    Sepal.Width 
-#&gt; "Petal.Length"  "Petal.Width" "Sepal.Length"  "Sepal.Width" </div><div class='input'>
-<span class='co'># `!` negates a selection:</span>
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, !<span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Sepal.Length   Petal.Length        Species 
-#&gt; "Sepal.Length" "Petal.Length"      "Species" </div><div class='input'>
-<span class='co'># `&amp;` and `|` take the intersection or the union of two selections:</span>
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) <span class='kw'>&amp;</span> <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Width 
-#&gt; "Petal.Width" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>starts_with</span>(<span class='st'>"Petal"</span>) <span class='kw'>|</span> <span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width    Sepal.Width 
-#&gt; "Petal.Length"  "Petal.Width"  "Sepal.Width" </div><div class='input'>
-<span class='co'># `all_of()` selects the variables in a character vector:</span>
-<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal.Length"</span>, <span class='st'>"Petal.Width"</span>)
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='no'>vars</span>))</div><div class='output co'>#&gt;   Petal.Length    Petal.Width 
-#&gt; "Petal.Length"  "Petal.Width" </div><div class='input'>
-<span class='co'># Whereas `all_of()` is strict, `any_of()` allows missing</span>
-<span class='co'># variables.</span>
-<span class='fu'><a href='https://rdrr.io/r/base/try.html'>try</a></span>(<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>all_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>))))</div><div class='output co'>#&gt; Error : Can't subset columns that don't exist.
-#&gt; <span style='color: #BB0000;'>✖</span><span> Column `Genres` doesn't exist.</div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, <span class='fu'>any_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>)))</div><div class='output co'>#&gt;   Species 
-#&gt; "Species" </div><div class='input'>
-<span class='co'># The lax variant is especially useful to make sure a variable is</span>
-<span class='co'># selected out:</span>
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>nms</span>, -<span class='fu'>any_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Species"</span>, <span class='st'>"Genres"</span>)))</div><div class='output co'>#&gt;   Sepal.Length    Sepal.Width   Petal.Length    Petal.Width 
-#&gt; "Sepal.Length"  "Sepal.Width" "Petal.Length"  "Petal.Width" </div><div class='input'>
-<span class='co'># The order of selected columns is determined from the inputs</span>
-<span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), <span class='fu'>starts_with</span>(<span class='st'>"c"</span>), <span class='fu'>starts_with</span>(<span class='st'>"d"</span>))</div><div class='output co'>#&gt;    cyl   carb   disp   drat 
-#&gt;  "cyl" "carb" "disp" "drat" </div><div class='input'><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>mtcars</span>), <span class='fu'>all_of</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"carb"</span>, <span class='st'>"mpg"</span>)))</div><div class='output co'>#&gt;   carb    mpg 
-#&gt; "carb"  "mpg" </div></span></pre>
+    <div class='dont-index'><p>Other selection helpers: 
+<code><a href='all_of.html'>all_of</a>()</code>,
+<code><a href='everything.html'>everything</a>()</code>,
+<code><a href='starts_with.html'>starts_with</a>()</code></p></div>
+
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
