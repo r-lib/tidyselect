@@ -49,7 +49,7 @@
 #' mtcars %>% select(1:last_col(5))
 #' ```
 #'
-#' @family selection helpers
+#' @seealso `r rd_helpers_seealso()`
 #' @export
 everything <- function(vars = peek_vars(fn = "everything")) {
   seq_along(vars)

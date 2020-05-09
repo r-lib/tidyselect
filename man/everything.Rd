@@ -90,9 +90,5 @@ Pass an offset to select a number of variables from the end:\if{html}{\out{<div 
 }
 
 \seealso{
-Other selection helpers: 
-\code{\link{all_of}()},
-\code{\link{language}},
-\code{\link{starts_with}()}
+The \link[=language]{selection language} page, which includes links to other selection helpers.
 }
-\concept{selection helpers}

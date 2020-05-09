@@ -76,7 +76,7 @@
 #' billboard %>% select(num_range("wk", 10:15))
 #' ```
 #'
-#' @family selection helpers
+#' @seealso `r rd_helpers_seealso()`
 #' @export
 starts_with <- function(match,
                         ignore.case = TRUE,

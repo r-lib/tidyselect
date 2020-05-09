@@ -114,7 +114,6 @@
 #'
 #' @name language
 #' @aliases select_helpers
-#' @family selection helpers
 NULL
 
 
@@ -148,4 +147,8 @@ one_of <- function(..., .vars = peek_vars(fn = "one_of")) {
   }
 
   match_vars(keep, .vars)
+}
+
+rd_helpers_seealso <- function() {
+  "The [selection language][language] page, which includes links to other selection helpers."
 }

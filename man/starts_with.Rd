@@ -159,9 +159,5 @@ billboard \%>\% select(num_range("wk", 10:15))
 }
 
 \seealso{
-Other selection helpers: 
-\code{\link{all_of}()},
-\code{\link{everything}()},
-\code{\link{language}}
+The \link[=language]{selection language} page, which includes links to other selection helpers.
 }
-\concept{selection helpers}

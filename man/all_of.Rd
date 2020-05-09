@@ -110,9 +110,5 @@ iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
 }
 
 \seealso{
-Other selection helpers: 
-\code{\link{everything}()},
-\code{\link{language}},
-\code{\link{starts_with}()}
+The \link[=language]{selection language} page, which includes links to other selection helpers.
 }
-\concept{selection helpers}
