@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' These functions are [selection helpers][select_helpers].
+#' These functions are [selection helpers][language].
 #'
 #' * [everything()] selects all variable. It is also useful in
 #'   combination with other tidyselect operators.

@@ -1,11 +1,11 @@
-#' Select helpers
+#' Selection language
 #'
 #' @description
 #'
 #' Tidyverse selections implement a dialect of R where operators make
 #' it easy to select variables:
 #'
-#' - `:` for selecting a _range_ of consecutive variables.
+#' - `:` for selecting a range of consecutive variables.
 #' - `!` for taking the complement of a set of variables.
 #' - `&` and `|` for selecting the intersection or the union of two
 #'   sets of variables.
@@ -120,7 +120,8 @@
 #' * `c(starts_with("c"), starts_with("d"))` selects all columns
 #'   starting with `"c"` first, then all columns starting with `"d"`.
 #'
-#' @name select_helpers
+#' @name language
+#' @aliases select_helpers
 #' @family selection helpers
 NULL
 

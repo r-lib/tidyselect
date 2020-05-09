@@ -44,7 +44,7 @@ established by functions like \code{select()} or \code{pivot_longer()}).}
 a range of 2 gives "01", a range of three "001", etc.}
 }
 \description{
-These \link[=select_helpers]{selection helpers} match variables according
+These \link[=language]{selection helpers} match variables according
 to a given pattern.
 \itemize{
 \item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
@@ -160,6 +160,6 @@ select a range, use \code{num_range()}. Compare:\if{html}{\out{<div class="r">}}
 Other selection helpers: 
 \code{\link{all_of}()},
 \code{\link{everything}()},
-\code{\link{select_helpers}}
+\code{\link{language}}
 }
 \concept{selection helpers}

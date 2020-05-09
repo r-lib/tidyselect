@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' These [selection helpers][select_helpers] select variables
+#' These [selection helpers][language] select variables
 #' contained in a character vector. They are especially useful for
 #' programming with selecting functions.
 #'

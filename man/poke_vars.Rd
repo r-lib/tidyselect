@@ -30,7 +30,7 @@ invisibly. For \code{peek_vars()}, the variables currently
 registered.
 }
 \description{
-Variables are made available to \link[=select_helpers]{select helpers} by
+Variables are made available to \link[=language]{select helpers} by
 registering them in a special placeholder.
 \itemize{
 \item \code{scoped_vars()} changes the current variables and sets up a

@@ -42,7 +42,7 @@ peeker <- function(what) {
 #' The variable names in a selection context are registered
 #' automatically by [eval_select()] and [eval_rename()] for the
 #' duration of the evaluation. `peek_vars()` is the glue that connects
-#' [selection helpers][select_helpers] to the current selection
+#' [selection helpers][language] to the current selection
 #' context.
 #'
 #' @inheritParams ellipsis::dots_empty
@@ -60,7 +60,7 @@ peek_data <- peeker("data")
 #'
 #' @description
 #'
-#' Variables are made available to [select helpers][select_helpers] by
+#' Variables are made available to [select helpers][language] by
 #' registering them in a special placeholder.
 #'
 #' * `scoped_vars()` changes the current variables and sets up a

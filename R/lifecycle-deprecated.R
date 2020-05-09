@@ -11,7 +11,7 @@
 #'
 #' @param .vars A character vector of existing column names.
 #' @param ...,args Selection inputs. See the help for [selection
-#'   helpers][select_helpers].
+#'   helpers][language].
 #' @param .include,.exclude Character vector of column names to always
 #'   include/exclude.
 #' @param .strict If `TRUE`, will throw an error if you attempt to select or

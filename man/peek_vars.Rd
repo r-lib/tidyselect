@@ -30,6 +30,6 @@ examples of how to create selection helpers with \code{peek_vars()}.
 The variable names in a selection context are registered
 automatically by \code{\link[=eval_select]{eval_select()}} and \code{\link[=eval_rename]{eval_rename()}} for the
 duration of the evaluation. \code{peek_vars()} is the glue that connects
-\link[=select_helpers]{selection helpers} to the current selection
+\link[=language]{selection helpers} to the current selection
 context.
 }

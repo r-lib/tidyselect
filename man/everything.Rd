@@ -17,7 +17,7 @@ established by functions like \code{select()} or \code{pivot_longer()}).}
 \item{offset}{Set it to \code{n} to select the nth var from the end.}
 }
 \description{
-These functions are \link[=select_helpers]{selection helpers}.
+These functions are \link[=language]{selection helpers}.
 \itemize{
 \item \code{\link[=everything]{everything()}} selects all variable. It is also useful in
 combination with other tidyselect operators.
@@ -90,7 +90,7 @@ Pass an offset to select a number of variables from the end:\if{html}{\out{<div 
 \seealso{
 Other selection helpers: 
 \code{\link{all_of}()},
-\code{\link{select_helpers}},
+\code{\link{language}},
 \code{\link{starts_with}()}
 }
 \concept{selection helpers}

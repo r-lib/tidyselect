@@ -2,7 +2,7 @@
 #'
 #' @description
 #'
-#' These [selection helpers][select_helpers] match variables according
+#' These [selection helpers][language] match variables according
 #' to a given pattern.
 #'
 #' * [starts_with()]: Starts with a prefix.

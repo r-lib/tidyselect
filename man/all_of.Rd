@@ -19,7 +19,7 @@ the variables are taken from the current selection context (as
 established by functions like \code{select()} or \code{pivot_longer()}).}
 }
 \description{
-These \link[=select_helpers]{selection helpers} select variables
+These \link[=language]{selection helpers} select variables
 contained in a character vector. They are especially useful for
 programming with selecting functions.
 \itemize{
@@ -110,7 +110,7 @@ frame because calling it again does not cause an error:\if{html}{\out{<div class
 \seealso{
 Other selection helpers: 
 \code{\link{everything}()},
-\code{\link{select_helpers}},
+\code{\link{language}},
 \code{\link{starts_with}()}
 }
 \concept{selection helpers}
