@@ -11,18 +11,19 @@
 #'   sets of variables.
 #' - `c()` for combining selections.
 #'
-#' In addition, you can use selection helpers such as:
+#' In addition, you can use __selection helpers__. Some helpers select specific
+#' columns:
 #' * [everything()]: Matches all variables.
 #' * [last_col()]: Select last variable, possibly with an offset.
 #'
-#' These helpers select variables based on their names:
+#' These helpers select variables by matching patterns in their names:
 #' * [starts_with()]: Starts with a prefix.
 #' * [ends_with()]: Ends with a suffix.
 #' * [contains()]: Contains a literal string.
 #' * [matches()]: Matches a regular expression.
 #' * [num_range()]: Matches a numerical range like x01, x02, x03.
 #'
-#' These functions select variables from a character vector.
+#' These helpers select variables from a character vector:
 #' * [all_of()]: Matches variable names in a character vector. All
 #'   names must be present, otherwise an out-of-bounds error is
 #'   thrown.

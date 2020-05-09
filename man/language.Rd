@@ -15,13 +15,14 @@ sets of variables.
 \item \code{c()} for combining selections.
 }
 
-In addition, you can use selection helpers such as:
+In addition, you can use \strong{selection helpers}. Some helpers select specific
+columns:
 \itemize{
 \item \code{\link[=everything]{everything()}}: Matches all variables.
 \item \code{\link[=last_col]{last_col()}}: Select last variable, possibly with an offset.
 }
 
-These helpers select variables based on their names:
+These helpers select variables by matching patterns in their names:
 \itemize{
 \item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
 \item \code{\link[=ends_with]{ends_with()}}: Ends with a suffix.
@@ -30,7 +31,7 @@ These helpers select variables based on their names:
 \item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
 }
 
-These functions select variables from a character vector.
+These helpers select variables from a character vector:
 \itemize{
 \item \code{\link[=all_of]{all_of()}}: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
