@@ -20,7 +20,11 @@ reference:
 
 - title: Selection helpers
   contents:
+  - select_helpers
   - starts_with("starts")
+  - all_of
+  - any_of
+  - everything
   - last_col
 
 - title: Evaluate expressions with tidyselect rules
