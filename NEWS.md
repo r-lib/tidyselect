@@ -19,6 +19,9 @@
   Now tidyselect will correctly complain about a missing variable
   rather than trying to invoke a function.
 
+  For compatibility we will support predicate functions starting with
+  `is` for 1 version.
+
 * `eval_select()` gains an `allow_rename` argument. If set to `FALSE`,
   renaming variables with the `c(foo = bar)` syntax is an error.
   This is useful to implement purely selective behaviour (#178).

@@ -274,14 +274,15 @@ named <- function(x) {
   set_names(x, names2(x))
 }
 
-inform_env <- env()
-inform_once <- function(msg, id = msg) {
+signal_env <- env()
+
+signal_once <- function(signal, msg, id) {
   stopifnot(is_string(id))
 
-  if (env_has(inform_env, id)) {
+  if (env_has(signal_env, id)) {
     return(invisible(NULL))
   }
-  inform_env[[id]] <- TRUE
+  signal_env[[id]] <- TRUE
 
   issue <- msg[[1]]
   bullets <- msg[-1]
@@ -292,9 +293,15 @@ inform_once <- function(msg, id = msg) {
     msg <- paste_line(msg, bullets)
   }
 
-  inform(paste_line(
+  signal(paste_line(
     msg, silver("This message is displayed once per session.")
   ))
+}
+inform_once <- function(msg, id = msg) {
+  signal_once(inform, msg, id)
+}
+warn_once <- function(msg, id = msg) {
+  signal_once(warn, msg, id)
 }
 
 verbosity <- function(default = "default") {

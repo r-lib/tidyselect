@@ -1,0 +1,42 @@
+
+Using a predicate without where() warns
+=======================================
+
+> invisible(select_loc(iris, is_integer))
+Warning: Predicate functions must be wrapped in `where()`.
+
+  # Bad
+  data %>% select(is_integer)
+
+  # Good
+  data %>% select(where(is_integer))
+
+i Please update your code.
+This message is displayed once per session.
+
+> invisible(select_loc(iris, is.numeric))
+Warning: Predicate functions must be wrapped in `where()`.
+
+  # Bad
+  data %>% select(is.numeric)
+
+  # Good
+  data %>% select(where(is.numeric))
+
+i Please update your code.
+This message is displayed once per session.
+
+> invisible(select_loc(iris, isFALSE))
+Warning: Predicate functions must be wrapped in `where()`.
+
+  # Bad
+  data %>% select(isFALSE)
+
+  # Good
+  data %>% select(where(isFALSE))
+
+i Please update your code.
+This message is displayed once per session.
+
+> # Warning is not repeated
+> invisible(select_loc(iris, is_integer))
