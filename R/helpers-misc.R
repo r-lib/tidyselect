@@ -19,7 +19,7 @@
 #' Selection helpers can be used in functions like `dplyr::select()`
 #' or `tidyr::pivot_longer()`. Let's first attach the tidyverse:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' library(tidyverse)
 #'
 #' # For better printing
@@ -29,7 +29,7 @@
 #'
 #' Use `everything()` to select all variables:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(everything())
 #'
 #' mtcars %>% pivot_longer(everything())
@@ -37,7 +37,7 @@
 #'
 #' Use `last_col()` to select the last variable:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(last_col())
 #'
 #' mtcars %>% pivot_longer(last_col())
@@ -45,7 +45,7 @@
 #'
 #' Pass an offset to select a number of variables from the end:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' mtcars %>% select(1:last_col(5))
 #' ```
 #'

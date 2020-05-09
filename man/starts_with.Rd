@@ -66,94 +66,96 @@ iris <- as_tibble(iris)
 
 \code{starts_with()} selects all variables matching a prefix and
 \code{ends_with()} matches a suffix:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(starts_with("Sepal"))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 2
-##   Sepal.Length Sepal.Width
-##          <dbl>       <dbl>
-## 1          5.1         3.5
-## 2          4.9         3  
-## 3          4.7         3.2
-## 4          4.6         3.1
-## # ... with 146 more rows
-}\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(ends_with("Width"))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 2
-##   Sepal.Width Petal.Width
-##         <dbl>       <dbl>
-## 1         3.5         0.2
-## 2         3           0.2
-## 3         3.2         0.2
-## 4         3.1         0.2
-## # ... with 146 more rows
-}
+#> # A tibble: 150 x 2
+#>   Sepal.Length Sepal.Width
+#>          <dbl>       <dbl>
+#> 1          5.1         3.5
+#> 2          4.9         3  
+#> 3          4.7         3.2
+#> 4          4.6         3.1
+#> # ... with 146 more rows
+iris \%>\% select(ends_with("Width"))
+#> # A tibble: 150 x 2
+#>   Sepal.Width Petal.Width
+#>         <dbl>       <dbl>
+#> 1         3.5         0.2
+#> 2         3           0.2
+#> 3         3.2         0.2
+#> 4         3.1         0.2
+#> # ... with 146 more rows
+}\if{html}{\out{</div>}}
 
 You can supply multiple prefixes or suffixes. Note how the order of
 variables depends on the order of the suffixes and prefixes:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(starts_with(c("Petal", "Sepal")))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 4
-##   Petal.Length Petal.Width Sepal.Length Sepal.Width
-##          <dbl>       <dbl>        <dbl>       <dbl>
-## 1          1.4         0.2          5.1         3.5
-## 2          1.4         0.2          4.9         3  
-## 3          1.3         0.2          4.7         3.2
-## 4          1.5         0.2          4.6         3.1
-## # ... with 146 more rows
-}\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(ends_with(c("Width", "Length")))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 4
-##   Sepal.Width Petal.Width Sepal.Length Petal.Length
-##         <dbl>       <dbl>        <dbl>        <dbl>
-## 1         3.5         0.2          5.1          1.4
-## 2         3           0.2          4.9          1.4
-## 3         3.2         0.2          4.7          1.3
-## 4         3.1         0.2          4.6          1.5
-## # ... with 146 more rows
-}
+#> # A tibble: 150 x 4
+#>   Petal.Length Petal.Width Sepal.Length Sepal.Width
+#>          <dbl>       <dbl>        <dbl>       <dbl>
+#> 1          1.4         0.2          5.1         3.5
+#> 2          1.4         0.2          4.9         3  
+#> 3          1.3         0.2          4.7         3.2
+#> 4          1.5         0.2          4.6         3.1
+#> # ... with 146 more rows
+iris \%>\% select(ends_with(c("Width", "Length")))
+#> # A tibble: 150 x 4
+#>   Sepal.Width Petal.Width Sepal.Length Petal.Length
+#>         <dbl>       <dbl>        <dbl>        <dbl>
+#> 1         3.5         0.2          5.1          1.4
+#> 2         3           0.2          4.9          1.4
+#> 3         3.2         0.2          4.7          1.3
+#> 4         3.1         0.2          4.6          1.5
+#> # ... with 146 more rows
+}\if{html}{\out{</div>}}
 
 \code{contains()} selects columns whose names contain a word:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(contains("al"))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 4
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width
-##          <dbl>       <dbl>        <dbl>       <dbl>
-## 1          5.1         3.5          1.4         0.2
-## 2          4.9         3            1.4         0.2
-## 3          4.7         3.2          1.3         0.2
-## 4          4.6         3.1          1.5         0.2
-## # ... with 146 more rows
-}
+#> # A tibble: 150 x 4
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width
+#>          <dbl>       <dbl>        <dbl>       <dbl>
+#> 1          5.1         3.5          1.4         0.2
+#> 2          4.9         3            1.4         0.2
+#> 3          4.7         3.2          1.3         0.2
+#> 4          4.6         3.1          1.5         0.2
+#> # ... with 146 more rows
+}\if{html}{\out{</div>}}
 
 These helpers do not use regular expressions. To select with a
 regexp use \code{matches()}\if{html}{\out{<div class="r">}}\preformatted{# [pt] is matched literally:
 iris \%>\% select(contains("[pt]al"))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 0
-}\if{html}{\out{<div class="r">}}\preformatted{# [pt] is interpreted as a regular expression
+#> # A tibble: 150 x 0
+
+# [pt] is interpreted as a regular expression
 iris \%>\% select(matches("[pt]al"))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 4
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width
-##          <dbl>       <dbl>        <dbl>       <dbl>
-## 1          5.1         3.5          1.4         0.2
-## 2          4.9         3            1.4         0.2
-## 3          4.7         3.2          1.3         0.2
-## 4          4.6         3.1          1.5         0.2
-## # ... with 146 more rows
-}
+#> # A tibble: 150 x 4
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width
+#>          <dbl>       <dbl>        <dbl>       <dbl>
+#> 1          5.1         3.5          1.4         0.2
+#> 2          4.9         3            1.4         0.2
+#> 3          4.7         3.2          1.3         0.2
+#> 4          4.6         3.1          1.5         0.2
+#> # ... with 146 more rows
+}\if{html}{\out{</div>}}
 
 \code{starts_with()} selects all variables starting with a prefix. To
 select a range, use \code{num_range()}. Compare:\if{html}{\out{<div class="r">}}\preformatted{billboard \%>\% select(starts_with("wk"))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 317 x 76
-##     wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13
-##   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-## 1    87    82    72    77    87    94    99    NA    NA    NA    NA    NA    NA
-## 2    91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
-## 3    81    70    68    67    66    57    54    53    51    51    51    51    47
-## 4    76    76    72    69    67    65    55    59    62    61    61    59    61
-## # ... with 313 more rows, and 63 more variables: wk14 <dbl>, wk15 <dbl>,
-## #   wk16 <dbl>, wk17 <dbl>, wk18 <dbl>, wk19 <dbl>, wk20 <dbl>, wk21 <dbl>, ...
-}\if{html}{\out{<div class="r">}}\preformatted{billboard \%>\% select(num_range("wk", 10:15))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 317 x 6
-##    wk10  wk11  wk12  wk13  wk14  wk15
-##   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-## 1    NA    NA    NA    NA    NA    NA
-## 2    NA    NA    NA    NA    NA    NA
-## 3    51    51    51    47    44    38
-## 4    61    61    59    61    66    72
-## # ... with 313 more rows
-}
+#> # A tibble: 317 x 76
+#>     wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1    87    82    72    77    87    94    99    NA    NA    NA    NA    NA    NA
+#> 2    91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA
+#> 3    81    70    68    67    66    57    54    53    51    51    51    51    47
+#> 4    76    76    72    69    67    65    55    59    62    61    61    59    61
+#> # ... with 313 more rows, and 63 more variables: wk14 <dbl>, wk15 <dbl>,
+#> #   wk16 <dbl>, wk17 <dbl>, wk18 <dbl>, wk19 <dbl>, wk20 <dbl>, wk21 <dbl>, ...
+
+billboard \%>\% select(num_range("wk", 10:15))
+#> # A tibble: 317 x 6
+#>    wk10  wk11  wk12  wk13  wk14  wk15
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1    NA    NA    NA    NA    NA    NA
+#> 2    NA    NA    NA    NA    NA    NA
+#> 3    51    51    51    47    44    38
+#> 4    61    61    59    61    66    72
+#> # ... with 313 more rows
+}\if{html}{\out{</div>}}
 }
 
 \seealso{

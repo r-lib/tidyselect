@@ -46,35 +46,36 @@ iris <- as_tibble(iris)
 It is a common to have a names of variables in a vector.\if{html}{\out{<div class="r">}}\preformatted{vars <- c("Sepal.Length", "Sepal.Width")
 
 iris[, vars]
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 2
-##   Sepal.Length Sepal.Width
-##          <dbl>       <dbl>
-## 1          5.1         3.5
-## 2          4.9         3  
-## 3          4.7         3.2
-## 4          4.6         3.1
-## # ... with 146 more rows
-}
+#> # A tibble: 150 x 2
+#>   Sepal.Length Sepal.Width
+#>          <dbl>       <dbl>
+#> 1          5.1         3.5
+#> 2          4.9         3  
+#> 3          4.7         3.2
+#> 4          4.6         3.1
+#> # ... with 146 more rows
+}\if{html}{\out{</div>}}
 
 To refer to these variables in selecting function, use \code{all_of()}:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(all_of(vars))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 2
-##   Sepal.Length Sepal.Width
-##          <dbl>       <dbl>
-## 1          5.1         3.5
-## 2          4.9         3  
-## 3          4.7         3.2
-## 4          4.6         3.1
-## # ... with 146 more rows
-}\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% pivot_longer(all_of(vars))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 300 x 5
-##   Petal.Length Petal.Width Species name         value
-##          <dbl>       <dbl> <fct>   <chr>        <dbl>
-## 1          1.4         0.2 setosa  Sepal.Length   5.1
-## 2          1.4         0.2 setosa  Sepal.Width    3.5
-## 3          1.4         0.2 setosa  Sepal.Length   4.9
-## 4          1.4         0.2 setosa  Sepal.Width    3  
-## # ... with 296 more rows
-}
+#> # A tibble: 150 x 2
+#>   Sepal.Length Sepal.Width
+#>          <dbl>       <dbl>
+#> 1          5.1         3.5
+#> 2          4.9         3  
+#> 3          4.7         3.2
+#> 4          4.6         3.1
+#> # ... with 146 more rows
+
+iris \%>\% pivot_longer(all_of(vars))
+#> # A tibble: 300 x 5
+#>   Petal.Length Petal.Width Species name         value
+#>          <dbl>       <dbl> <fct>   <chr>        <dbl>
+#> 1          1.4         0.2 setosa  Sepal.Length   5.1
+#> 2          1.4         0.2 setosa  Sepal.Width    3.5
+#> 3          1.4         0.2 setosa  Sepal.Length   4.9
+#> 4          1.4         0.2 setosa  Sepal.Width    3  
+#> # ... with 296 more rows
+}\if{html}{\out{</div>}}
 
 If any of the variable is missing from the data frame, that's an error:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(all_of(vars))
 }\if{html}{\out{</div>}}\preformatted{## Error: Can't subset columns that don't exist.
@@ -82,29 +83,30 @@ If any of the variable is missing from the data frame, that's an error:\if{html}
 }
 
 Use \code{any_of()} to allow missing variables:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(any_of(vars))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 87 x 0
-}
+#> # A tibble: 87 x 0
+}\if{html}{\out{</div>}}
 
 \code{any_of()} is especially useful to remove variables from a data
 frame because calling it again does not cause an error:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(-any_of(vars))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 3
-##   Petal.Length Petal.Width Species
-##          <dbl>       <dbl> <fct>  
-## 1          1.4         0.2 setosa 
-## 2          1.4         0.2 setosa 
-## 3          1.3         0.2 setosa 
-## 4          1.5         0.2 setosa 
-## # ... with 146 more rows
-}\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 3
-##   Petal.Length Petal.Width Species
-##          <dbl>       <dbl> <fct>  
-## 1          1.4         0.2 setosa 
-## 2          1.4         0.2 setosa 
-## 3          1.3         0.2 setosa 
-## 4          1.5         0.2 setosa 
-## # ... with 146 more rows
-}
+#> # A tibble: 150 x 3
+#>   Petal.Length Petal.Width Species
+#>          <dbl>       <dbl> <fct>  
+#> 1          1.4         0.2 setosa 
+#> 2          1.4         0.2 setosa 
+#> 3          1.3         0.2 setosa 
+#> 4          1.5         0.2 setosa 
+#> # ... with 146 more rows
+
+iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
+#> # A tibble: 150 x 3
+#>   Petal.Length Petal.Width Species
+#>          <dbl>       <dbl> <fct>  
+#> 1          1.4         0.2 setosa 
+#> 2          1.4         0.2 setosa 
+#> 3          1.3         0.2 setosa 
+#> 4          1.5         0.2 setosa 
+#> # ... with 146 more rows
+}\if{html}{\out{</div>}}
 }
 
 \seealso{

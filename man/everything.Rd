@@ -36,55 +36,57 @@ mtcars <- as_tibble(mtcars)
 }\if{html}{\out{</div>}}
 
 Use \code{everything()} to select all variables:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(everything())
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 5
-##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
-##          <dbl>       <dbl>        <dbl>       <dbl> <fct>  
-## 1          5.1         3.5          1.4         0.2 setosa 
-## 2          4.9         3            1.4         0.2 setosa 
-## 3          4.7         3.2          1.3         0.2 setosa 
-## 4          4.6         3.1          1.5         0.2 setosa 
-## # ... with 146 more rows
-}\if{html}{\out{<div class="r">}}\preformatted{mtcars \%>\% pivot_longer(everything())
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 352 x 2
-##   name  value
-##   <chr> <dbl>
-## 1 mpg      21
-## 2 cyl       6
-## 3 disp    160
-## 4 hp      110
-## # ... with 348 more rows
-}
+#> # A tibble: 150 x 5
+#>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+#>          <dbl>       <dbl>        <dbl>       <dbl> <fct>  
+#> 1          5.1         3.5          1.4         0.2 setosa 
+#> 2          4.9         3            1.4         0.2 setosa 
+#> 3          4.7         3.2          1.3         0.2 setosa 
+#> 4          4.6         3.1          1.5         0.2 setosa 
+#> # ... with 146 more rows
+
+mtcars \%>\% pivot_longer(everything())
+#> # A tibble: 352 x 2
+#>   name  value
+#>   <chr> <dbl>
+#> 1 mpg      21
+#> 2 cyl       6
+#> 3 disp    160
+#> 4 hp      110
+#> # ... with 348 more rows
+}\if{html}{\out{</div>}}
 
 Use \code{last_col()} to select the last variable:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(last_col())
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 150 x 1
-##   Species
-##   <fct>  
-## 1 setosa 
-## 2 setosa 
-## 3 setosa 
-## 4 setosa 
-## # ... with 146 more rows
-}\if{html}{\out{<div class="r">}}\preformatted{mtcars \%>\% pivot_longer(last_col())
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 32 x 12
-##     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear name  value
-##   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <chr> <dbl>
-## 1  21       6   160   110  3.9   2.62  16.5     0     1     4 carb      4
-## 2  21       6   160   110  3.9   2.88  17.0     0     1     4 carb      4
-## 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4 carb      1
-## 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3 carb      1
-## # ... with 28 more rows
-}
+#> # A tibble: 150 x 1
+#>   Species
+#>   <fct>  
+#> 1 setosa 
+#> 2 setosa 
+#> 3 setosa 
+#> 4 setosa 
+#> # ... with 146 more rows
+
+mtcars \%>\% pivot_longer(last_col())
+#> # A tibble: 32 x 12
+#>     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear name  value
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <chr> <dbl>
+#> 1  21       6   160   110  3.9   2.62  16.5     0     1     4 carb      4
+#> 2  21       6   160   110  3.9   2.88  17.0     0     1     4 carb      4
+#> 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4 carb      1
+#> 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3 carb      1
+#> # ... with 28 more rows
+}\if{html}{\out{</div>}}
 
 Pass an offset to select a number of variables from the end:\if{html}{\out{<div class="r">}}\preformatted{mtcars \%>\% select(1:last_col(5))
-}\if{html}{\out{</div>}}\preformatted{## # A tibble: 32 x 6
-##     mpg   cyl  disp    hp  drat    wt
-##   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
-## 1  21       6   160   110  3.9   2.62
-## 2  21       6   160   110  3.9   2.88
-## 3  22.8     4   108    93  3.85  2.32
-## 4  21.4     6   258   110  3.08  3.22
-## # ... with 28 more rows
-}
+#> # A tibble: 32 x 6
+#>     mpg   cyl  disp    hp  drat    wt
+#>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>
+#> 1  21       6   160   110  3.9   2.62
+#> 2  21       6   160   110  3.9   2.88
+#> 3  22.8     4   108    93  3.85  2.32
+#> 4  21.4     6   258   110  3.08  3.22
+#> # ... with 28 more rows
+}\if{html}{\out{</div>}}
 }
 
 \seealso{

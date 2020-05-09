@@ -42,7 +42,7 @@
 #' `dplyr::select()` or `tidyr::pivot_longer()`. Let's first attach
 #' the tidyverse:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' library(tidyverse)
 #'
 #' # For better printing
@@ -51,7 +51,7 @@
 #'
 #' Select variables by name:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' starwars %>% select(height)
 #'
 #' iris %>% pivot_longer(Sepal.Length)
@@ -60,14 +60,14 @@
 #' Select multiple variables by separating them with commas. Note how
 #' the order of columns is determined by the order of inputs:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' starwars %>% select(homeworld, height, mass)
 #' ```
 #'
 #' Functions like `tidyr::pivot_longer()` don't take variables with
 #' dots. In this case use `c()` to select multiple variables:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% pivot_longer(c(Sepal.Length, Petal.Length))
 #' ```
 #'
@@ -75,13 +75,13 @@
 #'
 #' The `:` operator selects a range of consecutive variables:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' starwars %>% select(name:mass)
 #' ```
 #'
 #' The `!` operator negates a selection:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' starwars %>% select(!(name:mass))
 #'
 #' iris %>% select(!c(Sepal.Length, Petal.Length))
@@ -91,7 +91,7 @@
 #'
 #' `&` and `|` take the intersection or the union of two selections:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(starts_with("Petal") & ends_with("Width"))
 #'
 #' iris %>% select(starts_with("Petal") | ends_with("Width"))
@@ -100,7 +100,7 @@
 #' To take the difference between two selections, combine the `&` and
 #' `!` operators:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(starts_with("Petal") & !ends_with("Width"))
 #' ```
 #'

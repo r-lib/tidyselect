@@ -27,7 +27,7 @@
 #' Selection helpers can be used in functions like `dplyr::select()`
 #' or `tidyr::pivot_longer()`. Let's first attach the tidyverse:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' library(tidyverse)
 #'
 #' # For better printing
@@ -37,7 +37,7 @@
 #' `starts_with()` selects all variables matching a prefix and
 #' `ends_with()` matches a suffix:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(starts_with("Sepal"))
 #' iris %>% select(ends_with("Width"))
 #' ```
@@ -45,21 +45,21 @@
 #' You can supply multiple prefixes or suffixes. Note how the order of
 #' variables depends on the order of the suffixes and prefixes:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(starts_with(c("Petal", "Sepal")))
 #' iris %>% select(ends_with(c("Width", "Length")))
 #' ```
 #'
 #' `contains()` selects columns whose names contain a word:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(contains("al"))
 #' ```
 #'
 #' These helpers do not use regular expressions. To select with a
 #' regexp use `matches()`
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' # [pt] is matched literally:
 #' iris %>% select(contains("[pt]al"))
 #'
@@ -70,7 +70,7 @@
 #' `starts_with()` selects all variables starting with a prefix. To
 #' select a range, use `num_range()`. Compare:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' billboard %>% select(starts_with("wk"))
 #'
 #' billboard %>% select(num_range("wk", 10:15))

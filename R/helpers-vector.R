@@ -27,7 +27,7 @@
 #' Selection helpers can be used in functions like `dplyr::select()`
 #' or `tidyr::pivot_longer()`. Let's first attach the tidyverse:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' library(tidyverse)
 #'
 #' # For better printing
@@ -36,7 +36,7 @@
 #'
 #' It is a common to have a names of variables in a vector.
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' vars <- c("Sepal.Length", "Sepal.Width")
 #'
 #' iris[, vars]
@@ -44,7 +44,7 @@
 #'
 #' To refer to these variables in selecting function, use `all_of()`:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(all_of(vars))
 #'
 #' iris %>% pivot_longer(all_of(vars))
@@ -58,14 +58,14 @@
 #'
 #' Use `any_of()` to allow missing variables:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' starwars %>% select(any_of(vars))
 #' ```
 #'
 #' `any_of()` is especially useful to remove variables from a data
 #' frame because calling it again does not cause an error:
 #'
-#' ```{r}
+#' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(-any_of(vars))
 #'
 #' iris %>% select(-any_of(vars)) %>% select(-any_of(vars))
