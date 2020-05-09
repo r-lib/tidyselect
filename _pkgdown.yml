@@ -25,6 +25,7 @@ reference:
   - any_of
   - everything
   - last_col
+  - where
 
 - subtitle: FAQ
   contents:
