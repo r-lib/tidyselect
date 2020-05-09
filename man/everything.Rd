@@ -87,3 +87,10 @@ Pass an offset to select a number of variables from the end:\if{html}{\out{<div 
 }
 }
 
+\seealso{
+Other selection helpers: 
+\code{\link{all_of}()},
+\code{\link{select_helpers}},
+\code{\link{starts_with}()}
+}
+\concept{selection helpers}

@@ -107,3 +107,10 @@ frame because calling it again does not cause an error:\if{html}{\out{<div class
 }
 }
 
+\seealso{
+Other selection helpers: 
+\code{\link{everything}()},
+\code{\link{select_helpers}},
+\code{\link{starts_with}()}
+}
+\concept{selection helpers}

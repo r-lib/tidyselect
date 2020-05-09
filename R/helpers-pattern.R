@@ -84,6 +84,7 @@
 #' billboard %>% select(num_range("wk", 10:15))
 #' ```
 #'
+#' @family selection helpers
 #' @export
 starts_with <- function(match,
                         ignore.case = TRUE,

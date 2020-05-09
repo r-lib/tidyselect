@@ -79,6 +79,7 @@
 #' iris %>% select(-any_of(vars)) %>% select(-any_of(vars))
 #' ```
 #'
+#' @family selection helpers
 #' @export
 all_of <- function(x) {
   if (is.function(x)) {

@@ -184,3 +184,10 @@ starting with \code{"c"} first, then all columns starting with \code{"d"}.
 }
 }
 
+\seealso{
+Other selection helpers: 
+\code{\link{all_of}()},
+\code{\link{everything}()},
+\code{\link{starts_with}()}
+}
+\concept{selection helpers}

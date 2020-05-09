@@ -156,3 +156,10 @@ select a range, use \code{num_range()}. Compare:\if{html}{\out{<div class="r">}}
 }
 }
 
+\seealso{
+Other selection helpers: 
+\code{\link{all_of}()},
+\code{\link{everything}()},
+\code{\link{select_helpers}}
+}
+\concept{selection helpers}

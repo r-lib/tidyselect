@@ -121,6 +121,7 @@
 #'   starting with `"c"` first, then all columns starting with `"d"`.
 #'
 #' @name select_helpers
+#' @family selection helpers
 NULL
 
 
