@@ -19,6 +19,9 @@
     <loc>https://tidyselect.r-lib.org/reference/faq-selection-context.html</loc>
   </url>
   <url>
+    <loc>https://tidyselect.r-lib.org/reference/language.html</loc>
+  </url>
+  <url>
     <loc>https://tidyselect.r-lib.org/reference/one_of.html</loc>
   </url>
   <url>
@@ -29,9 +32,6 @@
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://tidyselect.r-lib.org/reference/select_helpers.html</loc>
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/starts_with.html</loc>
