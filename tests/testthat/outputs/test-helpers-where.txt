@@ -26,14 +26,14 @@ Warning: Predicate functions must be wrapped in `where()`.
 i Please update your code.
 This message is displayed once per session.
 
-> invisible(select_loc(iris, isFALSE))
+> invisible(select_loc(iris, isTRUE))
 Warning: Predicate functions must be wrapped in `where()`.
 
   # Bad
-  data %>% select(isFALSE)
+  data %>% select(isTRUE)
 
   # Good
-  data %>% select(where(isFALSE))
+  data %>% select(where(isTRUE))
 
 i Please update your code.
 This message is displayed once per session.

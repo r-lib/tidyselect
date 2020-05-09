@@ -323,7 +323,7 @@ test_that("eval_sym() still supports predicate functions starting with `is`", {
   local_options(tidyselect_verbosity = "quiet")
   expect_identical(select_loc(iris, is_integer), select_loc(iris, where(is_integer)))
   expect_identical(select_loc(iris, is.numeric), select_loc(iris, where(is.numeric)))
-  expect_identical(select_loc(iris, isFALSE), select_loc(iris, where(isFALSE)))
+  expect_identical(select_loc(iris, isTRUE), select_loc(iris, where(isTRUE)))
 })
 
 test_that("eval_walk() has informative messages", {
@@ -331,7 +331,7 @@ test_that("eval_walk() has informative messages", {
     "# Using a predicate without where() warns"
     invisible(select_loc(iris, is_integer))
     invisible(select_loc(iris, is.numeric))
-    invisible(select_loc(iris, isFALSE))
+    invisible(select_loc(iris, isTRUE))
 
     "Warning is not repeated"
     invisible(select_loc(iris, is_integer))
