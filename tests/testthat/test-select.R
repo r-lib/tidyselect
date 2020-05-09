@@ -50,3 +50,9 @@ test_that("result is named even with constant inputs (#173)", {
     c(Sepal.Width = 2L)
   )
 })
+
+test_that("can forbid rename syntax (#178)", {
+  expect_error(select_loc(mtcars, c(foo = cyl), allow_rename = FALSE), "Can't rename")
+  expect_error(select_loc(mtcars, c(cyl, foo = cyl), allow_rename = FALSE), "Can't rename")
+  expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), NULL)
+})

@@ -5,6 +5,7 @@ vars_select_eval <- function(vars,
                              data = NULL,
                              name_spec = NULL,
                              uniquely_named = NULL,
+                             allow_rename = TRUE,
                              type = "select") {
   wrapped <- quo_get_expr2(expr, expr)
 
@@ -17,7 +18,7 @@ vars_select_eval <- function(vars,
   if (!is_symbolic(wrapped)) {
     pos <- as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data)
     pos <- loc_validate(pos, vars)
-    pos <- ensure_named(pos, vars, uniquely_named)
+    pos <- ensure_named(pos, vars, uniquely_named, allow_rename)
     return(pos)
   }
 
@@ -66,10 +67,17 @@ vars_select_eval <- function(vars,
     abort("All renaming inputs must be named.")
   }
 
-  ensure_named(pos, vars, uniquely_named)
+  ensure_named(pos, vars, uniquely_named, allow_rename)
 }
 
-ensure_named <- function(pos, vars, uniquely_named) {
+ensure_named <- function(pos, vars, uniquely_named, allow_rename) {
+  if (!allow_rename) {
+    if (is_named(pos)) {
+      abort("Can't rename variables in this context.")
+    }
+    return(set_names(pos, NULL))
+  }
+
   nms <- names(pos) <- names2(pos)
   nms_missing <- nms == ""
   names(pos)[nms_missing] <- vars[pos[nms_missing]]

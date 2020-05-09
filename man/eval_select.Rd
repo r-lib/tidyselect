@@ -22,7 +22,8 @@ eval_select(
   include = NULL,
   exclude = NULL,
   strict = TRUE,
-  name_spec = NULL
+  name_spec = NULL,
+  allow_rename = TRUE
 )
 }
 \arguments{
@@ -50,6 +51,10 @@ valid name specs.}
 
 \item{include, exclude}{Character vector of column names to always
 include or exclude from the selection.}
+
+\item{allow_rename}{If \code{TRUE} (the default), the renaming syntax
+\code{c(foo = bar)} is allowed. If \code{FALSE}, it causes an error. This
+is useful to implement purely selective behaviour.}
 }
 \value{
 A named vector of numeric locations, one for each of the

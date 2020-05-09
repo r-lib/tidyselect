@@ -1,6 +1,10 @@
 
 # tidyselect (development version)
 
+* `eval_select()` gains an `allow_rename` argument. If set to `FALSE`,
+  renaming variables with the `c(foo = bar)` syntax is an error.
+  This is useful to implement purely selective behaviour (#178).
+
 * Fixed issue preventing repeated deprecation messages when
   `tidyselect_verbosity` is set to `"verbose"` (#184).
 

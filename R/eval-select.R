@@ -31,6 +31,9 @@
 #'   expressions like `c(foo = c(bar = starts_with("foo")))`. See the
 #'   `name_spec` argument of [vctrs::vec_c()] for a description of
 #'   valid name specs.
+#' @param allow_rename If `TRUE` (the default), the renaming syntax
+#'   `c(foo = bar)` is allowed. If `FALSE`, it causes an error. This
+#'   is useful to implement purely selective behaviour.
 #' @inheritParams ellipsis::dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -115,7 +118,8 @@ eval_select <- function(expr,
                         include = NULL,
                         exclude = NULL,
                         strict = TRUE,
-                        name_spec = NULL) {
+                        name_spec = NULL,
+                        allow_rename = TRUE) {
   ellipsis::check_dots_empty()
   eval_select_impl(
     data,
@@ -124,7 +128,8 @@ eval_select <- function(expr,
     include = include,
     exclude = exclude,
     strict = strict,
-    name_spec = name_spec
+    name_spec = name_spec,
+    allow_rename = allow_rename
   )
 }
 
@@ -137,6 +142,7 @@ eval_select_impl <- function(x,
                              strict = TRUE,
                              name_spec = NULL,
                              uniquely_named = NULL,
+                             allow_rename = TRUE,
                              type = "select") {
   if (!is_null(x)) {
     vctrs::vec_assert(x)
@@ -166,6 +172,7 @@ eval_select_impl <- function(x,
       data = x,
       name_spec = name_spec,
       uniquely_named = uniquely_named,
+      allow_rename = allow_rename,
       type = type
     ),
     type = type
