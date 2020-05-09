@@ -5,9 +5,9 @@
 \alias{last_col}
 \title{Select all variables or the last variable}
 \usage{
-everything(vars = peek_vars(fn = "everything"))
+everything(vars = NULL)
 
-last_col(offset = 0L, vars = peek_vars(fn = "last_col"))
+last_col(offset = 0L, vars = NULL)
 }
 \arguments{
 \item{vars}{A character vector of variable names. If not supplied,

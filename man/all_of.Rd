@@ -7,7 +7,7 @@
 \usage{
 all_of(x)
 
-any_of(x, ..., vars = peek_vars(fn = "any_of"))
+any_of(x, ..., vars = NULL)
 }
 \arguments{
 \item{x}{A vector of character names or numeric locations.}

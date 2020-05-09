@@ -80,8 +80,9 @@
 #' @export
 starts_with <- function(match,
                         ignore.case = TRUE,
-                        vars = peek_vars(fn = "starts_with")) {
+                        vars = NULL) {
   check_match(match)
+  vars <- vars %||% peek_vars(fn = "starts_with")
 
   if (ignore.case) {
      vars <- tolower(vars)
@@ -99,8 +100,9 @@ starts_with_impl <- function(x, vars) {
 #' @export
 ends_with <- function(match,
                       ignore.case = TRUE,
-                      vars = peek_vars(fn = "ends_with")) {
+                      vars = NULL) {
   check_match(match)
+  vars <- vars %||% peek_vars(fn = "ends_with")
 
   if (ignore.case) {
     vars <- tolower(vars)
@@ -119,8 +121,9 @@ ends_with_impl <- function(x, vars, length) {
 #' @export
 contains <- function(match,
                      ignore.case = TRUE,
-                     vars = peek_vars(fn = "contains")) {
+                     vars = NULL) {
   check_match(match)
+  vars <- vars %||% peek_vars(fn = "contains")
 
   if (ignore.case) {
     vars <- tolower(vars)
@@ -136,8 +139,9 @@ contains <- function(match,
 matches <- function(match,
                     ignore.case = TRUE,
                     perl = FALSE,
-                    vars = peek_vars(fn = "matches")) {
+                    vars = NULL) {
   check_match(match)
+  vars <- vars %||% peek_vars(fn = "matches")
   flat_map_int(match, grep_vars, vars, ignore.case = ignore.case, perl = perl)
 }
 
@@ -150,10 +154,13 @@ matches <- function(match,
 num_range <- function(prefix,
                       range,
                       width = NULL,
-                      vars = peek_vars(fn = "num_range")) {
+                      vars = NULL) {
+  vars <- vars %||% peek_vars(fn = "num_range")
+
   if (!is_null(width)) {
     range <- sprintf(paste0("%0", width, "d"), range)
   }
+
   match_vars(paste0(prefix, range), vars)
 }
 

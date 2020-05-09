@@ -51,15 +51,18 @@
 #'
 #' @seealso `r rd_helpers_seealso()`
 #' @export
-everything <- function(vars = peek_vars(fn = "everything")) {
+everything <- function(vars = NULL) {
+  vars <- vars %||% peek_vars(fn = "everything")
   seq_along(vars)
 }
 
 #' @rdname everything
 #' @export
 #' @param offset Set it to `n` to select the nth var from the end.
-last_col <- function(offset = 0L, vars = peek_vars(fn = "last_col")) {
+last_col <- function(offset = 0L, vars = NULL) {
   stopifnot(is_integerish(offset))
+
+  vars <- vars %||% peek_vars(fn = "last_col")
   n <- length(vars)
 
   if (offset && n <= offset) {

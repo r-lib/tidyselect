@@ -4,7 +4,7 @@
 \alias{one_of}
 \title{Superseded selection helpers}
 \usage{
-one_of(..., .vars = peek_vars(fn = "one_of"))
+one_of(..., .vars = NULL)
 }
 \arguments{
 \item{...}{One or more character vectors.}

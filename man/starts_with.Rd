@@ -8,20 +8,15 @@
 \alias{num_range}
 \title{Select variables that match a pattern}
 \usage{
-starts_with(match, ignore.case = TRUE, vars = peek_vars(fn = "starts_with"))
+starts_with(match, ignore.case = TRUE, vars = NULL)
 
-ends_with(match, ignore.case = TRUE, vars = peek_vars(fn = "ends_with"))
+ends_with(match, ignore.case = TRUE, vars = NULL)
 
-contains(match, ignore.case = TRUE, vars = peek_vars(fn = "contains"))
+contains(match, ignore.case = TRUE, vars = NULL)
 
-matches(
-  match,
-  ignore.case = TRUE,
-  perl = FALSE,
-  vars = peek_vars(fn = "matches")
-)
+matches(match, ignore.case = TRUE, perl = FALSE, vars = NULL)
 
-num_range(prefix, range, width = NULL, vars = peek_vars(fn = "num_range"))
+num_range(prefix, range, width = NULL, vars = NULL)
 }
 \arguments{
 \item{match}{A character vector. If length > 1, the union of the

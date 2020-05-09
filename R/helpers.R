@@ -129,7 +129,8 @@ NULL
 #'
 #' @keywords internal
 #' @export
-one_of <- function(..., .vars = peek_vars(fn = "one_of")) {
+one_of <- function(..., .vars = NULL) {
+  .vars <- .vars %||% peek_vars(fn = "one_of")
   keep <- compact(list(...))
 
   bad_input <- detect_index(keep, ~ !vec_is_coercible(., chr()))

@@ -5,7 +5,7 @@ test_that("no set variables throws error", {
 })
 
 test_that("no set variables throws error from the correct function", {
-  expect_error(one_of(starts_with("z")), "`starts_with()` must be used within a *selecting* function", fixed = TRUE)
+  expect_error(one_of(starts_with("z")), "`one_of()` must be used within a *selecting* function", fixed = TRUE)
 })
 
 test_that("generic error message is thrown if `fn` is not supplied", {
