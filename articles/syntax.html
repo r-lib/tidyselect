@@ -307,10 +307,30 @@
 <a href="#predicate-functions" class="anchor"></a>Predicate functions</h3>
 <p>Predicate function objects can be supplied as input. They are applied to all elements of the data, and should return <code>TRUE</code> or <code>FALSE</code> to indicate inclusion. Predicates in data-expressions are effectively expanded to the set of variables that they represent:</p>
 <div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">is.numeric</span>)
+<span class="co">#&gt; Warning: Predicate functions must be wrapped in `where()`.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   # Bad</span>
+<span class="co">#&gt;   data %&gt;% select(is.numeric)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   # Good</span>
+<span class="co">#&gt;   data %&gt;% select(where(is.numeric))</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ℹ Please update your code.</span>
+<span class="co">#&gt; This message is displayed once per session.</span>
 <span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
 <span class="co">#&gt;            1            2            3            4</span>
 
 <span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">is.factor</span>)
+<span class="co">#&gt; Warning: Predicate functions must be wrapped in `where()`.</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   # Bad</span>
+<span class="co">#&gt;   data %&gt;% select(is.factor)</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt;   # Good</span>
+<span class="co">#&gt;   data %&gt;% select(where(is.factor))</span>
+<span class="co">#&gt; </span>
+<span class="co">#&gt; ℹ Please update your code.</span>
+<span class="co">#&gt; This message is displayed once per session.</span>
 <span class="co">#&gt; Species </span>
 <span class="co">#&gt;       5</span>
 
@@ -433,8 +453,8 @@
 <span class="co"># Since `Species` is defined as a function, you won't get an error</span>
 <span class="co"># even though the data-var doesn't exist:</span>
 <span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">Species</span>)
-<span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span>
-<span class="co">#&gt;    1    2    3    4    5    6    7    8    9   10   11</span>
+<span class="co">#&gt; Error: Can't subset columns that don't exist.</span>
+<span class="co">#&gt; ✖ Column `Species` doesn't exist.</span>
 
 <span class="co"># Use `all_of()` to be explicit that you want a data-var, not an env-var:</span>
 <span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="fu"><a href="../reference/all_of.html">all_of</a></span>(<span class="st">"Species"</span>))

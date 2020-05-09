@@ -153,6 +153,15 @@
 <a href="#tidyselect-development-version" class="anchor"></a>tidyselect (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li>
+<p>Predicate functions must now be wrapped with <code><a href="../reference/where.html">where()</a></code>.</p>
+<pre class="{r}"><code>iris %&gt;% select(where(is.factor))</code></pre>
+<p>We made this change to avoid puzzling error messages when a variable is unexpectedly missing from the data frame and there is a corresponding function in the environment:</p>
+<pre class="{r}"><code># Attempts to invoke `data()` function
+data.frame(x = 1) %&gt;% select(data)</code></pre>
+<p>Now tidyselect will correctly complain about a missing variable rather than trying to invoke a function.</p>
+<p>For compatibility we will support predicate functions starting with <code>is</code> for 1 version.</p>
+</li>
 <li><p><code><a href="../reference/eval_select.html">eval_select()</a></code> gains an <code>allow_rename</code> argument. If set to <code>FALSE</code>, renaming variables with the <code><a href="https://rdrr.io/r/base/c.html">c(foo = bar)</a></code> syntax is an error. This is useful to implement purely selective behaviour (<a href='https://github.com/r-lib/tidyselect/issues/178'>#178</a>).</p></li>
 <li><p>Fixed issue preventing repeated deprecation messages when <code>tidyselect_verbosity</code> is set to <code>"verbose"</code> (<a href='https://github.com/r-lib/tidyselect/issues/184'>#184</a>).</p></li>
 <li><p><code><a href="../reference/all_of.html">any_of()</a></code> now preserves the order of the input variables (<a href='https://github.com/r-lib/tidyselect/issues/186'>#186</a>).</p></li>
@@ -206,7 +215,7 @@
 </li>
 <li>
 <p>You can now use predicate functions in selection contexts:</p>
-<div class="sourceCode" id="cb1"><pre class="r"><span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">is.factor</span>)
+<div class="sourceCode" id="cb3"><pre class="r"><span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">is.factor</span>)
 <span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="no">is.factor</span> <span class="kw">|</span> <span class="no">is.numeric</span>)</pre></div>
 <p>This feature is not available in functions that use the legacy interface of tidyselect. These need to be updated to use the new <code><a href="../reference/eval_select.html">eval_select()</a></code> function instead of <code><a href="../reference/vars_select.html">vars_select()</a></code>.</p>
 </li>
@@ -214,10 +223,10 @@
 <li><p>Improved support for named elements. It is now possible to assign the same name to multiple elements, if the input data structure doesn’t require unique names (i.e. anything but a data frame).</p></li>
 <li>
 <p>The selection engine has been rewritten to support a clearer separation between data-expressions (calls to <code>:</code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">-</a></code>, and <code>c</code>) and env-expressions (anything else). This means you can now safely use expressions of the type:</p>
-<div class="sourceCode" id="cb2"><pre class="r"><span class="no">data</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">data</span>))
+<div class="sourceCode" id="cb4"><pre class="r"><span class="no">data</span> <span class="kw">%&gt;%</span> <span class="fu">select</span>(<span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">data</span>))
 <span class="no">data</span> <span class="kw">%&gt;%</span> <span class="fu">pivot_longer</span>(<span class="fl">1</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">data</span>))</pre></div>
 <p>Even if the data frame <code>data</code> contains a column also named <code>data</code>, the subexpression <code><a href="https://rdrr.io/r/base/nrow.html">ncol(data)</a></code> is still correctly evaluated. The <code>data:ncol(data)</code> expression is equivalent to <code>2:3</code> because <code>data</code> is looked up in the relevant context without ambiguity:</p>
-<div class="sourceCode" id="cb3"><pre class="r"><span class="no">data</span> <span class="kw">&lt;-</span> <span class="fu">tibble</span>(<span class="kw">foo</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">bar</span> <span class="kw">=</span> <span class="fl">3</span>)
+<div class="sourceCode" id="cb5"><pre class="r"><span class="no">data</span> <span class="kw">&lt;-</span> <span class="fu">tibble</span>(<span class="kw">foo</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">data</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">bar</span> <span class="kw">=</span> <span class="fl">3</span>)
 <span class="no">data</span> <span class="kw">%&gt;%</span> <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">data</span>:<span class="fu"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(<span class="no">data</span>))
 <span class="co">#&gt; # A tibble: 1 x 2</span>
 <span class="co">#&gt;    data   bar</span>
@@ -247,7 +256,7 @@ iris %&gt;% dplyr::select(-any_of(vars))</code></pre>
 </li>
 <li>
 <p>Selection helpers like <code><a href="../reference/all_of.html">all_of()</a></code> and <code><a href="../reference/starts_with.html">starts_with()</a></code> are now available in all selection contexts, even when they haven’t been attached to the search path. The most visible consequence of this change is that it is now easier to use selection functions without attaching the host package:</p>
-<div class="sourceCode" id="cb6"><pre class="r"><span class="co"># Before</span>
+<div class="sourceCode" id="cb8"><pre class="r"><span class="co"># Before</span>
 <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="no">mtcars</span>, <span class="kw pkg">dplyr</span><span class="kw ns">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/reexports.html">starts_with</a></span>(<span class="st">"c"</span>))
 
 <span class="co"># After</span>
