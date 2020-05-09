@@ -1,6 +1,24 @@
 
 # tidyselect (development version)
 
+* Predicate functions must now be wrapped with `where()`.
+
+  ```{r}
+  iris %>% select(where(is.factor))
+  ```
+
+  We made this change to avoid puzzling error messages when a variable
+  is unexpectedly missing from the data frame and there is a
+  corresponding function in the environment:
+
+  ```{r}
+  # Attempts to invoke `data()` function
+  data.frame(x = 1) %>% select(data)
+  ```
+
+  Now tidyselect will correctly complain about a missing variable
+  rather than trying to invoke a function.
+
 * `eval_select()` gains an `allow_rename` argument. If set to `FALSE`,
   renaming variables with the `c(foo = bar)` syntax is an error.
   This is useful to implement purely selective behaviour (#178).
