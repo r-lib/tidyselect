@@ -30,6 +30,10 @@
 #' * [any_of()]: Same as `all_of()`, except that no error is thrown
 #'   for names that don't exist.
 #'
+#' This helper selects variables with a function:
+#' * [where()]: Applies a function to all variables and selects those
+#'   for which the function returns `TRUE`.
+#'
 #' @section Basic usage:
 #'
 #' ```{r, child = "man/rmd/setup.Rmd"}

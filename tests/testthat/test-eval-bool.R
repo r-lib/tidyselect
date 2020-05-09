@@ -5,7 +5,7 @@ test_that("can refer to columns in | operands", {
 
 test_that("can refer to columns in & operands", {
   expect_identical(select_loc(mtcars, cyl & contains("am")), set_names(int(), chr()))
-  expect_identical(select_loc(mtcars, cyl & is.numeric), c(cyl = 2L))
+  expect_identical(select_loc(mtcars, cyl & where(is.numeric)), c(cyl = 2L))
 })
 
 test_that("can use named inputs in & operands", {

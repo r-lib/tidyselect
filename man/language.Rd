@@ -39,6 +39,12 @@ thrown.
 \item \code{\link[=any_of]{any_of()}}: Same as \code{all_of()}, except that no error is thrown
 for names that don't exist.
 }
+
+This helper selects variables with a function:
+\itemize{
+\item \code{\link[=where]{where()}}: Applies a function to all variables and selects those
+for which the function returns \code{TRUE}.
+}
 }
 \section{Basic usage}{
 

@@ -204,26 +204,26 @@ test_that("non-strict evaluation allows unknown variables", {
 })
 
 test_that("can use predicates in selections", {
-  expect_identical(select_loc(iris, is.factor), c(Species = 5L))
-  expect_identical(select_loc(iris, is.numeric), set_names(1:4, names(iris)[1:4]))
-  expect_identical(select_loc(iris, is.numeric & is.factor), set_names(int(), chr()))
-  expect_identical(select_loc(iris, is.numeric | is.factor), set_names(1:5, names(iris)))
+  expect_identical(select_loc(iris, where(is.factor)), c(Species = 5L))
+  expect_identical(select_loc(iris, where(is.numeric)), set_names(1:4, names(iris)[1:4]))
+  expect_identical(select_loc(iris, where(is.numeric) & where(is.factor)), set_names(int(), chr()))
+  expect_identical(select_loc(iris, where(is.numeric) | where(is.factor)), set_names(1:5, names(iris)))
 })
 
 test_that("inline functions are allowed", {
   expect_identical(
     select_loc(iris, !!is.numeric),
-    select_loc(iris, is.numeric),
+    select_loc(iris, where(is.numeric)),
   )
   expect_identical(
     select_loc(iris, function(x) is.numeric(x)),
-    select_loc(iris, is.numeric),
+    select_loc(iris, where(is.numeric)),
   )
 })
 
 test_that("predicates have access to the full data", {
   p <- function(x) is.numeric(x) && mean(x) > 5
-  expect_identical(select_loc(iris, p), c(Sepal.Length = 1L))
+  expect_identical(select_loc(iris, where(p)), c(Sepal.Length = 1L))
 })
 
 test_that("unary `-` is alias for `!`", {
@@ -311,4 +311,29 @@ test_that("`-1:-2` is syntax for `-(1:2)` for compatibility", {
     select_loc(iris, -Sepal.Length:-Sepal.Width),
     select_loc(iris, -(Sepal.Length:Sepal.Width))
   )
+})
+
+test_that("eval_sym() doesn't look for functions in the context", {
+  foo <- is.numeric
+  expect_error(select_loc(iris, foo), class = "vctrs_error_subscript_oob")
+  expect_error(select_loc(iris, data), class = "vctrs_error_subscript_oob")
+})
+
+test_that("eval_sym() still supports predicate functions starting with `is`", {
+  local_options(tidyselect_verbosity = "quiet")
+  expect_identical(select_loc(iris, is_integer), select_loc(iris, where(is_integer)))
+  expect_identical(select_loc(iris, is.numeric), select_loc(iris, where(is.numeric)))
+  expect_identical(select_loc(iris, isTRUE), select_loc(iris, where(isTRUE)))
+})
+
+test_that("eval_walk() has informative messages", {
+  verify_output(test_path("outputs", "test-helpers-where.txt"), {
+    "# Using a predicate without where() warns"
+    invisible(select_loc(iris, is_integer))
+    invisible(select_loc(iris, is.numeric))
+    invisible(select_loc(iris, isTRUE))
+
+    "Warning is not repeated"
+    invisible(select_loc(iris, is_integer))
+  })
 })

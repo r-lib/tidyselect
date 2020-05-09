@@ -470,7 +470,7 @@ test_that("vars_rename() ignore unknown columns if strict is FALSE", {
 
 test_that("informative error with legacy tidyselect", {
   expect_error(
-    vars_select(letters, is.numeric),
+    vars_select(letters, where(is.numeric)),
     "doesn't support predicates yet"
   )
 })

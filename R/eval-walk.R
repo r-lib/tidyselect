@@ -284,7 +284,30 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     return(name)
   }
 
+  # Predicate functions must now be wrapped in `where()`. We'll
+  # support functions starting with `is` for compatibility for
+  # compatibility.
   if (is_function(value)) {
+    if (!grepl("^is", name)) {
+      return(name)
+    }
+
+    if (!is_string(verbosity(), "quiet")) {
+      msg <- paste_line(c(
+        "Predicate functions must be wrapped in `where()`.",
+        "",
+        "  # Bad",
+        glue::glue("  data %>% select({name})"),
+        "",
+        "  # Good",
+        glue::glue("  data %>% select(where({name}))"),
+        ""
+      ))
+      bullet <- format_error_bullets(c(i = "Please update your code."))
+
+      warn_once(paste_line(msg, bullet))
+    }
+
     return(value)
   }
 

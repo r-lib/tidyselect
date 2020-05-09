@@ -36,5 +36,6 @@ vars_select_helpers <- list(
   everything = everything,
   last_col = last_col,
   all_of = all_of,
-  any_of = any_of
+  any_of = any_of,
+  where = where
 )
