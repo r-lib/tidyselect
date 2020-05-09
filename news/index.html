@@ -153,6 +153,7 @@
 <a href="#tidyselect-development-version" class="anchor"></a>tidyselect (development version)<small> Unreleased </small>
 </h1>
 <ul>
+<li><p><code><a href="../reference/eval_select.html">eval_select()</a></code> gains an <code>allow_rename</code> argument. If set to <code>FALSE</code>, renaming variables with the <code><a href="https://rdrr.io/r/base/c.html">c(foo = bar)</a></code> syntax is an error. This is useful to implement purely selective behaviour (<a href='https://github.com/r-lib/tidyselect/issues/178'>#178</a>).</p></li>
 <li><p>Fixed issue preventing repeated deprecation messages when <code>tidyselect_verbosity</code> is set to <code>"verbose"</code> (<a href='https://github.com/r-lib/tidyselect/issues/184'>#184</a>).</p></li>
 <li><p><code><a href="../reference/all_of.html">any_of()</a></code> now preserves the order of the input variables (<a href='https://github.com/r-lib/tidyselect/issues/186'>#186</a>).</p></li>
 <li><p>The return value of <code><a href="../reference/eval_select.html">eval_select()</a></code> is now always named, even when inputs are constant (<a href='https://github.com/r-lib/tidyselect/issues/173'>#173</a>).</p></li>

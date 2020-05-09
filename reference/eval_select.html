@@ -185,7 +185,8 @@ your packages.</p>
   <span class='kw'>include</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>name_spec</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>name_spec</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>allow_rename</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -229,6 +230,12 @@ valid name specs.</p></td>
       <th>include, exclude</th>
       <td><p>Character vector of column names to always
 include or exclude from the selection.</p></td>
+    </tr>
+    <tr>
+      <th>allow_rename</th>
+      <td><p>If <code>TRUE</code> (the default), the renaming syntax
+<code><a href='https://rdrr.io/r/base/c.html'>c(foo = bar)</a></code> is allowed. If <code>FALSE</code>, it causes an error. This
+is useful to implement purely selective behaviour.</p></td>
     </tr>
     </table>
 
