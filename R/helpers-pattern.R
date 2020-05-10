@@ -39,6 +39,7 @@
 #'
 #' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(starts_with("Sepal"))
+#'
 #' iris %>% select(ends_with("Width"))
 #' ```
 #'
@@ -47,6 +48,7 @@
 #'
 #' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(starts_with(c("Petal", "Sepal")))
+#'
 #' iris %>% select(ends_with(c("Width", "Length")))
 #' ```
 #'

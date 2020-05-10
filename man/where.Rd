@@ -27,6 +27,7 @@ iris <- as_tibble(iris)
 \code{where()} takes a function and returns all variables for which the
 function returns \code{TRUE}:\if{html}{\out{<div class="r">}}\preformatted{is.factor(iris[[4]])
 #> [1] FALSE
+
 is.factor(iris[[5]])
 #> [1] TRUE
 
@@ -42,6 +43,7 @@ iris \%>\% select(where(is.factor))
 
 is.numeric(iris[[4]])
 #> [1] TRUE
+
 is.numeric(iris[[5]])
 #> [1] FALSE
 
@@ -67,6 +69,7 @@ function on the spot. These expressions are equivalent:\if{html}{\out{<div class
 #> 3          4.7         3.2          1.3         0.2
 #> 4          4.6         3.1          1.5         0.2
 #> # ... with 146 more rows
+
 iris \%>\% select(where(function(x) is.numeric(x)))
 #> # A tibble: 150 x 4
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
@@ -76,6 +79,7 @@ iris \%>\% select(where(function(x) is.numeric(x)))
 #> 3          4.7         3.2          1.3         0.2
 #> 4          4.6         3.1          1.5         0.2
 #> # ... with 146 more rows
+
 iris \%>\% select(where(~ is.numeric(.x)))
 #> # A tibble: 150 x 4
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width

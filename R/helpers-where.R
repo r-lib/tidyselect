@@ -26,11 +26,13 @@
 #'
 #' ```{r, comment = "#>", collapse = TRUE}
 #' is.factor(iris[[4]])
+#'
 #' is.factor(iris[[5]])
 #'
 #' iris %>% select(where(is.factor))
 #'
 #' is.numeric(iris[[4]])
+#'
 #' is.numeric(iris[[5]])
 #'
 #' iris %>% select(where(is.numeric))
@@ -44,7 +46,9 @@
 #'
 #' ```{r, comment = "#>", collapse = TRUE}
 #' iris %>% select(where(is.numeric))
+#'
 #' iris %>% select(where(function(x) is.numeric(x)))
+#'
 #' iris %>% select(where(~ is.numeric(.x)))
 #' ```
 #'
