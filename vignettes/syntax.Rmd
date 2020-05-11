@@ -269,25 +269,21 @@ iris %>% select_loc(!Species, foo = Sepal.Width)
 
 ### Predicate functions
 
-Predicate function objects can be supplied as input. They are applied
-to all elements of the data, and should return `TRUE` or `FALSE` to
-indicate inclusion. Predicates in data-expressions are effectively
-expanded to the set of variables that they represent:
+Predicate function objects can be supplied as input in an
+env-expression, typically with the selection helper `where()`. They
+are applied to all elements of the data, and should return `TRUE` or
+`FALSE` to indicate inclusion. Predicates in env-expressions are
+effectively expanded to the set of variables that they represent:
 
 ```{r}
-iris %>% select_loc(is.numeric)
+iris %>% select_loc(where(is.numeric))
 
-iris %>% select_loc(is.factor)
+iris %>% select_loc(where(is.factor))
 
-iris %>% select_loc(is.numeric | is.factor)
+iris %>% select_loc(where(is.numeric) | where(is.factor))
 
-iris %>% select_loc(is.numeric & is.factor)
+iris %>% select_loc(where(is.numeric) & where(is.factor))
 ```
-
-Predicate functions supplied as symbols are ambiguous with column
-names, however proper naming conventions should ensure distinct
-namespaces in practice. See the Evaluation section for more about this
-ambiguity.
 
 
 ## Selection helpers
@@ -411,49 +407,6 @@ future, and then an error.
 
 ```{r}
 mtcars %>% select_loc(cyl_pos)
-```
-
-
-### Predicate functions within data-expressions
-
-There is one exception to the unambiguous lookup rules in data
-expressions. If a data-var is not found in the data frame, tidyselect
-attempts to find a predicate function in the environment. This
-introduces an ambiguity when a predicate function has the same name as
-a column. This is a conscious design decision:
-
-- It makes it easier to use predicate functions interactively.
-- The names of predicate functions and data frame columns rarely overlap.
-
-If you need 100% unambiguity, use `all_of()` to refer to data frame
-columns, and force predicate functions with `!!` or `force()`.
-`all_of()` is a way to explicitly opt for data lookup because it fails
-if the data frame doesn't contain the columns, even if a function of
-the same name is found in the environment:
-
-```{r, error = TRUE}
-Species <- function(x) is.numeric(x)
-
-# Since `Species` is defined as a function, you won't get an error
-# even though the data-var doesn't exist:
-mtcars %>% select_loc(Species)
-
-# Use `all_of()` to be explicit that you want a data-var, not an env-var:
-mtcars %>% select_loc(all_of("Species"))
-```
-
-Similarly, you can be explicit about finding predicate functions in
-the environment by forcing the symbols:
-
-```{r}
-# By default the data-var has precedence over the env-var:
-iris %>% select_loc(Species)
-
-# Use the force operator `!!` to force the env-var `Species`:
-iris %>% select_loc(!!Species)
-
-# Use the env-expression `force()` to force the env-var `Species`:
-iris %>% select_loc(force(Species))
 ```
 
 
