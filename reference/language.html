@@ -226,7 +226,7 @@ for which the function returns <code>TRUE</code>.</p></li>
 
 
 
-    <h2 class="hasAnchor" id="basic-usage"><a class="anchor" href="#basic-usage"></a>Basic usage</h2>
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
 
     
 
@@ -277,10 +277,7 @@ dots. In this case use <code><a href='https://rdrr.io/r/base/c.html'>c()</a></co
 <span class='co'>#&amp;gt; 2         3.5         0.2 setosa  Petal.Length   1.4</span>
 <span class='co'>#&amp;gt; 3         3           0.2 setosa  Sepal.Length   4.9</span>
 <span class='co'>#&amp;gt; 4         3           0.2 setosa  Petal.Length   1.4</span>
-<span class='co'>#&amp;gt; # ... with 296 more rows</span></pre><p></div></p>
-    <h2 class="hasAnchor" id="operator-usage"><a class="anchor" href="#operator-usage"></a>Operator usage</h2>
-
-    
+<span class='co'>#&amp;gt; # ... with 296 more rows</span></pre><p></div></p><h3>Operators:</h3>
 
 
 <p>The <code>:</code> operator selects a range of consecutive variables:<div class="r"></p><pre><span class='no'>starwars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>name</span>:<span class='no'>mass</span>)
@@ -353,6 +350,7 @@ iris %&amp;gt;% select(starts_with("Petal") | ends_with("Width"))
 #&amp;gt; 4          1.5
 #&amp;gt; # ... with 146 more rows
 </pre><p></div></p>
+
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
