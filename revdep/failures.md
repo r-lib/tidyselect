@@ -1,108 +1,191 @@
-# arrow
+# bcdata
 
 <details>
 
-* Version: 0.15.1.1
-* Source code: https://github.com/cran/arrow
-* URL: https://github.com/apache/arrow/, https://arrow.apache.org/docs/r
-* BugReports: https://issues.apache.org/jira/projects/ARROW/issues
-* Date/Publication: 2019-11-05 22:00:09 UTC
-* Number of recursive dependencies: 58
+* Version: 0.1.2
+* Source code: https://github.com/cran/bcdata
+* URL: https://bcgov.github.io/bcdata/, https://catalogue.data.gov.bc.ca/, https://github.com/bcgov/bcdata
+* BugReports: https://github.com/bcgov/bcdata/issues
+* Date/Publication: 2019-12-17 06:30:03 UTC
+* Number of recursive dependencies: 102
 
-Run `revdep_details(,"arrow")` for more info
+Run `revdep_details(,"bcdata")` for more info
 
 </details>
 
 ## In both
 
-*   R CMD check timed out
-    
-
-# ngsReports
-
-<details>
-
-* Version: 1.0.1
-* Source code: https://github.com/cran/ngsReports
-* URL: https://github.com/UofABioinformaticsHub/ngsReports
-* BugReports: https://github.com/UofABioinformaticsHub/ngsReports/issues
-* Date/Publication: 2019-08-18
-* Number of recursive dependencies: 131
-
-Run `revdep_details(,"ngsReports")` for more info
-
-</details>
-
-## In both
-
-*   R CMD check timed out
-    
-
-*   checking installed package size ... NOTE
+*   checking whether package ‘bcdata’ can be installed ... ERROR
     ```
-      installed size is  5.8Mb
-      sub-directories of 1Mb or more:
-        R     2.0Mb
-        doc   2.7Mb
+    Installation failed.
+    See ‘/tmp/workdir/bcdata/new/bcdata.Rcheck/00install.out’ for details.
     ```
 
-# plyranges
-
-<details>
-
-* Version: 
-* Source code: ???
-* Number of recursive dependencies: 0
-
-Run `revdep_details(,"")` for more info
-
-</details>
-
-## Error before installation
+## Installation
 
 ### Devel
 
 ```
-
-
-
-installing the source packages ‘BSgenome.Hsapiens.UCSC.hg19’, ‘HelloRangesData’, ‘pasillaBamSubset’
-
-
+* installing *source* package ‘bcdata’ ...
+** package ‘bcdata’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/opt/R/3.6.3/lib/R/library/sf/libs/sf.so':
+  libproj.so.12: cannot open shared object file: No such file or directory
+Calls: <Anonymous> ... asNamespace -> loadNamespace -> library.dynam -> dyn.load
+Execution halted
+ERROR: lazy loading failed for package ‘bcdata’
+* removing ‘/tmp/workdir/bcdata/new/bcdata.Rcheck/bcdata’
 
 ```
 ### CRAN
 
 ```
-
-
-
-installing the source packages ‘BSgenome.Hsapiens.UCSC.hg19’, ‘HelloRangesData’, ‘pasillaBamSubset’
-
-
+* installing *source* package ‘bcdata’ ...
+** package ‘bcdata’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/opt/R/3.6.3/lib/R/library/sf/libs/sf.so':
+  libproj.so.12: cannot open shared object file: No such file or directory
+Calls: <Anonymous> ... asNamespace -> loadNamespace -> library.dynam -> dyn.load
+Execution halted
+ERROR: lazy loading failed for package ‘bcdata’
+* removing ‘/tmp/workdir/bcdata/old/bcdata.Rcheck/bcdata’
 
 ```
-# rmdcev
+# CoordinateCleaner
 
 <details>
 
-* Version: 1.1.1
-* Source code: https://github.com/cran/rmdcev
-* Date/Publication: 2019-11-22 17:50:02 UTC
-* Number of recursive dependencies: 82
+* Version: 2.0-11
+* Source code: https://github.com/cran/CoordinateCleaner
+* URL: https://ropensci.github.io/CoordinateCleaner/
+* BugReports: https://github.com/ropensci/CoordinateCleaner/issues
+* Date/Publication: 2019-04-24 09:10:07 UTC
+* Number of recursive dependencies: 98
 
-Run `revdep_details(,"rmdcev")` for more info
+Run `revdep_details(,"CoordinateCleaner")` for more info
 
 </details>
 
 ## In both
 
-*   R CMD check timed out
-    
-
-*   checking dependencies in R code ... NOTE
+*   checking whether package ‘CoordinateCleaner’ can be installed ... ERROR
     ```
-    Namespace in Imports field not imported from: ‘rlang’
-      All declared Imports should be used.
+    Installation failed.
+    See ‘/tmp/workdir/CoordinateCleaner/new/CoordinateCleaner.Rcheck/00install.out’ for details.
     ```
 
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘CoordinateCleaner’ ...
+** package ‘CoordinateCleaner’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/opt/R/3.6.3/lib/R/library/rgdal/libs/rgdal.so':
+  libproj.so.12: cannot open shared object file: No such file or directory
+Calls: <Anonymous> ... asNamespace -> loadNamespace -> library.dynam -> dyn.load
+Execution halted
+ERROR: lazy loading failed for package ‘CoordinateCleaner’
+* removing ‘/tmp/workdir/CoordinateCleaner/new/CoordinateCleaner.Rcheck/CoordinateCleaner’
+
+```
+### CRAN
+
+```
+* installing *source* package ‘CoordinateCleaner’ ...
+** package ‘CoordinateCleaner’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/opt/R/3.6.3/lib/R/library/rgdal/libs/rgdal.so':
+  libproj.so.12: cannot open shared object file: No such file or directory
+Calls: <Anonymous> ... asNamespace -> loadNamespace -> library.dynam -> dyn.load
+Execution halted
+ERROR: lazy loading failed for package ‘CoordinateCleaner’
+* removing ‘/tmp/workdir/CoordinateCleaner/old/CoordinateCleaner.Rcheck/CoordinateCleaner’
+
+```
+# eechidna
+
+<details>
+
+* Version: 1.4.0
+* Source code: https://github.com/cran/eechidna
+* URL: https://github.com/ropenscilabs/eechidna
+* BugReports: https://github.com/ropenscilabs/eechidna/issues
+* Date/Publication: 2019-11-08 12:10:02 UTC
+* Number of recursive dependencies: 124
+
+Run `revdep_details(,"eechidna")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘eechidna’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/eechidna/new/eechidna.Rcheck/00install.out’ for details.
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘eechidna’ ...
+** package ‘eechidna’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/opt/R/3.6.3/lib/R/library/rgdal/libs/rgdal.so':
+  libproj.so.12: cannot open shared object file: No such file or directory
+Calls: <Anonymous> ... asNamespace -> loadNamespace -> library.dynam -> dyn.load
+Execution halted
+ERROR: lazy loading failed for package ‘eechidna’
+* removing ‘/tmp/workdir/eechidna/new/eechidna.Rcheck/eechidna’
+
+```
+### CRAN
+
+```
+* installing *source* package ‘eechidna’ ...
+** package ‘eechidna’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** data
+*** moving datasets to lazyload DB
+** inst
+** byte-compile and prepare package for lazy loading
+Error in dyn.load(file, DLLpath = DLLpath, ...) : 
+  unable to load shared object '/opt/R/3.6.3/lib/R/library/rgdal/libs/rgdal.so':
+  libproj.so.12: cannot open shared object file: No such file or directory
+Calls: <Anonymous> ... asNamespace -> loadNamespace -> library.dynam -> dyn.load
+Execution halted
+ERROR: lazy loading failed for package ‘eechidna’
+* removing ‘/tmp/workdir/eechidna/old/eechidna.Rcheck/eechidna’
+
+```
