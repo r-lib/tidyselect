@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidyselect</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0</span>
       </span>
     </div>
 
@@ -305,42 +305,21 @@
 <div id="predicate-functions" class="section level3">
 <h3 class="hasAnchor">
 <a href="#predicate-functions" class="anchor"></a>Predicate functions</h3>
-<p>Predicate function objects can be supplied as input. They are applied to all elements of the data, and should return <code>TRUE</code> or <code>FALSE</code> to indicate inclusion. Predicates in data-expressions are effectively expanded to the set of variables that they represent:</p>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">is.numeric</span>)
-<span class="co">#&gt; Warning: Predicate functions must be wrapped in `where()`.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   # Bad</span>
-<span class="co">#&gt;   data %&gt;% select(is.numeric)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   # Good</span>
-<span class="co">#&gt;   data %&gt;% select(where(is.numeric))</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ℹ Please update your code.</span>
-<span class="co">#&gt; This message is displayed once per session.</span>
+<p>Predicate function objects can be supplied as input in an env-expression, typically with the selection helper <code><a href="../reference/where.html">where()</a></code>. They are applied to all elements of the data, and should return <code>TRUE</code> or <code>FALSE</code> to indicate inclusion. Predicates in env-expressions are effectively expanded to the set of variables that they represent:</p>
+<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="fu"><a href="../reference/where.html">where</a></span>(<span class="no">is.numeric</span>))
 <span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
 <span class="co">#&gt;            1            2            3            4</span>
 
-<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">is.factor</span>)
-<span class="co">#&gt; Warning: Predicate functions must be wrapped in `where()`.</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   # Bad</span>
-<span class="co">#&gt;   data %&gt;% select(is.factor)</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt;   # Good</span>
-<span class="co">#&gt;   data %&gt;% select(where(is.factor))</span>
-<span class="co">#&gt; </span>
-<span class="co">#&gt; ℹ Please update your code.</span>
-<span class="co">#&gt; This message is displayed once per session.</span>
+<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="fu"><a href="../reference/where.html">where</a></span>(<span class="no">is.factor</span>))
 <span class="co">#&gt; Species </span>
 <span class="co">#&gt;       5</span>
 
-<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">is.numeric</span> <span class="kw">|</span> <span class="no">is.factor</span>)
+<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="fu"><a href="../reference/where.html">where</a></span>(<span class="no">is.numeric</span>) <span class="kw">|</span> <span class="fu"><a href="../reference/where.html">where</a></span>(<span class="no">is.factor</span>))
 <span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
 <span class="co">#&gt;            1            2            3            4            5</span>
 
-<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">is.numeric</span> <span class="kw">&amp;</span> <span class="no">is.factor</span>)
+<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="fu"><a href="../reference/where.html">where</a></span>(<span class="no">is.numeric</span>) <span class="kw">&amp;</span> <span class="fu"><a href="../reference/where.html">where</a></span>(<span class="no">is.factor</span>))
 <span class="co">#&gt; named integer(0)</span></pre></body></html></div>
-<p>Predicate functions supplied as symbols are ambiguous with column names, however proper naming conventions should ensure distinct namespaces in practice. See the Evaluation section for more about this ambiguity.</p>
 </div>
 </div>
 <div id="selection-helpers" class="section level2">
@@ -439,48 +418,11 @@
 <span class="co">#&gt; cyl </span>
 <span class="co">#&gt;   2</span></pre></body></html></div>
 </div>
-<div id="predicate-functions-within-data-expressions" class="section level3">
-<h3 class="hasAnchor">
-<a href="#predicate-functions-within-data-expressions" class="anchor"></a>Predicate functions within data-expressions</h3>
-<p>There is one exception to the unambiguous lookup rules in data expressions. If a data-var is not found in the data frame, tidyselect attempts to find a predicate function in the environment. This introduces an ambiguity when a predicate function has the same name as a column. This is a conscious design decision:</p>
-<ul>
-<li>It makes it easier to use predicate functions interactively.</li>
-<li>The names of predicate functions and data frame columns rarely overlap.</li>
-</ul>
-<p>If you need 100% unambiguity, use <code><a href="../reference/all_of.html">all_of()</a></code> to refer to data frame columns, and force predicate functions with <code>!!</code> or <code><a href="https://rdrr.io/r/base/force.html">force()</a></code>. <code><a href="../reference/all_of.html">all_of()</a></code> is a way to explicitly opt for data lookup because it fails if the data frame doesn’t contain the columns, even if a function of the same name is found in the environment:</p>
-<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="no">Species</span> <span class="kw">&lt;-</span> <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">is.numeric</a></span>(<span class="no">x</span>)
-
-<span class="co"># Since `Species` is defined as a function, you won't get an error</span>
-<span class="co"># even though the data-var doesn't exist:</span>
-<span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">Species</span>)
-<span class="co">#&gt; Error: Can't subset columns that don't exist.</span>
-<span class="co">#&gt; ✖ Column `Species` doesn't exist.</span>
-
-<span class="co"># Use `all_of()` to be explicit that you want a data-var, not an env-var:</span>
-<span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="fu"><a href="../reference/all_of.html">all_of</a></span>(<span class="st">"Species"</span>))
-<span class="co">#&gt; Error: Can't subset columns that don't exist.</span>
-<span class="co">#&gt; ✖ Column `Species` doesn't exist.</span></pre></body></html></div>
-<p>Similarly, you can be explicit about finding predicate functions in the environment by forcing the symbols:</p>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="co"># By default the data-var has precedence over the env-var:</span>
-<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">Species</span>)
-<span class="co">#&gt; Species </span>
-<span class="co">#&gt;       5</span>
-
-<span class="co"># Use the force operator `!!` to force the env-var `Species`:</span>
-<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(!!<span class="no">Species</span>)
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
-<span class="co">#&gt;            1            2            3            4</span>
-
-<span class="co"># Use the env-expression `force()` to force the env-var `Species`:</span>
-<span class="no">iris</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="fu"><a href="https://rdrr.io/r/base/force.html">force</a></span>(<span class="no">Species</span>))
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
-<span class="co">#&gt;            1            2            3            4</span></pre></body></html></div>
-</div>
 <div id="arithmetic-operators" class="section level3">
 <h3 class="hasAnchor">
 <a href="#arithmetic-operators" class="anchor"></a>Arithmetic operators</h3>
 <p>Within data-expressions (see Evaluation section), <code><a href="https://rdrr.io/r/base/Arithmetic.html">+</a></code>, <code><a href="https://rdrr.io/r/base/Arithmetic.html">*</a></code> and <code><a href="https://rdrr.io/r/base/Arithmetic.html">/</a></code> are overridden to cause an error. This is to prevent confusion stemming from normal data masking usage where variables can be transformed on the fly:</p>
-<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">cyl</span>^<span class="fl">2</span>)
+<div class="sourceCode" id="cb33"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">cyl</span>^<span class="fl">2</span>)
 <span class="co">#&gt; Error: Can't use arithmetic operator `^` in selection context.</span>
 
 <span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">mpg</span> * <span class="no">wt</span>)
@@ -495,7 +437,7 @@
 <h3 class="hasAnchor">
 <a href="#all-renaming-inputs-must-be-named" class="anchor"></a>All renaming inputs must be named</h3>
 <p>Unlike <code><a href="../reference/eval_select.html">eval_select()</a></code> which can select without renaming, <code><a href="../reference/eval_select.html">eval_rename()</a></code> expects a fully named selection. If one or several names are missing, an error is thrown.</p>
-<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">mpg</span>)
+<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">mpg</span>)
 <span class="co">#&gt; mpg </span>
 <span class="co">#&gt;   1</span>
 
@@ -506,7 +448,7 @@
 <h3 class="hasAnchor">
 <a href="#renaming-to-an-existing-variable-name" class="anchor"></a>Renaming to an existing variable name</h3>
 <p>If the input data is a data frame, tidyselect generally throws an error when duplicate column names are selected, in order to respect the invariant of unique column names.</p>
-<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="co"># Lists can have duplicates</span>
+<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="co"># Lists can have duplicates</span>
 <span class="fu"><a href="https://rdrr.io/r/base/list.html">as.list</a></span>(<span class="no">mtcars</span>) <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="kw">foo</span> <span class="kw">=</span> <span class="no">mpg</span>, <span class="kw">foo</span> <span class="kw">=</span> <span class="no">cyl</span>)
 <span class="co">#&gt; foo foo </span>
 <span class="co">#&gt;   1   2</span>
@@ -517,7 +459,7 @@
 <span class="co">#&gt; ✖ These names are duplicated:</span>
 <span class="co">#&gt;   * "foo" at locations 1 and 2.</span></pre></body></html></div>
 <p>A selection can rename a variable to an existing name if the latter is not part of the selection:</p>
-<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">cyl</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
+<div class="sourceCode" id="cb36"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">cyl</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
 <span class="co">#&gt; Error: Names must be unique.</span>
 <span class="co">#&gt; ✖ These names are duplicated:</span>
 <span class="co">#&gt;   * "cyl" at locations 1 and 2.</span>
@@ -526,13 +468,13 @@
 <span class="co">#&gt; disp  cyl </span>
 <span class="co">#&gt;    3    1</span></pre></body></html></div>
 <p>This is not possible when renaming.</p>
-<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">rename_loc</span>(<span class="no">cyl</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
+<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">rename_loc</span>(<span class="no">cyl</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
 <span class="co">#&gt; Error: All renaming inputs must be named.</span>
 
 <span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">rename_loc</span>(<span class="no">disp</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
 <span class="co">#&gt; Error: All renaming inputs must be named.</span></pre></body></html></div>
 <p>However, the name conflict can be solved by renaming the existing variable to another name:</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="kw">foo</span> <span class="kw">=</span> <span class="no">cyl</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
+<div class="sourceCode" id="cb38"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="kw">foo</span> <span class="kw">=</span> <span class="no">cyl</span>, <span class="kw">cyl</span> <span class="kw">=</span> <span class="no">mpg</span>)
 <span class="co">#&gt; foo cyl </span>
 <span class="co">#&gt;   2   1</span>
 
@@ -546,18 +488,18 @@
 <a href="#duplicate-columns-in-data-frames" class="anchor"></a>Duplicate columns in data frames</h2>
 <p>Normally a data frame shouldn’t have duplicate names. However, the real world is messy and duplicates do happen in the wild. tidyselect tries to be as permissive as it can with these duplicates so that users can restore unique names with <code>select()</code> or <code>rename()</code>.</p>
 <p>First let’s create a data frame with duplicate names:</p>
-<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">&lt;-</span> <span class="kw pkg">vctrs</span><span class="kw ns">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/new_data_frame.html">new_data_frame</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="fl">3</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">&lt;-</span> <span class="kw pkg">vctrs</span><span class="kw ns">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/new_data_frame.html">new_data_frame</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">x</span> <span class="kw">=</span> <span class="fl">3</span>))</pre></body></html></div>
 <p>If the duplicates are not part of the selection, they are simply ignored:</p>
-<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">y</span>)
+<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">y</span>)
 <span class="co">#&gt; y </span>
 <span class="co">#&gt; 2</span></pre></body></html></div>
 <p>If the duplicates are selected, this is an error:</p>
-<div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">x</span>)
+<div class="sourceCode" id="cb41"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">x</span>)
 <span class="co">#&gt; Error: Names must be unique.</span>
 <span class="co">#&gt; ✖ These names are duplicated:</span>
 <span class="co">#&gt;   * "x" at locations 1 and 2.</span></pre></body></html></div>
 <p>The duplicate names can be repaired by renaming chosen locations:</p>
-<div class="sourceCode" id="cb44"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">x</span>, <span class="kw">foo</span> <span class="kw">=</span> <span class="fl">3</span>)
+<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="no">dups</span> <span class="kw">%&gt;%</span> <span class="fu">select_loc</span>(<span class="no">x</span>, <span class="kw">foo</span> <span class="kw">=</span> <span class="fl">3</span>)
 <span class="co">#&gt;   x foo </span>
 <span class="co">#&gt;   1   3</span>
 
@@ -569,7 +511,7 @@
 <h2 class="hasAnchor">
 <a href="#acknowledgements" class="anchor"></a>Acknowledgements</h2>
 <p>The tidyselect syntax was inspired by the <code><a href="https://rdrr.io/r/base/subset.html">base::subset()</a></code> function written by Peter Dalgaard. The <code>select</code> parameter of <code><a href="https://rdrr.io/r/base/subset.html">subset.data.frame()</a></code> is evaluated in a data mask where the column names are bound to their locations in the data frame. This allows <code>:</code> to create sequences of variable locations. The locations can be combined with <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>. This selection interface set the tone for the development of the tidyselect syntax.</p>
-<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="kw">select</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">cyl</span>, <span class="no">hp</span>:<span class="no">wt</span>))
+<div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">mtcars</span> <span class="kw">%&gt;%</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="kw">select</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="no">cyl</span>, <span class="no">hp</span>:<span class="no">wt</span>))
 <span class="co">#&gt; # A tibble: 32 x 4</span>
 <span class="co">#&gt;     cyl    hp  drat    wt</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
