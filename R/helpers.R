@@ -4,7 +4,7 @@
 #'
 #' ## Overview of selection features:
 #'
-#' ```{r, child = identity("inst/man/overview.Rmd")}
+#' ```{r, child = identity("man/rmd/overview.Rmd")}
 #' ```
 #'
 #' @section Simple examples:
