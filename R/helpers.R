@@ -1,6 +1,6 @@
 #' Selection language
 #'
-#' @description
+#' @section Overview of selection features:
 #'
 #' Tidyverse selections implement a dialect of R where operators make
 #' it easy to select variables:
@@ -34,7 +34,7 @@
 #' * [where()]: Applies a function to all variables and selects those
 #'   for which the function returns `TRUE`.
 #'
-#' @section Examples:
+#' @section Simple examples:
 #'
 #' ```{r, child = "man/rmd/setup.Rmd"}
 #' ```

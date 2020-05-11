@@ -5,6 +5,11 @@
 \alias{select_helpers}
 \title{Selection language}
 \description{
+Selection language
+}
+\section{Overview of selection features}{
+
+
 Tidyverse selections implement a dialect of R where operators make
 it easy to select variables:
 \itemize{
@@ -46,7 +51,8 @@ This helper selects variables with a function:
 for which the function returns \code{TRUE}.
 }
 }
-\section{Examples}{
+
+\section{Simple examples}{
 
 
 Here we show the usage for the basic selection operators. See the
