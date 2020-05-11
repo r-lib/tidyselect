@@ -326,6 +326,15 @@ test_that("eval_sym() still supports predicate functions starting with `is`", {
   expect_identical(select_loc(iris, isTRUE), select_loc(iris, where(isTRUE)))
 })
 
+test_that("formula shorthand must be wrapped", {
+  verify_errors({
+    expect_error(select_loc(mtcars, ~ is.numeric(.x)))
+    expect_error(select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x)))
+    expect_error(select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x) ||
+                                      is.numeric(.x) || is.factor(.x) || is.character(.x)))
+  })
+})
+
 test_that("eval_walk() has informative messages", {
   verify_output(test_path("outputs", "test-helpers-where.txt"), {
     "# Using a predicate without where() warns"
@@ -335,5 +344,11 @@ test_that("eval_walk() has informative messages", {
 
     "Warning is not repeated"
     invisible(select_loc(iris, is_integer))
+
+    "formula shorthand must be wrapped"
+    select_loc(mtcars, ~ is.numeric(.x))
+    select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x))
+    select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x) ||
+                         is.numeric(.x) || is.factor(.x) || is.character(.x))
   })
 })

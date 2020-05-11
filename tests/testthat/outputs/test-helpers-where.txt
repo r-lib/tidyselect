@@ -40,3 +40,32 @@ This message is displayed once per session.
 
 > # Warning is not repeated
 > invisible(select_loc(iris, is_integer))
+> # formula shorthand must be wrapped
+> select_loc(mtcars, ~is.numeric(.x))
+Error: Formula shorthand must be wrapped in `where()`.
+
+  # Bad
+  data %>% select(~is.numeric(.x))
+
+  # Good
+  data %>% select(where(~is.numeric(.x)))
+
+> select_loc(mtcars, ~is.numeric(.x) || is.factor(.x) || is.character(.x))
+Error: Formula shorthand must be wrapped in `where()`.
+
+  # Bad
+  data %>% select(~is.numeric(.x) || is.factor(.x) || is.character(.x))
+
+  # Good
+  data %>% select(where(~is.numeric(.x) || is.factor(.x) || is.character(.x)))
+
+> select_loc(mtcars, ~is.numeric(.x) || is.factor(.x) || is.character(.x) ||
++   is.numeric(.x) || is.factor(.x) || is.character(.x))
+Error: Formula shorthand must be wrapped in `where()`.
+
+  # Bad
+  data %>% select(~...)
+
+  # Good
+  data %>% select(where(~...))
+

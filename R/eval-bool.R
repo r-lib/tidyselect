@@ -57,3 +57,17 @@ stop_bad_arith_op <- function(op) {
     "Can't use arithmetic operator `{op}` in selection context."
   ))
 }
+
+stop_formula <- function(expr) {
+  f <- as_label(expr)
+
+  abort(glue_line(c(
+    "Formula shorthand must be wrapped in `where()`.",
+    "",
+    "  # Bad",
+    "  data %>% select({f})",
+    "",
+    "  # Good",
+    "  data %>% select(where({f}))"
+  )))
+}

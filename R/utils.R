@@ -343,3 +343,8 @@ has_crayon <- function() {
   is_installed("crayon") && crayon::has_color()
 }
 silver <- function(x) if (has_crayon()) crayon::silver(x) else x
+
+glue_line <- function(..., env = parent.frame()) {
+  out <- map_chr(chr(...), glue::glue, .envir = env)
+  paste(out, collapse = "\n")
+}

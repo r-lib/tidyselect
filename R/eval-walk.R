@@ -123,6 +123,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `*` = stop_bad_arith_op("*"),
     `/` = eval_slash(expr, data_mask, context_mask),
     `^` = stop_bad_arith_op("^"),
+    `~` = stop_formula(expr),
     .data = eval(expr, data_mask),
     eval_context(expr, context_mask)
   )
@@ -218,6 +219,7 @@ call_kind <- function(expr) {
     `*` = ,
     `/` = ,
     `^` = ,
+    `~` = ,
     `c` = fn,
     "call"
   )
