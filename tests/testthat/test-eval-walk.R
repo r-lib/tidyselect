@@ -124,7 +124,7 @@ test_that("can use arithmetic operators in non-data context", {
 })
 
 test_that("symbol lookup outside data informs caller about better practice", {
-  scoped_options(tidyselect_verbosity = "verbose")
+  local_options(tidyselect_verbosity = "verbose")
 
   vars1 <- c("a", "b")
   expect_message(select_loc(letters2, vars1))

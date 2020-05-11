@@ -1,5 +1,5 @@
 
-scoped_options(
+local_options(
   lifecycle_verbosity = "quiet"
 )
 
