@@ -5,10 +5,7 @@
 \alias{select_helpers}
 \title{Selection language}
 \description{
-Selection language
-}
-\section{Overview of selection features}{
-
+\subsection{Overview of selection features:}{
 
 Tidyverse selections implement a dialect of R where operators make
 it easy to select variables:
@@ -23,35 +20,35 @@ sets of variables.
 In addition, you can use \strong{selection helpers}. Some helpers select specific
 columns:
 \itemize{
-\item \code{\link[=everything]{everything()}}: Matches all variables.
-\item \code{\link[=last_col]{last_col()}}: Select last variable, possibly with an offset.
+\item \code{\link[tidyselect:everything]{everything()}}: Matches all variables.
+\item \code{\link[tidyselect:last_col]{last_col()}}: Select last variable, possibly with an offset.
 }
 
 These helpers select variables by matching patterns in their names:
 \itemize{
-\item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
-\item \code{\link[=ends_with]{ends_with()}}: Ends with a suffix.
-\item \code{\link[=contains]{contains()}}: Contains a literal string.
-\item \code{\link[=matches]{matches()}}: Matches a regular expression.
-\item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
+\item \code{\link[tidyselect:starts_with]{starts_with()}}: Starts with a prefix.
+\item \code{\link[tidyselect:ends_with]{ends_with()}}: Ends with a suffix.
+\item \code{\link[tidyselect:contains]{contains()}}: Contains a literal string.
+\item \code{\link[tidyselect:matches]{matches()}}: Matches a regular expression.
+\item \code{\link[tidyselect:num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
 }
 
 These helpers select variables from a character vector:
 \itemize{
-\item \code{\link[=all_of]{all_of()}}: Matches variable names in a character vector. All
+\item \code{\link[tidyselect:all_of]{all_of()}}: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
 thrown.
-\item \code{\link[=any_of]{any_of()}}: Same as \code{all_of()}, except that no error is thrown
+\item \code{\link[tidyselect:any_of]{any_of()}}: Same as \code{all_of()}, except that no error is thrown
 for names that don't exist.
 }
 
 This helper selects variables with a function:
 \itemize{
-\item \code{\link[=where]{where()}}: Applies a function to all variables and selects those
+\item \code{\link[tidyselect:where]{where()}}: Applies a function to all variables and selects those
 for which the function returns \code{TRUE}.
 }
 }
-
+}
 \section{Simple examples}{
 
 

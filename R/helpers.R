@@ -1,38 +1,11 @@
 #' Selection language
 #'
-#' @section Overview of selection features:
+#' @description
 #'
-#' Tidyverse selections implement a dialect of R where operators make
-#' it easy to select variables:
+#' ## Overview of selection features:
 #'
-#' - `:` for selecting a range of consecutive variables.
-#' - `!` for taking the complement of a set of variables.
-#' - `&` and `|` for selecting the intersection or the union of two
-#'   sets of variables.
-#' - `c()` for combining selections.
-#'
-#' In addition, you can use __selection helpers__. Some helpers select specific
-#' columns:
-#' * [everything()]: Matches all variables.
-#' * [last_col()]: Select last variable, possibly with an offset.
-#'
-#' These helpers select variables by matching patterns in their names:
-#' * [starts_with()]: Starts with a prefix.
-#' * [ends_with()]: Ends with a suffix.
-#' * [contains()]: Contains a literal string.
-#' * [matches()]: Matches a regular expression.
-#' * [num_range()]: Matches a numerical range like x01, x02, x03.
-#'
-#' These helpers select variables from a character vector:
-#' * [all_of()]: Matches variable names in a character vector. All
-#'   names must be present, otherwise an out-of-bounds error is
-#'   thrown.
-#' * [any_of()]: Same as `all_of()`, except that no error is thrown
-#'   for names that don't exist.
-#'
-#' This helper selects variables with a function:
-#' * [where()]: Applies a function to all variables and selects those
-#'   for which the function returns `TRUE`.
+#' ```{r, child = identity("inst/man/overview.Rmd")}
+#' ```
 #'
 #' @section Simple examples:
 #'
