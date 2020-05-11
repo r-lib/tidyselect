@@ -33,7 +33,7 @@ a variable is removed.
 The order of selected columns is determined by the order in the
 vector.
 }
-\section{Usage}{
+\section{Examples}{
 
 
 Selection helpers can be used in functions like \code{dplyr::select()}

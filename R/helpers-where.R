@@ -6,7 +6,7 @@
 #' @param fn A function that returns `TRUE` or `FALSE` (technically, a
 #'   _predicate_ function). Can also be a purrr-like formula.
 #'
-#' @section Usage:
+#' @section Examples:
 #'
 #' ```{r, child = "man/rmd/setup.Rmd"}
 #' ```

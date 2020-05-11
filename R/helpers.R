@@ -34,7 +34,7 @@
 #' * [where()]: Applies a function to all variables and selects those
 #'   for which the function returns `TRUE`.
 #'
-#' @section Basic usage:
+#' @section Examples:
 #'
 #' ```{r, child = "man/rmd/setup.Rmd"}
 #' ```
@@ -75,7 +75,7 @@
 #' iris %>% pivot_longer(c(Sepal.Length, Petal.Length))
 #' ```
 #'
-#' @section Operator usage:
+#' ## Operators:
 #'
 #' The `:` operator selects a range of consecutive variables:
 #'

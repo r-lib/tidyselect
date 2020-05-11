@@ -24,7 +24,7 @@ combination with other tidyselect operators.
 \item \code{\link[=last_col]{last_col()}} selects the last variable.
 }
 }
-\section{Usage}{
+\section{Examples}{
 
 
 Selection helpers can be used in functions like \code{dplyr::select()}
@@ -77,7 +77,8 @@ mtcars \%>\% pivot_longer(last_col())
 #> # ... with 28 more rows
 }\if{html}{\out{</div>}}
 
-Pass an offset to select a number of variables from the end:\if{html}{\out{<div class="r">}}\preformatted{mtcars \%>\% select(1:last_col(5))
+Supply an offset \code{n} to select a variable located \code{n} positions
+from the end:\if{html}{\out{<div class="r">}}\preformatted{mtcars \%>\% select(1:last_col(5))
 #> # A tibble: 32 x 6
 #>     mpg   cyl  disp    hp  drat    wt
 #>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>

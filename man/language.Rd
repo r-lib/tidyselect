@@ -46,7 +46,7 @@ This helper selects variables with a function:
 for which the function returns \code{TRUE}.
 }
 }
-\section{Basic usage}{
+\section{Examples}{
 
 
 Here we show the usage for the basic selection operators. See the
@@ -104,10 +104,7 @@ dots. In this case use \code{c()} to select multiple variables:\if{html}{\out{<d
 #> 4         3           0.2 setosa  Petal.Length   1.4
 #> # ... with 296 more rows
 }\if{html}{\out{</div>}}
-}
-
-\section{Operator usage}{
-
+\subsection{Operators:}{
 
 The \code{:} operator selects a range of consecutive variables:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(name:mass)
 #> # A tibble: 87 x 3
@@ -184,6 +181,7 @@ To take the difference between two selections, combine the \code{&} and
 #> 4          1.5
 #> # ... with 146 more rows
 }\if{html}{\out{</div>}}
+}
 }
 
 \section{Details}{

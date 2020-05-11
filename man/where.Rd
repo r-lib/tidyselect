@@ -14,7 +14,7 @@ where(fn)
 This \link[=language]{selection helper} selects the variables for which a
 function returns \code{TRUE}.
 }
-\section{Usage}{
+\section{Examples}{
 
 
 Selection helpers can be used in functions like \code{dplyr::select()}

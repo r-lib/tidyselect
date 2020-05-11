@@ -19,7 +19,7 @@
 #' @inheritParams starts_with
 #' @param x A vector of character names or numeric locations.
 #'
-#' @section Usage:
+#' @section Examples:
 #'
 #' ```{r, child = "man/rmd/setup.Rmd"}
 #' ```

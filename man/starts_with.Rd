@@ -49,7 +49,7 @@ to a given pattern.
 \item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
 }
 }
-\section{Usage}{
+\section{Examples}{
 
 
 Selection helpers can be used in functions like \code{dplyr::select()}

@@ -19,7 +19,7 @@
 #'   the variables are taken from the current selection context (as
 #'   established by functions like `select()` or `pivot_longer()`).
 #'
-#' @section Usage:
+#' @section Examples:
 #'
 #' ```{r, child = "man/rmd/setup.Rmd"}
 #' ```

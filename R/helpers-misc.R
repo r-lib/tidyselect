@@ -11,7 +11,7 @@
 #'
 #' @inheritParams starts_with
 #'
-#' @section Usage:
+#' @section Examples:
 #'
 #' ```{r, child = "man/rmd/setup.Rmd"}
 #' ```
@@ -43,7 +43,8 @@
 #' mtcars %>% pivot_longer(last_col())
 #' ```
 #'
-#' Pass an offset to select a number of variables from the end:
+#' Supply an offset `n` to select a variable located `n` positions
+#' from the end:
 #'
 #' ```{r, comment = "#>", collapse = TRUE}
 #' mtcars %>% select(1:last_col(5))
