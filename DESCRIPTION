@@ -17,7 +17,7 @@ Imports:
     glue (>= 1.3.0),
     purrr (>= 0.3.2),
     rlang (>= 0.4.6),
-    vctrs (>= 0.2.2)
+    vctrs (>= 0.3.0)
 Suggests:
     covr,
     crayon,
