@@ -227,92 +227,92 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
 or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyverse</span>)
 
 <span class='co'># For better printing</span>
-<span class='no'>iris</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'>as_tibble</span>(<span class='no'>iris</span>)</pre><p></div></p>
+<span class='no'>iris</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='no'>iris</span>)</pre><p></div></p>
 <p><code>starts_with()</code> selects all variables matching a prefix and
-<code>ends_with()</code> matches a suffix:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='st'>"Sepal"</span>))
-<span class='co'>#&amp;gt; # A tibble: 150 x 2</span>
-<span class='co'>#&amp;gt;   Sepal.Length Sepal.Width</span>
-<span class='co'>#&amp;gt;          &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1          5.1         3.5</span>
-<span class='co'>#&amp;gt; 2          4.9         3  </span>
-<span class='co'>#&amp;gt; 3          4.7         3.2</span>
-<span class='co'>#&amp;gt; 4          4.6         3.1</span>
-<span class='co'>#&amp;gt; # ... with 146 more rows</span>
+<code>ends_with()</code> matches a suffix:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='st'>"Sepal"</span>))
+<span class='co'>#&gt; # A tibble: 150 x 2</span>
+<span class='co'>#&gt;   Sepal.Length Sepal.Width</span>
+<span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1          5.1         3.5</span>
+<span class='co'>#&gt; 2          4.9         3  </span>
+<span class='co'>#&gt; 3          4.7         3.2</span>
+<span class='co'>#&gt; 4          4.6         3.1</span>
+<span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))
-<span class='co'>#&amp;gt; # A tibble: 150 x 2</span>
-<span class='co'>#&amp;gt;   Sepal.Width Petal.Width</span>
-<span class='co'>#&amp;gt;         &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1         3.5         0.2</span>
-<span class='co'>#&amp;gt; 2         3           0.2</span>
-<span class='co'>#&amp;gt; 3         3.2         0.2</span>
-<span class='co'>#&amp;gt; 4         3.1         0.2</span>
-<span class='co'>#&amp;gt; # ... with 146 more rows</span></pre><p></div></p>
+<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))
+<span class='co'>#&gt; # A tibble: 150 x 2</span>
+<span class='co'>#&gt;   Sepal.Width Petal.Width</span>
+<span class='co'>#&gt;         &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1         3.5         0.2</span>
+<span class='co'>#&gt; 2         3           0.2</span>
+<span class='co'>#&gt; 3         3.2         0.2</span>
+<span class='co'>#&gt; 4         3.1         0.2</span>
+<span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
 <p>You can supply multiple prefixes or suffixes. Note how the order of
-variables depends on the order of the suffixes and prefixes:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal"</span>, <span class='st'>"Sepal"</span>)))
-<span class='co'>#&amp;gt; # A tibble: 150 x 4</span>
-<span class='co'>#&amp;gt;   Petal.Length Petal.Width Sepal.Length Sepal.Width</span>
-<span class='co'>#&amp;gt;          &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1          1.4         0.2          5.1         3.5</span>
-<span class='co'>#&amp;gt; 2          1.4         0.2          4.9         3  </span>
-<span class='co'>#&amp;gt; 3          1.3         0.2          4.7         3.2</span>
-<span class='co'>#&amp;gt; 4          1.5         0.2          4.6         3.1</span>
-<span class='co'>#&amp;gt; # ... with 146 more rows</span>
+variables depends on the order of the suffixes and prefixes:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal"</span>, <span class='st'>"Sepal"</span>)))
+<span class='co'>#&gt; # A tibble: 150 x 4</span>
+<span class='co'>#&gt;   Petal.Length Petal.Width Sepal.Length Sepal.Width</span>
+<span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1          1.4         0.2          5.1         3.5</span>
+<span class='co'>#&gt; 2          1.4         0.2          4.9         3  </span>
+<span class='co'>#&gt; 3          1.3         0.2          4.7         3.2</span>
+<span class='co'>#&gt; 4          1.5         0.2          4.6         3.1</span>
+<span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>ends_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Width"</span>, <span class='st'>"Length"</span>)))
-<span class='co'>#&amp;gt; # A tibble: 150 x 4</span>
-<span class='co'>#&amp;gt;   Sepal.Width Petal.Width Sepal.Length Petal.Length</span>
-<span class='co'>#&amp;gt;         &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1         3.5         0.2          5.1          1.4</span>
-<span class='co'>#&amp;gt; 2         3           0.2          4.9          1.4</span>
-<span class='co'>#&amp;gt; 3         3.2         0.2          4.7          1.3</span>
-<span class='co'>#&amp;gt; 4         3.1         0.2          4.6          1.5</span>
-<span class='co'>#&amp;gt; # ... with 146 more rows</span></pre><p></div></p>
-<p><code>contains()</code> selects columns whose names contain a word:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>contains</span>(<span class='st'>"al"</span>))
-<span class='co'>#&amp;gt; # A tibble: 150 x 4</span>
-<span class='co'>#&amp;gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class='co'>#&amp;gt;          &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1          5.1         3.5          1.4         0.2</span>
-<span class='co'>#&amp;gt; 2          4.9         3            1.4         0.2</span>
-<span class='co'>#&amp;gt; 3          4.7         3.2          1.3         0.2</span>
-<span class='co'>#&amp;gt; 4          4.6         3.1          1.5         0.2</span>
-<span class='co'>#&amp;gt; # ... with 146 more rows</span></pre><p></div></p>
+<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>ends_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Width"</span>, <span class='st'>"Length"</span>)))
+<span class='co'>#&gt; # A tibble: 150 x 4</span>
+<span class='co'>#&gt;   Sepal.Width Petal.Width Sepal.Length Petal.Length</span>
+<span class='co'>#&gt;         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1         3.5         0.2          5.1          1.4</span>
+<span class='co'>#&gt; 2         3           0.2          4.9          1.4</span>
+<span class='co'>#&gt; 3         3.2         0.2          4.7          1.3</span>
+<span class='co'>#&gt; 4         3.1         0.2          4.6          1.5</span>
+<span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
+<p><code>contains()</code> selects columns whose names contain a word:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>contains</span>(<span class='st'>"al"</span>))
+<span class='co'>#&gt; # A tibble: 150 x 4</span>
+<span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1          5.1         3.5          1.4         0.2</span>
+<span class='co'>#&gt; 2          4.9         3            1.4         0.2</span>
+<span class='co'>#&gt; 3          4.7         3.2          1.3         0.2</span>
+<span class='co'>#&gt; 4          4.6         3.1          1.5         0.2</span>
+<span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
 <p>These helpers do not use regular expressions. To select with a
 regexp use <code>matches()</code><div class="r"></p><pre><span class='co'># [pt] is matched literally:</span>
-<span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>contains</span>(<span class='st'>"[pt]al"</span>))
-<span class='co'>#&amp;gt; # A tibble: 150 x 0</span>
+<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>contains</span>(<span class='st'>"[pt]al"</span>))
+<span class='co'>#&gt; # A tibble: 150 x 0</span>
 
 <span class='co'># [pt] is interpreted as a regular expression</span>
-<span class='no'>iris</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>matches</span>(<span class='st'>"[pt]al"</span>))
-<span class='co'>#&amp;gt; # A tibble: 150 x 4</span>
-<span class='co'>#&amp;gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
-<span class='co'>#&amp;gt;          &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;        &amp;lt;dbl&amp;gt;       &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1          5.1         3.5          1.4         0.2</span>
-<span class='co'>#&amp;gt; 2          4.9         3            1.4         0.2</span>
-<span class='co'>#&amp;gt; 3          4.7         3.2          1.3         0.2</span>
-<span class='co'>#&amp;gt; 4          4.6         3.1          1.5         0.2</span>
-<span class='co'>#&amp;gt; # ... with 146 more rows</span></pre><p></div></p>
+<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>matches</span>(<span class='st'>"[pt]al"</span>))
+<span class='co'>#&gt; # A tibble: 150 x 4</span>
+<span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
+<span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1          5.1         3.5          1.4         0.2</span>
+<span class='co'>#&gt; 2          4.9         3            1.4         0.2</span>
+<span class='co'>#&gt; 3          4.7         3.2          1.3         0.2</span>
+<span class='co'>#&gt; 4          4.6         3.1          1.5         0.2</span>
+<span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
 <p><code>starts_with()</code> selects all variables starting with a prefix. To
-select a range, use <code>num_range()</code>. Compare:<div class="r"></p><pre><span class='no'>billboard</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='st'>"wk"</span>))
-<span class='co'>#&amp;gt; # A tibble: 317 x 76</span>
-<span class='co'>#&amp;gt;     wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13</span>
-<span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1    87    82    72    77    87    94    99    NA    NA    NA    NA    NA    NA</span>
-<span class='co'>#&amp;gt; 2    91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span>
-<span class='co'>#&amp;gt; 3    81    70    68    67    66    57    54    53    51    51    51    51    47</span>
-<span class='co'>#&amp;gt; 4    76    76    72    69    67    65    55    59    62    61    61    59    61</span>
-<span class='co'>#&amp;gt; # ... with 313 more rows, and 63 more variables: wk14 &amp;lt;dbl&amp;gt;, wk15 &amp;lt;dbl&amp;gt;,</span>
-<span class='co'>#&amp;gt; #   wk16 &amp;lt;dbl&amp;gt;, wk17 &amp;lt;dbl&amp;gt;, wk18 &amp;lt;dbl&amp;gt;, wk19 &amp;lt;dbl&amp;gt;, wk20 &amp;lt;dbl&amp;gt;, wk21 &amp;lt;dbl&amp;gt;, ...</span>
+select a range, use <code>num_range()</code>. Compare:<div class="r"></p><pre><span class='no'>billboard</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='st'>"wk"</span>))
+<span class='co'>#&gt; # A tibble: 317 x 76</span>
+<span class='co'>#&gt;     wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13</span>
+<span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1    87    82    72    77    87    94    99    NA    NA    NA    NA    NA    NA</span>
+<span class='co'>#&gt; 2    91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span>
+<span class='co'>#&gt; 3    81    70    68    67    66    57    54    53    51    51    51    51    47</span>
+<span class='co'>#&gt; 4    76    76    72    69    67    65    55    59    62    61    61    59    61</span>
+<span class='co'>#&gt; # ... with 313 more rows, and 63 more variables: wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;,</span>
+<span class='co'>#&gt; #   wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, ...</span>
 
-<span class='no'>billboard</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'>num_range</span>(<span class='st'>"wk"</span>, <span class='fl'>10</span>:<span class='fl'>15</span>))
-<span class='co'>#&amp;gt; # A tibble: 317 x 6</span>
-<span class='co'>#&amp;gt;    wk10  wk11  wk12  wk13  wk14  wk15</span>
-<span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1    NA    NA    NA    NA    NA    NA</span>
-<span class='co'>#&amp;gt; 2    NA    NA    NA    NA    NA    NA</span>
-<span class='co'>#&amp;gt; 3    51    51    51    47    44    38</span>
-<span class='co'>#&amp;gt; 4    61    61    59    61    66    72</span>
-<span class='co'>#&amp;gt; # ... with 313 more rows</span></pre><p></div></p>
+<span class='no'>billboard</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>num_range</span>(<span class='st'>"wk"</span>, <span class='fl'>10</span>:<span class='fl'>15</span>))
+<span class='co'>#&gt; # A tibble: 317 x 6</span>
+<span class='co'>#&gt;    wk10  wk11  wk12  wk13  wk14  wk15</span>
+<span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1    NA    NA    NA    NA    NA    NA</span>
+<span class='co'>#&gt; 2    NA    NA    NA    NA    NA    NA</span>
+<span class='co'>#&gt; 3    51    51    51    47    44    38</span>
+<span class='co'>#&gt; 4    61    61    59    61    66    72</span>
+<span class='co'>#&gt; # ... with 313 more rows</span></pre><p></div></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p>The <a href='language.html'>selection language</a> page, which includes links to other selection helpers.</p></div>

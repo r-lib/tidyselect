@@ -45,66 +45,66 @@ Ambiguity between columns and external variables
 
 
 With selecting functions like dplyr::select() or
-tidyr::pivot_longer(), you can refer to variables by name:mtcars %&amp;amp;gt;% select(cyl, am, vs)
-#&amp;amp;gt; # A tibble: 32 x 3
-#&amp;amp;gt;     cyl    am    vs
-#&amp;amp;gt;   &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt;
-#&amp;amp;gt; 1     6     1     0
-#&amp;amp;gt; 2     6     1     0
-#&amp;amp;gt; 3     4     1     1
-#&amp;amp;gt; 4     6     0     1
-#&amp;amp;gt; # ... with 28 more rows
+tidyr::pivot_longer(), you can refer to variables by name:mtcars %&amp;gt;% select(cyl, am, vs)
+#&amp;gt; # A tibble: 32 x 3
+#&amp;gt;     cyl    am    vs
+#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+#&amp;gt; 1     6     1     0
+#&amp;gt; 2     6     1     0
+#&amp;gt; 3     4     1     1
+#&amp;gt; 4     6     0     1
+#&amp;gt; # ... with 28 more rows
 
-mtcars %&amp;amp;gt;% select(mpg:disp)
-#&amp;amp;gt; # A tibble: 32 x 3
-#&amp;amp;gt;     mpg   cyl  disp
-#&amp;amp;gt;   &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt;
-#&amp;amp;gt; 1  21       6   160
-#&amp;amp;gt; 2  21       6   160
-#&amp;amp;gt; 3  22.8     4   108
-#&amp;amp;gt; 4  21.4     6   258
-#&amp;amp;gt; # ... with 28 more rows
+mtcars %&amp;gt;% select(mpg:disp)
+#&amp;gt; # A tibble: 32 x 3
+#&amp;gt;     mpg   cyl  disp
+#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+#&amp;gt; 1  21       6   160
+#&amp;gt; 2  21       6   160
+#&amp;gt; 3  22.8     4   108
+#&amp;gt; 4  21.4     6   258
+#&amp;gt; # ... with 28 more rows
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.vars &amp;amp;lt;- c(&quot;cyl&quot;, &quot;am&quot;, &quot;vs&quot;)
-result &amp;amp;lt;- mtcars %&amp;amp;gt;% select(vars)
-#&amp;amp;gt; Note: Using an external vector in selections is ambiguous.
-#&amp;amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
-#&amp;amp;gt; i See &amp;amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;amp;gt;.
-#&amp;amp;gt; This message is displayed once per session.
+not clear whether you want a data frame column or an external object.vars &amp;lt;- c(&quot;cyl&quot;, &quot;am&quot;, &quot;vs&quot;)
+result &amp;lt;- mtcars %&amp;gt;% select(vars)
+#&amp;gt; Note: Using an external vector in selections is ambiguous.
+#&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
+#&amp;gt; This message is displayed once per session.
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.some_df &amp;amp;lt;- mtcars[1:4, ]
-some_df$vars &amp;amp;lt;- 1:nrow(some_df)
+contains a column with the same name as your external variable.some_df &amp;lt;- mtcars[1:4, ]
+some_df$vars &amp;lt;- 1:nrow(some_df)
 These are very different objects but it isn’t a problem if the context
 forces you to be specific about where to find vars:vars
-#&amp;amp;gt; [1] &quot;cyl&quot; &quot;am&quot;  &quot;vs&quot;
+#&amp;gt; [1] &quot;cyl&quot; &quot;am&quot;  &quot;vs&quot;
 
 some_df$vars
-#&amp;amp;gt; [1] 1 2 3 4
-In a selection context however, the column wins:some_df %&amp;amp;gt;% select(vars)
-#&amp;amp;gt; # A tibble: 4 x 1
-#&amp;amp;gt;    vars
-#&amp;amp;gt;   &amp;amp;lt;int&amp;amp;gt;
-#&amp;amp;gt; 1     1
-#&amp;amp;gt; 2     2
-#&amp;amp;gt; 3     3
-#&amp;amp;gt; 4     4
+#&amp;gt; [1] 1 2 3 4
+In a selection context however, the column wins:some_df %&amp;gt;% select(vars)
+#&amp;gt; # A tibble: 4 x 1
+#&amp;gt;    vars
+#&amp;gt;   &amp;lt;int&amp;gt;
+#&amp;gt; 1     1
+#&amp;gt; 2     2
+#&amp;gt; 3     3
+#&amp;gt; 4     4
 
 Fixing the ambiguity
 
 
 To make your selection code more robust and silence the message, use
-all_of() to force the external vector:some_df %&amp;amp;gt;% select(all_of(vars))
-#&amp;amp;gt; # A tibble: 4 x 3
-#&amp;amp;gt;     cyl    am    vs
-#&amp;amp;gt;   &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt; &amp;amp;lt;dbl&amp;amp;gt;
-#&amp;amp;gt; 1     6     1     0
-#&amp;amp;gt; 2     6     1     0
-#&amp;amp;gt; 3     4     1     1
-#&amp;amp;gt; 4     6     0     1
+all_of() to force the external vector:some_df %&amp;gt;% select(all_of(vars))
+#&amp;gt; # A tibble: 4 x 3
+#&amp;gt;     cyl    am    vs
+#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
+#&amp;gt; 1     6     1     0
+#&amp;gt; 2     6     1     0
+#&amp;gt; 3     4     1     1
+#&amp;gt; 4     6     0     1
 For more information or if you have comments about this, please see the
 Github issue tracking
 the deprecation process.
@@ -224,66 +224,66 @@ the deprecation process.
 
 
 <p>With selecting functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> or
-<code>tidyr::pivot_longer()</code>, you can refer to variables by name:<div class="r"></p><pre><span class='no'>mtcars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>cyl</span>, <span class='no'>am</span>, <span class='no'>vs</span>)
-<span class='co'>#&amp;gt; # A tibble: 32 x 3</span>
-<span class='co'>#&amp;gt;     cyl    am    vs</span>
-<span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1     6     1     0</span>
-<span class='co'>#&amp;gt; 2     6     1     0</span>
-<span class='co'>#&amp;gt; 3     4     1     1</span>
-<span class='co'>#&amp;gt; 4     6     0     1</span>
-<span class='co'>#&amp;gt; # ... with 28 more rows</span>
+<code>tidyr::pivot_longer()</code>, you can refer to variables by name:<div class="r"></p><pre><span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>cyl</span>, <span class='no'>am</span>, <span class='no'>vs</span>)
+<span class='co'>#&gt; # A tibble: 32 x 3</span>
+<span class='co'>#&gt;     cyl    am    vs</span>
+<span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1     6     1     0</span>
+<span class='co'>#&gt; 2     6     1     0</span>
+<span class='co'>#&gt; 3     4     1     1</span>
+<span class='co'>#&gt; 4     6     0     1</span>
+<span class='co'>#&gt; # ... with 28 more rows</span>
 
-<span class='no'>mtcars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>mpg</span>:<span class='no'>disp</span>)
-<span class='co'>#&amp;gt; # A tibble: 32 x 3</span>
-<span class='co'>#&amp;gt;     mpg   cyl  disp</span>
-<span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1  21       6   160</span>
-<span class='co'>#&amp;gt; 2  21       6   160</span>
-<span class='co'>#&amp;gt; 3  22.8     4   108</span>
-<span class='co'>#&amp;gt; 4  21.4     6   258</span>
-<span class='co'>#&amp;gt; # ... with 28 more rows</span></pre><p></div></p>
+<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>mpg</span>:<span class='no'>disp</span>)
+<span class='co'>#&gt; # A tibble: 32 x 3</span>
+<span class='co'>#&gt;     mpg   cyl  disp</span>
+<span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1  21       6   160</span>
+<span class='co'>#&gt; 2  21       6   160</span>
+<span class='co'>#&gt; 3  22.8     4   108</span>
+<span class='co'>#&gt; 4  21.4     6   258</span>
+<span class='co'>#&gt; # ... with 28 more rows</span></pre><p></div></p>
 <p>For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.<div class="r"></p><pre><span class='no'>vars</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"am"</span>, <span class='st'>"vs"</span>)
-<span class='no'>result</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>mtcars</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
-<span class='co'>#&amp;gt; Note: Using an external vector in selections is ambiguous.</span>
-<span class='co'>#&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.</span>
-<span class='co'>#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.</span>
-<span class='co'>#&amp;gt; This message is displayed once per session.</span></pre><p></div></p>
+not clear whether you want a data frame column or an external object.<div class="r"></p><pre><span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"am"</span>, <span class='st'>"vs"</span>)
+<span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
+<span class='co'>#&gt; Note: Using an external vector in selections is ambiguous.</span>
+<span class='co'>#&gt; i Use `all_of(vars)` instead of `vars` to silence this message.</span>
+<span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span>
+<span class='co'>#&gt; This message is displayed once per session.</span></pre><p></div></p>
 <p>This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='no'>mtcars</span>[<span class='fl'>1</span>:<span class='fl'>4</span>, ]
-<span class='no'>some_df</span>$<span class='no'>vars</span> <span class='kw'>&amp;</span><span class='no'>lt</span>;- <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>some_df</span>)</pre><p></div></p>
+contains a column with the same name as your external variable.<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>[<span class='fl'>1</span>:<span class='fl'>4</span>, ]
+<span class='no'>some_df</span>$<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>some_df</span>)</pre><p></div></p>
 <p>These are very different objects but it isn’t a problem if the context
 forces you to be specific about where to find <code>vars</code>:<div class="r"></p><pre><span class='no'>vars</span>
-<span class='co'>#&amp;gt; [1] "cyl" "am"  "vs"</span>
+<span class='co'>#&gt; [1] "cyl" "am"  "vs"</span>
 
 <span class='no'>some_df</span>$<span class='no'>vars</span>
-<span class='co'>#&amp;gt; [1] 1 2 3 4</span></pre><p></div></p>
-<p>In a selection context however, the column wins:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
-<span class='co'>#&amp;gt; # A tibble: 4 x 1</span>
-<span class='co'>#&amp;gt;    vars</span>
-<span class='co'>#&amp;gt;   &amp;lt;int&amp;gt;</span>
-<span class='co'>#&amp;gt; 1     1</span>
-<span class='co'>#&amp;gt; 2     2</span>
-<span class='co'>#&amp;gt; 3     3</span>
-<span class='co'>#&amp;gt; 4     4</span></pre><p></div></p>
+<span class='co'>#&gt; [1] 1 2 3 4</span></pre><p></div></p>
+<p>In a selection context however, the column wins:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
+<span class='co'>#&gt; # A tibble: 4 x 1</span>
+<span class='co'>#&gt;    vars</span>
+<span class='co'>#&gt;   &lt;int&gt;</span>
+<span class='co'>#&gt; 1     1</span>
+<span class='co'>#&gt; 2     2</span>
+<span class='co'>#&gt; 3     3</span>
+<span class='co'>#&gt; 4     4</span></pre><p></div></p>
 
 <h3>Fixing the ambiguity</h3>
 
 
 <p>To make your selection code more robust and silence the message, use
-<code><a href='all_of.html'>all_of()</a></code> to force the external vector:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&amp;gt;%</span> <span class='fu'>select</span>(<span class='fu'><a href='all_of.html'>all_of</a></span>(<span class='no'>vars</span>))
-<span class='co'>#&amp;gt; # A tibble: 4 x 3</span>
-<span class='co'>#&amp;gt;     cyl    am    vs</span>
-<span class='co'>#&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;</span>
-<span class='co'>#&amp;gt; 1     6     1     0</span>
-<span class='co'>#&amp;gt; 2     6     1     0</span>
-<span class='co'>#&amp;gt; 3     4     1     1</span>
-<span class='co'>#&amp;gt; 4     6     0     1</span></pre><p></div></p>
+<code><a href='all_of.html'>all_of()</a></code> to force the external vector:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'><a href='all_of.html'>all_of</a></span>(<span class='no'>vars</span>))
+<span class='co'>#&gt; # A tibble: 4 x 3</span>
+<span class='co'>#&gt;     cyl    am    vs</span>
+<span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class='co'>#&gt; 1     6     1     0</span>
+<span class='co'>#&gt; 2     6     1     0</span>
+<span class='co'>#&gt; 3     4     1     1</span>
+<span class='co'>#&gt; 4     6     0     1</span></pre><p></div></p>
 <p>For more information or if you have comments about this, please see the
 <a href='https://github.com/r-lib/tidyselect/issues/76'>Github issue</a> tracking
 the deprecation process.</p>

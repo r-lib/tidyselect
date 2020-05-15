@@ -48,16 +48,16 @@ The cols argument of tidyr::pivot_longer().
 
 
 Using a selection helper anywhere else results in an error:starts_with(&quot;foo&quot;)
-#&amp;amp;gt; Error: `starts_with()` must be used within a *selecting* function.
-#&amp;amp;gt; i See &amp;amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;amp;gt;.
+#&amp;gt; Error: `starts_with()` must be used within a *selecting* function.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.
 
 mtcars[contains(&quot;foo&quot;)]
-#&amp;amp;gt; Error: `contains()` must be used within a *selecting* function.
-#&amp;amp;gt; i See &amp;amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;amp;gt;.
+#&amp;gt; Error: `contains()` must be used within a *selecting* function.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.
 
 subset(mtcars, select = matches(&quot;foo&quot;))
-#&amp;amp;gt; Error: `matches()` must be used within a *selecting* function.
-#&amp;amp;gt; i See &amp;amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;amp;gt;.
+#&amp;gt; Error: `matches()` must be used within a *selecting* function.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.
 If you see this error, you’ve probably used a selection helper in the
 wrong place, possibly as the result of a typo (e.g. misplaced comma or
 wrong argument name)." />
@@ -179,16 +179,16 @@ wrong argument name)." />
 </ul>
 
 <p>Using a selection helper anywhere else results in an error:<div class="r"></p><pre><span class='fu'><a href='starts_with.html'>starts_with</a></span>(<span class='st'>"foo"</span>)
-<span class='co'>#&amp;gt; Error: `starts_with()` must be used within a *selecting* function.</span>
-<span class='co'>#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.</span>
+<span class='co'>#&gt; Error: `starts_with()` must be used within a *selecting* function.</span>
+<span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span>
 
 <span class='no'>mtcars</span>[<span class='fu'><a href='starts_with.html'>contains</a></span>(<span class='st'>"foo"</span>)]
-<span class='co'>#&amp;gt; Error: `contains()` must be used within a *selecting* function.</span>
-<span class='co'>#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.</span>
+<span class='co'>#&gt; Error: `contains()` must be used within a *selecting* function.</span>
+<span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span>
 
 <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>mtcars</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fu'><a href='starts_with.html'>matches</a></span>(<span class='st'>"foo"</span>))
-<span class='co'>#&amp;gt; Error: `matches()` must be used within a *selecting* function.</span>
-<span class='co'>#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.</span></pre><p></div></p>
+<span class='co'>#&gt; Error: `matches()` must be used within a *selecting* function.</span>
+<span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span></pre><p></div></p>
 <p>If you see this error, you’ve probably used a selection helper in the
 wrong place, possibly as the result of a typo (e.g. misplaced comma or
 wrong argument name).</p>
