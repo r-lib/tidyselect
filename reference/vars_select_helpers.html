@@ -160,7 +160,7 @@ having to track addition of new helpers in tidyselect. However the
 selection helpers are now always embedded in the DSL.</p>
     </div>
 
-    <pre class="usage"><span class='no'>vars_select_helpers</span></pre>
+    <pre class="usage"><span class='kw'>vars_select_helpers</span></pre>
 
 
     <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
@@ -171,20 +171,20 @@ selection helpers are now always embedded in the DSL.</p>
     <pre class="examples"><div class='input'><span class='co'># You can easily embed the helpers by burying them in the scopes of</span>
 <span class='co'># input quosures. For this example we need an environment where</span>
 <span class='co'># tidyselect is not attached:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/eval.html'>local</a></span>(<span class='kw'>envir</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>baseenv</a></span>(), {
-  <span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>, <span class='st'>"baz"</span>)
-  <span class='no'>helpers</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>tidyselect</span><span class='kw ns'>::</span><span class='no'>vars_select_helpers</span>
+<span class='fu'><a href='https://rdrr.io/r/base/eval.html'>local</a></span>(envir = <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>baseenv</a></span>(), {
+  <span class='kw'>vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"foo"</span>, <span class='st'>"bar"</span>, <span class='st'>"baz"</span>)
+  <span class='kw'>helpers</span> <span class='op'>&lt;-</span> <span class='kw'>tidyselect</span>::<span class='kw'><a href='https://tidyselect.r-lib.org/reference/vars_select_helpers.html'>vars_select_helpers</a></span>
 
-  <span class='no'>my_select</span> <span class='kw'>&lt;-</span> <span class='kw'>function</span>(<span class='no'>...</span>) {
-    <span class='no'>quos</span> <span class='kw'>&lt;-</span> <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quos</a></span>(<span class='no'>...</span>)
-    <span class='no'>quos</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='no'>quos</span>, <span class='kw pkg'>rlang</span><span class='kw ns'>::</span><span class='no'><a href='https://rlang.r-lib.org/reference/env_bury.html'>env_bury</a></span>, !!! <span class='no'>helpers</span>)
+  <span class='kw'>my_select</span> <span class='op'>&lt;-</span> <span class='fu'>function</span>(<span class='kw'>...</span>) {
+    <span class='kw'>quos</span> <span class='op'>&lt;-</span> <span class='kw'>rlang</span>::<span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quos</a></span>(<span class='kw'>...</span>)
+    <span class='kw'>quos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(<span class='kw'>quos</span>, <span class='kw'>rlang</span>::<span class='kw'><a href='https://rlang.r-lib.org/reference/env_bury.html'>env_bury</a></span>, <span class='op'>!</span><span class='op'>!</span><span class='op'>!</span> <span class='kw'>helpers</span>)
 
-    <span class='kw pkg'>tidyselect</span><span class='kw ns'>::</span><span class='fu'><a href='vars_select.html'>vars_select</a></span>(<span class='no'>vars</span>, !!! <span class='no'>quos</span>)
+    <span class='kw'>tidyselect</span>::<span class='fu'><a href='https://tidyselect.r-lib.org/reference/vars_select.html'>vars_select</a></span>(<span class='kw'>vars</span>, <span class='op'>!</span><span class='op'>!</span><span class='op'>!</span> <span class='kw'>quos</span>)
   }
 
   <span class='co'># The user can now call my_select() with helpers without having</span>
   <span class='co'># to attach tidyselect:</span>
-  <span class='fu'>my_select</span>(<span class='fu'><a href='starts_with.html'>starts_with</a></span>(<span class='st'>"b"</span>))
+  <span class='fu'>my_select</span>(<span class='fu'>starts_with</span>(<span class='st'>"b"</span>))
 })</div><div class='output co'>#&gt;   bar   baz 
 #&gt; "bar" "baz" </div></pre>
   </div>

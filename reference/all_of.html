@@ -162,7 +162,7 @@ vector." />
     </div>
 
     <div class="ref-description">
-    <p>These <a href='language.html'>selection helpers</a> select variables
+    <p>These <a href='https://rdrr.io/r/base/is.language.html'>selection helpers</a> select variables
 contained in a character vector. They are especially useful for
 programming with selecting functions.</p><ul>
 <li><p><code>all_of()</code> is for strict selection. If any of the variables in
@@ -176,9 +176,9 @@ a variable is removed.</p></li>
 vector.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>all_of</span>(<span class='no'>x</span>)
+    <pre class="usage"><span class='fu'>all_of</span>(<span class='kw'>x</span>)
 
-<span class='fu'>any_of</span>(<span class='no'>x</span>, <span class='no'>...</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>any_of</span>(<span class='kw'>x</span>, <span class='kw'>...</span>, vars = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,13 +205,13 @@ established by functions like <code>select()</code> or <code>pivot_longer()</cod
 
 
 <p>Selection helpers can be used in functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>
-or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyverse</span>)
+or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>tidyverse</span>)
 
 <span class='co'># For better printing</span>
-<span class='no'>iris</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='no'>iris</span>)</pre><p></div></p>
-<p>It is a common to have a names of variables in a vector.<div class="r"></p><pre><span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Sepal.Width"</span>)
+<span class='kw'>iris</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='kw'>iris</span>)</pre><p></div></p>
+<p>It is a common to have a names of variables in a vector.<div class="r"></p><pre><span class='kw'>vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Sepal.Length"</span>, <span class='st'>"Sepal.Width"</span>)
 
-<span class='no'>iris</span>[, <span class='no'>vars</span>]
+<span class='kw'>iris</span>[, <span class='kw'>vars</span>]
 <span class='co'>#&gt; # A tibble: 150 x 2</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -220,7 +220,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 3          4.7         3.2</span>
 <span class='co'>#&gt; 4          4.6         3.1</span>
 <span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
-<p>To refer to these variables in selecting function, use <code>all_of()</code>:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>all_of</span>(<span class='no'>vars</span>))
+<p>To refer to these variables in selecting function, use <code>all_of()</code>:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>all_of</span>(<span class='kw'>vars</span>))
 <span class='co'>#&gt; # A tibble: 150 x 2</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -230,7 +230,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 4          4.6         3.1</span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>pivot_longer</span>(<span class='fu'>all_of</span>(<span class='no'>vars</span>))
+<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>pivot_longer</span>(<span class='fu'>all_of</span>(<span class='kw'>vars</span>))
 <span class='co'>#&gt; # A tibble: 300 x 5</span>
 <span class='co'>#&gt;   Petal.Length Petal.Width Species name         value</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;   &lt;chr&gt;        &lt;dbl&gt;</span>
@@ -239,14 +239,13 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 3          1.4         0.2 setosa  Sepal.Length   4.9</span>
 <span class='co'>#&gt; 4          1.4         0.2 setosa  Sepal.Width    3  </span>
 <span class='co'>#&gt; # ... with 296 more rows</span></pre><p></div></p>
-<p>If any of the variable is missing from the data frame, that's an error:<div class="r"></p><pre><span class='no'>starwars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>all_of</span>(<span class='no'>vars</span>))</pre><p></div></p><pre>## Error: Can't subset columns that don't exist.
-## x Columns `Sepal.Length` and `Sepal.Width` don't exist.
-</pre>
+<p>If any of the variable is missing from the data frame, that's an error:<div class="r"></p><pre><span class='kw'>starwars</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>all_of</span>(<span class='kw'>vars</span>))</pre><p></div></p><pre><span class='co'>## Error: Can't subset columns that don't exist.</span>
+<span class='co'>## x Columns `Sepal.Length` and `Sepal.Width` don't exist.</span></pre>
 
-<p>Use <code>any_of()</code> to allow missing variables:<div class="r"></p><pre><span class='no'>starwars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>any_of</span>(<span class='no'>vars</span>))
+<p>Use <code>any_of()</code> to allow missing variables:<div class="r"></p><pre><span class='kw'>starwars</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>any_of</span>(<span class='kw'>vars</span>))
 <span class='co'>#&gt; # A tibble: 87 x 0</span></pre><p></div></p>
 <p><code>any_of()</code> is especially useful to remove variables from a data
-frame because calling it again does not cause an error:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(-<span class='fu'>any_of</span>(<span class='no'>vars</span>))
+frame because calling it again does not cause an error:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='op'>-</span><span class='fu'>any_of</span>(<span class='kw'>vars</span>))
 <span class='co'>#&gt; # A tibble: 150 x 3</span>
 <span class='co'>#&gt;   Petal.Length Petal.Width Species</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  </span>
@@ -256,7 +255,7 @@ frame because calling it again does not cause an error:<div class="r"></p><pre><
 <span class='co'>#&gt; 4          1.5         0.2 setosa </span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(-<span class='fu'>any_of</span>(<span class='no'>vars</span>)) <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(-<span class='fu'>any_of</span>(<span class='no'>vars</span>))
+<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='op'>-</span><span class='fu'>any_of</span>(<span class='kw'>vars</span>)) <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='op'>-</span><span class='fu'>any_of</span>(<span class='kw'>vars</span>))
 <span class='co'>#&gt; # A tibble: 150 x 3</span>
 <span class='co'>#&gt;   Petal.Length Petal.Width Species</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  </span>
@@ -267,7 +266,7 @@ frame because calling it again does not cause an error:<div class="r"></p><pre><
 <span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The <a href='language.html'>selection language</a> page, which includes links to other selection helpers.</p></div>
+    <div class='dont-index'><p>The <a href='https://rdrr.io/r/base/is.language.html'>selection language</a> page, which includes links to other selection helpers.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

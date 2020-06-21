@@ -224,7 +224,7 @@ the deprecation process.
 
 
 <p>With selecting functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> or
-<code>tidyr::pivot_longer()</code>, you can refer to variables by name:<div class="r"></p><pre><span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>cyl</span>, <span class='no'>am</span>, <span class='no'>vs</span>)
+<code>tidyr::pivot_longer()</code>, you can refer to variables by name:<div class="r"></p><pre><span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='kw'>cyl</span>, <span class='kw'>am</span>, <span class='kw'>vs</span>)
 <span class='co'>#&gt; # A tibble: 32 x 3</span>
 <span class='co'>#&gt;     cyl    am    vs</span>
 <span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -234,7 +234,7 @@ the deprecation process.
 <span class='co'>#&gt; 4     6     0     1</span>
 <span class='co'>#&gt; # ... with 28 more rows</span>
 
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>mpg</span>:<span class='no'>disp</span>)
+<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='kw'>mpg</span><span class='op'>:</span><span class='kw'>disp</span>)
 <span class='co'>#&gt; # A tibble: 32 x 3</span>
 <span class='co'>#&gt;     mpg   cyl  disp</span>
 <span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -246,8 +246,8 @@ the deprecation process.
 <p>For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.<div class="r"></p><pre><span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"am"</span>, <span class='st'>"vs"</span>)
-<span class='no'>result</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
+not clear whether you want a data frame column or an external object.<div class="r"></p><pre><span class='kw'>vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cyl"</span>, <span class='st'>"am"</span>, <span class='st'>"vs"</span>)
+<span class='kw'>result</span> <span class='op'>&lt;-</span> <span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='kw'>vars</span>)
 <span class='co'>#&gt; Note: Using an external vector in selections is ambiguous.</span>
 <span class='co'>#&gt; i Use `all_of(vars)` instead of `vars` to silence this message.</span>
 <span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span>
@@ -255,15 +255,15 @@ not clear whether you want a data frame column or an external object.<div class=
 <p>This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>&lt;-</span> <span class='no'>mtcars</span>[<span class='fl'>1</span>:<span class='fl'>4</span>, ]
-<span class='no'>some_df</span>$<span class='no'>vars</span> <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='no'>some_df</span>)</pre><p></div></p>
+contains a column with the same name as your external variable.<div class="r"></p><pre><span class='kw'>some_df</span> <span class='op'>&lt;-</span> <span class='kw'>mtcars</span>[<span class='fl'>1</span><span class='op'>:</span><span class='fl'>4</span>, ]
+<span class='kw'>some_df</span><span class='op'>$</span><span class='kw'>vars</span> <span class='op'>&lt;-</span> <span class='fl'>1</span><span class='op'>:</span><span class='fu'><a href='https://rdrr.io/r/base/nrow.html'>nrow</a></span>(<span class='kw'>some_df</span>)</pre><p></div></p>
 <p>These are very different objects but it isn’t a problem if the context
-forces you to be specific about where to find <code>vars</code>:<div class="r"></p><pre><span class='no'>vars</span>
+forces you to be specific about where to find <code>vars</code>:<div class="r"></p><pre><span class='kw'>vars</span>
 <span class='co'>#&gt; [1] "cyl" "am"  "vs"</span>
 
-<span class='no'>some_df</span>$<span class='no'>vars</span>
+<span class='kw'>some_df</span><span class='op'>$</span><span class='kw'>vars</span>
 <span class='co'>#&gt; [1] 1 2 3 4</span></pre><p></div></p>
-<p>In a selection context however, the column wins:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='no'>vars</span>)
+<p>In a selection context however, the column wins:<div class="r"></p><pre><span class='kw'>some_df</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='kw'>vars</span>)
 <span class='co'>#&gt; # A tibble: 4 x 1</span>
 <span class='co'>#&gt;    vars</span>
 <span class='co'>#&gt;   &lt;int&gt;</span>
@@ -276,7 +276,7 @@ forces you to be specific about where to find <code>vars</code>:<div class="r"><
 
 
 <p>To make your selection code more robust and silence the message, use
-<code><a href='all_of.html'>all_of()</a></code> to force the external vector:<div class="r"></p><pre><span class='no'>some_df</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'><a href='all_of.html'>all_of</a></span>(<span class='no'>vars</span>))
+<code>all_of()</code> to force the external vector:<div class="r"></p><pre><span class='kw'>some_df</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>all_of</span>(<span class='kw'>vars</span>))
 <span class='co'>#&gt; # A tibble: 4 x 3</span>
 <span class='co'>#&gt;     cyl    am    vs</span>
 <span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>

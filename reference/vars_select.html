@@ -156,19 +156,19 @@ vignette(&quot;tidyselect&quot;) to get started." />
     <div class="ref-description">
     <p>These functions are now in the <a href='https://www.tidyverse.org/lifecycle/'>questioning stage</a>. They might be retired
 or deprecated in the future.</p>
-<p>Please use <code><a href='eval_select.html'>eval_select()</a></code> and <code><a href='eval_select.html'>eval_rename()</a></code> instead. See
-<code><a href='../articles/tidyselect.html'>vignette("tidyselect")</a></code> to get started.</p>
+<p>Please use <code>eval_select()</code> and <code>eval_rename()</code> instead. See
+<code>vignette("tidyselect")</code> to get started.</p>
     </div>
 
     <pre class="usage"><span class='fu'>vars_select</span>(
-  <span class='no'>.vars</span>,
-  <span class='no'>...</span>,
-  <span class='kw'>.include</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(),
-  <span class='kw'>.exclude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(),
-  <span class='kw'>.strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>.vars</span>,
+  <span class='kw'>...</span>,
+  .include = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(),
+  .exclude = <span class='fu'><a href='https://rdrr.io/r/base/character.html'>character</a></span>(),
+  .strict = <span class='fl'>TRUE</span>
 )
 
-<span class='fu'>vars_rename</span>(<span class='no'>.vars</span>, <span class='no'>...</span>, <span class='kw'>.strict</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+<span class='fu'>vars_rename</span>(<span class='kw'>.vars</span>, <span class='kw'>...</span>, .strict = <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -179,7 +179,7 @@ or deprecated in the future.</p>
     </tr>
     <tr>
       <th>..., args</th>
-      <td><p>Selection inputs. See the help for <a href='language.html'>selection helpers</a>.</p></td>
+      <td><p>Selection inputs. See the help for <a href='https://rdrr.io/r/base/is.language.html'>selection helpers</a>.</p></td>
     </tr>
     <tr>
       <th>.include, .exclude</th>
@@ -199,7 +199,7 @@ rename a variable that doesn't exist.</p></td>
 names are new names.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='vars_pull.html'>vars_pull()</a></code></p></div>
+    <div class='dont-index'><p><code>vars_pull()</code></p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

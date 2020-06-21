@@ -156,7 +156,7 @@ last_col() selects the last variable.
     </div>
 
     <div class="ref-description">
-    <p>These functions are <a href='language.html'>selection helpers</a>.</p><ul>
+    <p>These functions are <a href='https://rdrr.io/r/base/is.language.html'>selection helpers</a>.</p><ul>
 <li><p><code>everything()</code> selects all variable. It is also useful in
 combination with other tidyselect operators.</p></li>
 <li><p><code>last_col()</code> selects the last variable.</p></li>
@@ -164,9 +164,9 @@ combination with other tidyselect operators.</p></li>
 
     </div>
 
-    <pre class="usage"><span class='fu'>everything</span>(<span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>everything</span>(vars = <span class='kw'>NULL</span>)
 
-<span class='fu'>last_col</span>(<span class='kw'>offset</span> <span class='kw'>=</span> <span class='fl'>0L</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>last_col</span>(offset = <span class='fl'>0L</span>, vars = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,12 +189,12 @@ established by functions like <code>select()</code> or <code>pivot_longer()</cod
 
 
 <p>Selection helpers can be used in functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>
-or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyverse</span>)
+or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>tidyverse</span>)
 
 <span class='co'># For better printing</span>
-<span class='no'>iris</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='no'>iris</span>)
-<span class='no'>mtcars</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='no'>mtcars</span>)</pre><p></div></p>
-<p>Use <code>everything()</code> to select all variables:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>everything</span>())
+<span class='kw'>iris</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='kw'>iris</span>)
+<span class='kw'>mtcars</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='kw'>mtcars</span>)</pre><p></div></p>
+<p>Use <code>everything()</code> to select all variables:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>everything</span>())
 <span class='co'>#&gt; # A tibble: 150 x 5</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  </span>
@@ -204,7 +204,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 4          4.6         3.1          1.5         0.2 setosa </span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>pivot_longer</span>(<span class='fu'>everything</span>())
+<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>pivot_longer</span>(<span class='fu'>everything</span>())
 <span class='co'>#&gt; # A tibble: 352 x 2</span>
 <span class='co'>#&gt;   name  value</span>
 <span class='co'>#&gt;   &lt;chr&gt; &lt;dbl&gt;</span>
@@ -213,7 +213,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 3 disp    160</span>
 <span class='co'>#&gt; 4 hp      110</span>
 <span class='co'>#&gt; # ... with 348 more rows</span></pre><p></div></p>
-<p>Use <code>last_col()</code> to select the last variable:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>last_col</span>())
+<p>Use <code>last_col()</code> to select the last variable:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>last_col</span>())
 <span class='co'>#&gt; # A tibble: 150 x 1</span>
 <span class='co'>#&gt;   Species</span>
 <span class='co'>#&gt;   &lt;fct&gt;  </span>
@@ -223,7 +223,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 4 setosa </span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>pivot_longer</span>(<span class='fu'>last_col</span>())
+<span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>pivot_longer</span>(<span class='fu'>last_col</span>())
 <span class='co'>#&gt; # A tibble: 32 x 12</span>
 <span class='co'>#&gt;     mpg   cyl  disp    hp  drat    wt  qsec    vs    am  gear name  value</span>
 <span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;</span>
@@ -233,7 +233,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3 carb      1</span>
 <span class='co'>#&gt; # ... with 28 more rows</span></pre><p></div></p>
 <p>Supply an offset <code>n</code> to select a variable located <code>n</code> positions
-from the end:<div class="r"></p><pre><span class='no'>mtcars</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fl'>1</span>:<span class='fu'>last_col</span>(<span class='fl'>5</span>))
+from the end:<div class="r"></p><pre><span class='kw'>mtcars</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fl'>1</span><span class='op'>:</span><span class='fu'>last_col</span>(<span class='fl'>5</span>))
 <span class='co'>#&gt; # A tibble: 32 x 6</span>
 <span class='co'>#&gt;     mpg   cyl  disp    hp  drat    wt</span>
 <span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -244,7 +244,7 @@ from the end:<div class="r"></p><pre><span class='no'>mtcars</span> <span class=
 <span class='co'>#&gt; # ... with 28 more rows</span></pre><p></div></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The <a href='language.html'>selection language</a> page, which includes links to other selection helpers.</p></div>
+    <div class='dont-index'><p>The <a href='https://rdrr.io/r/base/is.language.html'>selection language</a> page, which includes links to other selection helpers.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -170,21 +170,21 @@ context." />
 <li><p><code>peek_vars()</code> returns the vector of names of the variables
 currently available for selection.</p></li>
 <li><p><code>peek_data()</code> returns the whole input vector (only available with
-<code><a href='eval_select.html'>eval_select()</a></code>).</p></li>
+<code>eval_select()</code>).</p></li>
 </ul>
 
 <p>Read the <a href='https://tidyselect.r-lib.org/articles/tidyselect.html'>Get started</a> for
 examples of how to create selection helpers with <code>peek_vars()</code>.</p>
 <p>The variable names in a selection context are registered
-automatically by <code><a href='eval_select.html'>eval_select()</a></code> and <code><a href='eval_select.html'>eval_rename()</a></code> for the
+automatically by <code>eval_select()</code> and <code>eval_rename()</code> for the
 duration of the evaluation. <code>peek_vars()</code> is the glue that connects
-<a href='language.html'>selection helpers</a> to the current selection
+<a href='https://rdrr.io/r/base/is.language.html'>selection helpers</a> to the current selection
 context.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>peek_vars</span>(<span class='no'>...</span>, <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>peek_vars</span>(<span class='kw'>...</span>, fn = <span class='kw'>NULL</span>)
 
-<span class='fu'>peek_data</span>(<span class='no'>...</span>, <span class='kw'>fn</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>peek_data</span>(<span class='kw'>...</span>, fn = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

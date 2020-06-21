@@ -159,7 +159,7 @@ num_range(): Matches a numerical range like x01, x02, x03.
     </div>
 
     <div class="ref-description">
-    <p>These <a href='language.html'>selection helpers</a> match variables according
+    <p>These <a href='https://rdrr.io/r/base/is.language.html'>selection helpers</a> match variables according
 to a given pattern.</p><ul>
 <li><p><code>starts_with()</code>: Starts with a prefix.</p></li>
 <li><p><code>ends_with()</code>: Ends with a suffix.</p></li>
@@ -170,15 +170,15 @@ to a given pattern.</p><ul>
 
     </div>
 
-    <pre class="usage"><span class='fu'>starts_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>starts_with</span>(<span class='kw'>match</span>, ignore.case = <span class='fl'>TRUE</span>, vars = <span class='kw'>NULL</span>)
 
-<span class='fu'>ends_with</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>ends_with</span>(<span class='kw'>match</span>, ignore.case = <span class='fl'>TRUE</span>, vars = <span class='kw'>NULL</span>)
 
-<span class='fu'>contains</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>contains</span>(<span class='kw'>match</span>, ignore.case = <span class='fl'>TRUE</span>, vars = <span class='kw'>NULL</span>)
 
-<span class='fu'>matches</span>(<span class='no'>match</span>, <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>perl</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+<span class='fu'>matches</span>(<span class='kw'>match</span>, ignore.case = <span class='fl'>TRUE</span>, perl = <span class='fl'>FALSE</span>, vars = <span class='kw'>NULL</span>)
 
-<span class='fu'>num_range</span>(<span class='no'>prefix</span>, <span class='no'>range</span>, <span class='kw'>width</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>vars</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+<span class='fu'>num_range</span>(<span class='kw'>prefix</span>, <span class='kw'>range</span>, width = <span class='kw'>NULL</span>, vars = <span class='kw'>NULL</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -224,12 +224,12 @@ a range of 2 gives "01", a range of three "001", etc.</p></td>
 
 
 <p>Selection helpers can be used in functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>
-or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>tidyverse</span>)
+or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>tidyverse</span>)
 
 <span class='co'># For better printing</span>
-<span class='no'>iris</span> <span class='kw'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='no'>iris</span>)</pre><p></div></p>
+<span class='kw'>iris</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='kw'>iris</span>)</pre><p></div></p>
 <p><code>starts_with()</code> selects all variables matching a prefix and
-<code>ends_with()</code> matches a suffix:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='st'>"Sepal"</span>))
+<code>ends_with()</code> matches a suffix:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='st'>"Sepal"</span>))
 <span class='co'>#&gt; # A tibble: 150 x 2</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -239,7 +239,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 4          4.6         3.1</span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))
+<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>ends_with</span>(<span class='st'>"Width"</span>))
 <span class='co'>#&gt; # A tibble: 150 x 2</span>
 <span class='co'>#&gt;   Sepal.Width Petal.Width</span>
 <span class='co'>#&gt;         &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -249,7 +249,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div cla
 <span class='co'>#&gt; 4         3.1         0.2</span>
 <span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
 <p>You can supply multiple prefixes or suffixes. Note how the order of
-variables depends on the order of the suffixes and prefixes:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal"</span>, <span class='st'>"Sepal"</span>)))
+variables depends on the order of the suffixes and prefixes:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Petal"</span>, <span class='st'>"Sepal"</span>)))
 <span class='co'>#&gt; # A tibble: 150 x 4</span>
 <span class='co'>#&gt;   Petal.Length Petal.Width Sepal.Length Sepal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -259,7 +259,7 @@ variables depends on the order of the suffixes and prefixes:<div class="r"></p><
 <span class='co'>#&gt; 4          1.5         0.2          4.6         3.1</span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>ends_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Width"</span>, <span class='st'>"Length"</span>)))
+<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>ends_with</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Width"</span>, <span class='st'>"Length"</span>)))
 <span class='co'>#&gt; # A tibble: 150 x 4</span>
 <span class='co'>#&gt;   Sepal.Width Petal.Width Sepal.Length Petal.Length</span>
 <span class='co'>#&gt;         &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;        &lt;dbl&gt;</span>
@@ -268,7 +268,7 @@ variables depends on the order of the suffixes and prefixes:<div class="r"></p><
 <span class='co'>#&gt; 3         3.2         0.2          4.7          1.3</span>
 <span class='co'>#&gt; 4         3.1         0.2          4.6          1.5</span>
 <span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
-<p><code>contains()</code> selects columns whose names contain a word:<div class="r"></p><pre><span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>contains</span>(<span class='st'>"al"</span>))
+<p><code>contains()</code> selects columns whose names contain a word:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>contains</span>(<span class='st'>"al"</span>))
 <span class='co'>#&gt; # A tibble: 150 x 4</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -279,11 +279,11 @@ variables depends on the order of the suffixes and prefixes:<div class="r"></p><
 <span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
 <p>These helpers do not use regular expressions. To select with a
 regexp use <code>matches()</code><div class="r"></p><pre><span class='co'># [pt] is matched literally:</span>
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>contains</span>(<span class='st'>"[pt]al"</span>))
+<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>contains</span>(<span class='st'>"[pt]al"</span>))
 <span class='co'>#&gt; # A tibble: 150 x 0</span>
 
 <span class='co'># [pt] is interpreted as a regular expression</span>
-<span class='no'>iris</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>matches</span>(<span class='st'>"[pt]al"</span>))
+<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>matches</span>(<span class='st'>"[pt]al"</span>))
 <span class='co'>#&gt; # A tibble: 150 x 4</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -293,7 +293,7 @@ regexp use <code>matches()</code><div class="r"></p><pre><span class='co'># [pt]
 <span class='co'>#&gt; 4          4.6         3.1          1.5         0.2</span>
 <span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
 <p><code>starts_with()</code> selects all variables starting with a prefix. To
-select a range, use <code>num_range()</code>. Compare:<div class="r"></p><pre><span class='no'>billboard</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='st'>"wk"</span>))
+select a range, use <code>num_range()</code>. Compare:<div class="r"></p><pre><span class='kw'>billboard</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>starts_with</span>(<span class='st'>"wk"</span>))
 <span class='co'>#&gt; # A tibble: 317 x 76</span>
 <span class='co'>#&gt;     wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13</span>
 <span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -304,7 +304,7 @@ select a range, use <code>num_range()</code>. Compare:<div class="r"></p><pre><s
 <span class='co'>#&gt; # ... with 313 more rows, and 63 more variables: wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;,</span>
 <span class='co'>#&gt; #   wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, ...</span>
 
-<span class='no'>billboard</span> <span class='kw'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>num_range</span>(<span class='st'>"wk"</span>, <span class='fl'>10</span>:<span class='fl'>15</span>))
+<span class='kw'>billboard</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>num_range</span>(<span class='st'>"wk"</span>, <span class='fl'>10</span><span class='op'>:</span><span class='fl'>15</span>))
 <span class='co'>#&gt; # A tibble: 317 x 6</span>
 <span class='co'>#&gt;    wk10  wk11  wk12  wk13  wk14  wk15</span>
 <span class='co'>#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -315,7 +315,7 @@ select a range, use <code>num_range()</code>. Compare:<div class="r"></p><pre><s
 <span class='co'>#&gt; # ... with 313 more rows</span></pre><p></div></p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>The <a href='language.html'>selection language</a> page, which includes links to other selection helpers.</p></div>
+    <div class='dont-index'><p>The <a href='https://rdrr.io/r/base/is.language.html'>selection language</a> page, which includes links to other selection helpers.</p></div>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
