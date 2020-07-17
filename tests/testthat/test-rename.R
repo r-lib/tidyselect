@@ -92,3 +92,12 @@ test_that("rename_loc() throws helpful errors", {
     rename_loc(iris, Species)
   })
 })
+
+test_that("rename_loc() handles where()", {
+  df <- vctrs::new_data_frame(list(a = 1, b = "X", c = 3))
+  expect_identical(
+    rename_loc(df, c(foo = where(is.numeric))),
+    c(foo1 = 1L, foo2 = 3L)
+  )
+  expect_error(rename_loc(df, where(is.numeric)))
+})
