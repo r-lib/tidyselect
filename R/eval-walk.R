@@ -144,7 +144,7 @@ as_indices_sel_impl <- function(x, vars, strict, data = NULL) {
       ))
     }
     predicate <- x
-    x <- which(map_lgl(data, predicate))
+    x <- which(map_lgl(unname(data), predicate))
   }
 
   as_indices_impl(x, vars, strict = strict)
