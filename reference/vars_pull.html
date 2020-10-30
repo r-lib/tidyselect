@@ -91,13 +91,7 @@ negative numbers to select columns from the end." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -155,12 +149,12 @@ negative numbers to select columns from the end." />
 
     <div class="ref-description">
     <p>This function powers <code><a href='https://dplyr.tidyverse.org/reference/pull.html'>dplyr::pull()</a></code> and various functions of the
-tidyr package. It is similar to <code>vars_select()</code> but returns only
+tidyr package. It is similar to <code><a href='vars_select.html'>vars_select()</a></code> but returns only
 one column name and has slightly different semantics: it allows
 negative numbers to select columns from the end.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vars_pull</span>(<span class='kw'>vars</span>, var = <span class='op'>-</span><span class='fl'>1</span>)</pre>
+    <pre class="usage"><span class='fu'>vars_pull</span><span class='op'>(</span><span class='va'>vars</span>, var <span class='op'>=</span> <span class='op'>-</span><span class='fl'>1</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -190,16 +184,19 @@ names and column locations).</p></td>
     <p>The selected column name as an unnamed string.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://dplyr.tidyverse.org/reference/pull.html'>dplyr::pull()</a></code>, <code>vars_select()</code></p></div>
+    <div class='dont-index'><p><code><a href='https://dplyr.tidyverse.org/reference/pull.html'>dplyr::pull()</a></code>, <code><a href='vars_select.html'>vars_select()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># It takes its argument by expression:</span>
-<span class='fu'>vars_pull</span>(<span class='kw'>letters</span>, <span class='kw'>c</span>)</div><div class='output co'>#&gt; [1] "c"</div><div class='input'>
+<span class='fu'>vars_pull</span><span class='op'>(</span><span class='va'>letters</span>, <span class='va'>c</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "c"</div><div class='input'>
 <span class='co'># Negative numbers select from the end:</span>
-<span class='fu'>vars_pull</span>(<span class='kw'>letters</span>, <span class='op'>-</span><span class='fl'>3</span>)</div><div class='output co'>#&gt; [1] "x"</div><div class='input'>
+<span class='fu'>vars_pull</span><span class='op'>(</span><span class='va'>letters</span>, <span class='op'>-</span><span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "x"</div><div class='input'>
 <span class='co'># You can unquote variables:</span>
-<span class='kw'>var</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
-<span class='fu'>vars_pull</span>(<span class='kw'>letters</span>, <span class='op'>!</span><span class='op'>!</span> <span class='kw'>var</span>)</div><div class='output co'>#&gt; [1] "j"</div></pre>
+<span class='va'>var</span> <span class='op'>&lt;-</span> <span class='fl'>10</span>
+<span class='fu'>vars_pull</span><span class='op'>(</span><span class='va'>letters</span>, <span class='op'>!</span><span class='op'>!</span> <span class='va'>var</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; [1] "j"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -215,7 +212,7 @@ names and column locations).</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

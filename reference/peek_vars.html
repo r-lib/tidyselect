@@ -102,13 +102,7 @@ context." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -170,21 +164,21 @@ context." />
 <li><p><code>peek_vars()</code> returns the vector of names of the variables
 currently available for selection.</p></li>
 <li><p><code>peek_data()</code> returns the whole input vector (only available with
-<code>eval_select()</code>).</p></li>
+<code><a href='eval_rename.html'>eval_select()</a></code>).</p></li>
 </ul>
 
 <p>Read the <a href='https://tidyselect.r-lib.org/articles/tidyselect.html'>Get started</a> for
 examples of how to create selection helpers with <code>peek_vars()</code>.</p>
 <p>The variable names in a selection context are registered
-automatically by <code>eval_select()</code> and <code>eval_rename()</code> for the
+automatically by <code><a href='eval_rename.html'>eval_select()</a></code> and <code><a href='eval_rename.html'>eval_rename()</a></code> for the
 duration of the evaluation. <code>peek_vars()</code> is the glue that connects
-<a href='https://rdrr.io/r/base/is.language.html'>selection helpers</a> to the current selection
+<a href='language.html'>selection helpers</a> to the current selection
 context.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>peek_vars</span>(<span class='kw'>...</span>, fn = <span class='kw'>NULL</span>)
+    <pre class="usage"><span class='fu'>peek_vars</span><span class='op'>(</span><span class='va'>...</span>, fn <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span>
 
-<span class='fu'>peek_data</span>(<span class='kw'>...</span>, fn = <span class='kw'>NULL</span>)</pre>
+<span class='fu'>peek_data</span><span class='op'>(</span><span class='va'>...</span>, fn <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -217,7 +211,7 @@ generic error message is used instead.</p></td>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

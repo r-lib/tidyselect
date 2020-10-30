@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>List of selection helpers — vars_select_helpers • tidyselect</title>
+<title>MIT License • tidyselect</title>
 
 
 <!-- jquery -->
@@ -18,8 +18,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
 <!-- bootstrap-toc -->
-<link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script>
+<link rel="stylesheet" href="bootstrap-toc.css">
+<script src="bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
@@ -33,17 +33,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
-<link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script>
+<link href="pkgdown.css" rel="stylesheet">
+<script src="pkgdown.js"></script>
 
 
 
 
-<meta property="og:title" content="List of selection helpers — vars_select_helpers" />
-<meta property="og:description" content="This list contains all selection helpers exported in tidyselect. It
-was useful when you wanted to embed the helpers in your API without
-having to track addition of new helpers in tidyselect. However the
-selection helpers are now always embedded in the DSL." />
+<meta property="og:title" content="MIT License" />
 
 
 
@@ -72,7 +68,7 @@ selection helpers are now always embedded in the DSL." />
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    <div class="container template-reference-topic">
+    <div class="container template-title-body">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -84,7 +80,7 @@ selection helpers are now always embedded in the DSL." />
         <span class="icon-bar"></span>
       </button>
       <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">tidyselect</a>
+        <a class="navbar-link" href="index.html">tidyselect</a>
         <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.9000</span>
       </span>
     </div>
@@ -99,17 +95,17 @@ selection helpers are now always embedded in the DSL." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/syntax.html">Technical description of tidyselect</a>
+      <a href="articles/syntax.html">Technical description of tidyselect</a>
     </li>
   </ul>
 </li>
 <li>
-  <a href="../articles/tidyselect.html">Get started</a>
+  <a href="articles/tidyselect.html">Get started</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -119,7 +115,7 @@ selection helpers are now always embedded in the DSL." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../news/index.html">Changelog</a>
+      <a href="news/index.html">Changelog</a>
     </li>
   </ul>
 </li>
@@ -140,55 +136,29 @@ selection helpers are now always embedded in the DSL." />
       </header>
 
 <div class="row">
-  <div class="col-md-9 contents">
+  <div class="contents col-md-9">
     <div class="page-header">
-    <h1>List of selection helpers</h1>
-    <small class="dont-index">Source: <a href='https://github.com/r-lib/tidyselect/blob/master/R/zzz.R'><code>R/zzz.R</code></a></small>
-    <div class="hidden name"><code>vars_select_helpers.Rd</code></div>
+      <h1>MIT License</h1>
     </div>
 
-    <div class="ref-description">
-    <p>This list contains all selection helpers exported in tidyselect. It
-was useful when you wanted to embed the helpers in your API without
-having to track addition of new helpers in tidyselect. However the
-selection helpers are now always embedded in the DSL.</p>
-    </div>
+<div id="mit-license" class="section level1">
 
-    <pre class="usage"><span class='va'>vars_select_helpers</span></pre>
+<p>Copyright (c) 2020 tidyselect authors</p>
+<p>Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:</p>
+<p>The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.</p>
+<p>THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.</p>
+</div>
 
-
-    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
-
-    <p>An object of class <code>list</code> of length 11.</p>
-
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># You can easily embed the helpers by burying them in the scopes of</span>
-<span class='co'># input quosures. For this example we need an environment where</span>
-<span class='co'># tidyselect is not attached:</span>
-<span class='fu'><a href='https://rdrr.io/r/base/eval.html'>local</a></span><span class='op'>(</span>envir <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/environment.html'>baseenv</a></span><span class='op'>(</span><span class='op'>)</span>, <span class='op'>{</span>
-  <span class='va'>vars</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"foo"</span>, <span class='st'>"bar"</span>, <span class='st'>"baz"</span><span class='op'>)</span>
-  <span class='va'>helpers</span> <span class='op'>&lt;-</span> <span class='fu'>tidyselect</span><span class='fu'>::</span><span class='va'>vars_select_helpers</span>
-
-  <span class='va'>my_select</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
-    <span class='va'>quos</span> <span class='op'>&lt;-</span> <span class='fu'>rlang</span><span class='fu'>::</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>quos</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span>
-    <span class='va'>quos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span><span class='op'>(</span><span class='va'>quos</span>, <span class='fu'>rlang</span><span class='fu'>::</span><span class='va'><a href='https://rlang.r-lib.org/reference/env_bury.html'>env_bury</a></span>, <span class='op'>!</span><span class='op'>!</span><span class='op'>!</span> <span class='va'>helpers</span><span class='op'>)</span>
-
-    <span class='fu'>tidyselect</span><span class='fu'>::</span><span class='fu'><a href='vars_select.html'>vars_select</a></span><span class='op'>(</span><span class='va'>vars</span>, <span class='op'>!</span><span class='op'>!</span><span class='op'>!</span> <span class='va'>quos</span><span class='op'>)</span>
-  <span class='op'>}</span>
-
-  <span class='co'># The user can now call my_select() with helpers without having</span>
-  <span class='co'># to attach tidyselect:</span>
-  <span class='fu'>my_select</span><span class='op'>(</span><span class='fu'><a href='starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"b"</span><span class='op'>)</span><span class='op'>)</span>
-<span class='op'>}</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;   bar   baz 
-#&gt; "bar" "baz" </div></pre>
   </div>
+
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
       <h2 data-toc-skip>Contents</h2>
     </nav>
   </div>
+
 </div>
+
 
 
       <footer>

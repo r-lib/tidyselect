@@ -89,13 +89,7 @@ function returns TRUE." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -152,11 +146,11 @@ function returns TRUE." />
     </div>
 
     <div class="ref-description">
-    <p>This <a href='https://rdrr.io/r/base/is.language.html'>selection helper</a> selects the variables for which a
+    <p>This <a href='language.html'>selection helper</a> selects the variables for which a
 function returns <code>TRUE</code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>where</span>(<span class='kw'>fn</span>)</pre>
+    <pre class="usage"><span class='fu'>where</span><span class='op'>(</span><span class='va'>fn</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,18 +168,19 @@ function returns <code>TRUE</code>.</p>
 
 
 <p>Selection helpers can be used in functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>
-or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='kw'>tidyverse</span>)
+or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:<div class="r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>tidyverse</span><span class='op'>)</span>
 
 <span class='co'># For better printing</span>
-<span class='kw'>iris</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span>(<span class='kw'>iris</span>)</pre><p></div></p>
+<span class='va'>iris</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
+</pre><p></div></p>
 <p><code>where()</code> takes a function and returns all variables for which the
-function returns <code>TRUE</code>:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>is.factor</a></span>(<span class='kw'>iris</span>[[<span class='fl'>4</span>]])
+function returns <code>TRUE</code>:<div class="r"></p><pre><span class='fu'><a href='https://rdrr.io/r/base/factor.html'>is.factor</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'>#&gt; [1] FALSE</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>is.factor</a></span>(<span class='kw'>iris</span>[[<span class='fl'>5</span>]])
+<span class='fu'><a href='https://rdrr.io/r/base/factor.html'>is.factor</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[[</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'>#&gt; [1] TRUE</span>
 
-<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>where</span>(<span class='kw'>is.factor</span>))
+<span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='va'>is.factor</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#&gt; # A tibble: 150 x 1</span>
 <span class='co'>#&gt;   Species</span>
 <span class='co'>#&gt;   &lt;fct&gt;  </span>
@@ -195,13 +190,13 @@ function returns <code>TRUE</code>:<div class="r"></p><pre><span class='fu'><a h
 <span class='co'>#&gt; 4 setosa </span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='kw'>iris</span>[[<span class='fl'>4</span>]])
+<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[[</span><span class='fl'>4</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'>#&gt; [1] TRUE</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='kw'>iris</span>[[<span class='fl'>5</span>]])
+<span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='va'>iris</span><span class='op'>[[</span><span class='fl'>5</span><span class='op'>]</span><span class='op'>]</span><span class='op'>)</span>
 <span class='co'>#&gt; [1] FALSE</span>
 
-<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>where</span>(<span class='kw'>is.numeric</span>))
+<span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='va'>is.numeric</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#&gt; # A tibble: 150 x 4</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -209,11 +204,12 @@ function returns <code>TRUE</code>:<div class="r"></p><pre><span class='fu'><a h
 <span class='co'>#&gt; 2          4.9         3            1.4         0.2</span>
 <span class='co'>#&gt; 3          4.7         3.2          1.3         0.2</span>
 <span class='co'>#&gt; 4          4.6         3.1          1.5         0.2</span>
-<span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p><h3>The formula shorthand</h3>
+<span class='co'>#&gt; # ... with 146 more rows</span>
+</pre><p></div></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>The formula shorthand</h3>
 
 
 <p>You can use purrr-like formulas as a shortcut for creating a
-function on the spot. These expressions are equivalent:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>where</span>(<span class='kw'>is.numeric</span>))
+function on the spot. These expressions are equivalent:<div class="r"></p><pre><span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='va'>is.numeric</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#&gt; # A tibble: 150 x 4</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -223,7 +219,7 @@ function on the spot. These expressions are equivalent:<div class="r"></p><pre><
 <span class='co'>#&gt; 4          4.6         3.1          1.5         0.2</span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>where</span>(<span class='fu'>function</span>(<span class='kw'>x</span>) <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='kw'>x</span>)))
+<span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='va'>x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#&gt; # A tibble: 150 x 4</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -233,7 +229,7 @@ function on the spot. These expressions are equivalent:<div class="r"></p><pre><
 <span class='co'>#&gt; 4          4.6         3.1          1.5         0.2</span>
 <span class='co'>#&gt; # ... with 146 more rows</span>
 
-<span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>where</span>(<span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='kw'>.x</span>)))
+<span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#&gt; # A tibble: 150 x 4</span>
 <span class='co'>#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class='co'>#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -241,9 +237,10 @@ function on the spot. These expressions are equivalent:<div class="r"></p><pre><
 <span class='co'>#&gt; 2          4.9         3            1.4         0.2</span>
 <span class='co'>#&gt; 3          4.7         3.2          1.3         0.2</span>
 <span class='co'>#&gt; 4          4.6         3.1          1.5         0.2</span>
-<span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
+<span class='co'>#&gt; # ... with 146 more rows</span>
+</pre><p></div></p>
 <p>The shorthand is useful for adding logic inline. Here we select all
-numeric variables whose mean is greater than 3.5:<div class="r"></p><pre><span class='kw'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span>(<span class='fu'>where</span>(<span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span>(<span class='kw'>.x</span>) <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span>(<span class='kw'>.x</span>) <span class='op'>&gt;</span> <span class='fl'>3.5</span>))
+numeric variables whose mean is greater than 3.5:<div class="r"></p><pre><span class='va'>iris</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='fu'>where</span><span class='op'>(</span><span class='op'>~</span> <span class='fu'><a href='https://rdrr.io/r/base/numeric.html'>is.numeric</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span> <span class='op'>&amp;&amp;</span> <span class='fu'><a href='https://rdrr.io/r/base/mean.html'>mean</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span> <span class='op'>&gt;</span> <span class='fl'>3.5</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#&gt; # A tibble: 150 x 2</span>
 <span class='co'>#&gt;   Sepal.Length Petal.Length</span>
 <span class='co'>#&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span>
@@ -251,7 +248,8 @@ numeric variables whose mean is greater than 3.5:<div class="r"></p><pre><span c
 <span class='co'>#&gt; 2          4.9          1.4</span>
 <span class='co'>#&gt; 3          4.7          1.3</span>
 <span class='co'>#&gt; 4          4.6          1.5</span>
-<span class='co'>#&gt; # ... with 146 more rows</span></pre><p></div></p>
+<span class='co'>#&gt; # ... with 146 more rows</span>
+</pre><p></div></p>
 
 
   </div>
@@ -269,7 +267,7 @@ numeric variables whose mean is greater than 3.5:<div class="r"></p><pre><span c
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>

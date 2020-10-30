@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>FAQ - Error: Must be used within a <em>selecting</em> function — faq-selection-context • tidyselect</title>
+<title>FAQ - Error: Must be used within a selecting function — faq-selection-context • tidyselect</title>
 
 
 <!-- jquery -->
@@ -39,7 +39,7 @@
 
 
 
-<meta property="og:title" content="FAQ - Error: Must be used within a <em>selecting</em> function — faq-selection-context" />
+<meta property="og:title" content="FAQ - Error: Must be used within a selecting function — faq-selection-context" />
 <meta property="og:description" content="Functions like starts_with(), contains() or matches() are
 selection helpers that only work in a selection context.
 Examples of valid selection contexts are:
@@ -58,6 +58,7 @@ mtcars[contains(&quot;foo&quot;)]
 subset(mtcars, select = matches(&quot;foo&quot;))
 #&amp;gt; Error: `matches()` must be used within a *selecting* function.
 #&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;.
+
 If you see this error, you’ve probably used a selection helper in the
 wrong place, possibly as the result of a typo (e.g. misplaced comma or
 wrong argument name)." />
@@ -108,13 +109,7 @@ wrong argument name)." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li class="dropdown">
+        <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -171,24 +166,25 @@ wrong argument name)." />
     </div>
 
     <div class="ref-description">
-    <p>Functions like <code>starts_with()</code>, <code>contains()</code> or <code>matches()</code> are
+    <p>Functions like <code><a href='starts_with.html'>starts_with()</a></code>, <code><a href='starts_with.html'>contains()</a></code> or <code><a href='starts_with.html'>matches()</a></code> are
 <strong>selection helpers</strong> that only work in a selection context.</p>
 <p>Examples of valid selection contexts are:</p><ul>
 <li><p>Inside <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>.</p></li>
 <li><p>The <code>cols</code> argument of <code>tidyr::pivot_longer()</code>.</p></li>
 </ul>
 
-<p>Using a selection helper anywhere else results in an error:<div class="r"></p><pre><span class='fu'>starts_with</span>(<span class='st'>"foo"</span>)
+<p>Using a selection helper anywhere else results in an error:<div class="r"></p><pre><span class='fu'><a href='starts_with.html'>starts_with</a></span><span class='op'>(</span><span class='st'>"foo"</span><span class='op'>)</span>
 <span class='co'>#&gt; Error: `starts_with()` must be used within a *selecting* function.</span>
 <span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span>
 
-<span class='kw'>mtcars</span>[<span class='fu'>contains</span>(<span class='st'>"foo"</span>)]
+<span class='va'>mtcars</span><span class='op'>[</span><span class='fu'><a href='starts_with.html'>contains</a></span><span class='op'>(</span><span class='st'>"foo"</span><span class='op'>)</span><span class='op'>]</span>
 <span class='co'>#&gt; Error: `contains()` must be used within a *selecting* function.</span>
 <span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span>
 
-<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>mtcars</span>, select = <span class='fu'>matches</span>(<span class='st'>"foo"</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>mtcars</span>, select <span class='op'>=</span> <span class='fu'><a href='starts_with.html'>matches</a></span><span class='op'>(</span><span class='st'>"foo"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'>#&gt; Error: `matches()` must be used within a *selecting* function.</span>
-<span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span></pre><p></div></p>
+<span class='co'>#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span>
+</pre><p></div></p>
 <p>If you see this error, you’ve probably used a selection helper in the
 wrong place, possibly as the result of a typo (e.g. misplaced comma or
 wrong argument name).</p>
@@ -212,7 +208,7 @@ wrong argument name).</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
 </div>
 
       </footer>
