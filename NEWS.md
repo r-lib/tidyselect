@@ -1,5 +1,7 @@
 # tidyselect (development version)
 
+* tidyselect has been re-licensed as MIT (#217).
+
 
 # tidyselect 1.1.0
 
