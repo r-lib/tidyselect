@@ -287,8 +287,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   }
 
   # Predicate functions must now be wrapped in `where()`. We'll
-  # support functions starting with `is` for compatibility for
-  # compatibility.
+  # support functions starting with `is` for compatibility.
   if (is_function(value)) {
     if (!grepl("^is", name)) {
       return(name)
