@@ -3,7 +3,7 @@
 \name{vars_select}
 \alias{vars_select}
 \alias{vars_rename}
-\title{Select or rename variables (questioning)}
+\title{Select or rename variables}
 \usage{
 vars_select(
   .vars,
@@ -31,8 +31,7 @@ A named character vector. Values are existing column names,
 names are new names.
 }
 \description{
-These functions are now in the \href{https://www.tidyverse.org/lifecycle/}{questioning stage}. They might be retired
-or deprecated in the future.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#questioning}{\figure{lifecycle-questioning.svg}{options: alt='[Questioning]'}}}{\strong{[Questioning]}}
 
 Please use \code{\link[=eval_select]{eval_select()}} and \code{\link[=eval_rename]{eval_rename()}} instead. See
 \code{vignette("tidyselect")} to get started.

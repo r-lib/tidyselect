@@ -1,10 +1,7 @@
-#' Select or rename variables (questioning)
+#' Select or rename variables
 #'
 #' @description
-#'
-#' These functions are now in the [questioning
-#' stage](https://www.tidyverse.org/lifecycle/). They might be retired
-#' or deprecated in the future.
+#' `r lifecycle::badge("questioning")`
 #'
 #' Please use [eval_select()] and [eval_rename()] instead. See
 #' `vignette("tidyselect")` to get started.
