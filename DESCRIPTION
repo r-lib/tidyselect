@@ -30,7 +30,6 @@ Suggests:
     withr
 License: MIT + file LICENSE
 Encoding: UTF-8
-LazyData: true
 ByteCompile: true
 RoxygenNote: 7.1.1
 Roxygen: list(markdown = TRUE)
