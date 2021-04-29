@@ -28,6 +28,8 @@
 </script>
 </head>
 <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-home">
       <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -40,7 +42,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">tidyselect</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -57,9 +59,6 @@
       <a href="articles/syntax.html">Technical description of tidyselect</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="articles/tidyselect.html">Get started</a>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
@@ -80,7 +79,7 @@
 </li>
 <li>
   <a href="https://github.com/r-lib/tidyselect/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -98,13 +97,13 @@
   <div class="contents col-md-9">
 <div id="tidyselect" class="section level1">
 <div class="page-header"><h1 class="hasAnchor">
-<a href="#tidyselect" class="anchor"></a>tidyselect</h1></div>
+<a href="#tidyselect" class="anchor" aria-hidden="true"></a>tidyselect</h1></div>
 <!-- badges: start -->
 
 <div id="overview" class="section level2">
 <h2 class="hasAnchor">
-<a href="#overview" class="anchor"></a>Overview</h2>
-<p>The tidyselect package is the backend of functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html">dplyr::select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/pull.html">dplyr::pull()</a></code> as well as several tidyr verbs. It allows you to create selecting verbs that are consistent with other tidyverse packages.</p>
+<a href="#overview" class="anchor" aria-hidden="true"></a>Overview</h2>
+<p>The tidyselect package is the backend of functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> or <code><a href="https://dplyr.tidyverse.org/reference/pull.html" class="external-link">dplyr::pull()</a></code> as well as several tidyr verbs. It allows you to create selecting verbs that are consistent with other tidyverse packages.</p>
 <ul>
 <li><p>To learn about the selection syntax as a user of dplyr or tidyr, read the user-friendly <a href="https://tidyselect.r-lib.org/reference/language.html">Selection language</a> reference.</p></li>
 <li><p>To learn how to implement tidyselect in your own functions, read the <a href="https://tidyselect.r-lib.org/articles/tidyselect.html">Get started</a> vignette.</p></li>
@@ -113,18 +112,18 @@
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#installation" class="anchor"></a>Installation</h2>
+<a href="#installation" class="anchor" aria-hidden="true"></a>Installation</h2>
 <p>tidyselect is on CRAN. You can also install the development version from github with:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit">
-<span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html">install_github</a></span><span class="op">(</span><span class="st">"r-lib/tidyselect"</span><span class="op">)</span></pre></div>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
+<span class="fu">remotes</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"r-lib/tidyselect"</span><span class="op">)</span></code></pre></div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <div class="links">
-<h2>Links</h2>
+<h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=tidyselect">https://​cloud.r-project.org/​package=tidyselect</a>
 </li>
@@ -134,41 +133,47 @@
 </li>
 </ul>
 </div>
+
 <div class="license">
-<h2>License</h2>
+<h2 data-toc-skip>License</h2>
 <ul class="list-unstyled">
 <li><a href="LICENSE.html">Full license</a></li>
 <li><small><a href="https://opensource.org/licenses/mit-license.php">MIT</a> + file <a href="LICENSE-text.html">LICENSE</a></small></li>
 </ul>
 </div>
+
+
 <div class="developers">
-<h2>Developers</h2>
+<h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Lionel Henry <br><small class="roles"> Author, maintainer </small>  </li>
 <li>
 <a href="http://hadley.nz">Hadley Wickham</a> <br><small class="roles"> Author </small>  </li>
-<li><a href="authors.html">All authors...</a></li>
+<li><a href="authors.html">More on authors...</a></li>
 </ul>
 </div>
 
-  <div class="dev-status">
-<h2>Dev status</h2>
+<div class="dev-status">
+<h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://codecov.io/gh/r-lib/tidyselect?branch=master"><img src="https://codecov.io/gh/r-lib/tidyselect/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
-<li><a href="https://cran.r-project.org/package=tidyselect"><img src="https://www.r-pkg.org/badges/version/tidyselect" alt="CRAN status"></a></li>
-<li><a href="https://github.com/r-lib/tidyselect/actions"><img src="https://github.com/r-lib/tidyselect/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
+<li><a href="https://codecov.io/gh/r-lib/tidyselect?branch=master" class="external-link"><img src="https://codecov.io/gh/r-lib/tidyselect/branch/master/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://cran.r-project.org/package=tidyselect" class="external-link"><img src="https://www.r-pkg.org/badges/version/tidyselect" alt="CRAN status"></a></li>
+<li><a href="https://github.com/r-lib/tidyselect/actions" class="external-link"><img src="https://github.com/r-lib/tidyselect/workflows/R-CMD-check/badge.svg" alt="R build status"></a></li>
 </ul>
 </div>
-</div>
+
+  </div>
 </div>
 
 
       <footer><div class="copyright">
-  <p>Developed by Lionel Henry, <a href="http://hadley.nz">Hadley Wickham</a>.</p>
+  <p></p>
+<p>Developed by Lionel Henry, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p></p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p>
 </div>
 
       </footer>
@@ -176,6 +181,8 @@
 
   
 
+
+  
 
   </body>
 </html>

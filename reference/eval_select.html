@@ -52,6 +52,8 @@ your packages." />
 
 
 
+
+
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -73,9 +75,18 @@ your packages." />
 </script>
 
 
+<!-- dependencies from examples -->
+
+
+  
+
+  
+
   </head>
 
   <body data-spy="scroll" data-target="#toc">
+    
+
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -89,7 +100,7 @@ your packages." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidyselect</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.0.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
       </span>
     </div>
 
@@ -106,9 +117,6 @@ your packages." />
       <a href="../articles/syntax.html">Technical description of tidyselect</a>
     </li>
   </ul>
-</li>
-<li>
-  <a href="../articles/tidyselect.html">Get started</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -129,7 +137,7 @@ your packages." />
 </li>
 <li>
   <a href="https://github.com/r-lib/tidyselect/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -152,17 +160,17 @@ your packages." />
     </div>
 
     <div class="ref-description">
-    <p><code>eval_select()</code> and <code>eval_rename()</code> evaluate defused R code
+    <p><code><a href='eval_select.html'>eval_select()</a></code> and <code><a href='eval_select.html'>eval_rename()</a></code> evaluate defused R code
 (i.e. quoted expressions) according to the special rules of the
 <a href='https://tidyselect.r-lib.org/articles/syntax.html'>tidyselect syntax</a>. They
 power functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code>, <code><a href='https://dplyr.tidyverse.org/reference/rename.html'>dplyr::rename()</a></code>, or
 <code>tidyr::pivot_longer()</code>.</p>
 <p>See the <a href='https://tidyselect.r-lib.org/articles/tidyselect.html'>Get started</a>
-vignette to learn how to use <code>eval_select()</code> and <code>eval_rename()</code> in
+vignette to learn how to use <code><a href='eval_select.html'>eval_select()</a></code> and <code><a href='eval_select.html'>eval_rename()</a></code> in
 your packages.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>eval_rename</span><span class='op'>(</span>
+    <pre class="usage"><span class='fu'><a href='eval_select.html'>eval_rename</a></span><span class='op'>(</span>
   <span class='va'>expr</span>,
   <span class='va'>data</span>,
   env <span class='op'>=</span> <span class='fu'>caller_env</span><span class='op'>(</span><span class='op'>)</span>,
@@ -171,7 +179,7 @@ your packages.</p>
   name_spec <span class='op'>=</span> <span class='cn'>NULL</span>
 <span class='op'>)</span>
 
-<span class='fu'>eval_select</span><span class='op'>(</span>
+<span class='fu'><a href='eval_select.html'>eval_select</a></span><span class='op'>(</span>
   <span class='va'>expr</span>,
   <span class='va'>data</span>,
   env <span class='op'>=</span> <span class='fu'>caller_env</span><span class='op'>(</span><span class='op'>)</span>,
@@ -216,7 +224,7 @@ attempts to select or rename a variable that doesn't exist. If
       <th>name_spec</th>
       <td><p>A name specification describing how to combine or
 propagate names. This is used only in case nested <code><a href='https://rdrr.io/r/base/c.html'>c()</a></code>
-expressions like <code><a href='https://rdrr.io/r/base/c.html'>c(foo = c(bar = starts_with("foo")))</a></code>. See the
+expressions like <code>c(foo = c(bar = starts_with("foo")))</code>. See the
 <code>name_spec</code> argument of <code><a href='https://vctrs.r-lib.org/reference/vec_c.html'>vctrs::vec_c()</a></code> for a description of
 valid name specs.</p></td>
     </tr>
@@ -228,7 +236,7 @@ include or exclude from the selection.</p></td>
     <tr>
       <th>allow_rename</th>
       <td><p>If <code>TRUE</code> (the default), the renaming syntax
-<code><a href='https://rdrr.io/r/base/c.html'>c(foo = bar)</a></code> is allowed. If <code>FALSE</code>, it causes an error. This
+<code>c(foo = bar)</code> is allowed. If <code>FALSE</code>, it causes an error. This
 is useful to implement purely selective behaviour.</p></td>
     </tr>
     </table>
@@ -246,7 +254,7 @@ locations.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>The select and rename variants take the same types of inputs and
-have the same type of return value. However <code>eval_rename()</code> has a
+have the same type of return value. However <code><a href='eval_select.html'>eval_rename()</a></code> has a
 few extra constraints. It requires named inputs, and will fail if a
 data frame column is renamed to another existing column name. See
 the <a href='https://tidyselect.r-lib.org/articles/syntax.html'>selecting versus renaming</a>
@@ -263,31 +271,31 @@ description of the rules of evaluation.</p></div>
 
 <span class='co'># Interpret defused code as selection:</span>
 <span class='va'>x</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>:</span><span class='va'>cyl</span><span class='op'>)</span>
-<span class='fu'>eval_select</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>mtcars</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; mpg cyl 
+<span class='fu'><a href='eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+</div><div class='co'>#&gt; mpg cyl 
 #&gt;   1   2 </div><div class='input'>
 <span class='co'># Interpret defused code as a renaming selection. All inputs must</span>
 <span class='co'># be named within `c()`:</span>
-<span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'>eval_rename</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span>, <span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Error : All renaming inputs must be named.</div><div class='input'><span class='fu'>eval_rename</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>foo <span class='op'>=</span> <span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>mtcars</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; foo 
+<span class='kw'><a href='https://rdrr.io/r/base/try.html'>try</a></span><span class='op'>(</span><span class='fu'><a href='eval_select.html'>eval_rename</a></span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='va'>mpg</span><span class='op'>)</span>, <span class='va'>mtcars</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='co'>#&gt; Error : All renaming inputs must be named.</div><div class='input'><span class='fu'><a href='eval_select.html'>eval_rename</a></span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span>foo <span class='op'>=</span> <span class='va'>mpg</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>mtcars</span><span class='op'>)</span>
+</div><div class='co'>#&gt; foo 
 #&gt;   1 </div><div class='input'>
 
 <span class='co'># Within a function, use `enquo()` to defuse one argument:</span>
 <span class='va'>my_function</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>expr</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>eval_select</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>enquo</a></span><span class='op'>(</span><span class='va'>expr</span><span class='op'>)</span>, <span class='va'>x</span><span class='op'>)</span>
+  <span class='fu'><a href='eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>enquo</a></span><span class='op'>(</span><span class='va'>expr</span><span class='op'>)</span>, <span class='va'>x</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 <span class='co'># If your function takes dots, evaluate a defused call to `c(...)`</span>
 <span class='co'># with `expr(c(...))`:</span>
 <span class='va'>my_function</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>eval_select</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>.x</span><span class='op'>)</span>
+  <span class='fu'><a href='eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>.x</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 <span class='co'># If your function takes dots and a named argument, use `{{ }}`</span>
 <span class='co'># inside the defused expression to tunnel it inside the tidyselect DSL:</span>
 <span class='va'>my_function</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>.expr</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='fu'>eval_select</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>{</span><span class='op'>{</span> <span class='va'>.expr</span> <span class='op'>}</span><span class='op'>}</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>.x</span><span class='op'>)</span>
+  <span class='fu'><a href='eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='op'>{</span><span class='op'>{</span> <span class='va'>.expr</span> <span class='op'>}</span><span class='op'>}</span>, <span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>.x</span><span class='op'>)</span>
 <span class='op'>}</span>
 
 <span class='co'># Note that the trick above works because `expr({{ arg }})` is the</span>
@@ -298,17 +306,17 @@ description of the rules of evaluation.</p></div>
 <span class='co'># examples of using these location vectors to implement `select()`</span>
 <span class='co'># and `rename()`:</span>
 <span class='va'>select</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>pos</span> <span class='op'>&lt;-</span> <span class='fu'>eval_select</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>.x</span><span class='op'>)</span>
+  <span class='va'>pos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='eval_select.html'>eval_select</a></span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>.x</span><span class='op'>)</span>
   <span class='fu'><a href='https://rlang.r-lib.org/reference/set_names.html'>set_names</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>[</span><span class='va'>pos</span><span class='op'>]</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>pos</span><span class='op'>)</span><span class='op'>)</span>
 <span class='op'>}</span>
 <span class='va'>rename</span> <span class='op'>&lt;-</span> <span class='kw'>function</span><span class='op'>(</span><span class='va'>.x</span>, <span class='va'>...</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='va'>pos</span> <span class='op'>&lt;-</span> <span class='fu'>eval_rename</span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>.x</span><span class='op'>)</span>
+  <span class='va'>pos</span> <span class='op'>&lt;-</span> <span class='fu'><a href='eval_select.html'>eval_rename</a></span><span class='op'>(</span><span class='fu'><a href='https://rlang.r-lib.org/reference/nse-defuse.html'>expr</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='va'>...</span><span class='op'>)</span><span class='op'>)</span>, <span class='va'>.x</span><span class='op'>)</span>
   <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>.x</span><span class='op'>)</span><span class='op'>[</span><span class='va'>pos</span><span class='op'>]</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>pos</span><span class='op'>)</span>
   <span class='va'>.x</span>
 <span class='op'>}</span>
 
 <span class='fu'>select</span><span class='op'>(</span><span class='va'>mtcars</span>, <span class='va'>mpg</span><span class='op'>:</span><span class='va'>cyl</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                      mpg cyl
+</div><div class='co'>#&gt;                      mpg cyl
 #&gt; Mazda RX4           21.0   6
 #&gt; Mazda RX4 Wag       21.0   6
 #&gt; Datsun 710          22.8   4
@@ -341,7 +349,7 @@ description of the rules of evaluation.</p></div>
 #&gt; Ferrari Dino        19.7   6
 #&gt; Maserati Bora       15.0   8
 #&gt; Volvo 142E          21.4   4</div><div class='input'><span class='fu'>rename</span><span class='op'>(</span><span class='va'>mtcars</span>, foo <span class='op'>=</span> <span class='va'>mpg</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                      foo cyl  disp  hp drat    wt  qsec vs am gear carb
+</div><div class='co'>#&gt;                      foo cyl  disp  hp drat    wt  qsec vs am gear carb
 #&gt; Mazda RX4           21.0   6 160.0 110 3.90 2.620 16.46  0  1    4    4
 #&gt; Mazda RX4 Wag       21.0   6 160.0 110 3.90 2.875 17.02  0  1    4    4
 #&gt; Datsun 710          22.8   4 108.0  93 3.85 2.320 18.61  1  1    4    1
@@ -385,11 +393,11 @@ description of the rules of evaluation.</p></div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>.</p>
+  <p><p>Developed by Lionel Henry, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.</p></p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.9000.</p>
+  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
 </div>
 
       </footer>
@@ -397,6 +405,8 @@ description of the rules of evaluation.</p></div>
 
   
 
+
+  
 
   </body>
 </html>
