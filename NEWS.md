@@ -1,4 +1,6 @@
-# tidyselect (development version)
+# tidyselect 1.1.1
+
+* Fix for CRAN checks.
 
 * tidyselect has been re-licensed as MIT (#217).
 
