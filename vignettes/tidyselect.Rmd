@@ -350,17 +350,14 @@ iris %>% select(my_selector("Sepal", "Length"))
 To create a new selection helper:
 
 1. Inspect the variables with `peek_vars()`. By convention this should
-   be overridable by an optional argument.
+   be done in an argument that the user can override.
 
 2. Return one of the supported data types: vector of names or
    locations (the latter is recommended, see section on handling
    duplicate variables), or a predicate function.
 
 ```{r}
-if_width <- function(n, vars = NULL) {
-  if (is.null(vars)) {
-    vars <- peek_vars(fn = "if_width")
-  }
+if_width <- function(n, vars = peek_vars(fn = "if_width")) {
   vars[nchar(vars) == n]
 }
 
@@ -374,8 +371,8 @@ helper is used in the wrong context:
 mtcars[if_width(2)]
 ```
 
-During development it is useful to supply a custom `vars`, especially
-in unit tests:
+Because the variables are inspected in a default argument, it is easy
+to override. This is mostly useful in unit tests:
 
 ```{r}
 if_width(2, vars = names(mtcars))

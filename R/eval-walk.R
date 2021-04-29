@@ -307,7 +307,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
       ))
       bullet <- format_error_bullets(c(i = "Please update your code."))
 
-      abort(paste_line(msg, bullet))
+      warn_once(paste_line(msg, bullet))
     }
 
     return(value)
