@@ -178,7 +178,7 @@ test_that("symbol evaluation informs from global environment but not packages", 
 })
 
 test_that("selection helpers are in the context mask", {
-  out <- local(envir = baseenv(), {
+  out <- local(envir = env(base_env()), {
     letters2 <- rlang::set_names(letters)
     tidyselect::eval_select(quote(all_of("a")), letters2)
   })
