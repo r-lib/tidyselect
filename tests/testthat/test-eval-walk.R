@@ -387,3 +387,10 @@ test_that("can rename before predicate", {
   expect_equal(head(names(selection), 1), "y")
 
 })
+
+test_that("data names aren't retained when renaming with predicate", {
+  expect_identical(
+    eval_rename(expr(c(foo = where(~ all(.x %in% 0:1)))), mtcars),
+    c(foo1 = 8L, foo2 = 9L)
+  )
+})
