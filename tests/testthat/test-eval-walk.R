@@ -360,3 +360,10 @@ test_that("can use predicates with allow_rename = FALSE", {
     seq_along(mtcars)
   )
 })
+
+test_that("no duplicates with predicate and user rename", {
+  expect_equal(
+    ncol(eval_select(expr(c(where(is.numeric), y = mpg)), mtcars)),
+    ncol(eval_select(expr(where(is.numeric)), mtcars))
+  )
+})
