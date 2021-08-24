@@ -361,9 +361,29 @@ test_that("can use predicates with allow_rename = FALSE", {
   )
 })
 
-test_that("no duplicates with predicate and user rename", {
+test_that("can rename after predicate", {
+  selection <- eval_select(expr(c(where(is.numeric), y = mpg)), mtcars)
+
+  "no duplicate columns"
   expect_equal(
-    ncol(eval_select(expr(c(where(is.numeric), y = mpg)), mtcars)),
+    ncol(selection),
     ncol(eval_select(expr(where(is.numeric)), mtcars))
   )
+
+  "var is renamed"
+  expect_equal(head(names(selection), 1), "y")
+})
+
+test_that("can rename before predicate", {
+  selection <- eval_select(expr(c(y = mpg, where(is.numeric))), mtcars)
+
+  "no duplicate columns"
+  expect_equal(
+    ncol(selection),
+    ncol(eval_select(expr(where(is.numeric)), mtcars))
+  )
+
+  "var is renamed"
+  expect_equal(head(names(selection), 1), "y")
+
 })
