@@ -353,3 +353,10 @@ test_that("eval_walk() has informative messages", {
                          is.numeric(.x) || is.factor(.x) || is.character(.x))
   })
 })
+
+test_that("can use predicates with allow_rename = FALSE", {
+  expect_equal(
+    select_loc(mtcars, where(is.numeric), allow_rename = FALSE),
+    seq_along(mtcars)
+  )
+})
