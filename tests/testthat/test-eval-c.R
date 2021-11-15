@@ -1,4 +1,3 @@
-
 test_that("c() interpolates union and setdiff operations (#130)", {
   expect_identical(select_loc(mtcars, c(mpg:disp, -(mpg:cyl))), c(disp = 3L))
 

@@ -1,5 +1,3 @@
-context("vars")
-
 test_that("local_vars() restores previous state", {
   vars <- c("a", "b", "c")
   local_vars(vars)

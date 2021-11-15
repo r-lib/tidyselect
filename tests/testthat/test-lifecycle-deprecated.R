@@ -1,6 +1,6 @@
-
 local_options(
-  lifecycle_verbosity = "quiet"
+  lifecycle_verbosity = "quiet",
+  tidyselect_verbosity = "quiet"
 )
 
 # Once defunct, don't delete the tests, port them to `select_loc()`.
@@ -69,8 +69,8 @@ test_that("can supply empty inputs", {
 })
 
 test_that("empty selection signals a condition", {
-  expect_is(catch_cnd(vars_select(letters)), "tidyselect_empty_dots")
-  expect_is(catch_cnd(vars_select(letters, starts_with("1"))), "tidyselect_empty")
+  expect_s3_class(catch_cnd(vars_select(letters)), "tidyselect_empty_dots")
+  expect_s3_class(catch_cnd(vars_select(letters, starts_with("1"))), "tidyselect_empty")
 })
 
 test_that("unknown variables errors are ignored if `.strict` is FALSE", {

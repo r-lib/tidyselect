@@ -1,4 +1,3 @@
-
 letters2 <- set_names(letters)
 
 select_loc <- function(x,

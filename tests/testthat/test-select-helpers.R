@@ -1,4 +1,3 @@
-
 test_that("no set variables throws error", {
   expect_error(starts_with("z"), "`starts_with()` must be used within a *selecting* function", fixed = TRUE)
   expect_error(one_of("z"), "`one_of()` must be used within a *selecting* function", fixed = TRUE)

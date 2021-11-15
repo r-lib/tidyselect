@@ -1,4 +1,3 @@
-
 test_that("can refer to columns in | operands", {
   expect_identical(select_loc(mtcars, cyl | am), c(cyl = 2L, am = 9L))
 })

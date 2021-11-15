@@ -1,5 +1,3 @@
-context("pull var")
-
 test_that("errors for bad inputs", {
   expect_error(
     vars_pull(letters, letters),

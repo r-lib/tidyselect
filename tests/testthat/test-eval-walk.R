@@ -1,4 +1,3 @@
-
 test_that("leaves of data expression tree are evaluated in the context", {
   wrapper <- function(x, var) select_loc(x, {{ var }}:length(x))
   expect_identical(wrapper(letters2, x), select_loc(letters2, x:26))

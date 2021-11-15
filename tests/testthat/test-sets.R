@@ -1,4 +1,3 @@
-
 test_that("`sel_union()` matches named elements", {
   expect_identical(sel_union(1L, c(foo = 1L)), c(foo = 1L))
   expect_identical(sel_union(named(1L), c(foo = 1L)), c(foo = 1L))

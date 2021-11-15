@@ -1,4 +1,3 @@
-
 test_that("rename_loc() requires named vectors", {
   expect_error(
     rename_loc(letters, c(foo = a)),

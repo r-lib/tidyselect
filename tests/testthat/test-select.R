@@ -1,5 +1,3 @@
-context("select")
-
 test_that("select() is generic", {
   expect_identical(
     select(set_names(letters), b:c),
