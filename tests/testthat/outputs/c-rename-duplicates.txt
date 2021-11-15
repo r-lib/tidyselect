@@ -1,6 +1,0 @@
-> names(df)
-[1] "a" "b" "a"
-
-> select_loc(df, c(foo = a))
-Error: Can't rename duplicate variables to `{name}`.
-

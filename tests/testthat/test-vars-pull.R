@@ -50,7 +50,7 @@ test_that("errors for bad inputs", {
     class = "vctrs_error_subscript_type"
   )
 
-  verify_output(test_path("outputs", "vars-pull-input-checking.txt"), {
+  expect_snapshot(error = TRUE, {
     vars_pull(letters, letters)
     vars_pull(letters, aa)
     vars_pull(letters, 0)
@@ -93,7 +93,7 @@ test_that("vars_pull() instruments base errors", {
 })
 
 test_that("vars_pull() has informative errors", {
-  verify_output(test_path("error", "test-vars-pull.txt"), {
+  expect_snapshot(error = TRUE, {
     "# vars_pull() instruments base errors"
     vars_pull(letters, foobar)
   })

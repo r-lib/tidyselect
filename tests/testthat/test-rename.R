@@ -80,7 +80,7 @@ test_that("rename_loc() uses names inside c()", {
 })
 
 test_that("rename_loc() throws helpful errors", {
-  verify_output(test_path("outputs", "rename-errors.txt"), {
+  expect_snapshot(error = TRUE, {
     "Unnamed vector"
     rename_loc(letters, c(foo = a))
 

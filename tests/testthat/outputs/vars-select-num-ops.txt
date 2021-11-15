@@ -1,6 +1,0 @@
-> select_loc(letters2, a * 2)
-Error: Can't use arithmetic operator `*` in selection context.
-
-> select_loc(letters2, a^2)
-Error: Can't use arithmetic operator `^` in selection context.
-

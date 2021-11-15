@@ -1,8 +1,0 @@
-> select_loc(letters2, starts_with("a") || ends_with("b"))
-Error: Can't use scalar `||` in selections.
-i Do you need `|` instead?
-
-> select_loc(letters2, starts_with("a") && ends_with("b"))
-Error: Can't use scalar `&&` in selections.
-i Do you need `&` instead?
-

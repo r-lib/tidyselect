@@ -36,7 +36,7 @@ test_that("boolean operators throw relevant errors", {
     "empty selection"
   )
 
-  verify_output(test_path("outputs", "select-eval-boolean-errors.txt"), {
+  expect_snapshot(error = TRUE, {
     "Unknown names"
     select_loc(mtcars, foobar & contains("am"))
     select_loc(mtcars, contains("am") | foobar)

@@ -1,4 +1,0 @@
-> # Foreign errors during evaluation
-> select_loc(iris, eval_tidy(foobar))
-Error: object 'foobar' not found
-

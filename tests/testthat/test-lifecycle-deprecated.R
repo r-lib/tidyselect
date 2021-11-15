@@ -164,7 +164,7 @@ test_that("vars_select() type-checks inputs", {
     class = "vctrs_error_subscript_type"
   )
 
-  verify_output(test_path("outputs", "vars-select-index-type.txt"), {
+  expect_snapshot(error = TRUE, {
     vars_select(letters, TRUE)
     vars_select(letters, 2.5)
     vars_select(letters, structure(1:3, class = "tidysel_foobar"))
@@ -235,7 +235,7 @@ test_that("vars_select() fails when renaming to same name", {
 
 test_that("vars_select() fails informatively when renaming to same", {
   skip("FIXME")
-  verify_output(test_path("outputs", "vars-select-renaming-to-same.txt"), {
+  expect_snapshot(error = TRUE, {
     "Renaming to same:"
     vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e)
 
@@ -251,7 +251,7 @@ test_that("vars_select() has consistent location errors", {
   expect_error(vars_select(letters, -100), class = "vctrs_error_subscript_oob")
   expect_error(vars_select(letters, !100), class = "vctrs_error_subscript_oob")
 
-  verify_output(test_path("outputs", "vars-select-oob-errors.txt"), {
+  expect_snapshot(error = TRUE, {
     "Bare names"
     vars_select(letters, foo)
     vars_select(letters, -foo)
@@ -309,7 +309,7 @@ test_that("when .strict = FALSE, vars_rename always succeeds", {
     c(A = "x")
   )
 
-  verify_output(test_path("outputs", "rename-strict-errors.txt"), {
+  expect_snapshot(error = TRUE, {
     vars_rename(c("a", "b"), d = e, .strict = TRUE)
     vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
     vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
@@ -382,7 +382,7 @@ test_that("vars_rename() disallows renaming to same column", {
     class = "vctrs_error_names_must_be_unique"
   )
 
-  verify_output(test_path("outputs", "vars-rename-error-rename-to-same.txt"), {
+  expect_snapshot(error = TRUE, {
     "New column"
     vars_rename(c("a", "b", "c"), foo = a, foo = b)
 
@@ -408,7 +408,7 @@ test_that("vars_rename() disallows renaming to existing columns (#70)", {
     vars_rename(c("a", "b", "c"), b = a, c = b),
     class = "vctrs_error_names_must_be_unique"
   )
-  verify_output(test_path("outputs", "vars-rename-error-rename-to-existing.txt"), {
+  expect_snapshot(error = TRUE, {
     "One column"
     vars_rename(c("a", "b", "c"), b = a)
 
@@ -454,7 +454,7 @@ test_that("vars_rename() type-checks arguments", {
   expect_error(vars_rename(letters, A = 1.5), class = "vctrs_error_subscript_type")
   expect_error(vars_rename(letters, A = !!list()), class = "vctrs_error_subscript_type")
 
-  verify_output(test_path("outputs", "vars-rename-type-checking.txt"), {
+  expect_snapshot(error = TRUE, {
     vars_rename(letters, A = TRUE)
     vars_rename(letters, A = 1.5)
     vars_rename(letters, A = list())

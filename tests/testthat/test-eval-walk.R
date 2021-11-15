@@ -89,7 +89,7 @@ test_that("boolean operators are overloaded", {
 })
 
 test_that("scalar boolean operators fail informatively", {
-  verify_output(test_path("outputs", "vars-select-bool-scalar-ops.txt"), {
+  expect_snapshot(error = TRUE, {
     select_loc(letters2, starts_with("a") || ends_with("b"))
     select_loc(letters2, starts_with("a") && ends_with("b"))
   })
@@ -112,7 +112,7 @@ test_that("can't use `*` and `^` in data context", {
   expect_error(select_loc(letters2, a * 2), "arithmetic")
   expect_error(select_loc(letters2, a^2), "arithmetic")
 
-  verify_output(test_path("outputs", "vars-select-num-ops.txt"), {
+  expect_snapshot(error = TRUE, {
     select_loc(letters2, a * 2)
     select_loc(letters2, a^2)
   })
@@ -130,13 +130,13 @@ test_that("symbol lookup outside data informs caller about better practice", {
   expect_message(select_loc(letters2, vars1))
 
   vars2 <- c("a", "b") # To force a message the second time
-  verify_output(test_path("outputs", "vars-select-context-lookup.txt"), {
+  expect_snapshot(error = TRUE, {
     select_loc(letters2, vars2)
   })
 })
 
 test_that("symbol evaluation only informs once (#184)", {
-  verify_output(test_path("outputs", "eval-sym-verbosity.txt"), {
+  expect_snapshot({
     "Default"
     with_options(tidyselect_verbosity = NULL, {
       `_vars_default` <- "cyl"
@@ -262,7 +262,7 @@ test_that("unique elements are returned", {
 })
 
 test_that("selections provide informative errors", {
-  verify_output(test_path("outputs", "eval-errors.txt"), {
+  expect_snapshot(error = TRUE, {
     "Foreign errors during evaluation"
     select_loc(iris, eval_tidy(foobar))
   })
@@ -336,7 +336,7 @@ test_that("formula shorthand must be wrapped", {
 })
 
 test_that("eval_walk() has informative messages", {
-  verify_output(test_path("outputs", "test-helpers-where.txt"), {
+  expect_snapshot(error = TRUE, {
     "# Using a predicate without where() warns"
     invisible(select_loc(iris, is_integer))
     invisible(select_loc(iris, is.numeric))

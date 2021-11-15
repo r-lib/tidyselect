@@ -1,8 +1,0 @@
-> select_loc(letters2, vars2)
-Message: Note: Using an external vector in selections is ambiguous.
-i Use `all_of(vars2)` instead of `vars2` to silence this message.
-i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-
-a b 
-1 2 
-
