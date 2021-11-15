@@ -7,5 +7,5 @@
     Code
       select_loc(df, c(foo = a))
     Error <rlang_error>
-      Can't rename duplicate variables to `{name}`.
+      Can't rename duplicate variables to `foo`.
 

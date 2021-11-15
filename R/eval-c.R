@@ -94,7 +94,7 @@ is_negated_colon <- function(x) {
 combine_names <- function(x, tag, name_spec, uniquely_named) {
   if (uniquely_named && is_data_dups(x)) {
     name <- as_string(tag)
-    abort("Can't rename duplicate variables to `{name}`.")
+    abort(glue("Can't rename duplicate variables to `{name}`."))
   }
 
   vctrs::vec_c(!!tag := x, .name_spec = name_spec)
