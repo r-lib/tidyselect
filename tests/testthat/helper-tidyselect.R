@@ -35,5 +35,3 @@ rename_loc <- function(x,
     name_spec = name_spec
   )
 }
-
-verify_errors <- identity

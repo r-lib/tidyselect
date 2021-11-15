@@ -22,7 +22,8 @@
 
     Code
       # # vars_pull() instruments base errors
-      vars_pull(letters, foobar)
-    Error <rlang_error>
+      (expect_error(vars_pull(letters, foobar), ""))
+    Output
+      <error/rlang_error>
       object 'foobar' not found
 

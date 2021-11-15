@@ -115,8 +115,9 @@
       # Warning is not repeated
       invisible(select_loc(iris, is_integer))
       # formula shorthand must be wrapped
-      select_loc(mtcars, ~is.numeric(.x))
-    Error <rlang_error>
+      (expect_error(select_loc(mtcars, ~is.numeric(.x))))
+    Output
+      <error/rlang_error>
       Formula shorthand must be wrapped in `where()`.
       
         # Bad
@@ -125,8 +126,10 @@
         # Good
         data %>% select(where(~is.numeric(.x)))
     Code
-      select_loc(mtcars, ~is.numeric(.x) || is.factor(.x) || is.character(.x))
-    Error <rlang_error>
+      (expect_error(select_loc(mtcars, ~is.numeric(.x) || is.factor(.x) ||
+        is.character(.x))))
+    Output
+      <error/rlang_error>
       Formula shorthand must be wrapped in `where()`.
       
         # Bad
@@ -135,9 +138,10 @@
         # Good
         data %>% select(where(~is.numeric(.x) || is.factor(.x) || is.character(.x)))
     Code
-      select_loc(mtcars, ~is.numeric(.x) || is.factor(.x) || is.character(.x) ||
-        is.numeric(.x) || is.factor(.x) || is.character(.x))
-    Error <rlang_error>
+      (expect_error(select_loc(mtcars, ~is.numeric(.x) || is.factor(.x) ||
+        is.character(.x) || is.numeric(.x) || is.factor(.x) || is.character(.x))))
+    Output
+      <error/rlang_error>
       Formula shorthand must be wrapped in `where()`.
       
         # Bad
