@@ -85,8 +85,6 @@ for which the function returns TRUE.
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -108,16 +106,9 @@ for which the function returns TRUE.
 </script>
 
 
-
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -137,7 +128,13 @@ for which the function returns TRUE.
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
+        <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -148,6 +145,9 @@ for which the function returns TRUE.
       <a href="../articles/syntax.html">Technical description of tidyselect</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../articles/tidyselect.html">Get started</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -192,7 +192,7 @@ for which the function returns TRUE.
 
     <div class="ref-description">
     
-<h3 class='hasAnchor' id='overview-of-selection-features-'><a class='anchor' aria-hidden='true' href='#overview-of-selection-features-'></a>Overview of selection features:</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Overview of selection features:</h3>
 
 
 <p>Tidyverse selections implement a dialect of R where operators make
@@ -245,7 +245,7 @@ for which the function returns <code>TRUE</code>.</p></li>
 specific help pages to learn about helpers like <code><a href='starts_with.html'>starts_with()</a></code>.</p>
 <p>The selection language can be used in functions like
 <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> or <code>tidyr::pivot_longer()</code>. Let's first attach
-the tidyverse:<div class="r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'>tidyverse</span><span class='op'>)</span>
+the tidyverse:<div class="r"></p><pre><span class='kw'><a href='https://rdrr.io/r/base/library.html'>library</a></span><span class='op'>(</span><span class='va'><a href='https://tidyverse.tidyverse.org'>tidyverse</a></span><span class='op'>)</span>
 
 <span class='co'># For better printing</span>
 <span class='va'>iris</span> <span class='op'>&lt;-</span> <span class='fu'>as_tibble</span><span class='op'>(</span><span class='va'>iris</span><span class='op'>)</span>
@@ -291,7 +291,7 @@ dots. In this case use <code><a href='https://rdrr.io/r/base/c.html'>c()</a></co
 <span class='co'>#&gt; 3         3           0.2 setosa  Sepal.Length   4.9</span>
 <span class='co'>#&gt; 4         3           0.2 setosa  Petal.Length   1.4</span>
 <span class='co'>#&gt; # ... with 296 more rows</span>
-</pre><p></div></p><h3 class='hasAnchor' id='operators-'><a class='anchor' aria-hidden='true' href='#operators-'></a>Operators:</h3>
+</pre><p></div></p><h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Operators:</h3>
 
 
 <p>The <code>:</code> operator selects a range of consecutive variables:<div class="r"></p><pre><span class='va'>starwars</span> <span class='op'>%&gt;%</span> <span class='fu'>select</span><span class='op'>(</span><span class='va'>name</span><span class='op'>:</span><span class='va'>mass</span><span class='op'>)</span>
@@ -389,11 +389,11 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Lionel Henry, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.</p></p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -401,8 +401,6 @@ starting with <code>"c"</code> first, then all columns starting with <code>"d"</
 
   
 
-
-  
 
   </body>
 </html>

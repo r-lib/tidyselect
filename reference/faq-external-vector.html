@@ -119,8 +119,6 @@ the deprecation process.
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -142,16 +140,9 @@ the deprecation process.
 </script>
 
 
-
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -171,7 +162,13 @@ the deprecation process.
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
+        <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -182,6 +179,9 @@ the deprecation process.
       <a href="../articles/syntax.html">Technical description of tidyselect</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../articles/tidyselect.html">Get started</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -226,7 +226,7 @@ the deprecation process.
 
     <div class="ref-description">
     
-<h3 class='hasAnchor' id='ambiguity-between-columns-and-external-variables'><a class='anchor' aria-hidden='true' href='#ambiguity-between-columns-and-external-variables'></a>Ambiguity between columns and external variables</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Ambiguity between columns and external variables</h3>
 
 
 <p>With selecting functions like <code><a href='https://dplyr.tidyverse.org/reference/select.html'>dplyr::select()</a></code> or
@@ -283,7 +283,7 @@ forces you to be specific about where to find <code>vars</code>:<div class="r"><
 <span class='co'>#&gt; 4     4</span>
 </pre><p></div></p>
 
-<h3 class='hasAnchor' id='fixing-the-ambiguity'><a class='anchor' aria-hidden='true' href='#fixing-the-ambiguity'></a>Fixing the ambiguity</h3>
+<h3 class='hasAnchor' id='arguments'><a class='anchor' href='#arguments'></a>Fixing the ambiguity</h3>
 
 
 <p>To make your selection code more robust and silence the message, use
@@ -316,11 +316,11 @@ the deprecation process.</p>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Lionel Henry, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.</p></p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -328,8 +328,6 @@ the deprecation process.</p>
 
   
 
-
-  
 
   </body>
 </html>

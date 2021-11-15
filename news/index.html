@@ -44,8 +44,6 @@
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -67,16 +65,9 @@
 </script>
 
 
-
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -96,7 +87,13 @@
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
+        <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -107,6 +104,9 @@
       <a href="../articles/syntax.html">Technical description of tidyselect</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../articles/tidyselect.html">Get started</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -150,12 +150,12 @@
 
     <div id="tidyselect-development-version" class="section level1">
 <h1 class="page-header" data-toc-text="development version">
-<a href="#tidyselect-development-version" class="anchor" aria-hidden="true"></a>tidyselect (development version)<small> Unreleased </small>
+<a href="#tidyselect-development-version" class="anchor"></a>tidyselect (development version)<small> Unreleased </small>
 </h1>
 </div>
     <div id="tidyselect-111" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.1">
-<a href="#tidyselect-111" class="anchor" aria-hidden="true"></a>tidyselect 1.1.1<small> Unreleased </small>
+<a href="#tidyselect-111" class="anchor"></a>tidyselect 1.1.1<small> 2021-04-30 </small>
 </h1>
 <ul>
 <li><p>Fix for CRAN checks.</p></li>
@@ -164,7 +164,7 @@
 </div>
     <div id="tidyselect-110" class="section level1">
 <h1 class="page-header" data-toc-text="1.1.0">
-<a href="#tidyselect-110" class="anchor" aria-hidden="true"></a>tidyselect 1.1.0<small> 2020-05-11 </small>
+<a href="#tidyselect-110" class="anchor"></a>tidyselect 1.1.0<small> 2020-05-11 </small>
 </h1>
 <ul>
 <li>
@@ -176,20 +176,20 @@ data.frame(x = 1) %&gt;% select(data)</code></pre>
 <p>Now tidyselect will correctly complain about a missing variable rather than trying to invoke a function.</p>
 <p>For compatibility we will support predicate functions starting with <code>is</code> for 1 version.</p>
 </li>
-<li><p><code><a href="../reference/eval_select.html">eval_select()</a></code> gains an <code>allow_rename</code> argument. If set to <code>FALSE</code>, renaming variables with the <code>c(foo = bar)</code> syntax is an error. This is useful to implement purely selective behaviour (<a href='https://github.com/r-lib/tidyselect/issues/178'>#178</a>).</p></li>
+<li><p><code><a href="../reference/eval_rename.html">eval_select()</a></code> gains an <code>allow_rename</code> argument. If set to <code>FALSE</code>, renaming variables with the <code>c(foo = bar)</code> syntax is an error. This is useful to implement purely selective behaviour (<a href='https://github.com/r-lib/tidyselect/issues/178'>#178</a>).</p></li>
 <li><p>Fixed issue preventing repeated deprecation messages when <code>tidyselect_verbosity</code> is set to <code>"verbose"</code> (<a href='https://github.com/r-lib/tidyselect/issues/184'>#184</a>).</p></li>
 <li><p><code><a href="../reference/all_of.html">any_of()</a></code> now preserves the order of the input variables (<a href='https://github.com/r-lib/tidyselect/issues/186'>#186</a>).</p></li>
-<li><p>The return value of <code><a href="../reference/eval_select.html">eval_select()</a></code> is now always named, even when inputs are constant (<a href='https://github.com/r-lib/tidyselect/issues/173'>#173</a>).</p></li>
+<li><p>The return value of <code><a href="../reference/eval_rename.html">eval_select()</a></code> is now always named, even when inputs are constant (<a href='https://github.com/r-lib/tidyselect/issues/173'>#173</a>).</p></li>
 </ul>
 </div>
     <div id="tidyselect-100" class="section level1">
 <h1 class="page-header" data-toc-text="1.0.0">
-<a href="#tidyselect-100" class="anchor" aria-hidden="true"></a>tidyselect 1.0.0<small> 2020-01-27 </small>
+<a href="#tidyselect-100" class="anchor"></a>tidyselect 1.0.0<small> 2020-01-27 </small>
 </h1>
 <p>This is the 1.0.0 release of tidyselect. It features a more solidly defined and implemented syntax, support for predicate functions, new boolean operators, and much more.</p>
 <div id="documentation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#documentation" class="anchor" aria-hidden="true"></a>Documentation</h2>
+<a href="#documentation" class="anchor"></a>Documentation</h2>
 <ul>
 <li><p>New Get started vignette for client packages. Read it with <code><a href="../articles/tidyselect.html">vignette("tidyselect")</a></code> or at <a href="https://tidyselect.r-lib.org/articles/tidyselect.html" class="uri">https://tidyselect.r-lib.org/articles/tidyselect.html</a>.</p></li>
 <li><p>The definition of the tidyselect language has been consolidated. A technical description is now available: <a href="https://tidyselect.r-lib.org/articles/syntax.html" class="uri">https://tidyselect.r-lib.org/articles/syntax.html</a>.</p></li>
@@ -197,7 +197,7 @@ data.frame(x = 1) %&gt;% select(data)</code></pre>
 </div>
 <div id="breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#breaking-changes" class="anchor" aria-hidden="true"></a>Breaking changes</h2>
+<a href="#breaking-changes" class="anchor"></a>Breaking changes</h2>
 <ul>
 <li>Selecting non-column variables with bare names now triggers an informative message suggesting to use <code><a href="../reference/all_of.html">all_of()</a></code> instead. Referring to contextual objects with a bare name is brittle because it might be masked by a data frame column. Using <code><a href="../reference/all_of.html">all_of()</a></code> is safe (<a href='https://github.com/r-lib/tidyselect/issues/76'>#76</a>).</li>
 </ul>
@@ -208,11 +208,11 @@ data.frame(x = 1) %&gt;% select(data)</code></pre>
 <li><p>Selected variables now must be unique. It was previously possible to return duplicate selections in some circumstances.</p></li>
 <li><p>The input names can no longer contain <code>NA</code> values.</p></li>
 </ul>
-<p>Note that we recommend <code><a href="https://testthat.r-lib.org/reference/verify_output.html" class="external-link">testthat::verify_output()</a></code> for monitoring error messages thrown from packages that you don’t control. Unlike <code>expect_error()</code>, <code>verify_output()</code> does not cause CMD check failures when error messages have changed. See <a href="https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/" class="external-link uri">https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/</a> for more information.</p>
+<p>Note that we recommend <code><a href="https://testthat.r-lib.org/reference/verify_output.html">testthat::verify_output()</a></code> for monitoring error messages thrown from packages that you don’t control. Unlike <code>expect_error()</code>, <code>verify_output()</code> does not cause CMD check failures when error messages have changed. See <a href="https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/" class="uri">https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/</a> for more information.</p>
 </div>
 <div id="syntax" class="section level2">
 <h2 class="hasAnchor">
-<a href="#syntax" class="anchor" aria-hidden="true"></a>Syntax</h2>
+<a href="#syntax" class="anchor"></a>Syntax</h2>
 <ul>
 <li>
 <p>The boolean operators can now be used to create selections (<a href='https://github.com/r-lib/tidyselect/issues/106'>#106</a>).</p>
@@ -224,7 +224,7 @@ data.frame(x = 1) %&gt;% select(data)</code></pre>
 <li>
 <code>&amp;</code> takes the intersection of two selections.</li>
 </ul>
-<p>These patterns can currently be achieved using <code>-</code>, <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> and <code><a href="https://rdrr.io/r/base/sets.html" class="external-link">intersect()</a></code> respectively. The boolean operators should be more intuitive to use.</p>
+<p>These patterns can currently be achieved using <code>-</code>, <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> and <code><a href="https://rdrr.io/r/base/sets.html">intersect()</a></code> respectively. The boolean operators should be more intuitive to use.</p>
 <p>Many thanks to Irene Steves (<a href='https://github.com/isteves'>@isteves</a>) for suggesting this UI.</p>
 </li>
 <li>
@@ -233,9 +233,9 @@ data.frame(x = 1) %&gt;% select(data)</code></pre>
 <code class="sourceCode R">
 <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span>
 <span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="va">is.factor</span> <span class="op">|</span> <span class="va">is.numeric</span><span class="op">)</span></code></pre></div>
-<p>This feature is not available in functions that use the legacy interface of tidyselect. These need to be updated to use the new <code><a href="../reference/eval_select.html">eval_select()</a></code> function instead of <code><a href="../reference/vars_select.html">vars_select()</a></code>.</p>
+<p>This feature is not available in functions that use the legacy interface of tidyselect. These need to be updated to use the new <code><a href="../reference/eval_rename.html">eval_select()</a></code> function instead of <code><a href="../reference/vars_select.html">vars_select()</a></code>.</p>
 </li>
-<li><p>Unary <code>-</code> inside nested <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> is now consistently syntax for set difference (<a href='https://github.com/r-lib/tidyselect/issues/130'>#130</a>).</p></li>
+<li><p>Unary <code>-</code> inside nested <code><a href="https://rdrr.io/r/base/c.html">c()</a></code> is now consistently syntax for set difference (<a href='https://github.com/r-lib/tidyselect/issues/130'>#130</a>).</p></li>
 <li><p>Improved support for named elements. It is now possible to assign the same name to multiple elements, if the input data structure doesn’t require unique names (i.e. anything but a data frame).</p></li>
 <li>
 <p>The selection engine has been rewritten to support a clearer separation between data-expressions (calls to <code>:</code>, <code>-</code>, and <code>c</code>) and env-expressions (anything else). This means you can now safely use expressions of the type:</p>
@@ -266,7 +266,7 @@ data %&gt;% select_from(data)
 </div>
 <div id="user-facing-improvements" class="section level2">
 <h2 class="hasAnchor">
-<a href="#user-facing-improvements" class="anchor" aria-hidden="true"></a>User-facing improvements</h2>
+<a href="#user-facing-improvements" class="anchor"></a>User-facing improvements</h2>
 <ul>
 <li>
 <p>The new selection helpers <code><a href="../reference/all_of.html">all_of()</a></code> and <code><a href="../reference/all_of.html">any_of()</a></code> are strict variants of <code><a href="../reference/one_of.html">one_of()</a></code>. The former always fails if some variables are unknown, while the latter does not. <code><a href="../reference/all_of.html">all_of()</a></code> is safer to use when you expect all selected variables to exist. <code><a href="../reference/all_of.html">any_of()</a></code> is useful in other cases, for instance to ensure variables are selected out:</p>
@@ -296,8 +296,8 @@ starts_with("a") | starts_with("b")</code></pre>
 </div>
 <div id="api" class="section level2">
 <h2 class="hasAnchor">
-<a href="#api" class="anchor" aria-hidden="true"></a>API</h2>
-<p>New <code><a href="../reference/eval_select.html">eval_select()</a></code> and <code><a href="../reference/eval_select.html">eval_rename()</a></code> functions for client packages. These replace <code><a href="../reference/vars_select.html">vars_select()</a></code> and <code><a href="../reference/vars_select.html">vars_rename()</a></code>, which are now deprecated. These functions:</p>
+<a href="#api" class="anchor"></a>API</h2>
+<p>New <code><a href="../reference/eval_rename.html">eval_select()</a></code> and <code><a href="../reference/eval_rename.html">eval_rename()</a></code> functions for client packages. These replace <code><a href="../reference/vars_select.html">vars_select()</a></code> and <code><a href="../reference/vars_select.html">vars_rename()</a></code>, which are now deprecated. These functions:</p>
 <ul>
 <li><p>Take the full data rather than just names. This makes it possible to use function predicates in selection context.</p></li>
 <li><p>Return a numeric vector of locations rather than a vector of names. This makes it possible to use tidyselect with inputs that support duplicate names, like regular vectors.</p></li>
@@ -305,31 +305,31 @@ starts_with("a") | starts_with("b")</code></pre>
 </div>
 <div id="other-features-and-fixes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#other-features-and-fixes" class="anchor" aria-hidden="true"></a>Other features and fixes</h2>
+<a href="#other-features-and-fixes" class="anchor"></a>Other features and fixes</h2>
 <ul>
 <li><p>The <code>.strict</code> argument of <code><a href="../reference/vars_select.html">vars_select()</a></code> now works more robustly and consistently.</p></li>
 <li><p>Using arithmetic operators in selection context now fails more informatively (<a href='https://github.com/r-lib/tidyselect/issues/84'>#84</a>).</p></li>
 <li><p>It is now possible to select columns in data frames containing duplicate variables (<a href='https://github.com/r-lib/tidyselect/issues/94'>#94</a>). However, the duplicates can’t be part of the final selection.</p></li>
-<li><p><code><a href="../reference/eval_select.html">eval_rename()</a></code> no longer ignore the names of unquoted character vectors of length 1 (<a href='https://github.com/r-lib/tidyselect/issues/79'>#79</a>).</p></li>
-<li><p><code><a href="../reference/eval_select.html">eval_rename()</a></code> now fails when a variable is renamed to an existing name (<a href='https://github.com/r-lib/tidyselect/issues/70'>#70</a>).</p></li>
-<li><p><code><a href="../reference/eval_select.html">eval_rename()</a></code> has better support for existing duplicates (but creating new duplicates is an error).</p></li>
-<li><p><code><a href="../reference/eval_select.html">eval_select()</a></code>, <code><a href="../reference/eval_select.html">eval_rename()</a></code> and <code><a href="../reference/vars_pull.html">vars_pull()</a></code> now detect missing values uniformly (<a href='https://github.com/r-lib/tidyselect/issues/72'>#72</a>).</p></li>
+<li><p><code><a href="../reference/eval_rename.html">eval_rename()</a></code> no longer ignore the names of unquoted character vectors of length 1 (<a href='https://github.com/r-lib/tidyselect/issues/79'>#79</a>).</p></li>
+<li><p><code><a href="../reference/eval_rename.html">eval_rename()</a></code> now fails when a variable is renamed to an existing name (<a href='https://github.com/r-lib/tidyselect/issues/70'>#70</a>).</p></li>
+<li><p><code><a href="../reference/eval_rename.html">eval_rename()</a></code> has better support for existing duplicates (but creating new duplicates is an error).</p></li>
+<li><p><code><a href="../reference/eval_rename.html">eval_select()</a></code>, <code><a href="../reference/eval_rename.html">eval_rename()</a></code> and <code><a href="../reference/vars_pull.html">vars_pull()</a></code> now detect missing values uniformly (<a href='https://github.com/r-lib/tidyselect/issues/72'>#72</a>).</p></li>
 <li><p><code><a href="../reference/vars_pull.html">vars_pull()</a></code> now includes the faulty expression in error messages.</p></li>
-<li><p>The performance issues of <code><a href="../reference/eval_select.html">eval_rename()</a></code> with many arguments have been fixed. This make <code><a href="https://dplyr.tidyverse.org/reference/select_all.html" class="external-link">dplyr::rename_all()</a></code> with many columns much faster (<a href='https://github.com/zkamvar'>@zkamvar</a>, <a href='https://github.com/r-lib/tidyselect/issues/92'>#92</a>).</p></li>
-<li><p>tidyselect is now much faster with many columns, thanks to a performance fix in <code><a href="https://rlang.r-lib.org/reference/env_bind.html" class="external-link">rlang::env_bind()</a></code> as well as internal fixes.</p></li>
+<li><p>The performance issues of <code><a href="../reference/eval_rename.html">eval_rename()</a></code> with many arguments have been fixed. This make <code><a href="https://dplyr.tidyverse.org/reference/select_all.html">dplyr::rename_all()</a></code> with many columns much faster (<a href='https://github.com/zkamvar'>@zkamvar</a>, <a href='https://github.com/r-lib/tidyselect/issues/92'>#92</a>).</p></li>
+<li><p>tidyselect is now much faster with many columns, thanks to a performance fix in <code><a href="https://rlang.r-lib.org/reference/env_bind.html">rlang::env_bind()</a></code> as well as internal fixes.</p></li>
 <li><p><code><a href="../reference/vars_select.html">vars_select()</a></code> ignores vectors with only zeros (<a href='https://github.com/r-lib/tidyselect/issues/82'>#82</a>).</p></li>
 </ul>
 </div>
 </div>
     <div id="tidyselect-025" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.5">
-<a href="#tidyselect-025" class="anchor" aria-hidden="true"></a>tidyselect 0.2.5<small> 2018-10-11 </small>
+<a href="#tidyselect-025" class="anchor"></a>tidyselect 0.2.5<small> 2018-10-11 </small>
 </h1>
 <p>This is a maintenance release for compatibility with rlang 0.3.0.</p>
 </div>
     <div id="tidyselect-024" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.4">
-<a href="#tidyselect-024" class="anchor" aria-hidden="true"></a>tidyselect 0.2.4<small> 2018-02-26 </small>
+<a href="#tidyselect-024" class="anchor"></a>tidyselect 0.2.4<small> 2018-02-26 </small>
 </h1>
 <ul>
 <li><p>Fixed a warning that occurred when a vector of column positions was supplied to <code><a href="../reference/vars_select.html">vars_select()</a></code> or functions depending on it such as <code>tidyr::gather()</code> (<a href='https://github.com/r-lib/tidyselect/issues/43'>#43</a> and tidyverse/tidyr<a href='https://github.com/r-lib/tidyselect/issues/374'>#374</a>).</p></li>
@@ -338,7 +338,7 @@ starts_with("a") | starts_with("b")</code></pre>
 </div>
     <div id="tidyselect-023" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.3">
-<a href="#tidyselect-023" class="anchor" aria-hidden="true"></a>tidyselect 0.2.3<small> 2017-11-06 </small>
+<a href="#tidyselect-023" class="anchor"></a>tidyselect 0.2.3<small> 2017-11-06 </small>
 </h1>
 <ul>
 <li><p>Internal fixes in prevision of using <code>tidyselect</code> within <code>dplyr</code>.</p></li>
@@ -348,7 +348,7 @@ starts_with("a") | starts_with("b")</code></pre>
 </div>
     <div id="tidyselect-022" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.2">
-<a href="#tidyselect-022" class="anchor" aria-hidden="true"></a>tidyselect 0.2.2<small> 2017-10-10 </small>
+<a href="#tidyselect-022" class="anchor"></a>tidyselect 0.2.2<small> 2017-10-10 </small>
 </h1>
 <ul>
 <li>
@@ -357,7 +357,7 @@ starts_with("a") | starts_with("b")</code></pre>
 </div>
     <div id="tidyselect-021" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.1">
-<a href="#tidyselect-021" class="anchor" aria-hidden="true"></a>tidyselect 0.2.1<small> 2017-10-09 </small>
+<a href="#tidyselect-021" class="anchor"></a>tidyselect 0.2.1<small> 2017-10-09 </small>
 </h1>
 <ul>
 <li>
@@ -366,20 +366,20 @@ starts_with("a") | starts_with("b")</code></pre>
 vars_select(names(mtcars), - !!vars)</code></pre>
 </li>
 <li><p><code><a href="../reference/everything.html">last_col()</a></code> now issues an error when the variable vector is empty.</p></li>
-<li><p><code><a href="../reference/everything.html">last_col()</a></code> now returns column positions rather than column names for consistency with other helpers. This also makes it compatible with functions like <code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq()</a></code>.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> now supports character vectors the same way as <code>-</code> and <code><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq()</a></code>. (<a href='https://github.com/r-lib/tidyselect/issues/37'>#37</a> <a href='https://github.com/gergness'>@gergness</a>)</p></li>
+<li><p><code><a href="../reference/everything.html">last_col()</a></code> now returns column positions rather than column names for consistency with other helpers. This also makes it compatible with functions like <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code>.</p></li>
+<li><p><code><a href="https://rdrr.io/r/base/c.html">c()</a></code> now supports character vectors the same way as <code>-</code> and <code><a href="https://rdrr.io/r/base/seq.html">seq()</a></code>. (<a href='https://github.com/r-lib/tidyselect/issues/37'>#37</a> <a href='https://github.com/gergness'>@gergness</a>)</p></li>
 </ul>
 </div>
     <div id="tidyselect-020" class="section level1">
 <h1 class="page-header" data-toc-text="0.2.0">
-<a href="#tidyselect-020" class="anchor" aria-hidden="true"></a>tidyselect 0.2.0<small> 2017-08-30 </small>
+<a href="#tidyselect-020" class="anchor"></a>tidyselect 0.2.0<small> 2017-08-30 </small>
 </h1>
 <p>The main point of this release is to revert a troublesome behaviour introduced in tidyselect 0.1.0. It also includes a few features.</p>
 <div id="evaluation-rules" class="section level2">
 <h2 class="hasAnchor">
-<a href="#evaluation-rules" class="anchor" aria-hidden="true"></a>Evaluation rules</h2>
-<p>The special evaluation semantics for selection have been changed back to the old behaviour because the new rules were causing too much trouble and confusion. From now on data expressions (symbols and calls to <code>:</code> and <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>) can refer to both registered variables and to objects from the context.</p>
-<p>However the semantics for context expressions (any calls other than to <code>:</code> and <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>) remain the same. Those expressions are evaluated in the context only and cannot refer to registered variables.</p>
+<a href="#evaluation-rules" class="anchor"></a>Evaluation rules</h2>
+<p>The special evaluation semantics for selection have been changed back to the old behaviour because the new rules were causing too much trouble and confusion. From now on data expressions (symbols and calls to <code>:</code> and <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>) can refer to both registered variables and to objects from the context.</p>
+<p>However the semantics for context expressions (any calls other than to <code>:</code> and <code><a href="https://rdrr.io/r/base/c.html">c()</a></code>) remain the same. Those expressions are evaluated in the context only and cannot refer to registered variables.</p>
 <p>If you’re writing functions and refer to contextual objects, it is still a good idea to avoid data expressions. Since registered variables are change as a function of user input and you never know if your local objects might be shadowed by a variable. Consider:</p>
 <pre><code>n &lt;- 2
 vars_select(letters, 1:n)</code></pre>
@@ -392,7 +392,7 @@ vars_select(letters, 1:n)</code></pre>
 </div>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor" aria-hidden="true"></a>New features</h2>
+<a href="#new-features" class="anchor"></a>New features</h2>
 <ul>
 <li><p>The new select helper <code><a href="../reference/everything.html">last_col()</a></code> is helpful to select over a custom range: <code>vars_select(vars, 3:last_col())</code>.</p></li>
 <li><p><code>:</code> and <code>-</code> now handle strings as well. This makes it easy to unquote a column name: <code>(!!name) : last_col()</code> or <code>- !!name</code>.</p></li>
@@ -406,7 +406,7 @@ vars_select(letters, 1:n)</code></pre>
 </div>
 <div id="fixes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#fixes" class="anchor" aria-hidden="true"></a>Fixes</h2>
+<a href="#fixes" class="anchor"></a>Fixes</h2>
 <ul>
 <li>
 <code><a href="../reference/one_of.html">one_of()</a></code> argument <code>vars</code> has been renamed to <code>.vars</code> to avoid spurious matching.</li>
@@ -415,12 +415,12 @@ vars_select(letters, 1:n)</code></pre>
 </div>
     <div id="tidyselect-011" class="section level1">
 <h1 class="page-header" data-toc-text="0.1.1">
-<a href="#tidyselect-011" class="anchor" aria-hidden="true"></a>tidyselect 0.1.1<small> 2017-07-24 </small>
+<a href="#tidyselect-011" class="anchor"></a>tidyselect 0.1.1<small> 2017-07-24 </small>
 </h1>
-<p>tidyselect is the new home for the legacy functions <code><a href="https://dplyr.tidyverse.org/reference/select_vars.html" class="external-link">dplyr::select_vars()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select_vars.html" class="external-link">dplyr::rename_vars()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/select_vars.html" class="external-link">dplyr::select_var()</a></code>.</p>
+<p>tidyselect is the new home for the legacy functions <code><a href="https://dplyr.tidyverse.org/reference/select_vars.html">dplyr::select_vars()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/select_vars.html">dplyr::rename_vars()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/select_vars.html">dplyr::select_var()</a></code>.</p>
 <div id="api-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#api-changes" class="anchor" aria-hidden="true"></a>API changes</h2>
+<a href="#api-changes" class="anchor"></a>API changes</h2>
 <p>We took this opportunity to make a few changes to the API:</p>
 <ul>
 <li><p><code>select_vars()</code> and <code>rename_vars()</code> are now <code><a href="../reference/vars_select.html">vars_select()</a></code> and <code><a href="../reference/vars_select.html">vars_rename()</a></code>. This follows the tidyverse convention that a prefix corresponds to the input type while suffixes indicate the output type. Similarly, <code>select_var()</code> is now <code><a href="../reference/vars_pull.html">vars_pull()</a></code>.</p></li>
@@ -433,7 +433,7 @@ vars_select(letters, 1:n)</code></pre>
 </div>
 <div id="establishing-a-variable-context" class="section level2">
 <h2 class="hasAnchor">
-<a href="#establishing-a-variable-context" class="anchor" aria-hidden="true"></a>Establishing a variable context</h2>
+<a href="#establishing-a-variable-context" class="anchor"></a>Establishing a variable context</h2>
 <p>tidyselect provides a few more ways of establishing a variable context:</p>
 <ul>
 <li>
@@ -442,13 +442,13 @@ vars_select(letters, 1:n)</code></pre>
 </li>
 <li>
 <p><code><a href="../reference/poke_vars.html">poke_vars()</a></code> establishes a new variable context. It returns the previous context invisibly and it is your responsibility to restore it after you are done. This is for expert use only.</p>
-<p><code>current_vars()</code> has been renamed to <code><a href="../reference/peek_vars.html">peek_vars()</a></code>. This naming is a reference to <a href="https://en.wikipedia.org/wiki/PEEK_and_POKE" class="external-link">peek and poke</a> from legacy languages.</p>
+<p><code>current_vars()</code> has been renamed to <code><a href="../reference/peek_vars.html">peek_vars()</a></code>. This naming is a reference to <a href="https://en.wikipedia.org/wiki/PEEK_and_POKE">peek and poke</a> from legacy languages.</p>
 </li>
 </ul>
 </div>
 <div id="new-evaluation-semantics" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-evaluation-semantics" class="anchor" aria-hidden="true"></a>New evaluation semantics</h2>
+<a href="#new-evaluation-semantics" class="anchor"></a>New evaluation semantics</h2>
 <p>The evaluation semantics for selecting verbs have changed. Symbols are now evaluated in a data-only context that is isolated from the calling environment. This means that you can no longer refer to local variables unless you are explicitly unquoting these variables with <code>!!</code>, which is mostly for expert use.</p>
 <p>Note that since dplyr 0.7, helper calls (like <code><a href="../reference/starts_with.html">starts_with()</a></code>) obey the opposite behaviour and are evaluated in the calling context isolated from the data context. To sum up, symbols can only refer to data frame objects, while helpers can only refer to contextual objects. This differs from usual R evaluation semantics where both the data and the calling environment are in scope (with the former prevailing over the latter).</p>
 </div>
@@ -466,11 +466,11 @@ vars_select(letters, 1:n)</code></pre>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Lionel Henry, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.</p></p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -478,8 +478,6 @@ vars_select(letters, 1:n)</code></pre>
 
   
 
-
-  
 
   </body>
 </html>

@@ -59,8 +59,6 @@ context." />
 
 
 
-
-
 <!-- mathjax -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
@@ -82,16 +80,9 @@ context." />
 </script>
 
 
-
-  
-
-  
-
   </head>
 
   <body data-spy="scroll" data-target="#toc">
-    
-
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -111,7 +102,13 @@ context." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li class="dropdown">
+        <li>
+  <a href="../index.html">
+    <span class="fas fa-home fa-lg"></span>
+     
+  </a>
+</li>
+<li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
     Articles
      
@@ -122,6 +119,9 @@ context." />
       <a href="../articles/syntax.html">Technical description of tidyselect</a>
     </li>
   </ul>
+</li>
+<li>
+  <a href="../articles/tidyselect.html">Get started</a>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -170,13 +170,13 @@ context." />
 <li><p><code>peek_vars()</code> returns the vector of names of the variables
 currently available for selection.</p></li>
 <li><p><code>peek_data()</code> returns the whole input vector (only available with
-<code><a href='eval_select.html'>eval_select()</a></code>).</p></li>
+<code><a href='eval_rename.html'>eval_select()</a></code>).</p></li>
 </ul>
 
 <p>Read the <a href='https://tidyselect.r-lib.org/articles/tidyselect.html'>Get started</a> for
 examples of how to create selection helpers with <code>peek_vars()</code>.</p>
 <p>The variable names in a selection context are registered
-automatically by <code><a href='eval_select.html'>eval_select()</a></code> and <code><a href='eval_select.html'>eval_rename()</a></code> for the
+automatically by <code><a href='eval_rename.html'>eval_select()</a></code> and <code><a href='eval_rename.html'>eval_rename()</a></code> for the
 duration of the evaluation. <code>peek_vars()</code> is the glue that connects
 <a href='language.html'>selection helpers</a> to the current selection
 context.</p>
@@ -213,11 +213,11 @@ generic error message is used instead.</p></td>
 
       <footer>
       <div class="copyright">
-  <p><p>Developed by Lionel Henry, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>.</p></p>
+  <p>Developed by Lionel Henry, <a href='http://hadley.nz'>Hadley Wickham</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 1.6.1.9001.</p></p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
@@ -225,8 +225,6 @@ generic error message is used instead.</p></td>
 
   
 
-
-  
 
   </body>
 </html>
