@@ -35,8 +35,3 @@ rename_loc <- function(x,
     name_spec = name_spec
   )
 }
-
-# Until r-lib/testthat#1492 is merged
-expect_snapshot <- function(x, ...) {
-  testthat::expect_snapshot(!!enquo0(x), ...)
-}
