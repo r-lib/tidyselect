@@ -104,7 +104,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   # mask, so we can evaluate the expression in the correct context
   # later on.
   if (is_quosure(expr)) {
-    scoped_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
+    local_bindings(.__current__. = quo_get_env(expr), .env = context_mask)
     expr <- quo_get_expr2(expr, expr)
   }
 
