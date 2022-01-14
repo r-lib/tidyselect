@@ -1,7 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>https://tidyselect.r-lib.org/404.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/LICENSE-text.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/LICENSE.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/articles/syntax.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/articles/tidyselect.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/authors.html</loc>
+  </url>
+  <url>
     <loc>https://tidyselect.r-lib.org/index.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/news/index.html</loc>
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/all_of.html</loc>
@@ -17,6 +41,9 @@
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/faq-selection-context.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/reference/index.html</loc>
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/language.html</loc>
@@ -50,11 +77,5 @@
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/where.html</loc>
-  </url>
-  <url>
-    <loc>https://tidyselect.r-lib.org/articles/syntax.html</loc>
-  </url>
-  <url>
-    <loc>https://tidyselect.r-lib.org/articles/tidyselect.html</loc>
   </url>
 </urlset>
