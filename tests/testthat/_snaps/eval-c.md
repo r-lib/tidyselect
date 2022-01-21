@@ -6,6 +6,7 @@
       [1] "a" "b" "a"
     Code
       select_loc(df, c(foo = a))
-    Error <rlang_error>
-      Can't rename duplicate variables to `foo`.
+    Condition
+      Error in `combine_names()`:
+      ! Can't rename duplicate variables to `foo`.
 
