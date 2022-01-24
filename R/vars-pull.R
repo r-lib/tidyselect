@@ -34,7 +34,7 @@
 vars_pull <- function(vars, var = -1) {
   n <- length(vars)
 
-  instrument_base_errors(
+  with_entraced_errors(
     loc <- eval_tidy(enquo(var), set_names(seq_along(vars), vars))
   )
   loc <- pull_as_location2(loc, n, vars)
