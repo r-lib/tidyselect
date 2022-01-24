@@ -54,3 +54,24 @@ test_that("can forbid rename syntax (#178)", {
   expect_error(select_loc(mtcars, c(cyl, foo = cyl), allow_rename = FALSE), "Can't rename")
   expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), NULL)
 })
+
+test_that("eval_select() errors mention correct calls", {
+  f <- function() stop("foo")
+  expect_snapshot((expect_error(select_loc(mtcars, f()))))
+})
+
+test_that("eval_select() produces correct backtraces", {
+  f <- function(base) g(base)
+  g <- function(base) h(base)
+  h <- function(base) if (base) stop("foo") else abort("foo")
+
+  local_options(
+    rlang_trace_trop_env = current_env(),
+    rlang_trace_format_srcrefs = FALSE
+  )
+
+  expect_snapshot({
+    print(expect_error(select_loc(mtcars, f(base = TRUE))))
+    print(expect_error(select_loc(mtcars, f(base = FALSE))))
+  })
+})

@@ -92,3 +92,24 @@ test_that("vars_pull() has informative errors", {
     (expect_error(vars_pull(letters, foobar), ""))
   })
 })
+
+test_that("vars_pull() errors mention correct calls", {
+  f <- function() stop("foo")
+  expect_snapshot((expect_error(vars_pull(letters, f()))))
+})
+
+test_that("vars_pull() produces correct backtraces", {
+  f <- function(base) g(base)
+  g <- function(base) h(base)
+  h <- function(base) if (base) stop("foo") else abort("foo")
+
+  local_options(
+    rlang_trace_trop_env = current_env(),
+    rlang_trace_format_srcrefs = FALSE
+  )
+
+  expect_snapshot({
+    print(expect_error(vars_pull(letters, f(base = TRUE))))
+    print(expect_error(vars_pull(letters, f(base = FALSE))))
+  })
+})

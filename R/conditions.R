@@ -10,12 +10,16 @@ with_subscript_errors <- function(expr, type = "select") {
     }
   )
 }
+
 instrument_base_errors <- function(expr) {
-  withCallingHandlers(
+  try_fetch(
     expr,
     simpleError = function(cnd) {
-      # Pass `cnd` as parent to ensure proper backtraces
-      abort(conditionMessage(cnd), parent = cnd)
+      # TODO! `parent = NA`
+      abort(
+        conditionMessage(cnd),
+        call = conditionCall(cnd)
+      )
     }
   )
 }

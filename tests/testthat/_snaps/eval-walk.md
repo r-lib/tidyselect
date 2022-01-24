@@ -71,9 +71,7 @@
       # Foreign errors during evaluation
       select_loc(iris, eval_tidy(foobar))
     Condition
-      Error in `instrument_base_errors()`:
-      ! object 'foobar' not found
-      Caused by error in `eval_tidy()`:
+      Error:
       ! object 'foobar' not found
 
 # eval_walk() has informative messages

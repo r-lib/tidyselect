@@ -9,9 +9,7 @@
     Code
       vars_pull(letters, aa)
     Condition
-      Error in `instrument_base_errors()`:
-      ! object 'aa' not found
-      Caused by error in `eval_tidy()`:
+      Error:
       ! object 'aa' not found
     Code
       vars_pull(letters, 0)
@@ -81,8 +79,41 @@
       (expect_error(vars_pull(letters, foobar), ""))
     Output
       <error/rlang_error>
-      Error in `instrument_base_errors()`:
+      Error:
       ! object 'foobar' not found
-      Caused by error in `eval_tidy()`:
-      ! object 'foobar' not found
+
+# vars_pull() errors mention correct calls
+
+    Code
+      (expect_error(vars_pull(letters, f())))
+    Output
+      <error/rlang_error>
+      Error in `f()`:
+      ! foo
+
+# vars_pull() produces correct backtraces
+
+    Code
+      print(expect_error(vars_pull(letters, f(base = TRUE))))
+    Output
+      <error/rlang_error>
+      Error in `h()`:
+      ! foo
+      Backtrace:
+        1. base::print(expect_error(vars_pull(letters, f(base = TRUE))))
+       13. tidyselect f(base = TRUE)
+       14. tidyselect g(base)
+       15. tidyselect h(base)
+       16. base::stop("foo")
+    Code
+      print(expect_error(vars_pull(letters, f(base = FALSE))))
+    Output
+      <error/rlang_error>
+      Error in `h()`:
+      ! foo
+      Backtrace:
+        1. base::print(expect_error(vars_pull(letters, f(base = FALSE))))
+       13. tidyselect f(base = FALSE)
+       14. tidyselect g(base)
+       15. tidyselect h(base)
 
