@@ -5,14 +5,16 @@ eval_rename <- function(expr,
                         env = caller_env(),
                         ...,
                         strict = TRUE,
-                        name_spec = NULL) {
+                        name_spec = NULL,
+                        error_call = caller_env()) {
   ellipsis::check_dots_empty()
   rename_impl(
     data,
     names(data),
     as_quosure(expr, env),
     strict = strict,
-    name_spec = name_spec
+    name_spec = name_spec,
+    error_call = error_call
   )
 }
 
@@ -21,9 +23,10 @@ rename_impl <- function(x,
                         names,
                         sel,
                         strict = TRUE,
-                        name_spec = NULL) {
+                        name_spec = NULL,
+                        error_call) {
   if (is_null(names)) {
-    abort("Can't rename an unnamed vector.")
+    abort("Can't rename an unnamed vector.", call = error_call)
   }
 
   pos <- eval_select_impl(
@@ -32,14 +35,19 @@ rename_impl <- function(x,
     {{ sel }},
     strict = strict,
     name_spec = name_spec,
-    type = "rename"
+    type = "rename",
+    error_call = error_call
   )
 
   # Check for unique names only if input is a data frame
   if (is.data.frame(x) || is_null(x)) {
     names[pos] <- names(pos)
     with_subscript_errors(
-      vctrs::vec_as_names(names, repair = "check_unique")
+      vctrs::vec_as_names(
+        names,
+        repair = "check_unique",
+        call = error_call
+      )
     )
   }
 

@@ -38,7 +38,8 @@ vars_select <- function(.vars,
     exclude = .exclude,
     strict = .strict,
     name_spec = unique_name_spec,
-    uniquely_named = TRUE
+    uniquely_named = TRUE,
+    error_call = caller_env()
   )
 
   sel <- set_names(.vars[idx], names(idx))
@@ -67,7 +68,8 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
     NULL,
     .vars,
     quo(c(...)),
-    strict = .strict
+    strict = .strict,
+    error_call = caller_env()
   )
 
   .vars <- set_names(.vars)

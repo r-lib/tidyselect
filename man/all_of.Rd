@@ -78,7 +78,7 @@ iris \%>\% pivot_longer(all_of(vars))
 }\if{html}{\out{</div>}}
 
 If any of the variable is missing from the data frame, that's an error:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(all_of(vars))
-}\if{html}{\out{</div>}}\preformatted{## Error in `chr_as_locations()` at tidyselect/R/eval-walk.R:171:2:
+}\if{html}{\out{</div>}}\preformatted{## Error:
 ## ! Can't subset columns that don't exist.
 ## x Columns `Sepal.Length` and `Sepal.Width` don't exist.
 }

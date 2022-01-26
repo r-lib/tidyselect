@@ -5,7 +5,8 @@ select_loc <- function(x,
                        exclude = NULL,
                        strict = TRUE,
                        name_spec = NULL,
-                       allow_rename = TRUE) {
+                       allow_rename = TRUE,
+                       error_call = current_env()) {
   ellipsis::check_dots_empty()
 
   eval_select(
@@ -15,7 +16,8 @@ select_loc <- function(x,
     exclude = exclude,
     strict = strict,
     name_spec = name_spec,
-    allow_rename = allow_rename
+    allow_rename = allow_rename,
+    error_call = error_call
   )
 }
 
@@ -23,14 +25,16 @@ rename_loc <- function(x,
                        sel,
                        ...,
                        strict = TRUE,
-                       name_spec = NULL) {
+                       name_spec = NULL,
+                       error_call = current_env()) {
   ellipsis::check_dots_empty()
   rename_impl(
     x,
     names(x),
     enquo(sel),
     strict = strict,
-    name_spec = name_spec
+    name_spec = name_spec,
+    error_call = error_call
   )
 }
 
@@ -177,23 +181,32 @@ flat_map_int <- function(.x, .fn, ...) {
   vctrs::vec_c(!!!out, .ptype = int())
 }
 
-loc_validate <- function(pos, vars) {
-  check_missing(pos)
-  check_negative(pos)
+loc_validate <- function(pos, vars, call = caller_env()) {
+  check_missing(pos, call = call)
+  check_negative(pos, call = call)
 
-  pos <- vctrs::vec_as_subscript(pos, logical = "error", character = "error")
-  pos <- vctrs::vec_as_location(pos, n = length(vars))
+  pos <- vctrs::vec_as_subscript(
+    pos,
+    logical = "error",
+    character = "error",
+    call = call
+  )
+  pos <- vctrs::vec_as_location(
+    pos,
+    n = length(vars),
+    call = call
+  )
 
   named(sel_unique(pos))
 }
-check_missing <- function(x) {
+check_missing <- function(x, call) {
   if (anyNA(x)) {
-    abort("Selections can't have missing values.")
+    abort("Selections can't have missing values.", call = call)
   }
 }
-check_negative <- function(x) {
+check_negative <- function(x, call) {
   if (any(x < 0L)) {
-    abort("Selections can't have negative values.")
+    abort("Selections can't have negative values.", call = call)
   }
 }
 
@@ -382,4 +395,8 @@ silver <- function(x) if (has_crayon()) crayon::silver(x) else x
 glue_line <- function(..., env = parent.frame()) {
   out <- map_chr(chr(...), glue::glue, .envir = env)
   paste(out, collapse = "\n")
+}
+
+mask_error_call <- function(data_mask) {
+  data_mask$.__tidyselect__.$internal$error_call
 }

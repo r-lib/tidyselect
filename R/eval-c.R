@@ -33,14 +33,21 @@ reduce_sels <- function(node, data_mask, context_mask, init) {
     new <- walk_data_tree(new, data_mask, context_mask)
     if (!is_null(tag)) {
       internal <- data_mask$.__tidyselect__.$internal
-      new <- combine_names(new, tag, internal$name_spec, internal$strict)
+      new <- combine_names(
+        new,
+        tag,
+        internal$name_spec,
+        internal$strict,
+        error_call = internal$error_call
+      )
     }
 
     if (kind == "union") {
       out <- sel_union(out, new)
     } else {
       vars <- data_mask$.__tidyselect__.$internal$vars
-      out <- sel_diff(out, new, vars)
+      error_call <- mask_error_call(data_mask)
+      out <- sel_diff(out, new, vars, error_call = error_call)
     }
 
     node <- cdr
@@ -91,10 +98,15 @@ is_negated_colon <- function(x) {
   is_call(expr, ":") && is_negated(expr[[2]]) && is_negated(expr[[3]])
 }
 
-combine_names <- function(x, tag, name_spec, uniquely_named) {
+combine_names <- function(x,
+                          tag,
+                          name_spec,
+                          uniquely_named,
+                          error_call) {
   if (uniquely_named && is_data_dups(x)) {
     name <- as_string(tag)
-    abort(glue("Can't rename duplicate variables to `{name}`."))
+    msg <- glue("Can't rename duplicate variables to `{name}`.")
+    abort(msg, call = error_call)
   }
 
   vctrs::vec_c(!!tag := x, .name_spec = name_spec)

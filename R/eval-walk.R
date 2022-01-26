@@ -1,4 +1,3 @@
-
 vars_select_eval <- function(vars,
                              expr,
                              strict,
@@ -6,7 +5,8 @@ vars_select_eval <- function(vars,
                              name_spec = NULL,
                              uniquely_named = NULL,
                              allow_rename = TRUE,
-                             type = "select") {
+                             type = "select",
+                             error_call) {
   wrapped <- quo_get_expr2(expr, expr)
 
   if (is_missing(wrapped)) {
@@ -16,9 +16,21 @@ vars_select_eval <- function(vars,
   uniquely_named <- uniquely_named %||% is.data.frame(data)
 
   if (!is_symbolic(wrapped)) {
-    pos <- as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data)
+    pos <- as_indices_sel_impl(
+      wrapped,
+      vars = vars,
+      strict = strict,
+      data = data,
+      call = error_call
+    )
     pos <- loc_validate(pos, vars)
-    pos <- ensure_named(pos, vars, uniquely_named, allow_rename)
+    pos <- ensure_named(
+      pos,
+      vars,
+      uniquely_named,
+      allow_rename,
+      call = error_call
+    )
     return(pos)
   }
 
@@ -56,24 +68,35 @@ vars_select_eval <- function(vars,
     data = data,
     strict = strict,
     name_spec = name_spec,
-    uniquely_named = uniquely_named
+    uniquely_named = uniquely_named,
+    error_call = error_call
   )
   data_mask$.__tidyselect__.$internal <- internal
 
-  pos <- walk_data_tree(expr, data_mask, context_mask)
-  pos <- loc_validate(pos, vars)
+  pos <- walk_data_tree(expr, data_mask, context_mask, error_call)
+  pos <- loc_validate(pos, vars, call = error_call)
 
   if (type == "rename" && !is_named(pos)) {
-    abort("All renaming inputs must be named.")
+    abort("All renaming inputs must be named.", call = error_call)
   }
 
-  ensure_named(pos, vars, uniquely_named, allow_rename)
+  ensure_named(
+    pos,
+    vars,
+    uniquely_named,
+    allow_rename,
+    call = error_call
+  )
 }
 
-ensure_named <- function(pos, vars, uniquely_named, allow_rename) {
+ensure_named <- function(pos,
+                         vars,
+                         uniquely_named,
+                         allow_rename,
+                         call) {
   if (!allow_rename) {
     if (is_named(pos)) {
-      abort("Can't rename variables in this context.")
+      abort("Can't rename variables in this context.", call = call)
     }
     return(set_names(pos, NULL))
   }
@@ -84,7 +107,7 @@ ensure_named <- function(pos, vars, uniquely_named, allow_rename) {
 
   # Duplicates are not allowed for data frames
   if (uniquely_named) {
-    vctrs::vec_as_names(names(pos), repair = "check_unique")
+    vctrs::vec_as_names(names(pos), repair = "check_unique", call = call)
   }
 
   pos
@@ -108,7 +131,10 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     expr <- quo_get_expr2(expr, expr)
   }
 
-  out <- switch(expr_kind(expr),
+  error_call <- data_mask$.__tidyselect__.$internal$error_call
+
+  out <- switch(
+    expr_kind(expr, error_call),
     literal = expr,
     symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
@@ -118,12 +144,12 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `|` = eval_or(expr, data_mask, context_mask),
     `&` = eval_and(expr, data_mask, context_mask),
     `c` = eval_c(expr, data_mask, context_mask),
-    `||` = stop_bad_bool_op("||", "|"),
-    `&&` = stop_bad_bool_op("&&", "&"),
-    `*` = stop_bad_arith_op("*"),
+    `||` = stop_bad_bool_op("||", "|", call = error_call),
+    `&&` = stop_bad_bool_op("&&", "&", call = error_call),
+    `*` = stop_bad_arith_op("*", call = error_call),
     `/` = eval_slash(expr, data_mask, context_mask),
-    `^` = stop_bad_arith_op("^"),
-    `~` = stop_formula(expr),
+    `^` = stop_bad_arith_op("^", call = error_call),
+    `~` = stop_formula(expr, call = error_call),
     .data = eval(expr, data_mask),
     eval_context(expr, context_mask)
   )
@@ -132,30 +158,37 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   strict <- data_mask$.__tidyselect__.$internal$strict
   data <- data_mask$.__tidyselect__.$internal$data
 
-  as_indices_sel_impl(out, vars = vars, strict = strict, data)
+  as_indices_sel_impl(
+    out,
+    vars = vars,
+    strict = strict,
+    data = data,
+    call = error_call
+  )
 }
 
-as_indices_sel_impl <- function(x, vars, strict, data = NULL) {
+as_indices_sel_impl <- function(x, vars, strict, data = NULL, call) {
   if (is.function(x)) {
     if (is_null(data)) {
-      abort(c(
+      msg <- c(
         "This tidyselect interface doesn't support predicates yet.",
         i = "Contact the package author and suggest using `eval_select()`."
-      ))
+      )
+      abort(msg, call = call)
     }
     predicate <- x
     x <- which(map_lgl(data, predicate))
   }
 
-  as_indices_impl(x, vars, strict = strict)
+  as_indices_impl(x, vars, call = call, strict = strict)
 }
 
-as_indices_impl <- function(x, vars, strict) {
+as_indices_impl <- function(x, vars, strict, call = caller_env()) {
   if (is_null(x)) {
     return(int())
   }
 
-  x <- vctrs::vec_as_subscript(x, logical = "error")
+  x <- vctrs::vec_as_subscript(x, logical = "error", call = call)
 
   if (!strict) {
     # Remove out-of-bounds elements if non-strict. We do this eagerly
@@ -168,32 +201,39 @@ as_indices_impl <- function(x, vars, strict) {
     )
   }
 
-  switch(typeof(x),
-    character = chr_as_locations(x, vars),
+  switch(
+    typeof(x),
+    character = chr_as_locations(x, vars, call = call),
     double = ,
     integer = x,
-    abort("Internal error: Unexpected type in `as_indices()`.")
+    abort("Unexpected type.", .internal = TRUE)
   )
 }
 
-chr_as_locations <- function(x, vars) {
-  out <- vctrs::vec_as_location(x, n = length(vars), names = vars)
+chr_as_locations <- function(x, vars, call = caller_env()) {
+  out <- vctrs::vec_as_location(
+    x,
+    n = length(vars),
+    names = vars,
+    call = call
+  )
   set_names(out, names(x))
 }
 
-as_indices <- function(x, vars, strict = TRUE) {
-  inds <- with_subscript_errors(as_indices_impl(x, vars, strict))
+as_indices <- function(x, vars, strict = TRUE, call) {
+  inds <- with_subscript_errors(as_indices_impl(x, vars, strict, call))
   vctrs::vec_as_location(inds, length(vars), vars, convert_values = NULL)
 }
 
-expr_kind <- function(expr) {
-  switch(typeof(expr),
+expr_kind <- function(expr, error_call) {
+  switch(
+    typeof(expr),
     symbol = "symbol",
-    language = call_kind(expr),
+    language = call_kind(expr, error_call),
     "literal"
   )
 }
-call_kind <- function(expr) {
+call_kind <- function(expr, error_call) {
   head <- node_car(expr)
   if (!is_symbol(head)) {
     return("call")
@@ -202,7 +242,7 @@ call_kind <- function(expr) {
   fn <- as_string(head)
 
   if (fn %in% c("$", "[[") && identical(node_cadr(expr), quote(.data))) {
-    validate_dot_data(expr)
+    validate_dot_data(expr, error_call)
     return(".data")
   }
 
@@ -230,7 +270,8 @@ eval_colon <- function(expr, data_mask, context_mask) {
     # Compatibility syntax for `-1:-2`. We interpret it as `-(1:2)`.
     out <- eval_colon(unnegate_colon(expr), data_mask, context_mask)
     vars <- data_mask$.__tidyselect__.$internal$vars
-    sel_complement(out, vars)
+    error_call <- mask_error_call(data_mask)
+    sel_complement(out, vars, error_call = error_call)
   } else {
     x <- walk_data_tree(expr[[2]], data_mask, context_mask, colon = TRUE)
     y <- walk_data_tree(expr[[3]], data_mask, context_mask, colon = TRUE)
@@ -249,9 +290,11 @@ eval_minus <- function(expr, data_mask, context_mask) {
 eval_slash <- function(expr, data_mask, context_mask) {
   lhs <- walk_data_tree(expr[[2]], data_mask, context_mask)
   rhs <- walk_data_tree(expr[[3]], data_mask, context_mask)
-  vars <- data_mask$.__tidyselect__.$internal$vars
 
-  sel_diff(lhs, rhs, vars)
+  vars <- data_mask$.__tidyselect__.$internal$vars
+  error_call <- mask_error_call(data_mask)
+
+  sel_diff(lhs, rhs, vars, error_call = error_call)
 }
 
 eval_context <- function(expr, context_mask) {
@@ -339,12 +382,12 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   value
 }
 
-validate_dot_data <- function(expr) {
+validate_dot_data <- function(expr, call) {
   if (is_call(expr, "$") && !is_symbol(expr[[3]])) {
-    abort("The RHS of `.data$rhs` must be a symbol.")
+    abort("The RHS of `.data$rhs` must be a symbol.", call = call)
   }
   if (is_call(expr, "[[") && is_symbolic(expr[[3]])) {
-    abort("The subscript of `.data[[subscript]]` must be a constant.")
+    abort("The subscript of `.data[[subscript]]` must be a constant.", call = call)
   }
 }
 
