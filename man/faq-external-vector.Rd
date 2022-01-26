@@ -7,7 +7,7 @@
 \subsection{Ambiguity between columns and external variables}{
 
 With selecting functions like \code{dplyr::select()} or
-\code{tidyr::pivot_longer()}, you can refer to variables by name:\if{html}{\out{<div class="r">}}\preformatted{mtcars \%>\% select(cyl, am, vs)
+\code{tidyr::pivot_longer()}, you can refer to variables by name:\if{html}{\out{<div class="sourceCode r">}}\preformatted{mtcars \%>\% select(cyl, am, vs)
 #> # A tibble: 32 x 3
 #>     cyl    am    vs
 #>   <dbl> <dbl> <dbl>
@@ -31,7 +31,7 @@ mtcars \%>\% select(mpg:disp)
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.\if{html}{\out{<div class="r">}}\preformatted{vars <- c("cyl", "am", "vs")
+not clear whether you want a data frame column or an external object.\if{html}{\out{<div class="sourceCode r">}}\preformatted{vars <- c("cyl", "am", "vs")
 result <- mtcars \%>\% select(vars)
 #> Note: Using an external vector in selections is ambiguous.
 #> i Use `all_of(vars)` instead of `vars` to silence this message.
@@ -42,19 +42,19 @@ result <- mtcars \%>\% select(vars)
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.\if{html}{\out{<div class="r">}}\preformatted{some_df <- mtcars[1:4, ]
+contains a column with the same name as your external variable.\if{html}{\out{<div class="sourceCode r">}}\preformatted{some_df <- mtcars[1:4, ]
 some_df$vars <- 1:nrow(some_df)
 }\if{html}{\out{</div>}}
 
 These are very different objects but it isn’t a problem if the context
-forces you to be specific about where to find \code{vars}:\if{html}{\out{<div class="r">}}\preformatted{vars
+forces you to be specific about where to find \code{vars}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{vars
 #> [1] "cyl" "am"  "vs"
 
 some_df$vars
 #> [1] 1 2 3 4
 }\if{html}{\out{</div>}}
 
-In a selection context however, the column wins:\if{html}{\out{<div class="r">}}\preformatted{some_df \%>\% select(vars)
+In a selection context however, the column wins:\if{html}{\out{<div class="sourceCode r">}}\preformatted{some_df \%>\% select(vars)
 #> # A tibble: 4 x 1
 #>    vars
 #>   <int>
@@ -68,7 +68,7 @@ In a selection context however, the column wins:\if{html}{\out{<div class="r">}}
 \subsection{Fixing the ambiguity}{
 
 To make your selection code more robust and silence the message, use
-\code{all_of()} to force the external vector:\if{html}{\out{<div class="r">}}\preformatted{some_df \%>\% select(all_of(vars))
+\code{all_of()} to force the external vector:\if{html}{\out{<div class="sourceCode r">}}\preformatted{some_df \%>\% select(all_of(vars))
 #> # A tibble: 4 x 3
 #>     cyl    am    vs
 #>   <dbl> <dbl> <dbl>

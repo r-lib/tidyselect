@@ -20,31 +20,31 @@ sets of variables.
 In addition, you can use \strong{selection helpers}. Some helpers select specific
 columns:
 \itemize{
-\item \code{\link[tidyselect:everything]{everything()}}: Matches all variables.
-\item \code{\link[tidyselect:last_col]{last_col()}}: Select last variable, possibly with an offset.
+\item \code{\link[=everything]{everything()}}: Matches all variables.
+\item \code{\link[=last_col]{last_col()}}: Select last variable, possibly with an offset.
 }
 
 These helpers select variables by matching patterns in their names:
 \itemize{
-\item \code{\link[tidyselect:starts_with]{starts_with()}}: Starts with a prefix.
-\item \code{\link[tidyselect:ends_with]{ends_with()}}: Ends with a suffix.
-\item \code{\link[tidyselect:contains]{contains()}}: Contains a literal string.
-\item \code{\link[tidyselect:matches]{matches()}}: Matches a regular expression.
-\item \code{\link[tidyselect:num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
+\item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
+\item \code{\link[=ends_with]{ends_with()}}: Ends with a suffix.
+\item \code{\link[=contains]{contains()}}: Contains a literal string.
+\item \code{\link[=matches]{matches()}}: Matches a regular expression.
+\item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
 }
 
 These helpers select variables from a character vector:
 \itemize{
-\item \code{\link[tidyselect:all_of]{all_of()}}: Matches variable names in a character vector. All
+\item \code{\link[=all_of]{all_of()}}: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
 thrown.
-\item \code{\link[tidyselect:any_of]{any_of()}}: Same as \code{all_of()}, except that no error is thrown
+\item \code{\link[=any_of]{any_of()}}: Same as \code{all_of()}, except that no error is thrown
 for names that don't exist.
 }
 
 This helper selects variables with a function:
 \itemize{
-\item \code{\link[tidyselect:where]{where()}}: Applies a function to all variables and selects those
+\item \code{\link[=where]{where()}}: Applies a function to all variables and selects those
 for which the function returns \code{TRUE}.
 }
 }
@@ -57,13 +57,13 @@ specific help pages to learn about helpers like \code{\link[=starts_with]{starts
 
 The selection language can be used in functions like
 \code{dplyr::select()} or \code{tidyr::pivot_longer()}. Let's first attach
-the tidyverse:\if{html}{\out{<div class="r">}}\preformatted{library(tidyverse)
+the tidyverse:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidyverse)
 
 # For better printing
 iris <- as_tibble(iris)
 }\if{html}{\out{</div>}}
 
-Select variables by name:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(height)
+Select variables by name:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(height)
 #> # A tibble: 87 x 1
 #>   height
 #>    <int>
@@ -85,7 +85,7 @@ iris \%>\% pivot_longer(Sepal.Length)
 }\if{html}{\out{</div>}}
 
 Select multiple variables by separating them with commas. Note how
-the order of columns is determined by the order of inputs:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(homeworld, height, mass)
+the order of columns is determined by the order of inputs:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(homeworld, height, mass)
 #> # A tibble: 87 x 3
 #>   homeworld height  mass
 #>   <chr>      <int> <dbl>
@@ -97,7 +97,7 @@ the order of columns is determined by the order of inputs:\if{html}{\out{<div cl
 }\if{html}{\out{</div>}}
 
 Functions like \code{tidyr::pivot_longer()} don't take variables with
-dots. In this case use \code{c()} to select multiple variables:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% pivot_longer(c(Sepal.Length, Petal.Length))
+dots. In this case use \code{c()} to select multiple variables:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% pivot_longer(c(Sepal.Length, Petal.Length))
 #> # A tibble: 300 x 5
 #>   Sepal.Width Petal.Width Species name         value
 #>         <dbl>       <dbl> <fct>   <chr>        <dbl>
@@ -109,7 +109,7 @@ dots. In this case use \code{c()} to select multiple variables:\if{html}{\out{<d
 }\if{html}{\out{</div>}}
 \subsection{Operators:}{
 
-The \code{:} operator selects a range of consecutive variables:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(name:mass)
+The \code{:} operator selects a range of consecutive variables:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(name:mass)
 #> # A tibble: 87 x 3
 #>   name           height  mass
 #>   <chr>           <int> <dbl>
@@ -120,14 +120,14 @@ The \code{:} operator selects a range of consecutive variables:\if{html}{\out{<d
 #> # ... with 83 more rows
 }\if{html}{\out{</div>}}
 
-The \code{!} operator negates a selection:\if{html}{\out{<div class="r">}}\preformatted{starwars \%>\% select(!(name:mass))
+The \code{!} operator negates a selection:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(!(name:mass))
 #> # A tibble: 87 x 11
-#>   hair_color skin_color eye_color birth_year sex   gender homeworld species
-#>   <chr>      <chr>      <chr>          <dbl> <chr> <chr>  <chr>     <chr>  
-#> 1 blond      fair       blue            19   male  mascu~ Tatooine  Human  
-#> 2 <NA>       gold       yellow         112   none  mascu~ Tatooine  Droid  
-#> 3 <NA>       white, bl~ red             33   none  mascu~ Naboo     Droid  
-#> 4 none       white      yellow          41.9 male  mascu~ Tatooine  Human  
+#>   hair_color skin_color  eye_color birth_year sex   gender    homeworld species
+#>   <chr>      <chr>       <chr>          <dbl> <chr> <chr>     <chr>     <chr>  
+#> 1 blond      fair        blue            19   male  masculine Tatooine  Human  
+#> 2 <NA>       gold        yellow         112   none  masculine Tatooine  Droid  
+#> 3 <NA>       white, blue red             33   none  masculine Naboo     Droid  
+#> 4 none       white       yellow          41.9 male  masculine Tatooine  Human  
 #> # ... with 83 more rows, and 3 more variables: films <list>, vehicles <list>,
 #> #   starships <list>
 
@@ -152,7 +152,7 @@ iris \%>\% select(!ends_with("Width"))
 #> # ... with 146 more rows
 }\if{html}{\out{</div>}}
 
-\code{&} and \code{|} take the intersection or the union of two selections:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(starts_with("Petal") & ends_with("Width"))
+\code{&} and \code{|} take the intersection or the union of two selections:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(starts_with("Petal") & ends_with("Width"))
 #> # A tibble: 150 x 1
 #>   Petal.Width
 #>         <dbl>
@@ -174,7 +174,7 @@ iris \%>\% select(starts_with("Petal") | ends_with("Width"))
 }\if{html}{\out{</div>}}
 
 To take the difference between two selections, combine the \code{&} and
-\code{!} operators:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(starts_with("Petal") & !ends_with("Width"))
+\code{!} operators:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(starts_with("Petal") & !ends_with("Width"))
 #> # A tibble: 150 x 1
 #>   Petal.Length
 #>          <dbl>

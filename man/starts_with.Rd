@@ -53,14 +53,14 @@ to a given pattern.
 
 
 Selection helpers can be used in functions like \code{dplyr::select()}
-or \code{tidyr::pivot_longer()}. Let's first attach the tidyverse:\if{html}{\out{<div class="r">}}\preformatted{library(tidyverse)
+or \code{tidyr::pivot_longer()}. Let's first attach the tidyverse:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidyverse)
 
 # For better printing
 iris <- as_tibble(iris)
 }\if{html}{\out{</div>}}
 
 \code{starts_with()} selects all variables matching a prefix and
-\code{ends_with()} matches a suffix:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(starts_with("Sepal"))
+\code{ends_with()} matches a suffix:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(starts_with("Sepal"))
 #> # A tibble: 150 x 2
 #>   Sepal.Length Sepal.Width
 #>          <dbl>       <dbl>
@@ -82,7 +82,7 @@ iris \%>\% select(ends_with("Width"))
 }\if{html}{\out{</div>}}
 
 You can supply multiple prefixes or suffixes. Note how the order of
-variables depends on the order of the suffixes and prefixes:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(starts_with(c("Petal", "Sepal")))
+variables depends on the order of the suffixes and prefixes:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(starts_with(c("Petal", "Sepal")))
 #> # A tibble: 150 x 4
 #>   Petal.Length Petal.Width Sepal.Length Sepal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
@@ -103,7 +103,7 @@ iris \%>\% select(ends_with(c("Width", "Length")))
 #> # ... with 146 more rows
 }\if{html}{\out{</div>}}
 
-\code{contains()} selects columns whose names contain a word:\if{html}{\out{<div class="r">}}\preformatted{iris \%>\% select(contains("al"))
+\code{contains()} selects columns whose names contain a word:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(contains("al"))
 #> # A tibble: 150 x 4
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
@@ -115,7 +115,7 @@ iris \%>\% select(ends_with(c("Width", "Length")))
 }\if{html}{\out{</div>}}
 
 These helpers do not use regular expressions. To select with a
-regexp use \code{matches()}\if{html}{\out{<div class="r">}}\preformatted{# [pt] is matched literally:
+regexp use \code{matches()}\if{html}{\out{<div class="sourceCode r">}}\preformatted{# [pt] is matched literally:
 iris \%>\% select(contains("[pt]al"))
 #> # A tibble: 150 x 0
 
@@ -132,7 +132,7 @@ iris \%>\% select(matches("[pt]al"))
 }\if{html}{\out{</div>}}
 
 \code{starts_with()} selects all variables starting with a prefix. To
-select a range, use \code{num_range()}. Compare:\if{html}{\out{<div class="r">}}\preformatted{billboard \%>\% select(starts_with("wk"))
+select a range, use \code{num_range()}. Compare:\if{html}{\out{<div class="sourceCode r">}}\preformatted{billboard \%>\% select(starts_with("wk"))
 #> # A tibble: 317 x 76
 #>     wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13
 #>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>

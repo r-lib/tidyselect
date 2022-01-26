@@ -13,16 +13,19 @@ Examples of valid selection contexts are:
 \item The \code{cols} argument of \code{tidyr::pivot_longer()}.
 }
 
-Using a selection helper anywhere else results in an error:\if{html}{\out{<div class="r">}}\preformatted{starts_with("foo")
-#> Error: `starts_with()` must be used within a *selecting* function.
+Using a selection helper anywhere else results in an error:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starts_with("foo")
+#> Error in `peek_vars()` at rlang/R/operators.R:14:2:
+#> ! `starts_with()` must be used within a *selecting* function.
 #> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
 
 mtcars[contains("foo")]
-#> Error: `contains()` must be used within a *selecting* function.
+#> Error in `peek_vars()` at rlang/R/operators.R:14:2:
+#> ! `contains()` must be used within a *selecting* function.
 #> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
 
 subset(mtcars, select = matches("foo"))
-#> Error: `matches()` must be used within a *selecting* function.
+#> Error in `peek_vars()` at rlang/R/operators.R:14:2:
+#> ! `matches()` must be used within a *selecting* function.
 #> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
 }\if{html}{\out{</div>}}
 

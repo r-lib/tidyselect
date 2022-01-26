@@ -6,10 +6,7 @@
 \alias{tidyselect-package}
 \title{tidyselect: Select from a Set of Strings}
 \description{
-A backend for the selecting functions of the 'tidyverse'.
-    It makes it easy to implement select-like functions in your own
-    packages in a way that is consistent with other 'tidyverse'
-    interfaces for selection.
+A backend for the selecting functions of the 'tidyverse'. It makes it easy to implement select-like functions in your own packages in a way that is consistent with other 'tidyverse' interfaces for selection.
 }
 \seealso{
 Useful links:
