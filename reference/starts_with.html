@@ -128,12 +128,12 @@ a range of 2 gives "01", a range of three "001", etc.</p></dd>
 
 
 <p>Selection helpers can be used in functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>
-or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p><div class="r"><div class="sourceCode"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 
 <span class="co"># For better printing</span>
-<span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></code></pre></div><p></p></div>
+<span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></code></pre><p></p></div>
 <p><code>starts_with()</code> selects all variables matching a prefix and
-<code>ends_with()</code> matches a suffix:</p><div class="r"><div class="sourceCode"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span>
+<code>ends_with()</code> matches a suffix:</p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 2</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width</span>
 <span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -151,9 +151,9 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p><div
 <span class="co">#&gt; 2         3           0.2</span>
 <span class="co">#&gt; 3         3.2         0.2</span>
 <span class="co">#&gt; 4         3.1         0.2</span>
-<span class="co">#&gt; # ... with 146 more rows</span></code></pre></div><p></p></div>
+<span class="co">#&gt; # ... with 146 more rows</span></code></pre><p></p></div>
 <p>You can supply multiple prefixes or suffixes. Note how the order of
-variables depends on the order of the suffixes and prefixes:</p><div class="r"><div class="sourceCode"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Petal"</span>, <span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
+variables depends on the order of the suffixes and prefixes:</p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Petal"</span>, <span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 4</span>
 <span class="co">#&gt;   Petal.Length Petal.Width Sepal.Length Sepal.Width</span>
 <span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -171,8 +171,8 @@ variables depends on the order of the suffixes and prefixes:</p><div class="r"><
 <span class="co">#&gt; 2         3           0.2          4.9          1.4</span>
 <span class="co">#&gt; 3         3.2         0.2          4.7          1.3</span>
 <span class="co">#&gt; 4         3.1         0.2          4.6          1.5</span>
-<span class="co">#&gt; # ... with 146 more rows</span></code></pre></div><p></p></div>
-<p><code>contains()</code> selects columns whose names contain a word:</p><div class="r"><div class="sourceCode"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"al"</span><span class="op">)</span><span class="op">)</span>
+<span class="co">#&gt; # ... with 146 more rows</span></code></pre><p></p></div>
+<p><code>contains()</code> selects columns whose names contain a word:</p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"al"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 4</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -180,9 +180,9 @@ variables depends on the order of the suffixes and prefixes:</p><div class="r"><
 <span class="co">#&gt; 2          4.9         3            1.4         0.2</span>
 <span class="co">#&gt; 3          4.7         3.2          1.3         0.2</span>
 <span class="co">#&gt; 4          4.6         3.1          1.5         0.2</span>
-<span class="co">#&gt; # ... with 146 more rows</span></code></pre></div><p></p></div>
+<span class="co">#&gt; # ... with 146 more rows</span></code></pre><p></p></div>
 <p>These helpers do not use regular expressions. To select with a
-regexp use <code>matches()</code></p><div class="r"><div class="sourceCode"><pre><code><span class="co"># [pt] is matched literally:</span>
+regexp use <code>matches()</code></p><div class="sourceCode r"><pre><code><span class="co"># [pt] is matched literally:</span>
 <span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"[pt]al"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 0</span>
 
@@ -195,9 +195,9 @@ regexp use <code>matches()</code></p><div class="r"><div class="sourceCode"><pre
 <span class="co">#&gt; 2          4.9         3            1.4         0.2</span>
 <span class="co">#&gt; 3          4.7         3.2          1.3         0.2</span>
 <span class="co">#&gt; 4          4.6         3.1          1.5         0.2</span>
-<span class="co">#&gt; # ... with 146 more rows</span></code></pre></div><p></p></div>
+<span class="co">#&gt; # ... with 146 more rows</span></code></pre><p></p></div>
 <p><code>starts_with()</code> selects all variables starting with a prefix. To
-select a range, use <code>num_range()</code>. Compare:</p><div class="r"><div class="sourceCode"><pre><code><span class="va">billboard</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"wk"</span><span class="op">)</span><span class="op">)</span>
+select a range, use <code>num_range()</code>. Compare:</p><div class="sourceCode r"><pre><code><span class="va">billboard</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"wk"</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 317 x 76</span>
 <span class="co">#&gt;     wk1   wk2   wk3   wk4   wk5   wk6   wk7   wk8   wk9  wk10  wk11  wk12  wk13</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -216,7 +216,7 @@ select a range, use <code>num_range()</code>. Compare:</p><div class="r"><div cl
 <span class="co">#&gt; 2    NA    NA    NA    NA    NA    NA</span>
 <span class="co">#&gt; 3    51    51    51    47    44    38</span>
 <span class="co">#&gt; 4    61    61    59    61    66    72</span>
-<span class="co">#&gt; # ... with 313 more rows</span></code></pre></div><p></p></div>
+<span class="co">#&gt; # ... with 313 more rows</span></code></pre><p></p></div>
     </div>
     <div id="see-also">
     <h2>See also</h2>
