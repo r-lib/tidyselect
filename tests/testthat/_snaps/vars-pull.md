@@ -3,7 +3,7 @@
     Code
       vars_pull(letters, letters)
     Condition
-      Error:
+      Error in `pull_as_location2()`:
       ! Must extract column with a single valid subscript.
       x Subscript `var` has size 26 but must be size 1.
     Code
@@ -14,20 +14,20 @@
     Code
       vars_pull(letters, 0)
     Condition
-      Error:
+      Error in `pull_as_location2()`:
       ! Must extract column with a single valid subscript.
       x Subscript `var` has value 0 but must be a positive location.
     Code
       vars_pull(letters, 100)
     Condition
-      Error in `stop_subscript()`:
+      Error in `vec_as_location2_result()`:
       ! Can't extract columns that don't exist.
       x Location 100 doesn't exist.
       i There are only 26 columns.
     Code
       vars_pull(letters, -100)
     Condition
-      Error in `stop_subscript()`:
+      Error in `vec_as_location2_result()`:
       ! Can't extract columns that don't exist.
       x Location 100 doesn't exist.
       i There are only 26 columns.
@@ -36,10 +36,8 @@
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Can't convert from `var` <double> to <integer> due to loss of precision.
-      Caused by error in `stop_vctrs()`:
-      ! Can't convert from `var` <double> to <integer> due to loss of precision.
-      * Locations: 1
+      x Subscript `var` has the wrong type `double`.
+      i It must be numeric or character.
     Code
       vars_pull(letters, TRUE)
     Condition
@@ -50,25 +48,25 @@
     Code
       vars_pull(letters, NA)
     Condition
-      Error:
+      Error in `pull_as_location2()`:
       ! Must extract column with a single valid subscript.
       x Subscript `var` can't be `NA`.
     Code
       vars_pull(letters, na_int)
     Condition
-      Error:
+      Error in `pull_as_location2()`:
       ! Must extract column with a single valid subscript.
       x Subscript `var` can't be `NA`.
     Code
       vars_pull(letters, "foo")
     Condition
-      Error in `stop_subscript()`:
+      Error in `vec_as_location2_result()`:
       ! Can't extract columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       vars_pull(letters, !!c("a", "b"))
     Condition
-      Error:
+      Error in `pull_as_location2()`:
       ! Must extract column with a single valid subscript.
       x Subscript `var` has size 2 but must be size 1.
 
