@@ -301,11 +301,11 @@
 <p><code><a href="../reference/eval_select.html">eval_rename()</a></code> is very similar to <code><a href="../reference/eval_select.html">eval_select()</a></code> but it has more constraints because it is meant for renaming variables in place. In particular it throws an error if the selected inputs are unnamed. In practice, <code><a href="../reference/eval_select.html">eval_rename()</a></code> only accepts a <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> expression as <code>expr</code> argument, and all inputs inside the outermost <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> must be named:</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="../reference/eval_select.html">eval_rename</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`vars_select_eval()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span>
 
 <span class="fu"><a href="../reference/eval_select.html">eval_rename</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`vars_select_eval()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span>
 
 <span class="fu"><a href="../reference/eval_select.html">eval_rename</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span>
@@ -391,7 +391,7 @@
 <p>The <code>fn</code> argument makes the error message more informative when the helper is used in the wrong context:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars</span><span class="op">[</span><span class="fu">if_width</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`peek_vars()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> `if_width()` must be used within a *selecting* function.</span>
 <span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span></code></pre></div>
 <p>Because the variables are inspected in a default argument, it is easy to override. This is mostly useful in unit tests:</p>
@@ -417,7 +417,7 @@
 <p>If the input is a data frame, the user is now informed that their selection should not contain duplicates:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="fu">if_width</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`ensure_named()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`select()`</span><span style="font-weight: bold;">:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
 <span class="co">#&gt;   * "foo" at locations 1 and 2.</span></code></pre></div>

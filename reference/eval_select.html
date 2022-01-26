@@ -96,7 +96,8 @@ your packages.</p>
   env <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span>,
   <span class="va">...</span>,
   strict <span class="op">=</span> <span class="cn">TRUE</span>,
-  name_spec <span class="op">=</span> <span class="cn">NULL</span>
+  name_spec <span class="op">=</span> <span class="cn">NULL</span>,
+  error_call <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span>
 
 <span class="fu">eval_select</span><span class="op">(</span>
@@ -108,7 +109,8 @@ your packages.</p>
   exclude <span class="op">=</span> <span class="cn">NULL</span>,
   strict <span class="op">=</span> <span class="cn">TRUE</span>,
   name_spec <span class="op">=</span> <span class="cn">NULL</span>,
-  allow_rename <span class="op">=</span> <span class="cn">TRUE</span>
+  allow_rename <span class="op">=</span> <span class="cn">TRUE</span>,
+  error_call <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -136,6 +138,11 @@ propagate names. This is used only in case nested <code><a href="https://rdrr.io
 expressions like <code>c(foo = c(bar = starts_with("foo")))</code>. See the
 <code>name_spec</code> argument of <code><a href="https://vctrs.r-lib.org/reference/vec_c.html" class="external-link">vctrs::vec_c()</a></code> for a description of
 valid name specs.</p></dd>
+<dt>error_call</dt>
+<dd><p>The execution environment of a currently
+running function, e.g. <code><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env()</a></code>. The function will be
+mentioned in error messages as the source of the error. See the
+<code>call</code> argument of <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">abort()</a></code> for more information.</p></dd>
 <dt>include, exclude</dt>
 <dd><p>Character vector of column names to always
 include or exclude from the selection.</p></dd>
@@ -185,8 +192,7 @@ description of the rules of evaluation.</p></div>
 <span class="r-in"><span class="co"># Interpret defused code as a renaming selection. All inputs must</span></span>
 <span class="r-in"><span class="co"># be named within `c()`:</span></span>
 <span class="r-in"><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">eval_rename</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Error in vars_select_eval(vars, expr, strict, data = x, name_spec = name_spec,  : </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   All renaming inputs must be named.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in eval(expr, envir, enclos) : All renaming inputs must be named.</span>
 <span class="r-in"><span class="fu">eval_rename</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> foo </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1 </span>

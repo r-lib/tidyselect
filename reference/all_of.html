@@ -151,7 +151,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p><div
 <span class="co">#&gt; 3          1.4         0.2 setosa  Sepal.Length   4.9</span>
 <span class="co">#&gt; 4          1.4         0.2 setosa  Sepal.Width    3  </span>
 <span class="co">#&gt; # ... with 296 more rows</span></code></pre><p></p></div>
-<p>If any of the variable is missing from the data frame, that's an error:</p><div class="sourceCode r"><pre><code><span class="va">starwars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Error in `chr_as_locations()` at tidyselect/R/eval-walk.R:171:2:</span>
+<p>If any of the variable is missing from the data frame, that's an error:</p><div class="sourceCode r"><pre><code><span class="va">starwars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></code></pre><p></p></div><div class="sourceCode"><pre><code><span class="co">## Error:</span>
 <span class="co">## ! Can't subset columns that don't exist.</span>
 <span class="co">## x Columns `Sepal.Length` and `Sepal.Width` don't exist.</span></code></pre></div>
 
