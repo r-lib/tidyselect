@@ -15,10 +15,11 @@ peeker <- function(what) {
       }
 
       # Please keep in sync with faq.R.
-      abort(glue_c(
+      msg <- glue_c(
         "{fn} must be used within a *selecting* function.",
         i = "See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>."
-      ))
+      )
+      abort(msg, call = NULL)
     }
 
     x

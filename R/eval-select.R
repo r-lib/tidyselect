@@ -152,7 +152,7 @@ eval_select_impl <- function(x,
     vctrs::vec_assert(x)
   }
   if (is_null(names)) {
-    abort("Can't select within an unnamed vector.")
+    abort("Can't select within an unnamed vector.", call = error_call)
   }
 
   # Put vars in scope and peek validated vars

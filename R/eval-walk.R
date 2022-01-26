@@ -24,7 +24,13 @@ vars_select_eval <- function(vars,
       call = error_call
     )
     pos <- loc_validate(pos, vars)
-    pos <- ensure_named(pos, vars, uniquely_named, allow_rename)
+    pos <- ensure_named(
+      pos,
+      vars,
+      uniquely_named,
+      allow_rename,
+      call = error_call
+    )
     return(pos)
   }
 
@@ -71,16 +77,26 @@ vars_select_eval <- function(vars,
   pos <- loc_validate(pos, vars, call = error_call)
 
   if (type == "rename" && !is_named(pos)) {
-    abort("All renaming inputs must be named.")
+    abort("All renaming inputs must be named.", call = error_call)
   }
 
-  ensure_named(pos, vars, uniquely_named, allow_rename)
+  ensure_named(
+    pos,
+    vars,
+    uniquely_named,
+    allow_rename,
+    call = error_call
+  )
 }
 
-ensure_named <- function(pos, vars, uniquely_named, allow_rename) {
+ensure_named <- function(pos,
+                         vars,
+                         uniquely_named,
+                         allow_rename,
+                         call) {
   if (!allow_rename) {
     if (is_named(pos)) {
-      abort("Can't rename variables in this context.")
+      abort("Can't rename variables in this context.", call = call)
     }
     return(set_names(pos, NULL))
   }
@@ -91,7 +107,7 @@ ensure_named <- function(pos, vars, uniquely_named, allow_rename) {
 
   # Duplicates are not allowed for data frames
   if (uniquely_named) {
-    vctrs::vec_as_names(names(pos), repair = "check_unique")
+    vctrs::vec_as_names(names(pos), repair = "check_unique", call = call)
   }
 
   pos
@@ -117,6 +133,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   error_call <- data_mask$.__tidyselect__.$internal$error_call
 
+  # TODO!
   out <- switch(expr_kind(expr),
     literal = expr,
     symbol = eval_sym(expr, data_mask, context_mask),
@@ -153,10 +170,11 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 as_indices_sel_impl <- function(x, vars, strict, data = NULL, call) {
   if (is.function(x)) {
     if (is_null(data)) {
-      abort(c(
+      msg <- c(
         "This tidyselect interface doesn't support predicates yet.",
         i = "Contact the package author and suggest using `eval_select()`."
-      ))
+      )
+      abort(msg, call = call)
     }
     predicate <- x
     x <- which(map_lgl(data, predicate))
@@ -183,11 +201,12 @@ as_indices_impl <- function(x, vars, strict, call = caller_env()) {
     )
   }
 
-  switch(typeof(x),
+  switch(
+    typeof(x),
     character = chr_as_locations(x, vars, call = call),
     double = ,
     integer = x,
-    abort("Internal error: Unexpected type in `as_indices()`.")
+    abort("Unexpected type.", .internal = TRUE)
   )
 }
 

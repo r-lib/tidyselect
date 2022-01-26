@@ -7,6 +7,6 @@
     Code
       select_loc(df, c(foo = a))
     Condition
-      Error in `combine_names()`:
+      Error in `select_loc()`:
       ! Can't rename duplicate variables to `foo`.
 

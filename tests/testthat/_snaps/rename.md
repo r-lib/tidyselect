@@ -10,7 +10,7 @@
       # Duplicate names (FIXME)
       rename_loc(mtcars, c(foo = cyl, foo = disp))
     Condition
-      Error in `ensure_named()`:
+      Error in `rename_loc()`:
       ! Names must be unique.
       x These names are duplicated:
         * "foo" at locations 1 and 2.
@@ -18,6 +18,6 @@
       # Unnamed inputs
       rename_loc(iris, Species)
     Condition
-      Error in `vars_select_eval()`:
+      Error in `rename_loc()`:
       ! All renaming inputs must be named.
 
