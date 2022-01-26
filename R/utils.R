@@ -25,14 +25,16 @@ rename_loc <- function(x,
                        sel,
                        ...,
                        strict = TRUE,
-                       name_spec = NULL) {
+                       name_spec = NULL,
+                       error_call = current_env()) {
   ellipsis::check_dots_empty()
   rename_impl(
     x,
     names(x),
     enquo(sel),
     strict = strict,
-    name_spec = name_spec
+    name_spec = name_spec,
+    error_call = error_call
   )
 }
 

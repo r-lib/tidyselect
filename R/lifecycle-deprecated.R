@@ -68,7 +68,8 @@ vars_rename <- function(.vars, ..., .strict = TRUE) {
     NULL,
     .vars,
     quo(c(...)),
-    strict = .strict
+    strict = .strict,
+    error_call = caller_env()
   )
 
   .vars <- set_names(.vars)

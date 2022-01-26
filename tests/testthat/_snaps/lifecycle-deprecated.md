@@ -77,19 +77,19 @@
     Code
       vars_rename(c("a", "b"), d = e, .strict = TRUE)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Can't rename columns that don't exist.
       x Column `e` doesn't exist.
     Code
       vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Can't rename columns that don't exist.
       x Column `e` doesn't exist.
     Code
       vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Can't rename columns that don't exist.
       x Column `e` doesn't exist.
 
@@ -99,7 +99,7 @@
       # New column
       vars_rename(c("a", "b", "c"), foo = a, foo = b)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Names must be unique.
       x These names are duplicated:
         * "foo" at locations 1 and 2.
@@ -107,7 +107,7 @@
       # Existing column
       vars_rename(c("a", "b", "c"), c = a, c = b)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Names must be unique.
       x These names are duplicated:
         * "c" at locations 1, 2, and 3.
@@ -118,7 +118,7 @@
       # One column
       vars_rename(c("a", "b", "c"), b = a)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Names must be unique.
       x These names are duplicated:
         * "b" at locations 1 and 2.
@@ -126,7 +126,7 @@
       # Multiple columns
       vars_rename(c("a", "b", "c", "d"), c = a, d = b)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Names must be unique.
       x These names are duplicated:
         * "c" at locations 1 and 3.
@@ -135,7 +135,7 @@
       # Overlapping rename with one duplicate column
       vars_rename(c("a", "b", "c"), b = a, c = b)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Names must be unique.
       x These names are duplicated:
         * "c" at locations 2 and 3.
@@ -145,20 +145,20 @@
     Code
       vars_rename(letters, A = TRUE)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Must rename columns with a valid subscript vector.
       x Subscript has the wrong type `logical`.
       i It must be numeric or character.
     Code
       vars_rename(letters, A = 1.5)
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Must rename columns with a valid subscript vector.
       x Can't convert from <double> to <integer> due to loss of precision.
     Code
       vars_rename(letters, A = list())
     Condition
-      Error in `rename_impl()`:
+      Error:
       ! Must rename columns with a valid subscript vector.
       x Subscript has the wrong type `list`.
       i It must be numeric or character.

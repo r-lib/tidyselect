@@ -4,7 +4,7 @@
       # Unnamed vector
       rename_loc(letters, c(foo = a))
     Condition
-      Error in `rename_impl()`:
+      Error in `rename_loc()`:
       ! Can't rename an unnamed vector.
     Code
       # Duplicate names (FIXME)
