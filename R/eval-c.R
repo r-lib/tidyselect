@@ -40,7 +40,8 @@ reduce_sels <- function(node, data_mask, context_mask, init) {
       out <- sel_union(out, new)
     } else {
       vars <- data_mask$.__tidyselect__.$internal$vars
-      out <- sel_diff(out, new, vars)
+      error_call <- mask_error_call(data_mask)
+      out <- sel_diff(out, new, vars, error_call = error_call)
     }
 
     node <- cdr

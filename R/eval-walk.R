@@ -68,7 +68,7 @@ vars_select_eval <- function(vars,
   data_mask$.__tidyselect__.$internal <- internal
 
   pos <- walk_data_tree(expr, data_mask, context_mask, error_call)
-  pos <- loc_validate(pos, vars)
+  pos <- loc_validate(pos, vars, call = error_call)
 
   if (type == "rename" && !is_named(pos)) {
     abort("All renaming inputs must be named.")
@@ -115,6 +115,8 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     expr <- quo_get_expr2(expr, expr)
   }
 
+  error_call <- data_mask$.__tidyselect__.$internal$error_call
+
   out <- switch(expr_kind(expr),
     literal = expr,
     symbol = eval_sym(expr, data_mask, context_mask),
@@ -125,12 +127,12 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `|` = eval_or(expr, data_mask, context_mask),
     `&` = eval_and(expr, data_mask, context_mask),
     `c` = eval_c(expr, data_mask, context_mask),
-    `||` = stop_bad_bool_op("||", "|"),
-    `&&` = stop_bad_bool_op("&&", "&"),
-    `*` = stop_bad_arith_op("*"),
+    `||` = stop_bad_bool_op("||", "|", call = error_call),
+    `&&` = stop_bad_bool_op("&&", "&", call = error_call),
+    `*` = stop_bad_arith_op("*", call = error_call),
     `/` = eval_slash(expr, data_mask, context_mask),
-    `^` = stop_bad_arith_op("^"),
-    `~` = stop_formula(expr),
+    `^` = stop_bad_arith_op("^", call = error_call),
+    `~` = stop_formula(expr, call = error_call),
     .data = eval(expr, data_mask),
     eval_context(expr, context_mask)
   )
@@ -138,14 +140,13 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   vars <- data_mask$.__tidyselect__.$internal$vars
   strict <- data_mask$.__tidyselect__.$internal$strict
   data <- data_mask$.__tidyselect__.$internal$data
-  call <- data_mask$.__tidyselect__.$internal$error_call
 
   as_indices_sel_impl(
     out,
     vars = vars,
     strict = strict,
     data = data,
-    call = call
+    call = error_call
   )
 }
 
@@ -249,7 +250,8 @@ eval_colon <- function(expr, data_mask, context_mask) {
     # Compatibility syntax for `-1:-2`. We interpret it as `-(1:2)`.
     out <- eval_colon(unnegate_colon(expr), data_mask, context_mask)
     vars <- data_mask$.__tidyselect__.$internal$vars
-    sel_complement(out, vars)
+    error_call <- mask_error_call(data_mask)
+    sel_complement(out, vars, error_call = error_call)
   } else {
     x <- walk_data_tree(expr[[2]], data_mask, context_mask, colon = TRUE)
     y <- walk_data_tree(expr[[3]], data_mask, context_mask, colon = TRUE)
@@ -268,9 +270,11 @@ eval_minus <- function(expr, data_mask, context_mask) {
 eval_slash <- function(expr, data_mask, context_mask) {
   lhs <- walk_data_tree(expr[[2]], data_mask, context_mask)
   rhs <- walk_data_tree(expr[[3]], data_mask, context_mask)
-  vars <- data_mask$.__tidyselect__.$internal$vars
 
-  sel_diff(lhs, rhs, vars)
+  vars <- data_mask$.__tidyselect__.$internal$vars
+  error_call <- mask_error_call(data_mask)
+
+  sel_diff(lhs, rhs, vars, error_call = error_call)
 }
 
 eval_context <- function(expr, context_mask) {

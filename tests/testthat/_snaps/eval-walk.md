@@ -3,13 +3,13 @@
     Code
       select_loc(letters2, starts_with("a") || ends_with("b"))
     Condition
-      Error in `stop_bad_bool_op()`:
+      Error in `select_loc()`:
       ! Can't use scalar `||` in selections.
       i Do you need `|` instead?
     Code
       select_loc(letters2, starts_with("a") && ends_with("b"))
     Condition
-      Error in `stop_bad_bool_op()`:
+      Error in `select_loc()`:
       ! Can't use scalar `&&` in selections.
       i Do you need `&` instead?
 
@@ -18,12 +18,12 @@
     Code
       select_loc(letters2, a * 2)
     Condition
-      Error in `stop_bad_arith_op()`:
+      Error in `select_loc()`:
       ! Can't use arithmetic operator `*` in selection context.
     Code
       select_loc(letters2, a^2)
     Condition
-      Error in `stop_bad_arith_op()`:
+      Error in `select_loc()`:
       ! Can't use arithmetic operator `^` in selection context.
 
 # symbol evaluation only informs once (#184)
@@ -126,7 +126,7 @@
       (expect_error(select_loc(mtcars, ~ is.numeric(.x))))
     Output
       <error/rlang_error>
-      Error in `stop_formula()`:
+      Error in `select_loc()`:
       ! Formula shorthand must be wrapped in `where()`.
       
         # Bad
@@ -139,7 +139,7 @@
         is.character(.x))))
     Output
       <error/rlang_error>
-      Error in `stop_formula()`:
+      Error in `select_loc()`:
       ! Formula shorthand must be wrapped in `where()`.
       
         # Bad
@@ -152,7 +152,7 @@
         is.character(.x) || is.numeric(.x) || is.factor(.x) || is.character(.x))))
     Output
       <error/rlang_error>
-      Error in `stop_formula()`:
+      Error in `select_loc()`:
       ! Formula shorthand must be wrapped in `where()`.
       
         # Bad

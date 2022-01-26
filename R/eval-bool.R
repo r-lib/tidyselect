@@ -3,7 +3,8 @@ eval_bang <- function(expr, data_mask, context_mask) {
   x <- walk_data_tree(expr[[2]], data_mask, context_mask)
 
   vars <- data_mask$.__tidyselect__.$internal$vars
-  sel_complement(x, vars)
+  error_call <- mask_error_call(data_mask)
+  sel_complement(x, vars, error_call = error_call)
 }
 
 eval_or <- function(expr, data_mask, context_mask) {
@@ -25,10 +26,11 @@ eval_and <- function(expr, data_mask, context_mask) {
     y <- eval_sym(y, data_mask, context_mask, strict = TRUE)
 
     if (!is_function(x) && !is_function(y)) {
-      abort(glue_c(
+      msg <- glue_c(
         "Can't take the intersection of two columns.",
         i = "`{x_name} & {y_name}` is always an empty selection."
-      ))
+      )
+      abort(msg, call = mask_error_call(data_mask))
     }
   }
 
@@ -45,23 +47,24 @@ walk_operand <- function(expr, data_mask, context_mask) {
   walk_data_tree(expr, data_mask, context_mask)
 }
 
-stop_bad_bool_op <- function(bad, ok) {
-  abort(glue_c(
+stop_bad_bool_op <- function(bad, ok, call) {
+  msg <- glue_c(
     "Can't use scalar `{bad}` in selections.",
     i = "Do you need `{ok}` instead?"
-  ))
+  )
+  abort(msg, call = call)
 }
 
-stop_bad_arith_op <- function(op) {
-  abort(glue_c(
+stop_bad_arith_op <- function(op, call) {
+  msg <- glue_c(
     "Can't use arithmetic operator `{op}` in selection context."
-  ))
+  )
+  abort(msg, call = call)
 }
 
-stop_formula <- function(expr) {
+stop_formula <- function(expr, call) {
   f <- as_label(expr)
-
-  abort(glue_line(c(
+  msg <- glue_line(c(
     "Formula shorthand must be wrapped in `where()`.",
     "",
     "  # Bad",
@@ -69,5 +72,7 @@ stop_formula <- function(expr) {
     "",
     "  # Good",
     "  data %>% select(where({f}))"
-  )))
+  ))
+
+  abort(msg, call = call)
 }

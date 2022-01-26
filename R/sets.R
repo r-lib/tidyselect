@@ -25,9 +25,9 @@ sel_unique <- function(x) {
 
 # Set difference and set complement must validate their RHS eagerly,
 # otherwise OOB elements might be selected out and go unnoticed
-sel_diff <- function(x, y, vars = NULL) {
+sel_diff <- function(x, y, vars = NULL, error_call = caller_env()) {
   if (!is_null(vars)) {
-    y <- loc_validate(y, vars)
+    y <- loc_validate(y, vars, call = error_call)
   }
   if (is_null(names(x)) || is_null(names(y))) {
     set_diff(x, y)
@@ -35,8 +35,8 @@ sel_diff <- function(x, y, vars = NULL) {
     sel_operation(x, y, set_diff)
   }
 }
-sel_complement <- function(x, vars = NULL) {
-  sel_diff(seq_along(vars), x, vars)
+sel_complement <- function(x, vars = NULL, error_call = caller_env()) {
+  sel_diff(seq_along(vars), x, vars, error_call = error_call)
 }
 
 sel_operation <- function(x, y, sel_op) {
