@@ -133,8 +133,8 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   error_call <- data_mask$.__tidyselect__.$internal$error_call
 
-  # TODO!
-  out <- switch(expr_kind(expr),
+  out <- switch(
+    expr_kind(expr, error_call),
     literal = expr,
     symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
@@ -225,14 +225,15 @@ as_indices <- function(x, vars, strict = TRUE, call) {
   vctrs::vec_as_location(inds, length(vars), vars, convert_values = NULL)
 }
 
-expr_kind <- function(expr) {
-  switch(typeof(expr),
+expr_kind <- function(expr, error_call) {
+  switch(
+    typeof(expr),
     symbol = "symbol",
-    language = call_kind(expr),
+    language = call_kind(expr, error_call),
     "literal"
   )
 }
-call_kind <- function(expr) {
+call_kind <- function(expr, error_call) {
   head <- node_car(expr)
   if (!is_symbol(head)) {
     return("call")
@@ -241,7 +242,7 @@ call_kind <- function(expr) {
   fn <- as_string(head)
 
   if (fn %in% c("$", "[[") && identical(node_cadr(expr), quote(.data))) {
-    validate_dot_data(expr)
+    validate_dot_data(expr, error_call)
     return(".data")
   }
 
@@ -381,12 +382,12 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   value
 }
 
-validate_dot_data <- function(expr) {
+validate_dot_data <- function(expr, call) {
   if (is_call(expr, "$") && !is_symbol(expr[[3]])) {
-    abort("The RHS of `.data$rhs` must be a symbol.")
+    abort("The RHS of `.data$rhs` must be a symbol.", call = call)
   }
   if (is_call(expr, "[[") && is_symbolic(expr[[3]])) {
-    abort("The subscript of `.data[[subscript]]` must be a constant.")
+    abort("The subscript of `.data[[subscript]]` must be a constant.", call = call)
   }
 }
 

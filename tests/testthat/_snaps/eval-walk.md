@@ -160,4 +160,10 @@
       
         # Good
         data %>% select(where(~...))
+    Code
+      (expect_error(select_loc(mtcars, .data$"foo")))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! The RHS of `.data$rhs` must be a symbol.
 

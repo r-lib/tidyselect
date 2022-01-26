@@ -341,5 +341,7 @@ test_that("eval_walk() has informative messages", {
     (expect_error(select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x))))
     (expect_error(select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x) ||
                                        is.numeric(.x) || is.factor(.x) || is.character(.x))))
+
+    (expect_error(select_loc(mtcars, .data$"foo")))
   })
 })
