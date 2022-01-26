@@ -14,17 +14,17 @@ Examples of valid selection contexts are:
 }
 
 Using a selection helper anywhere else results in an error:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starts_with("foo")
-#> Error in `peek_vars()` at rlang/R/operators.R:14:2:
+#> Error:
 #> ! `starts_with()` must be used within a *selecting* function.
 #> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
 
 mtcars[contains("foo")]
-#> Error in `peek_vars()` at rlang/R/operators.R:14:2:
+#> Error:
 #> ! `contains()` must be used within a *selecting* function.
 #> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
 
 subset(mtcars, select = matches("foo"))
-#> Error in `peek_vars()` at rlang/R/operators.R:14:2:
+#> Error:
 #> ! `matches()` must be used within a *selecting* function.
 #> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
 }\if{html}{\out{</div>}}
