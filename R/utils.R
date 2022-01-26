@@ -5,7 +5,8 @@ select_loc <- function(x,
                        exclude = NULL,
                        strict = TRUE,
                        name_spec = NULL,
-                       allow_rename = TRUE) {
+                       allow_rename = TRUE,
+                       error_call = current_env()) {
   ellipsis::check_dots_empty()
 
   eval_select(
@@ -15,7 +16,8 @@ select_loc <- function(x,
     exclude = exclude,
     strict = strict,
     name_spec = name_spec,
-    allow_rename = allow_rename
+    allow_rename = allow_rename,
+    error_call = error_call
   )
 }
 

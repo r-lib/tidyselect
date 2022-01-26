@@ -14,6 +14,8 @@
 #' vignette to learn how to use `eval_select()` and `eval_rename()` in
 #' your packages.
 #'
+#' @inheritParams rlang::args_error_context
+#'
 #' @param expr Defused R code describing a selection according to the
 #'   tidyselect syntax.
 #' @param data A named list, data frame, or atomic vector.
@@ -119,7 +121,8 @@ eval_select <- function(expr,
                         exclude = NULL,
                         strict = TRUE,
                         name_spec = NULL,
-                        allow_rename = TRUE) {
+                        allow_rename = TRUE,
+                        error_call = caller_env()) {
   ellipsis::check_dots_empty()
   eval_select_impl(
     data,
@@ -129,11 +132,11 @@ eval_select <- function(expr,
     exclude = exclude,
     strict = strict,
     name_spec = name_spec,
-    allow_rename = allow_rename
+    allow_rename = allow_rename,
+    error_call = error_call,
   )
 }
 
-# Caller must put vars in scope
 eval_select_impl <- function(x,
                              names,
                              expr,
@@ -143,7 +146,8 @@ eval_select_impl <- function(x,
                              name_spec = NULL,
                              uniquely_named = NULL,
                              allow_rename = TRUE,
-                             type = "select") {
+                             type = "select",
+                             error_call = caller_env()) {
   if (!is_null(x)) {
     vctrs::vec_assert(x)
   }
@@ -168,19 +172,28 @@ eval_select_impl <- function(x,
     vars_select_eval(
       vars,
       expr,
-      strict,
+      strict = strict,
       data = x,
       name_spec = name_spec,
       uniquely_named = uniquely_named,
       allow_rename = allow_rename,
-      type = type
+      type = type,
+      error_call = error_call
     ),
     type = type
   )
 }
 
 # Example implementation mainly used for unit tests
-select <- function(.x, ..., .strict = TRUE) {
-  pos <- eval_select(expr(c(...)), .x, strict = .strict)
+select <- function(.x,
+                   ...,
+                   .strict = TRUE,
+                   error_call = caller_env()) {
+  pos <- eval_select(
+    expr(c(...)),
+    .x,
+    strict = .strict,
+    error_call = error_call
+  )
   set_names(.x[pos], names(pos))
 }

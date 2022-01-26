@@ -3,20 +3,20 @@
     Code
       vars_select(letters, TRUE)
     Condition
-      Error in `as_indices_impl()`:
+      Error:
       ! Must subset columns with a valid subscript vector.
       x Subscript has the wrong type `logical`.
       i It must be numeric or character.
     Code
       vars_select(letters, 2.5)
     Condition
-      Error in `as_indices_impl()`:
+      Error:
       ! Must subset columns with a valid subscript vector.
       x Can't convert from <double> to <integer> due to loss of precision.
     Code
       vars_select(letters, structure(1:3, class = "tidysel_foobar"))
     Condition
-      Error in `as_indices_impl()`:
+      Error:
       ! Must subset columns with a valid subscript vector.
       x Subscript has the wrong type `tidysel_foobar`.
       i It must be numeric or character.
@@ -27,26 +27,26 @@
       # Bare names
       vars_select(letters, foo)
     Condition
-      Error in `chr_as_locations()`:
+      Error:
       ! Can't subset columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       vars_select(letters, -foo)
     Condition
-      Error in `chr_as_locations()`:
+      Error:
       ! Can't subset columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       # Names
       vars_select(letters, "foo")
     Condition
-      Error in `chr_as_locations()`:
+      Error:
       ! Can't subset columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       vars_select(letters, a:"foo")
     Condition
-      Error in `chr_as_locations()`:
+      Error:
       ! Can't subset columns that don't exist.
       x Column `foo` doesn't exist.
     Code
@@ -77,19 +77,19 @@
     Code
       vars_rename(c("a", "b"), d = e, .strict = TRUE)
     Condition
-      Error in `chr_as_locations()`:
+      Error in `rename_impl()`:
       ! Can't rename columns that don't exist.
       x Column `e` doesn't exist.
     Code
       vars_rename(c("a", "b"), d = e, f = g, .strict = TRUE)
     Condition
-      Error in `chr_as_locations()`:
+      Error in `rename_impl()`:
       ! Can't rename columns that don't exist.
       x Column `e` doesn't exist.
     Code
       vars_rename(c("a", "b"), d = "e", f = "g", .strict = TRUE)
     Condition
-      Error in `chr_as_locations()`:
+      Error in `rename_impl()`:
       ! Can't rename columns that don't exist.
       x Column `e` doesn't exist.
 
@@ -145,20 +145,20 @@
     Code
       vars_rename(letters, A = TRUE)
     Condition
-      Error in `as_indices_impl()`:
+      Error in `rename_impl()`:
       ! Must rename columns with a valid subscript vector.
       x Subscript has the wrong type `logical`.
       i It must be numeric or character.
     Code
       vars_rename(letters, A = 1.5)
     Condition
-      Error in `as_indices_impl()`:
+      Error in `rename_impl()`:
       ! Must rename columns with a valid subscript vector.
       x Can't convert from <double> to <integer> due to loss of precision.
     Code
       vars_rename(letters, A = list())
     Condition
-      Error in `as_indices_impl()`:
+      Error in `rename_impl()`:
       ! Must rename columns with a valid subscript vector.
       x Subscript has the wrong type `list`.
       i It must be numeric or character.

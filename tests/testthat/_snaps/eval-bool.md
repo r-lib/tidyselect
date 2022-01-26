@@ -4,13 +4,13 @@
       # Unknown names
       select_loc(mtcars, foobar & contains("am"))
     Condition
-      Error in `chr_as_locations()`:
+      Error in `select_loc()`:
       ! Can't subset columns that don't exist.
       x Column `foobar` doesn't exist.
     Code
       select_loc(mtcars, contains("am") | foobar)
     Condition
-      Error in `chr_as_locations()`:
+      Error in `select_loc()`:
       ! Can't subset columns that don't exist.
       x Column `foobar` doesn't exist.
     Code
@@ -25,7 +25,7 @@
       foo <- 1:2
       select_loc(iris, Species | foo)
     Condition
-      Error in `chr_as_locations()`:
+      Error in `select_loc()`:
       ! Can't subset columns that don't exist.
       x Column `foo` doesn't exist.
 

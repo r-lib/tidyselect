@@ -11,7 +11,8 @@ eval_rename(
   env = caller_env(),
   ...,
   strict = TRUE,
-  name_spec = NULL
+  name_spec = NULL,
+  error_call = caller_env()
 )
 
 eval_select(
@@ -23,7 +24,8 @@ eval_select(
   exclude = NULL,
   strict = TRUE,
   name_spec = NULL,
-  allow_rename = TRUE
+  allow_rename = TRUE,
+  error_call = caller_env()
 )
 }
 \arguments{
@@ -48,6 +50,11 @@ propagate names. This is used only in case nested \code{c()}
 expressions like \code{c(foo = c(bar = starts_with("foo")))}. See the
 \code{name_spec} argument of \code{\link[vctrs:vec_c]{vctrs::vec_c()}} for a description of
 valid name specs.}
+
+\item{error_call}{The execution environment of a currently
+running function, e.g. \code{caller_env()}. The function will be
+mentioned in error messages as the source of the error. See the
+\code{call} argument of \code{\link[rlang:abort]{abort()}} for more information.}
 
 \item{include, exclude}{Character vector of column names to always
 include or exclude from the selection.}

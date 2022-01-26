@@ -1,4 +1,3 @@
-
 vars_select_eval <- function(vars,
                              expr,
                              strict,
@@ -6,7 +5,8 @@ vars_select_eval <- function(vars,
                              name_spec = NULL,
                              uniquely_named = NULL,
                              allow_rename = TRUE,
-                             type = "select") {
+                             type = "select",
+                             error_call) {
   wrapped <- quo_get_expr2(expr, expr)
 
   if (is_missing(wrapped)) {
@@ -16,7 +16,13 @@ vars_select_eval <- function(vars,
   uniquely_named <- uniquely_named %||% is.data.frame(data)
 
   if (!is_symbolic(wrapped)) {
-    pos <- as_indices_sel_impl(wrapped, vars = vars, strict = strict, data = data)
+    pos <- as_indices_sel_impl(
+      wrapped,
+      vars = vars,
+      strict = strict,
+      data = data,
+      call = error_call
+    )
     pos <- loc_validate(pos, vars)
     pos <- ensure_named(pos, vars, uniquely_named, allow_rename)
     return(pos)
@@ -56,11 +62,12 @@ vars_select_eval <- function(vars,
     data = data,
     strict = strict,
     name_spec = name_spec,
-    uniquely_named = uniquely_named
+    uniquely_named = uniquely_named,
+    error_call = error_call
   )
   data_mask$.__tidyselect__.$internal <- internal
 
-  pos <- walk_data_tree(expr, data_mask, context_mask)
+  pos <- walk_data_tree(expr, data_mask, context_mask, error_call)
   pos <- loc_validate(pos, vars)
 
   if (type == "rename" && !is_named(pos)) {
@@ -131,11 +138,18 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   vars <- data_mask$.__tidyselect__.$internal$vars
   strict <- data_mask$.__tidyselect__.$internal$strict
   data <- data_mask$.__tidyselect__.$internal$data
+  call <- data_mask$.__tidyselect__.$internal$error_call
 
-  as_indices_sel_impl(out, vars = vars, strict = strict, data)
+  as_indices_sel_impl(
+    out,
+    vars = vars,
+    strict = strict,
+    data = data,
+    call = call
+  )
 }
 
-as_indices_sel_impl <- function(x, vars, strict, data = NULL) {
+as_indices_sel_impl <- function(x, vars, strict, data = NULL, call) {
   if (is.function(x)) {
     if (is_null(data)) {
       abort(c(
@@ -147,15 +161,15 @@ as_indices_sel_impl <- function(x, vars, strict, data = NULL) {
     x <- which(map_lgl(data, predicate))
   }
 
-  as_indices_impl(x, vars, strict = strict)
+  as_indices_impl(x, vars, call = call, strict = strict)
 }
 
-as_indices_impl <- function(x, vars, strict) {
+as_indices_impl <- function(x, vars, strict, call = caller_env()) {
   if (is_null(x)) {
     return(int())
   }
 
-  x <- vctrs::vec_as_subscript(x, logical = "error")
+  x <- vctrs::vec_as_subscript(x, logical = "error", call = call)
 
   if (!strict) {
     # Remove out-of-bounds elements if non-strict. We do this eagerly
@@ -169,20 +183,25 @@ as_indices_impl <- function(x, vars, strict) {
   }
 
   switch(typeof(x),
-    character = chr_as_locations(x, vars),
+    character = chr_as_locations(x, vars, call = call),
     double = ,
     integer = x,
     abort("Internal error: Unexpected type in `as_indices()`.")
   )
 }
 
-chr_as_locations <- function(x, vars) {
-  out <- vctrs::vec_as_location(x, n = length(vars), names = vars)
+chr_as_locations <- function(x, vars, call = caller_env()) {
+  out <- vctrs::vec_as_location(
+    x,
+    n = length(vars),
+    names = vars,
+    call = call
+  )
   set_names(out, names(x))
 }
 
-as_indices <- function(x, vars, strict = TRUE) {
-  inds <- with_subscript_errors(as_indices_impl(x, vars, strict))
+as_indices <- function(x, vars, strict = TRUE, call) {
+  inds <- with_subscript_errors(as_indices_impl(x, vars, strict, call))
   vctrs::vec_as_location(inds, length(vars), vars, convert_values = NULL)
 }
 
