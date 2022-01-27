@@ -29,7 +29,7 @@ Suggests:
     tibble (>= 2.1.3),
     withr
 Remotes:
-    r-lib/rlang@dev,
+    r-lib/rlang,
     r-lib/vctrs
 License: MIT + file LICENSE
 Encoding: UTF-8
