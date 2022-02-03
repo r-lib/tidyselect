@@ -256,6 +256,7 @@ test_that("last_col() selects last argument with offset", {
 
   expect_error(last_col(3, vars), "`offset` must be smaller than the number of columns")
   expect_error(last_col(vars = chr()), "Can't select last column when input is empty")
+  expect_error(last_col(1:3, vars), "length(offset) == 1 is not TRUE", fixed = TRUE)
 })
 
 test_that("all_of() and any_of() handle named vectors", {
