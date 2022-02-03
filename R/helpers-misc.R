@@ -61,7 +61,7 @@ everything <- function(vars = NULL) {
 #' @export
 #' @param offset Set it to `n` to select the nth var from the end.
 last_col <- function(offset = 0L, vars = NULL) {
-  stopifnot(is_integerish(offset))
+  stopifnot(is_integerish(offset), length(offset) == 1L)
 
   vars <- vars %||% peek_vars(fn = "last_col")
   n <- length(vars)
