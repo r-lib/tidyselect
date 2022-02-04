@@ -16,7 +16,7 @@ Imports:
     ellipsis,
     glue (>= 1.3.0),
     purrr (>= 0.3.2),
-    rlang (>= 1.0.0.9000),
+    rlang (>= 1.0.1),
     vctrs (>= 0.3.0)
 Suggests:
     covr,
@@ -29,7 +29,6 @@ Suggests:
     tibble (>= 2.1.3),
     withr
 Remotes:
-    r-lib/rlang,
     r-lib/vctrs
 License: MIT + file LICENSE
 Encoding: UTF-8
