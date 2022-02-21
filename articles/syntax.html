@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidyselect</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1.9000</span>
       </span>
     </div>
 
@@ -407,8 +407,8 @@
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cyl_pos</span> <span class="op">&lt;-</span> <span class="fl">2</span>
 <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span> <span class="op">|</span> <span class="va">cyl_pos</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_subscript()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't subset columns that don't exist.</span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't subset columns past the end.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> Column `cyl_pos` doesn't exist.</span></code></pre></div>
 </li>
 <li>
@@ -487,14 +487,14 @@
 
 <span class="co"># Data frames cannot</span>
 <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span>, foo <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_vctrs()`:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
 <span class="co">#&gt;   * "foo" at locations 1 and 2.</span></code></pre></div>
 <p>A selection can rename a variable to an existing name if the latter is not part of the selection:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_vctrs()`:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
 <span class="co">#&gt;   * "cyl" at locations 1 and 2.</span>
@@ -537,7 +537,7 @@
 <p>If the duplicates are selected, this is an error:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_vctrs()`:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
 <span class="co">#&gt;   * "x" at locations 1 and 2.</span></code></pre></div>
