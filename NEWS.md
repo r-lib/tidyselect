@@ -1,5 +1,10 @@
 # tidyselect (development version)
 
+* Fix for CRAN checks.
+
+* Better compatibility with rlang 1.0.0 errors. More to come soon.
+
+
 # tidyselect 1.1.1
 
 * Fix for CRAN checks.
