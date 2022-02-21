@@ -1,6 +1,4 @@
-Fixes the failures with rlang 1.0.0.
-
-## R CMD check results
+## revdepcheck results
 
 We checked 275 reverse dependencies (273 from CRAN + 2 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
