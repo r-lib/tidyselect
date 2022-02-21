@@ -1,4 +1,4 @@
-# tidyselect (development version)
+# tidyselect 1.1.2
 
 * Fix for CRAN checks.
 
