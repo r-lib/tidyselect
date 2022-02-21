@@ -17,10 +17,9 @@
       ! foo
       Backtrace:
         1. base::print(expect_error(select_loc(mtcars, f(base = TRUE))))
-       23. tidyselect f(base = TRUE)
-       24. tidyselect g(base)
-       25. tidyselect h(base)
-       26. base::stop("foo")
+       27. base::.handleSimpleError(`<fn>`, "foo", base::quote(h(base)))
+       28. rlang h(simpleError(msg, call))
+       29. handlers[[1L]](cnd)
     Code
       print(expect_error(select_loc(mtcars, f(base = FALSE))))
     Output

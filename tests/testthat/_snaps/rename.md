@@ -10,7 +10,7 @@
       # Duplicate names (FIXME)
       rename_loc(mtcars, c(foo = cyl, foo = disp))
     Condition
-      Error in `rename_loc()`:
+      Error in `stop_vctrs()`:
       ! Names must be unique.
       x These names are duplicated:
         * "foo" at locations 1 and 2.

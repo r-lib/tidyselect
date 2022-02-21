@@ -3,7 +3,7 @@
     Code
       vars_pull(letters, letters)
     Condition
-      Error in `pull_as_location2()`:
+      Error:
       ! Must extract column with a single valid subscript.
       x Subscript `var` has size 26 but must be size 1.
     Code
@@ -14,20 +14,20 @@
     Code
       vars_pull(letters, 0)
     Condition
-      Error in `pull_as_location2()`:
+      Error:
       ! Must extract column with a single valid subscript.
       x Subscript `var` has value 0 but must be a positive location.
     Code
       vars_pull(letters, 100)
     Condition
-      Error in `vec_as_location2_result()`:
+      Error in `stop_subscript()`:
       ! Can't extract columns that don't exist.
       x Location 100 doesn't exist.
       i There are only 26 columns.
     Code
       vars_pull(letters, -100)
     Condition
-      Error in `vec_as_location2_result()`:
+      Error in `stop_subscript()`:
       ! Can't extract columns that don't exist.
       x Location 100 doesn't exist.
       i There are only 26 columns.
@@ -36,8 +36,10 @@
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `var` has the wrong type `double`.
-      i It must be numeric or character.
+      x Can't convert from `var` <double> to <integer> due to loss of precision.
+      Caused by error in `stop_vctrs()`:
+      ! Can't convert from `var` <double> to <integer> due to loss of precision.
+      * Locations: 1
     Code
       vars_pull(letters, TRUE)
     Condition
@@ -48,25 +50,25 @@
     Code
       vars_pull(letters, NA)
     Condition
-      Error in `pull_as_location2()`:
+      Error:
       ! Must extract column with a single valid subscript.
       x Subscript `var` can't be `NA`.
     Code
       vars_pull(letters, na_int)
     Condition
-      Error in `pull_as_location2()`:
+      Error:
       ! Must extract column with a single valid subscript.
       x Subscript `var` can't be `NA`.
     Code
       vars_pull(letters, "foo")
     Condition
-      Error in `vec_as_location2_result()`:
+      Error in `stop_subscript()`:
       ! Can't extract columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       vars_pull(letters, !!c("a", "b"))
     Condition
-      Error in `pull_as_location2()`:
+      Error:
       ! Must extract column with a single valid subscript.
       x Subscript `var` has size 2 but must be size 1.
 
@@ -99,10 +101,9 @@
       ! foo
       Backtrace:
         1. base::print(expect_error(vars_pull(letters, f(base = TRUE))))
-       13. tidyselect f(base = TRUE)
-       14. tidyselect g(base)
-       15. tidyselect h(base)
-       16. base::stop("foo")
+       17. base::.handleSimpleError(`<fn>`, "foo", base::quote(h(base)))
+       18. rlang h(simpleError(msg, call))
+       19. handlers[[1L]](cnd)
     Code
       print(expect_error(vars_pull(letters, f(base = FALSE))))
     Output

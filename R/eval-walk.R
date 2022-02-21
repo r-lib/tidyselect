@@ -107,7 +107,7 @@ ensure_named <- function(pos,
 
   # Duplicates are not allowed for data frames
   if (uniquely_named) {
-    vctrs::vec_as_names(names(pos), repair = "check_unique", call = call)
+    vctrs::vec_as_names(names(pos), repair = "check_unique")
   }
 
   pos
@@ -188,7 +188,7 @@ as_indices_impl <- function(x, vars, strict, call = caller_env()) {
     return(int())
   }
 
-  x <- vctrs::vec_as_subscript(x, logical = "error", call = call)
+  x <- vctrs::vec_as_subscript(x, logical = "error")
 
   if (!strict) {
     # Remove out-of-bounds elements if non-strict. We do this eagerly
@@ -214,8 +214,7 @@ chr_as_locations <- function(x, vars, call = caller_env()) {
   out <- vctrs::vec_as_location(
     x,
     n = length(vars),
-    names = vars,
-    call = call
+    names = vars
   )
   set_names(out, names(x))
 }

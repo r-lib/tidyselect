@@ -45,8 +45,7 @@ rename_impl <- function(x,
     with_subscript_errors(
       vctrs::vec_as_names(
         names,
-        repair = "check_unique",
-        call = error_call
+        repair = "check_unique"
       )
     )
   }

@@ -188,13 +188,11 @@ loc_validate <- function(pos, vars, call = caller_env()) {
   pos <- vctrs::vec_as_subscript(
     pos,
     logical = "error",
-    character = "error",
-    call = call
+    character = "error"
   )
   pos <- vctrs::vec_as_location(
     pos,
-    n = length(vars),
-    call = call
+    n = length(vars)
   )
 
   named(sel_unique(pos))
