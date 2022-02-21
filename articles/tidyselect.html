@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidyselect</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
@@ -417,7 +417,7 @@
 <p>If the input is a data frame, the user is now informed that their selection should not contain duplicates:</p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="fu">if_width</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`select()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_vctrs()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
 <span class="co">#&gt;   * "foo" at locations 1 and 2.</span></code></pre></div>

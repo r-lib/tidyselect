@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">tidyselect</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.2</span>
       </span>
     </div>
 
@@ -407,7 +407,7 @@
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">cyl_pos</span> <span class="op">&lt;-</span> <span class="fl">2</span>
 <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span> <span class="op">|</span> <span class="va">cyl_pos</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`select_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_subscript()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't subset columns that don't exist.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> Column `cyl_pos` doesn't exist.</span></code></pre></div>
 </li>
@@ -415,7 +415,7 @@
 <p><strong>env-expressions</strong> are evaluated in the environment. This includes all calls other than those mentioned above, as well as symbols that are part of those calls. You can’t refer to data-variables in a data-expression:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`all_of()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `all_of()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> object 'mpg' not found</span></code></pre></div>
 </li>
 </ol>
@@ -450,11 +450,11 @@
 <p>Within data-expressions (see Evaluation section), <code>+</code>, <code>*</code> and <code>/</code> are overridden to cause an error. This is to prevent confusion stemming from normal data masking usage where variables can be transformed on the fly:</p>
 <div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`select_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use arithmetic operator `^` in selection context.</span>
 
 <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span> <span class="op">*</span> <span class="va">wt</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`select_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use arithmetic operator `*` in selection context.</span></code></pre></div>
 </div>
 </div>
@@ -472,7 +472,7 @@
 <span class="co">#&gt;   1</span>
 
 <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`rename_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span></code></pre></div>
 </div>
 <div class="section level3">
@@ -487,14 +487,14 @@
 
 <span class="co"># Data frames cannot</span>
 <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span>, foo <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`select_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_vctrs()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
 <span class="co">#&gt;   * "foo" at locations 1 and 2.</span></code></pre></div>
 <p>A selection can rename a variable to an existing name if the latter is not part of the selection:</p>
 <div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`select_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_vctrs()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
 <span class="co">#&gt;   * "cyl" at locations 1 and 2.</span>
@@ -505,11 +505,11 @@
 <p>This is not possible when renaming.</p>
 <div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`rename_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span>
 
 <span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">disp</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`rename_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span></code></pre></div>
 <p>However, the name conflict can be solved by renaming the existing variable to another name:</p>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
@@ -537,7 +537,7 @@
 <p>If the duplicates are selected, this is an error:</p>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in </span><span style="color: #262626; background-color: #DADADA; font-weight: bold;">`select_loc()`</span><span style="font-weight: bold;">:</span></span>
+<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `stop_vctrs()`:</span></span>
 <span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
 <span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
 <span class="co">#&gt;   * "x" at locations 1 and 2.</span></code></pre></div>
