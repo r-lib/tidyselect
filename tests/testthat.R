@@ -1,5 +1,4 @@
-library("testthat")
-library("rlang")
-library("tidyselect")
+library(testthat)
+library(tidyselect)
 
 test_check("tidyselect")
