@@ -54,22 +54,22 @@
       vars_select(letters, 30, 50, 100)
     Condition
       Error:
-      ! Can't subset columns that don't exist.
-      x Locations 30, 50, and 100 don't exist.
+      ! Can't subset columns past the end.
+      i Locations 30, 50, and 100 don't exist.
       i There are only 26 columns.
     Code
       vars_select(letters, -100)
     Condition
       Error:
-      ! Can't subset columns that don't exist.
-      x Location 100 doesn't exist.
+      ! Can't subset columns past the end.
+      i Location 100 doesn't exist.
       i There are only 26 columns.
     Code
       vars_select(letters, !100)
     Condition
       Error:
-      ! Can't subset columns that don't exist.
-      x Location 100 doesn't exist.
+      ! Can't subset columns past the end.
+      i Location 100 doesn't exist.
       i There are only 26 columns.
 
 # when .strict = FALSE, vars_rename always succeeds

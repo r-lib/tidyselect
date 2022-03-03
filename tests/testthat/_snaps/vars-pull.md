@@ -21,15 +21,15 @@
       vars_pull(letters, 100)
     Condition
       Error in `vec_as_location2_result()`:
-      ! Can't extract columns that don't exist.
-      x Location 100 doesn't exist.
+      ! Can't extract columns past the end.
+      i Location 100 doesn't exist.
       i There are only 26 columns.
     Code
       vars_pull(letters, -100)
     Condition
       Error in `vec_as_location2_result()`:
-      ! Can't extract columns that don't exist.
-      x Location 100 doesn't exist.
+      ! Can't extract columns past the end.
+      i Location 100 doesn't exist.
       i There are only 26 columns.
     Code
       vars_pull(letters, -Inf)
