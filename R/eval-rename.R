@@ -7,7 +7,7 @@ eval_rename <- function(expr,
                         strict = TRUE,
                         name_spec = NULL,
                         error_call = caller_env()) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   rename_impl(
     data,
     names(data),

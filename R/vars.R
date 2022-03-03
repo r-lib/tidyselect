@@ -2,7 +2,7 @@
 peeker <- function(what) {
   function(..., fn = NULL) {
     if (!missing(...)) {
-      ellipsis::check_dots_empty()
+      check_dots_empty()
     }
 
     x <- vars_env[[what]]
@@ -46,7 +46,7 @@ peeker <- function(what) {
 #' [selection helpers][language] to the current selection
 #' context.
 #'
-#' @inheritParams ellipsis::dots_empty
+#' @inheritParams rlang::args_dots_empty
 #' @param fn The name of the function to use in error messages when
 #'   the helper is used in the wrong context. If not supplied, a
 #'   generic error message is used instead.

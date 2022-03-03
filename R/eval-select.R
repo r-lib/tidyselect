@@ -36,7 +36,7 @@
 #' @param allow_rename If `TRUE` (the default), the renaming syntax
 #'   `c(foo = bar)` is allowed. If `FALSE`, it causes an error. This
 #'   is useful to implement purely selective behaviour.
-#' @inheritParams ellipsis::dots_empty
+#' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
 #'   selected elements.
@@ -123,7 +123,7 @@ eval_select <- function(expr,
                         name_spec = NULL,
                         allow_rename = TRUE,
                         error_call = caller_env()) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   eval_select_impl(
     data,
     names(data),

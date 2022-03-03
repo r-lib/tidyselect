@@ -84,10 +84,10 @@ all_of <- function(x) {
 }
 
 #' @rdname all_of
-#' @inheritParams ellipsis::dots_empty
+#' @inheritParams rlang::args_dots_empty
 #' @export
 any_of <- function(x, ..., vars = NULL) {
   vars <- vars %||% peek_vars(fn = "any_of")
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   as_indices_impl(x, vars = vars, strict = FALSE)
 }

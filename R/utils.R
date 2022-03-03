@@ -7,7 +7,7 @@ select_loc <- function(x,
                        name_spec = NULL,
                        allow_rename = TRUE,
                        error_call = current_env()) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
 
   eval_select(
     enquo(sel),
@@ -27,7 +27,7 @@ rename_loc <- function(x,
                        strict = TRUE,
                        name_spec = NULL,
                        error_call = current_env()) {
-  ellipsis::check_dots_empty()
+  check_dots_empty()
   rename_impl(
     x,
     names(x),
