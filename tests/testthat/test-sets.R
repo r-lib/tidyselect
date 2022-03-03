@@ -46,4 +46,3 @@ test_that("order is preserved", {
   expect_identical(sel_diff(c(1L, foo = 1L, bar = 1L), c(1L, bar = 1L)), c(foo = 1L))
   expect_identical(sel_diff(c(1L, bar = 1L, foo = 1L), c(1L, foo = 1L)), c(bar = 1L))
 })
-

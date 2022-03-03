@@ -79,7 +79,7 @@ iris \%>\% pivot_longer(all_of(vars))
 
 If any of the variable is missing from the data frame, that's an error:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(all_of(vars))
 }\if{html}{\out{</div>}}\preformatted{## Error:
-## ! Can't subset columns that don't exist.
+## ! Can't subset columns past the end.
 ## x Columns `Sepal.Length` and `Sepal.Width` don't exist.
 }
 

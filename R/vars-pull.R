@@ -30,7 +30,7 @@
 #'
 #' # You can unquote variables:
 #' var <- 10
-#' vars_pull(letters, !! var)
+#' vars_pull(letters, !!var)
 vars_pull <- function(vars, var = -1) {
   n <- length(vars)
 

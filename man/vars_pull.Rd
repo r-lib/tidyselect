@@ -41,7 +41,7 @@ vars_pull(letters, -3)
 
 # You can unquote variables:
 var <- 10
-vars_pull(letters, !! var)
+vars_pull(letters, !!var)
 }
 \seealso{
 \code{\link[dplyr:pull]{dplyr::pull()}}, \code{\link[=vars_select]{vars_select()}}

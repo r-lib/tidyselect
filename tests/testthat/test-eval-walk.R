@@ -119,7 +119,7 @@ test_that("can't use `*` and `^` in data context", {
 })
 
 test_that("can use arithmetic operators in non-data context", {
-  expect_identical(select_loc(letters2, identity(2 * 2 + 2 ^ 2 / 2)), c(f = 6L))
+  expect_identical(select_loc(letters2, identity(2 * 2 + 2^2 / 2)), c(f = 6L))
 })
 
 test_that("symbol lookup outside data informs caller about better practice", {
@@ -271,8 +271,8 @@ test_that("selections provide informative errors", {
 test_that("can select with .data pronoun (#2715)", {
   expect_identical(select_loc(c(foo = "foo"), .data$foo), c(foo = 1L))
   expect_identical(select_loc(c(foo = "foo"), .data[["foo"]]), c(foo = 1L))
-  expect_identical(select_loc(letters2, .data$a : .data$b), c(a = 1L, b = 2L))
-  expect_identical(select_loc(letters2, .data[["a"]] : .data[["b"]]), c(a = 1L, b = 2L))
+  expect_identical(select_loc(letters2, .data$a:.data$b), c(a = 1L, b = 2L))
+  expect_identical(select_loc(letters2, .data[["a"]]:.data[["b"]]), c(a = 1L, b = 2L))
 })
 
 test_that(".data in env-expression has the lexical definition", {

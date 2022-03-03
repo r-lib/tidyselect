@@ -25,7 +25,7 @@ test_that("negative index removes values", {
 })
 
 test_that("can select with character vectors", {
-  expect_identical(vars_select(letters, "b", !! "z", c("b", "c")), set_names(c("b", "z", "c")))
+  expect_identical(vars_select(letters, "b", !!"z", c("b", "c")), set_names(c("b", "z", "c")))
 })
 
 test_that("abort on unknown columns", {
@@ -95,8 +95,8 @@ test_that("`-` handles strings", {
 })
 
 test_that("`-` handles character vectors (#35)", {
-  expect_identical(vars_select(letters, - (!! letters[1:20])), vars_select(letters, -(1:20)))
-  expect_error(vars_select(letters, - c("foo", "z", "bar")), class = "vctrs_error_subscript_oob")
+  expect_identical(vars_select(letters, -(!!letters[1:20])), vars_select(letters, -(1:20)))
+  expect_error(vars_select(letters, -c("foo", "z", "bar")), class = "vctrs_error_subscript_oob")
 })
 
 test_that("can select `c` despite overscoped c()", {
@@ -105,7 +105,7 @@ test_that("can select `c` despite overscoped c()", {
 
 test_that("vars_select() handles named character vectors", {
   expect_identical(vars_select(letters, c("A" = "y", "B" = "z")), vars_select(letters, A = y, B = z))
-  expect_identical(vars_select(letters, !! c("A" = "y", "B" = "z")), vars_select(letters, A = y, B = z))
+  expect_identical(vars_select(letters, !!c("A" = "y", "B" = "z")), vars_select(letters, A = y, B = z))
 })
 
 test_that("can select with length > 1 double vectors (#43)", {

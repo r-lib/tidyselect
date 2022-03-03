@@ -4,5 +4,5 @@ test_that("where() selects with a predicate", {
 })
 
 test_that("where() checks return values", {
-  expect_error(select_loc(iris, where(~ NA)), "return `TRUE` or `FALSE`")
+  expect_error(select_loc(iris, where(~NA)), "return `TRUE` or `FALSE`")
 })

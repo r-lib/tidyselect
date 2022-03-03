@@ -87,8 +87,8 @@ starts_with <- function(match,
   vars <- vars %||% peek_vars(fn = "starts_with")
 
   if (ignore.case) {
-     vars <- tolower(vars)
-     match <- tolower(match)
+    vars <- tolower(vars)
+    match <- tolower(match)
   }
 
   flat_map_int(match, starts_with_impl, vars)

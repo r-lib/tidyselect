@@ -118,7 +118,6 @@ test_that("one_of tolerates but warns for unknown columns", {
   expect_equal(res, integer(0))
   expect_warning(res <- one_of(c("x", "z"), .vars = vars), "Unknown columns: `z`")
   expect_equal(res, 1L)
-
 })
 
 test_that("one_of converts names to locations", {
