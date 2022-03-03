@@ -34,3 +34,8 @@ from github with:
 # install.packages("remotes")
 remotes::install_github("r-lib/tidyselect")
 ```
+
+
+## Code of Conduct
+
+Please note that the tidyselect project is released with a [Contributor Code of Conduct](https://tidyselect.r-lib.org/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
