@@ -21,7 +21,7 @@ create selecting verbs that are consistent with other tidyverse packages.
   vignette.
 
 * To learn exactly how the tidyselect syntax is interpreted, read the
-  [Technical descrition](https://tidyselect.r-lib.org/articles/syntax.html)
+  [Technical description](https://tidyselect.r-lib.org/articles/syntax.html)
   vignette.
 
 
