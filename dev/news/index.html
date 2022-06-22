@@ -53,9 +53,7 @@
       <small>Source: <a href="https://github.com/r-lib/tidyselect/blob/HEAD/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
-    <div class="section level2">
-<h2 class="pkg-version" data-toc-text="development version" id="tidyselect-development-version">tidyselect (development version)<a class="anchor" aria-label="anchor" href="#tidyselect-development-version"></a></h2>
-</div>
+    <div class="section level2"><h2 class="pkg-version" data-toc-text="development version" id="tidyselect-development-version">tidyselect (development version)<a class="anchor" aria-label="anchor" href="#tidyselect-development-version"></a></h2></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.1.2" id="tidyselect-112">tidyselect 1.1.2<a class="anchor" aria-label="anchor" href="#tidyselect-112"></a></h2><p class="text-muted">CRAN release: 2022-02-21</p>
 <ul><li><p>Fix for CRAN checks.</p></li>
@@ -92,8 +90,7 @@
 </ul></div>
 <div class="section level3">
 <h3 id="breaking-changes-1-0-0">Breaking changes<a class="anchor" aria-label="anchor" href="#breaking-changes-1-0-0"></a></h3>
-<ul><li>Selecting non-column variables with bare names now triggers an informative message suggesting to use <code><a href="../reference/all_of.html">all_of()</a></code> instead. Referring to contextual objects with a bare name is brittle because it might be masked by a data frame column. Using <code><a href="../reference/all_of.html">all_of()</a></code> is safe (<a href="https://github.com/r-lib/tidyselect/issues/76" class="external-link">#76</a>).</li>
-</ul><p>tidyselect now uses vctrs for validating inputs. These changes may reveal programming errors that were previously silent. They may also cause failures if your unit tests make faulty assumptions about the content of error messages created in tidyselect:</p>
+<ul><li>Selecting non-column variables with bare names now triggers an informative message suggesting to use <code><a href="../reference/all_of.html">all_of()</a></code> instead. Referring to contextual objects with a bare name is brittle because it might be masked by a data frame column. Using <code><a href="../reference/all_of.html">all_of()</a></code> is safe (<a href="https://github.com/r-lib/tidyselect/issues/76" class="external-link">#76</a>).</li></ul><p>tidyselect now uses vctrs for validating inputs. These changes may reveal programming errors that were previously silent. They may also cause failures if your unit tests make faulty assumptions about the content of error messages created in tidyselect:</p>
 <ul><li><p>Out-of-bounds errors are thrown when a name doesn’t exist or a location is too large for the input.</p></li>
 <li><p>Logical vectors now fail properly.</p></li>
 <li><p>Selected variables now must be unique. It was previously possible to return duplicate selections in some circumstances.</p></li>
@@ -215,8 +212,7 @@
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.2" id="tidyselect-022">tidyselect 0.2.2<a class="anchor" aria-label="anchor" href="#tidyselect-022"></a></h2><p class="text-muted">CRAN release: 2017-10-10</p>
 <ul><li>
-<code>dplyr</code> is now correctly mentioned as suggested package.</li>
-</ul></div>
+<code>dplyr</code> is now correctly mentioned as suggested package.</li></ul></div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.2.1" id="tidyselect-021">tidyselect 0.2.1<a class="anchor" aria-label="anchor" href="#tidyselect-021"></a></h2><p class="text-muted">CRAN release: 2017-10-09</p>
 <ul><li>
@@ -259,8 +255,7 @@
 <div class="section level3">
 <h3 id="fixes-0-2-0">Fixes<a class="anchor" aria-label="anchor" href="#fixes-0-2-0"></a></h3>
 <ul><li>
-<code><a href="../reference/one_of.html">one_of()</a></code> argument <code>vars</code> has been renamed to <code>.vars</code> to avoid spurious matching.</li>
-</ul></div>
+<code><a href="../reference/one_of.html">one_of()</a></code> argument <code>vars</code> has been renamed to <code>.vars</code> to avoid spurious matching.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="0.1.1" id="tidyselect-011">tidyselect 0.1.1<a class="anchor" aria-label="anchor" href="#tidyselect-011"></a></h2><p class="text-muted">CRAN release: 2017-07-24</p>
@@ -304,7 +299,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
   </div></footer></body></html>
