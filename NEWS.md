@@ -1,5 +1,7 @@
 # tidyselect (development version)
 
+* Improved propagation of `error_call` to vctrs input checkers.
+
 
 # tidyselect 1.1.2
 
