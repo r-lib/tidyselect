@@ -31,6 +31,8 @@ Suggests:
     withr
 VignetteBuilder:
     knitr
+Remotes:
+    r-lib/rlang
 ByteCompile: true
 Config/testthat/edition: 3
 Config/Needs/website: tidyverse/tidytemplate
