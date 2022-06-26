@@ -73,7 +73,7 @@ vars_select_eval <- function(vars,
   )
   data_mask$.__tidyselect__.$internal <- internal
 
-  pos <- walk_data_tree(expr, data_mask, context_mask, error_call)
+  pos <- walk_data_tree(expr, data_mask, context_mask)
   pos <- loc_validate(pos, vars, call = error_call)
 
   if (type == "rename" && !is_named(pos)) {
