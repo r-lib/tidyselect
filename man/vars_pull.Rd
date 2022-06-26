@@ -4,7 +4,7 @@
 \alias{vars_pull}
 \title{Select variable}
 \usage{
-vars_pull(vars, var = -1)
+vars_pull(vars, var = -1, error_call = caller_env())
 }
 \arguments{
 \item{vars}{A character vector of existing column names.}
@@ -22,6 +22,11 @@ column you've created most recently).
 This argument is taken by expression and supports
 \link[rlang:topic-inject]{quasiquotation} (you can unquote column
 names and column locations).}
+
+\item{error_call}{The execution environment of a currently
+running function, e.g. \code{caller_env()}. The function will be
+mentioned in error messages as the source of the error. See the
+\code{call} argument of \code{\link[rlang:abort]{abort()}} for more information.}
 }
 \value{
 The selected column name as an unnamed string.

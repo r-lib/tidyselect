@@ -95,25 +95,29 @@
       print(expect_error(vars_pull(letters, f(base = TRUE))))
     Output
       <error/rlang_error>
-      Error in `h()`:
+      Error:
+      ! Problem while evaluating `f(base = TRUE)`.
+      Caused by error in `h()`:
       ! foo
       ---
       Backtrace:
         1. base::print(expect_error(vars_pull(letters, f(base = TRUE))))
-       13. tidyselect (local) f(base = TRUE)
-       14. tidyselect (local) g(base)
-       15. tidyselect (local) h(base)
-       16. base::stop("foo")
+       17. tidyselect (local) f(base = TRUE)
+       18. tidyselect (local) g(base)
+       19. tidyselect (local) h(base)
+       20. base::stop("foo")
     Code
       print(expect_error(vars_pull(letters, f(base = FALSE))))
     Output
       <error/rlang_error>
-      Error in `h()`:
+      Error:
+      ! Problem while evaluating `f(base = FALSE)`.
+      Caused by error in `h()`:
       ! foo
       ---
       Backtrace:
         1. base::print(expect_error(vars_pull(letters, f(base = FALSE))))
-       13. tidyselect (local) f(base = FALSE)
-       14. tidyselect (local) g(base)
-       15. tidyselect (local) h(base)
+       17. tidyselect (local) f(base = FALSE)
+       18. tidyselect (local) g(base)
+       19. tidyselect (local) h(base)
 
