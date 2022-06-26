@@ -28,14 +28,18 @@ combination with other tidyselect operators.
 
 
 Selection helpers can be used in functions like \code{dplyr::select()}
-or \code{tidyr::pivot_longer()}. Let's first attach the tidyverse:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidyverse)
+or \code{tidyr::pivot_longer()}. Let's first attach the tidyverse:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidyverse)
 
 # For better printing
 iris <- as_tibble(iris)
 mtcars <- as_tibble(mtcars)
 }\if{html}{\out{</div>}}
 
-Use \code{everything()} to select all variables:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(everything())
+Use \code{everything()} to select all variables:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(everything())
 #> # A tibble: 150 x 5
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
 #>          <dbl>       <dbl>        <dbl>       <dbl> <fct>  
@@ -56,7 +60,9 @@ mtcars \%>\% pivot_longer(everything())
 #> # ... with 348 more rows
 }\if{html}{\out{</div>}}
 
-Use \code{last_col()} to select the last variable:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(last_col())
+Use \code{last_col()} to select the last variable:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(last_col())
 #> # A tibble: 150 x 1
 #>   Species
 #>   <fct>  
@@ -78,7 +84,9 @@ mtcars \%>\% pivot_longer(last_col())
 }\if{html}{\out{</div>}}
 
 Supply an offset \code{n} to select a variable located \code{n} positions
-from the end:\if{html}{\out{<div class="sourceCode r">}}\preformatted{mtcars \%>\% select(1:last_col(5))
+from the end:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{mtcars \%>\% select(1:last_col(5))
 #> # A tibble: 32 x 6
 #>     mpg   cyl  disp    hp  drat    wt
 #>   <dbl> <dbl> <dbl> <dbl> <dbl> <dbl>

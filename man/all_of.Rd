@@ -37,13 +37,17 @@ vector.
 
 
 Selection helpers can be used in functions like \code{dplyr::select()}
-or \code{tidyr::pivot_longer()}. Let's first attach the tidyverse:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidyverse)
+or \code{tidyr::pivot_longer()}. Let's first attach the tidyverse:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidyverse)
 
 # For better printing
 iris <- as_tibble(iris)
 }\if{html}{\out{</div>}}
 
-It is a common to have a names of variables in a vector.\if{html}{\out{<div class="sourceCode r">}}\preformatted{vars <- c("Sepal.Length", "Sepal.Width")
+It is a common to have a names of variables in a vector.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{vars <- c("Sepal.Length", "Sepal.Width")
 
 iris[, vars]
 #> # A tibble: 150 x 2
@@ -56,7 +60,9 @@ iris[, vars]
 #> # ... with 146 more rows
 }\if{html}{\out{</div>}}
 
-To refer to these variables in selecting function, use \code{all_of()}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(all_of(vars))
+To refer to these variables in selecting function, use \code{all_of()}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(all_of(vars))
 #> # A tibble: 150 x 2
 #>   Sepal.Length Sepal.Width
 #>          <dbl>       <dbl>
@@ -77,18 +83,26 @@ iris \%>\% pivot_longer(all_of(vars))
 #> # ... with 296 more rows
 }\if{html}{\out{</div>}}
 
-If any of the variable is missing from the data frame, that's an error:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(all_of(vars))
-}\if{html}{\out{</div>}}\preformatted{## Error:
-## ! Can't subset columns past the end.
-## x Columns `Sepal.Length` and `Sepal.Width` don't exist.
-}
+If any of the variable is missing from the data frame, that's an error:
 
-Use \code{any_of()} to allow missing variables:\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(any_of(vars))
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(all_of(vars))
+}\if{html}{\out{</div>}}
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{## Error:
+## ! Can't subset columns that don't exist.
+## x Columns `Sepal.Length` and `Sepal.Width` don't exist.
+}\if{html}{\out{</div>}}
+
+Use \code{any_of()} to allow missing variables:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(any_of(vars))
 #> # A tibble: 87 x 0
 }\if{html}{\out{</div>}}
 
 \code{any_of()} is especially useful to remove variables from a data
-frame because calling it again does not cause an error:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(-any_of(vars))
+frame because calling it again does not cause an error:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(-any_of(vars))
 #> # A tibble: 150 x 3
 #>   Petal.Length Petal.Width Species
 #>          <dbl>       <dbl> <fct>  

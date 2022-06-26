@@ -18,14 +18,18 @@ function returns \code{TRUE}.
 
 
 Selection helpers can be used in functions like \code{dplyr::select()}
-or \code{tidyr::pivot_longer()}. Let's first attach the tidyverse:\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidyverse)
+or \code{tidyr::pivot_longer()}. Let's first attach the tidyverse:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{library(tidyverse)
 
 # For better printing
 iris <- as_tibble(iris)
 }\if{html}{\out{</div>}}
 
 \code{where()} takes a function and returns all variables for which the
-function returns \code{TRUE}:\if{html}{\out{<div class="sourceCode r">}}\preformatted{is.factor(iris[[4]])
+function returns \code{TRUE}:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{is.factor(iris[[4]])
 #> [1] FALSE
 
 is.factor(iris[[5]])
@@ -60,7 +64,9 @@ iris \%>\% select(where(is.numeric))
 \subsection{The formula shorthand}{
 
 You can use purrr-like formulas as a shortcut for creating a
-function on the spot. These expressions are equivalent:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(where(is.numeric))
+function on the spot. These expressions are equivalent:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(where(is.numeric))
 #> # A tibble: 150 x 4
 #>   Sepal.Length Sepal.Width Petal.Length Petal.Width
 #>          <dbl>       <dbl>        <dbl>       <dbl>
@@ -92,7 +98,9 @@ iris \%>\% select(where(~ is.numeric(.x)))
 }\if{html}{\out{</div>}}
 
 The shorthand is useful for adding logic inline. Here we select all
-numeric variables whose mean is greater than 3.5:\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(where(~ is.numeric(.x) && mean(.x) > 3.5))
+numeric variables whose mean is greater than 3.5:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{iris \%>\% select(where(~ is.numeric(.x) && mean(.x) > 3.5))
 #> # A tibble: 150 x 2
 #>   Sepal.Length Petal.Length
 #>          <dbl>        <dbl>
