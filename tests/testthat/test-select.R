@@ -75,3 +75,12 @@ test_that("eval_select() produces correct backtraces", {
     print(expect_error(select_loc(mtcars, f(base = FALSE))))
   })
 })
+
+test_that("eval_select() produces correct chained errors", {
+  expect_snapshot({
+    (expect_error(select_loc(mtcars, 1 + "")))
+
+    f <- function() 1 + ""
+    (expect_error(select_loc(mtcars, f())))
+  })
+})

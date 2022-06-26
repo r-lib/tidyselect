@@ -4,7 +4,8 @@
       (expect_error(select_loc(mtcars, f())))
     Output
       <error/rlang_error>
-      Error in `f()`:
+      Error in `select_loc()`:
+      Caused by error in `f()`:
       ! foo
 
 # eval_select() produces correct backtraces
@@ -13,25 +14,48 @@
       print(expect_error(select_loc(mtcars, f(base = TRUE))))
     Output
       <error/rlang_error>
-      Error in `h()`:
+      Error in `select_loc()`:
+      ! Problem while evaluating `f(base = TRUE)`.
+      Caused by error in `h()`:
       ! foo
       ---
       Backtrace:
         1. base::print(expect_error(select_loc(mtcars, f(base = TRUE))))
-       23. tidyselect (local) f(base = TRUE)
-       24. tidyselect (local) g(base)
-       25. tidyselect (local) h(base)
-       26. base::stop("foo")
+       27. tidyselect (local) f(base = TRUE)
+       28. tidyselect (local) g(base)
+       29. tidyselect (local) h(base)
+       30. base::stop("foo")
     Code
       print(expect_error(select_loc(mtcars, f(base = FALSE))))
     Output
       <error/rlang_error>
-      Error in `h()`:
+      Error in `select_loc()`:
+      ! Problem while evaluating `f(base = FALSE)`.
+      Caused by error in `h()`:
       ! foo
       ---
       Backtrace:
         1. base::print(expect_error(select_loc(mtcars, f(base = FALSE))))
-       23. tidyselect (local) f(base = FALSE)
-       24. tidyselect (local) g(base)
-       25. tidyselect (local) h(base)
+       27. tidyselect (local) f(base = FALSE)
+       28. tidyselect (local) g(base)
+       29. tidyselect (local) h(base)
+
+# eval_select() produces correct chained errors
+
+    Code
+      (expect_error(select_loc(mtcars, 1 + "")))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      Caused by error in `1 + ""`:
+      ! non-numeric argument to binary operator
+    Code
+      f <- (function() 1 + "")
+      (expect_error(select_loc(mtcars, f())))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! Problem while evaluating `f()`.
+      Caused by error in `1 + ""`:
+      ! non-numeric argument to binary operator
 

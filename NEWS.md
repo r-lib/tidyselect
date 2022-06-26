@@ -1,5 +1,10 @@
 # tidyselect (development version)
 
+* Evaluation errors are now chained. The child error call is set to
+  the `error_call` argument of `eval_select()` and `eval_rename()`.
+
+* `vars_pull()` gains an `error_call` argument.
+
 * Improved backtraces of base errors.
 
 * Improved propagation of `error_call` to vctrs input checkers.

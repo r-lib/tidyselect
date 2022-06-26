@@ -139,7 +139,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `!` = eval_bang(expr, data_mask, context_mask),
-    `-` = eval_minus(expr, data_mask, context_mask),
+    `-` = eval_minus(expr, data_mask, context_mask, error_call),
     `:` = eval_colon(expr, data_mask, context_mask),
     `|` = eval_or(expr, data_mask, context_mask),
     `&` = eval_and(expr, data_mask, context_mask),
@@ -151,7 +151,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     `^` = stop_bad_arith_op("^", call = error_call),
     `~` = stop_formula(expr, call = error_call),
     .data = eval(expr, data_mask),
-    eval_context(expr, context_mask)
+    eval_context(expr, context_mask, call = error_call)
   )
 
   vars <- data_mask$.__tidyselect__.$internal$vars
@@ -279,11 +279,11 @@ eval_colon <- function(expr, data_mask, context_mask) {
   }
 }
 
-eval_minus <- function(expr, data_mask, context_mask) {
+eval_minus <- function(expr, data_mask, context_mask, call = call) {
   if (length(expr) == 2) {
     eval_bang(expr, data_mask, context_mask)
   } else {
-    eval_context(expr, context_mask)
+    eval_context(expr, context_mask, call = call)
   }
 }
 
@@ -297,10 +297,14 @@ eval_slash <- function(expr, data_mask, context_mask) {
   sel_diff(lhs, rhs, vars, error_call = error_call)
 }
 
-eval_context <- function(expr, context_mask) {
+eval_context <- function(expr, context_mask, call) {
   env <- context_mask$.__current__. %||% base_env()
-  expr <- as_quosure(expr, env)
-  eval_tidy(expr, context_mask)
+  with_chained_errors(
+    eval_tidy(as_quosure(expr, env), context_mask),
+    "select",
+    call,
+    eval_expr = expr
+  )
 }
 
 eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {

@@ -6,6 +6,7 @@
 #' negative numbers to select columns from the end.
 #'
 #' @inheritParams vars_select
+#' @inheritParams rlang::args_error_context
 #' @param var A variable specified as:
 #'   * a literal variable name
 #'   * a positive integer, giving the position counting from the left
@@ -31,11 +32,15 @@
 #' # You can unquote variables:
 #' var <- 10
 #' vars_pull(letters, !!var)
-vars_pull <- function(vars, var = -1) {
+vars_pull <- function(vars, var = -1, error_call = caller_env()) {
+  expr <- enquo(var)
   n <- length(vars)
 
-  with_entraced_errors(
-    loc <- eval_tidy(enquo(var), set_names(seq_along(vars), vars))
+  loc <- with_chained_errors(
+    eval_tidy(enquo(var), set_names(seq_along(vars), vars)),
+    action = "pull",
+    call = error_call,
+    eval_expr = expr
   )
   loc <- pull_as_location2(loc, n, vars)
 
