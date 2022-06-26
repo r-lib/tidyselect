@@ -14,10 +14,10 @@ with_entraced_errors <- function(expr) {
   try_fetch(
     expr,
     simpleError = function(cnd) {
-      # TODO! `parent = NA`
       abort(
         conditionMessage(cnd),
-        call = conditionCall(cnd)
+        call = conditionCall(cnd),
+        parent = NA
       )
     }
   )

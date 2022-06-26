@@ -97,11 +97,12 @@
       <error/rlang_error>
       Error in `h()`:
       ! foo
+      ---
       Backtrace:
         1. base::print(expect_error(vars_pull(letters, f(base = TRUE))))
-       13. tidyselect f(base = TRUE)
-       14. tidyselect g(base)
-       15. tidyselect h(base)
+       13. tidyselect (local) f(base = TRUE)
+       14. tidyselect (local) g(base)
+       15. tidyselect (local) h(base)
        16. base::stop("foo")
     Code
       print(expect_error(vars_pull(letters, f(base = FALSE))))
@@ -109,9 +110,10 @@
       <error/rlang_error>
       Error in `h()`:
       ! foo
+      ---
       Backtrace:
         1. base::print(expect_error(vars_pull(letters, f(base = FALSE))))
-       13. tidyselect f(base = FALSE)
-       14. tidyselect g(base)
-       15. tidyselect h(base)
+       13. tidyselect (local) f(base = FALSE)
+       14. tidyselect (local) g(base)
+       15. tidyselect (local) h(base)
 
