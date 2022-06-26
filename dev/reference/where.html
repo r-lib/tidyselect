@@ -79,12 +79,14 @@ function returns <code>TRUE</code>.</p>
 
 
 <p>Selection helpers can be used in functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>
-or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 
 <span class="co"># For better printing</span>
 <span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></code></pre><p></p></div>
 <p><code>where()</code> takes a function and returns all variables for which the
-function returns <code>TRUE</code>:</p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">is.factor</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
+function returns <code>TRUE</code>:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">is.factor</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
 <span class="co">#&gt; [1] FALSE</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/factor.html" class="external-link">is.factor</a></span><span class="op">(</span><span class="va">iris</span><span class="op">[[</span><span class="fl">5</span><span class="op">]</span><span class="op">]</span><span class="op">)</span>
@@ -119,7 +121,8 @@ function returns <code>TRUE</code>:</p><div class="sourceCode r"><pre><code><spa
 
 
 <p>You can use purrr-like formulas as a shortcut for creating a
-function on the spot. These expressions are equivalent:</p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span>
+function on the spot. These expressions are equivalent:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 4</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width</span>
 <span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt;</span>
@@ -149,7 +152,8 @@ function on the spot. These expressions are equivalent:</p><div class="sourceCod
 <span class="co">#&gt; 4          4.6         3.1          1.5         0.2</span>
 <span class="co">#&gt; # ... with 146 more rows</span></code></pre><p></p></div>
 <p>The shorthand is useful for adding logic inline. Here we select all
-numeric variables whose mean is greater than 3.5:</p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3.5</span><span class="op">)</span><span class="op">)</span>
+numeric variables whose mean is greater than 3.5:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="op">~</span> <span class="fu"><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">&amp;&amp;</span> <span class="fu"><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span> <span class="op">&gt;</span> <span class="fl">3.5</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 2</span>
 <span class="co">#&gt;   Sepal.Length Petal.Length</span>
 <span class="co">#&gt;          &lt;dbl&gt;        &lt;dbl&gt;</span>

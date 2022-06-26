@@ -95,12 +95,14 @@ established by functions like <code>select()</code> or <code>pivot_longer()</cod
 
 
 <p>Selection helpers can be used in functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>
-or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
+or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span>
 
 <span class="co"># For better printing</span>
 <span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">iris</span><span class="op">)</span>
 <span class="va">mtcars</span> <span class="op">&lt;-</span> <span class="fu">as_tibble</span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></code></pre><p></p></div>
-<p>Use <code>everything()</code> to select all variables:</p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<p>Use <code>everything()</code> to select all variables:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 5</span>
 <span class="co">#&gt;   Sepal.Length Sepal.Width Petal.Length Petal.Width Species</span>
 <span class="co">#&gt;          &lt;dbl&gt;       &lt;dbl&gt;        &lt;dbl&gt;       &lt;dbl&gt; &lt;fct&gt;  </span>
@@ -119,7 +121,8 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p><div
 <span class="co">#&gt; 3 disp    160</span>
 <span class="co">#&gt; 4 hp      110</span>
 <span class="co">#&gt; # ... with 348 more rows</span></code></pre><p></p></div>
-<p>Use <code>last_col()</code> to select the last variable:</p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/everything.html">last_col</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
+<p>Use <code>last_col()</code> to select the last variable:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/everything.html">last_col</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 150 x 1</span>
 <span class="co">#&gt;   Species</span>
 <span class="co">#&gt;   &lt;fct&gt;  </span>
@@ -139,7 +142,8 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p><div
 <span class="co">#&gt; 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3 carb      1</span>
 <span class="co">#&gt; # ... with 28 more rows</span></code></pre><p></p></div>
 <p>Supply an offset <code>n</code> to select a variable located <code>n</code> positions
-from the end:</p><div class="sourceCode r"><pre><code><span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="../reference/everything.html">last_col</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
+from the end:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="../reference/everything.html">last_col</a></span><span class="op">(</span><span class="fl">5</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 32 x 6</span>
 <span class="co">#&gt;     mpg   cyl  disp    hp  drat    wt</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>

@@ -5,7 +5,8 @@ Ambiguity between columns and external variables
 
 
 With selecting functions like dplyr::select() or
-tidyr::pivot_longer(), you can refer to variables by name:mtcars %&amp;gt;% select(cyl, am, vs)
+tidyr::pivot_longer(), you can refer to variables by name:
+mtcars %&amp;gt;% select(cyl, am, vs)
 #&amp;gt; # A tibble: 32 x 3
 #&amp;gt;     cyl    am    vs
 #&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
@@ -28,7 +29,8 @@ mtcars %&amp;gt;% select(mpg:disp)
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.vars &amp;lt;- c("cyl", "am", "vs")
+not clear whether you want a data frame column or an external object.
+vars &amp;lt;- c("cyl", "am", "vs")
 result &amp;lt;- mtcars %&amp;gt;% select(vars)
 #&amp;gt; Note: Using an external vector in selections is ambiguous.
 #&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
@@ -38,17 +40,20 @@ result &amp;lt;- mtcars %&amp;gt;% select(vars)
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.some_df &amp;lt;- mtcars[1:4, ]
+contains a column with the same name as your external variable.
+some_df &amp;lt;- mtcars[1:4, ]
 some_df$vars &amp;lt;- 1:nrow(some_df)
 
 These are very different objects but it isn’t a problem if the context
-forces you to be specific about where to find vars:vars
+forces you to be specific about where to find vars:
+vars
 #&amp;gt; [1] "cyl" "am"  "vs"
 
 some_df$vars
 #&amp;gt; [1] 1 2 3 4
 
-In a selection context however, the column wins:some_df %&amp;gt;% select(vars)
+In a selection context however, the column wins:
+some_df %&amp;gt;% select(vars)
 #&amp;gt; # A tibble: 4 x 1
 #&amp;gt;    vars
 #&amp;gt;   &amp;lt;int&amp;gt;
@@ -64,7 +69,8 @@ Fixing the ambiguity
 
 
 To make your selection code more robust and silence the message, use
-all_of() to force the external vector:some_df %&amp;gt;% select(all_of(vars))
+all_of() to force the external vector:
+some_df %&amp;gt;% select(all_of(vars))
 #&amp;gt; # A tibble: 4 x 3
 #&amp;gt;     cyl    am    vs
 #&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
@@ -83,7 +89,8 @@ Ambiguity between columns and external variables
 
 
 With selecting functions like dplyr::select() or
-tidyr::pivot_longer(), you can refer to variables by name:mtcars %&amp;gt;% select(cyl, am, vs)
+tidyr::pivot_longer(), you can refer to variables by name:
+mtcars %&amp;gt;% select(cyl, am, vs)
 #&amp;gt; # A tibble: 32 x 3
 #&amp;gt;     cyl    am    vs
 #&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
@@ -106,7 +113,8 @@ mtcars %&amp;gt;% select(mpg:disp)
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.vars &amp;lt;- c("cyl", "am", "vs")
+not clear whether you want a data frame column or an external object.
+vars &amp;lt;- c("cyl", "am", "vs")
 result &amp;lt;- mtcars %&amp;gt;% select(vars)
 #&amp;gt; Note: Using an external vector in selections is ambiguous.
 #&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
@@ -116,17 +124,20 @@ result &amp;lt;- mtcars %&amp;gt;% select(vars)
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.some_df &amp;lt;- mtcars[1:4, ]
+contains a column with the same name as your external variable.
+some_df &amp;lt;- mtcars[1:4, ]
 some_df$vars &amp;lt;- 1:nrow(some_df)
 
 These are very different objects but it isn’t a problem if the context
-forces you to be specific about where to find vars:vars
+forces you to be specific about where to find vars:
+vars
 #&amp;gt; [1] "cyl" "am"  "vs"
 
 some_df$vars
 #&amp;gt; [1] 1 2 3 4
 
-In a selection context however, the column wins:some_df %&amp;gt;% select(vars)
+In a selection context however, the column wins:
+some_df %&amp;gt;% select(vars)
 #&amp;gt; # A tibble: 4 x 1
 #&amp;gt;    vars
 #&amp;gt;   &amp;lt;int&amp;gt;
@@ -142,7 +153,8 @@ Fixing the ambiguity
 
 
 To make your selection code more robust and silence the message, use
-all_of() to force the external vector:some_df %&amp;gt;% select(all_of(vars))
+all_of() to force the external vector:
+some_df %&amp;gt;% select(all_of(vars))
 #&amp;gt; # A tibble: 4 x 3
 #&amp;gt;     cyl    am    vs
 #&amp;gt;   &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt; &amp;lt;dbl&amp;gt;
@@ -217,7 +229,8 @@ the deprecation process.
 
 
 <p>With selecting functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> or
-<code>tidyr::pivot_longer()</code>, you can refer to variables by name:</p><div class="sourceCode r"><pre><code><span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">cyl</span>, <span class="va">am</span>, <span class="va">vs</span><span class="op">)</span>
+<code>tidyr::pivot_longer()</code>, you can refer to variables by name:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">cyl</span>, <span class="va">am</span>, <span class="va">vs</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 32 x 3</span>
 <span class="co">#&gt;     cyl    am    vs</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
@@ -239,7 +252,8 @@ the deprecation process.
 <p>For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.</p><div class="sourceCode r"><pre><code><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span>, <span class="st">"vs"</span><span class="op">)</span>
+not clear whether you want a data frame column or an external object.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span>, <span class="st">"vs"</span><span class="op">)</span>
 <span class="va">result</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">vars</span><span class="op">)</span>
 <span class="co">#&gt; Note: Using an external vector in selections is ambiguous.</span>
 <span class="co">#&gt; i Use `all_of(vars)` instead of `vars` to silence this message.</span>
@@ -248,15 +262,18 @@ not clear whether you want a data frame column or an external object.</p><div cl
 <p>This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
-contains a column with the same name as your external variable.</p><div class="sourceCode r"><pre><code><span class="va">some_df</span> <span class="op">&lt;-</span> <span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">]</span>
+contains a column with the same name as your external variable.</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">some_df</span> <span class="op">&lt;-</span> <span class="va">mtcars</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">]</span>
 <span class="va">some_df</span><span class="op">$</span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">some_df</span><span class="op">)</span></code></pre><p></p></div>
 <p>These are very different objects but it isn’t a problem if the context
-forces you to be specific about where to find <code>vars</code>:</p><div class="sourceCode r"><pre><code><span class="va">vars</span>
+forces you to be specific about where to find <code>vars</code>:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">vars</span>
 <span class="co">#&gt; [1] "cyl" "am"  "vs"</span>
 
 <span class="va">some_df</span><span class="op">$</span><span class="va">vars</span>
 <span class="co">#&gt; [1] 1 2 3 4</span></code></pre><p></p></div>
-<p>In a selection context however, the column wins:</p><div class="sourceCode r"><pre><code><span class="va">some_df</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">vars</span><span class="op">)</span>
+<p>In a selection context however, the column wins:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">some_df</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">vars</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 4 x 1</span>
 <span class="co">#&gt;    vars</span>
 <span class="co">#&gt;   &lt;int&gt;</span>
@@ -271,7 +288,8 @@ forces you to be specific about where to find <code>vars</code>:</p><div class="
 
 
 <p>To make your selection code more robust and silence the message, use
-<code><a href="all_of.html">all_of()</a></code> to force the external vector:</p><div class="sourceCode r"><pre><code><span class="va">some_df</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span>
+<code><a href="all_of.html">all_of()</a></code> to force the external vector:</p>
+<p></p><div class="sourceCode r"><pre><code><span class="va">some_df</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; # A tibble: 4 x 3</span>
 <span class="co">#&gt;     cyl    am    vs</span>
 <span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
