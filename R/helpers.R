@@ -112,7 +112,7 @@ one_of <- function(..., .vars = NULL) {
 
   bad_input <- detect_index(keep, ~ !vec_is_coercible(., chr()))
   if (bad_input) {
-    type <- friendly_type_of(keep[[bad_input]])
+    type <- obj_type_friendly(keep[[bad_input]])
     msg <- glue::glue("Input { bad_input } must be a vector of column names, not {type}.")
     abort(msg, "vctrs_error_incompatible_index_type")
   }

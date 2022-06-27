@@ -103,12 +103,12 @@ test_that("order is determined from inputs (#53)", {
 # one_of ------------------------------------------------------------------
 
 test_that("one_of gives useful errors", {
-  expect_error(
-    one_of(1L, .vars = c("x", "y")),
-    "Input 1 must be a vector of column names, not an integer vector",
-    fixed = TRUE,
-    class = "vctrs_error_incompatible_index_type"
-  )
+  expect_snapshot({
+    (expect_error(
+      one_of(1L, .vars = c("x", "y")),
+      class = "vctrs_error_incompatible_index_type"
+    ))
+  })
 })
 
 test_that("one_of tolerates but warns for unknown columns", {
