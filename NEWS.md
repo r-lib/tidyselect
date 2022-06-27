@@ -1,4 +1,4 @@
-# tidyselect (development version)
+# tidyselect 1.1.3
 
 * Evaluation errors are now chained. The child error call is set to
   the `error_call` argument of `eval_select()` and `eval_rename()`.

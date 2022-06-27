@@ -1,6 +1,6 @@
 Package: tidyselect
 Title: Select from a Set of Strings
-Version: 1.1.2.9000
+Version: 1.1.3
 Authors@R: c(
     person("Lionel", "Henry", , "lionel@rstudio.com", role = c("aut", "cre")),
     person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
@@ -32,8 +32,6 @@ Suggests:
     withr
 VignetteBuilder:
     knitr
-Remotes:
-    r-lib/rlang
 ByteCompile: true
 Config/testthat/edition: 3
 Config/Needs/website: tidyverse/tidytemplate
