@@ -60,6 +60,12 @@ test_that("eval_select() errors mention correct calls", {
   expect_snapshot((expect_error(select_loc(mtcars, f()))))
 })
 
+test_that("predicate outputs are type-checked", {
+  expect_snapshot({
+    (expect_error(select_loc(mtcars, function(x) "")))
+  })
+})
+
 test_that("eval_select() produces correct backtraces", {
   f <- function(base) g(base)
   g <- function(base) h(base)

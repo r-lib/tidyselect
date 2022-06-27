@@ -8,6 +8,15 @@
       Caused by error in `f()`:
       ! foo
 
+# predicate outputs are type-checked
+
+    Code
+      (expect_error(select_loc(mtcars, function(x) "")))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! Selecting functions must return `TRUE` or `FALSE`, not `""`.
+
 # eval_select() produces correct backtraces
 
     Code
