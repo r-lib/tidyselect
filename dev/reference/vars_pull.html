@@ -69,7 +69,7 @@ negative numbers to select columns from the end.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">vars_pull</span><span class="op">(</span><span class="va">vars</span>, var <span class="op">=</span> <span class="op">-</span><span class="fl">1</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vars_pull</span><span class="op">(</span><span class="va">vars</span>, var <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, error_call <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -88,6 +88,13 @@ column you've created most recently).</p>
 <a href="https://rlang.r-lib.org/reference/topic-inject.html" class="external-link">quasiquotation</a> (you can unquote column
 names and column locations).</p></dd>
 
+
+<dt>error_call</dt>
+<dd><p>The execution environment of a currently
+running function, e.g. <code><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env()</a></code>. The function will be
+mentioned in error messages as the source of the error. See the
+<code>call</code> argument of <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">abort()</a></code> for more information.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -102,17 +109,17 @@ names and column locations).</p></dd>
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># It takes its argument by expression:</span></span>
-<span class="r-in"><span class="fu">vars_pull</span><span class="op">(</span><span class="va">letters</span>, <span class="va">c</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># It takes its argument by expression:</span></span></span>
+<span class="r-in"><span><span class="fu">vars_pull</span><span class="op">(</span><span class="va">letters</span>, <span class="va">c</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "c"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Negative numbers select from the end:</span></span>
-<span class="r-in"><span class="fu">vars_pull</span><span class="op">(</span><span class="va">letters</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Negative numbers select from the end:</span></span></span>
+<span class="r-in"><span><span class="fu">vars_pull</span><span class="op">(</span><span class="va">letters</span>, <span class="op">-</span><span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "x"</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># You can unquote variables:</span></span>
-<span class="r-in"><span class="va">var</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
-<span class="r-in"><span class="fu">vars_pull</span><span class="op">(</span><span class="va">letters</span>, <span class="op">!</span><span class="op">!</span><span class="va">var</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># You can unquote variables:</span></span></span>
+<span class="r-in"><span><span class="va">var</span> <span class="op">&lt;-</span> <span class="fl">10</span></span></span>
+<span class="r-in"><span><span class="fu">vars_pull</span><span class="op">(</span><span class="va">letters</span>, <span class="op">!</span><span class="op">!</span><span class="va">var</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "j"</span>
 </code></pre></div>
     </div>
