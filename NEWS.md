@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* Fixed error when selecting with predicates and `allow_rename =
+  FALSE` (#225).
+
 * Evaluation errors are now chained. The child error call is set to
   the `error_call` argument of `eval_select()` and `eval_rename()`.
 

@@ -90,3 +90,12 @@ test_that("eval_select() produces correct chained errors", {
     (expect_error(select_loc(mtcars, f())))
   })
 })
+
+test_that("can select with predicate when `allow_rename` is `FALSE` (#225)", {
+  sel <- eval_select(
+    expr(where(is.numeric)),
+    mtcars,
+    allow_rename = FALSE
+  )
+  expect_equal(sel, seq_along(mtcars))
+})
