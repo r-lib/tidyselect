@@ -62,11 +62,9 @@ test_that("peek_data() fails informatively", {
 })
 
 test_that("generic error message is thrown if `fn` is not supplied", {
-  local_vars(NULL)
   expect_error(peek_vars(), "Selection helpers must be used")
 })
 
 test_that("custom error message is thrown if `fn` is supplied", {
-  local_vars(NULL)
   expect_error(peek_vars(fn = "z"), "`z()` must be used", fixed = TRUE)
 })
