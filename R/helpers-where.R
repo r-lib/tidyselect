@@ -67,7 +67,7 @@ where <- function(fn) {
     out <- predicate(x, ...)
 
     if (!is_bool(out)) {
-      abort(glue("Function in `where()` must return a single `TRUE` or `FALSE`, not {obj_type_friendly(out)}."))
+      abort(glue("Predicate function must return a single `TRUE` or `FALSE`, not {obj_type_friendly(out)}."), call = quote(where()))
     }
 
     out
