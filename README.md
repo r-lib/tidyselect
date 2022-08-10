@@ -26,7 +26,7 @@ create selecting verbs that are consistent with other tidyverse packages.
 Generally, tidyselect will be installed automatically by the packages that need it. If you need to install it manually for some reason, you can get it with:
 
 ```r
-install.packages("tidyverse")
+install.packages("tidyselect")
 ```
 
 ## Code of Conduct
