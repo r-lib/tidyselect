@@ -153,22 +153,14 @@ poke_data <- function(data) {
 #' @export
 scoped_vars <- function(vars, frame = caller_env()) {
   old <- poke_vars(vars)
-
-  # Inline everything so the call will succeed in any environment
-  expr <- call2(on.exit, call2(poke_vars, old), add = TRUE)
-  eval_bare(expr, frame)
-
+  withr::defer(poke_vars(old), envir = frame)
   invisible(old)
 }
 local_vars <- scoped_vars
 
 local_data <- function(data, frame = caller_env()) {
   old <- poke_data(data)
-
-  # Inline everything so the call will succeed in any environment
-  expr <- call2(on.exit, call2(poke_data, old), add = TRUE)
-  eval_bare(expr, frame)
-
+  withr::defer(poke_data(old), envir = frame)
   invisible(old)
 }
 
