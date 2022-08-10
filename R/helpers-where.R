@@ -59,7 +59,7 @@
 #' iris %>% select(where(~ is.numeric(.x) && mean(.x) > 3.5))
 #' ```
 #'
-#' @name where
+#' @export
 where <- function(fn) {
   predicate <- as_function(fn)
 
