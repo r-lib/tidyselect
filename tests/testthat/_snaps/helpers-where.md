@@ -1,6 +1,14 @@
 # where() checks return values
 
     Code
+      where(NA)
+    Condition
+      Error in `where()`:
+      ! Can't convert `fn`, `NA`, to a function.
+
+---
+
+    Code
       select_loc(iris, where(~NA))
     Condition
       Error in `where()`:
