@@ -37,8 +37,7 @@ vignette](https://tidyselect.r-lib.org/articles/syntax.html).
 
 In this vignette, we describe how to include tidyselect in your own
 packages. If you just want to know how to use tidyselect syntax in
-dplyr or tidyr, please read <https://r4ds.had.co.nz/transform.html#select>
-instead.
+dplyr or tidyr, please read `?language` instead.
 
 
 ## Before we start

@@ -6,21 +6,10 @@ development:
 template:
   package: tidytemplate
   bootstrap: 5
-  
+
   includes:
     in_header: |
       <script defer data-domain="tidyselect.r-lib.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
-
-navbar:
-  structure:
-    left:  [home, articles]
-    right: [reference, news, github]
-  components:
-    news:
-      text: News
-      menu:
-      - text: "Changelog"
-        href: news/index.html
 
 reference:
 - title: Selecting variables
@@ -37,7 +26,6 @@ reference:
 - subtitle: FAQ
   contents:
   - starts_with("faq")
-
 
 - title: Creating tidyselect API
 - subtitle: Evaluate expressions with tidyselect rules
