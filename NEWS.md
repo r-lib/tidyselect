@@ -1,5 +1,7 @@
 # tidyselect (development version)
 
+* `vars_pull()` generates more informative error messages (#258).
+
 * `where()` is now exported, like all other select helpers (#201).
 
 * Fixed error when selecting with predicates and `allow_rename =

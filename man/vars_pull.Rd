@@ -4,7 +4,12 @@
 \alias{vars_pull}
 \title{Select variable}
 \usage{
-vars_pull(vars, var = -1, error_call = caller_env())
+vars_pull(
+  vars,
+  var = -1,
+  error_call = caller_env(),
+  error_arg = caller_arg(var)
+)
 }
 \arguments{
 \item{vars}{A character vector of existing column names.}
@@ -27,6 +32,10 @@ names and column locations).}
 running function, e.g. \code{caller_env()}. The function will be
 mentioned in error messages as the source of the error. See the
 \code{call} argument of \code{\link[rlang:abort]{abort()}} for more information.}
+
+\item{error_arg}{An argument name as a string. This argument
+will be mentioned in error messages as the input that is at the
+origin of a problem.}
 }
 \value{
 The selected column name as an unnamed string.

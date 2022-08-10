@@ -32,7 +32,7 @@
 #' # You can unquote variables:
 #' var <- 10
 #' vars_pull(letters, !!var)
-vars_pull <- function(vars, var = -1, error_call = caller_env()) {
+vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = caller_arg(var)) {
   expr <- enquo(var)
   n <- length(vars)
 
@@ -42,7 +42,7 @@ vars_pull <- function(vars, var = -1, error_call = caller_env()) {
     call = error_call,
     eval_expr = expr
   )
-  loc <- pull_as_location2(loc, n, vars)
+  loc <- pull_as_location2(loc, n, vars, error_arg = error_arg, error_call = error_call)
 
   if (loc < 0L) {
     loc <- n + 1L + loc
@@ -51,23 +51,29 @@ vars_pull <- function(vars, var = -1, error_call = caller_env()) {
   vars[[loc]]
 }
 
-pull_as_location2 <- function(i, n, names) {
+pull_as_location2 <- function(i, n, names, error_call = caller_env(), error_arg = "var") {
   with_subscript_errors(type = "pull", {
-    i <- vctrs::vec_as_subscript2(i, arg = "var", logical = "error")
+    i <- vctrs::vec_as_subscript2(i,
+      logical = "error",
+      arg = error_arg,
+      call = error_call
+    )
 
     if (is.numeric(i)) {
       vctrs::num_as_location2(
         i,
         n = n,
         negative = "ignore",
-        arg = "var"
+        arg = error_arg,
+        call = error_call
       )
     } else {
       vctrs::vec_as_location2(
         i,
         n = n,
         names = names,
-        arg = "var"
+        arg = error_arg,
+        call = error_call,
       )
     }
   })
