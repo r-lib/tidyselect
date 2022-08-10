@@ -18,6 +18,7 @@ With selecting functions like \code{dplyr::select()} or
 #> 3     4     1     1
 #> 4     6     0     1
 #> # ... with 28 more rows
+#> # i Use `print(n = ...)` to see more rows
 
 mtcars \%>\% select(mpg:disp)
 #> # A tibble: 32 x 3
@@ -28,6 +29,7 @@ mtcars \%>\% select(mpg:disp)
 #> 3  22.8     4   108
 #> 4  21.4     6   258
 #> # ... with 28 more rows
+#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 
 For historical reasons, it is also possible to refer an external vector

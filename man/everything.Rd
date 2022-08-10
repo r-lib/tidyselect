@@ -48,6 +48,7 @@ Use \code{everything()} to select all variables:
 #> 3          4.7         3.2          1.3         0.2 setosa 
 #> 4          4.6         3.1          1.5         0.2 setosa 
 #> # ... with 146 more rows
+#> # i Use `print(n = ...)` to see more rows
 
 mtcars \%>\% pivot_longer(everything())
 #> # A tibble: 352 x 2
@@ -58,6 +59,7 @@ mtcars \%>\% pivot_longer(everything())
 #> 3 disp    160
 #> 4 hp      110
 #> # ... with 348 more rows
+#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 
 Use \code{last_col()} to select the last variable:
@@ -71,6 +73,7 @@ Use \code{last_col()} to select the last variable:
 #> 3 setosa 
 #> 4 setosa 
 #> # ... with 146 more rows
+#> # i Use `print(n = ...)` to see more rows
 
 mtcars \%>\% pivot_longer(last_col())
 #> # A tibble: 32 x 12
@@ -81,6 +84,7 @@ mtcars \%>\% pivot_longer(last_col())
 #> 3  22.8     4   108    93  3.85  2.32  18.6     1     1     4 carb      1
 #> 4  21.4     6   258   110  3.08  3.22  19.4     1     0     3 carb      1
 #> # ... with 28 more rows
+#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 
 Supply an offset \code{n} to select a variable located \code{n} positions
@@ -95,6 +99,7 @@ from the end:
 #> 3  22.8     4   108    93  3.85  2.32
 #> 4  21.4     6   258   110  3.08  3.22
 #> # ... with 28 more rows
+#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 }
 
