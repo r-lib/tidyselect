@@ -5,7 +5,7 @@
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `letters` has size 26 but must be size 1.
+      x Subscript `var` has size 26 but must be size 1.
     Code
       vars_pull(letters, aa)
     Condition
@@ -16,7 +16,7 @@
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `0` has value 0 but must be a positive location.
+      x Subscript `var` has value 0 but must be a positive location.
     Code
       vars_pull(letters, 100)
     Condition
@@ -36,27 +36,27 @@
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `-Inf` has the wrong type `double`.
+      x Subscript `var` has the wrong type `double`.
       i It must be numeric or character.
     Code
       vars_pull(letters, TRUE)
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `TRUE` has the wrong type `logical`.
+      x Subscript `var` has the wrong type `logical`.
       i It must be numeric or character.
     Code
       vars_pull(letters, NA)
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `NA` can't be `NA`.
+      x Subscript `var` can't be `NA`.
     Code
       vars_pull(letters, na_int)
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `na_int` can't be `NA`.
+      x Subscript `var` can't be `NA`.
     Code
       vars_pull(letters, "foo")
     Condition
@@ -68,7 +68,7 @@
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `!!c("a", "b")` has size 2 but must be size 1.
+      x Subscript `var` has size 2 but must be size 1.
 
 # vars_pull() has informative errors
 

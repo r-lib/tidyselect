@@ -32,12 +32,13 @@
 #' # You can unquote variables:
 #' var <- 10
 #' vars_pull(letters, !!var)
-vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = caller_arg(var)) {
+vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = "var") {
   expr <- enquo(var)
+
   n <- length(vars)
 
   loc <- with_chained_errors(
-    eval_tidy(enquo(var), set_names(seq_along(vars), vars)),
+    eval_tidy(expr, set_names(seq_along(vars), vars)),
     action = "pull",
     call = error_call,
     eval_expr = expr
