@@ -1,6 +1,7 @@
 # tidyselect (development version)
 
 * `where()` is now exported, like all other select helpers (#201).
+  It also gives more informative errors (#236).
 
 * Fixed error when selecting with predicates and `allow_rename =
   FALSE` (#225).
