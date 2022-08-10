@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `all_of()` (like `any_of()`) now fails when used outside of a
+  tidyselect context (#269).
+
 * `where()` is now exported, like all other select helpers (#201).
 
 * Fixed error when selecting with predicates and `allow_rename =

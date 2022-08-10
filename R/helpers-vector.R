@@ -74,13 +74,8 @@
 #' @seealso `r rd_helpers_seealso()`
 #' @export
 all_of <- function(x) {
-  if (is.function(x)) {
-    # Trigger bad type error
-    vctrs::vec_as_location(x, 0L)
-    abort("Internal error: `all_of()` should have failed sooner")
-  }
-
-  x
+  peek_vars(fn = "all_of")
+  vctrs::vec_as_subscript(x, logical = "error")
 }
 
 #' @rdname all_of
