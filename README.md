@@ -23,14 +23,11 @@ create selecting verbs that are consistent with other tidyverse packages.
 
 ## Installation
 
-tidyselect is on CRAN. You can also install the development version
-from github with:
+Generally, tidyselect will be installed automatically by the packages that need it. If you need to install it manually for some reason, you can get it with:
 
 ```r
-# install.packages("remotes")
-remotes::install_github("r-lib/tidyselect")
+install.packages("tidyverse")
 ```
-
 
 ## Code of Conduct
 
