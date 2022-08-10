@@ -6,7 +6,6 @@
 [![R-CMD-check](https://github.com/r-lib/tidyselect/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/tidyselect/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-
 ## Overview
 
 The tidyselect package is the backend of functions like `dplyr::select()`
@@ -14,16 +13,13 @@ or `dplyr::pull()` as well as several tidyr verbs. It allows you to
 create selecting verbs that are consistent with other tidyverse packages.
 
 * To learn about the selection syntax as a user of dplyr or tidyr, read
-  the user-friendly [Selection language](https://tidyselect.r-lib.org/reference/language.html) reference.
+  the user-friendly `?language` reference.
 
-* To learn how to implement tidyselect in your own functions, read the
-  [Get started](https://tidyselect.r-lib.org/articles/tidyselect.html)
-  vignette.
+* To learn how to implement tidyselect in your own functions, read 
+  `vignette("tidyselect")`.
 
 * To learn exactly how the tidyselect syntax is interpreted, read the
-  [Technical description](https://tidyselect.r-lib.org/articles/syntax.html)
-  vignette.
-
+  technical description in `vignette("syntax")`.
 
 ## Installation
 
