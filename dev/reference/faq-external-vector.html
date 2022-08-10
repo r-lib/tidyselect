@@ -15,6 +15,7 @@ mtcars %&amp;gt;% select(cyl, am, vs)
 #&amp;gt; 3     4     1     1
 #&amp;gt; 4     6     0     1
 #&amp;gt; # ... with 28 more rows
+#&amp;gt; # i Use `print(n = ...)` to see more rows
 
 mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; # A tibble: 32 x 3
@@ -25,6 +26,7 @@ mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; 3  22.8     4   108
 #&amp;gt; 4  21.4     6   258
 #&amp;gt; # ... with 28 more rows
+#&amp;gt; # i Use `print(n = ...)` to see more rows
 
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
@@ -99,6 +101,7 @@ mtcars %&amp;gt;% select(cyl, am, vs)
 #&amp;gt; 3     4     1     1
 #&amp;gt; 4     6     0     1
 #&amp;gt; # ... with 28 more rows
+#&amp;gt; # i Use `print(n = ...)` to see more rows
 
 mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; # A tibble: 32 x 3
@@ -109,6 +112,7 @@ mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; 3  22.8     4   108
 #&amp;gt; 4  21.4     6   258
 #&amp;gt; # ... with 28 more rows
+#&amp;gt; # i Use `print(n = ...)` to see more rows
 
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
@@ -239,6 +243,7 @@ the deprecation process.
 <span><span class="co">#&gt; 3     4     1     1</span></span>
 <span><span class="co">#&gt; 4     6     0     1</span></span>
 <span><span class="co">#&gt; # ... with 28 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span>
 <span></span>
 <span><span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 32 x 3</span></span>
@@ -248,7 +253,8 @@ the deprecation process.
 <span><span class="co">#&gt; 2  21       6   160</span></span>
 <span><span class="co">#&gt; 3  22.8     4   108</span></span>
 <span><span class="co">#&gt; 4  21.4     6   258</span></span>
-<span><span class="co">#&gt; # ... with 28 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 28 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
 <p>For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is

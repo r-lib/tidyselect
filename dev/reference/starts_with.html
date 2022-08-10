@@ -149,6 +149,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <span><span class="co">#&gt; 3          4.7         3.2</span></span>
 <span><span class="co">#&gt; 4          4.6         3.1</span></span>
 <span><span class="co">#&gt; # ... with 146 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 2</span></span>
@@ -158,7 +159,8 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <span><span class="co">#&gt; 2         3           0.2</span></span>
 <span><span class="co">#&gt; 3         3.2         0.2</span></span>
 <span><span class="co">#&gt; 4         3.1         0.2</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 146 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
 <p>You can supply multiple prefixes or suffixes. Note how the order of
 variables depends on the order of the suffixes and prefixes:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Petal"</span>, <span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -170,6 +172,7 @@ variables depends on the order of the suffixes and prefixes:</p>
 <span><span class="co">#&gt; 3          1.3         0.2          4.7         3.2</span></span>
 <span><span class="co">#&gt; 4          1.5         0.2          4.6         3.1</span></span>
 <span><span class="co">#&gt; # ... with 146 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Width"</span>, <span class="st">"Length"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 4</span></span>
@@ -179,7 +182,8 @@ variables depends on the order of the suffixes and prefixes:</p>
 <span><span class="co">#&gt; 2         3           0.2          4.9          1.4</span></span>
 <span><span class="co">#&gt; 3         3.2         0.2          4.7          1.3</span></span>
 <span><span class="co">#&gt; 4         3.1         0.2          4.6          1.5</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 146 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
 <p><code>contains()</code> selects columns whose names contain a word:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"al"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 4</span></span>
@@ -189,12 +193,14 @@ variables depends on the order of the suffixes and prefixes:</p>
 <span><span class="co">#&gt; 2          4.9         3            1.4         0.2</span></span>
 <span><span class="co">#&gt; 3          4.7         3.2          1.3         0.2</span></span>
 <span><span class="co">#&gt; 4          4.6         3.1          1.5         0.2</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 146 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
 <p>These helpers do not use regular expressions. To select with a
 regexp use <code>matches()</code></p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># [pt] is matched literally:</span></span>
 <span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"[pt]al"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 0</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span>
 <span></span>
 <span><span class="co"># [pt] is interpreted as a regular expression</span></span>
 <span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"[pt]al"</span><span class="op">)</span><span class="op">)</span></span>
@@ -205,7 +211,8 @@ regexp use <code>matches()</code></p>
 <span><span class="co">#&gt; 2          4.9         3            1.4         0.2</span></span>
 <span><span class="co">#&gt; 3          4.7         3.2          1.3         0.2</span></span>
 <span><span class="co">#&gt; 4          4.6         3.1          1.5         0.2</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 146 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
 <p><code>starts_with()</code> selects all variables starting with a prefix. To
 select a range, use <code>num_range()</code>. Compare:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">billboard</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"wk"</span><span class="op">)</span><span class="op">)</span></span>
@@ -218,6 +225,7 @@ select a range, use <code>num_range()</code>. Compare:</p>
 <span><span class="co">#&gt; 4    76    76    72    69    67    65    55    59    62    61    61    59    61</span></span>
 <span><span class="co">#&gt; # ... with 313 more rows, and 63 more variables: wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, ...</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows, and `colnames()` to see all variable names</span></span>
 <span></span>
 <span><span class="va">billboard</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">num_range</a></span><span class="op">(</span><span class="st">"wk"</span>, <span class="fl">10</span><span class="op">:</span><span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 317 x 6</span></span>
@@ -227,7 +235,8 @@ select a range, use <code>num_range()</code>. Compare:</p>
 <span><span class="co">#&gt; 2    NA    NA    NA    NA    NA    NA</span></span>
 <span><span class="co">#&gt; 3    51    51    51    47    44    38</span></span>
 <span><span class="co">#&gt; 4    61    61    59    61    66    72</span></span>
-<span><span class="co">#&gt; # ... with 313 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 313 more rows</span></span>
+<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
