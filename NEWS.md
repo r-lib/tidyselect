@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `matches()` recognises and correctly uses stringr pattern objects
+  (`stringr::regexp()`, `stringr::fixed()`, etc) (#238). 
+
 * Fixed error when selecting with predicates and `allow_rename =
   FALSE` (#225).
 

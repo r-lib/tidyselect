@@ -159,3 +159,20 @@ test_that("initial (of multiple) selectors default correctly (issue #2275)", {
   expect_equal(select_loc(cn, c(-contains("foo"), contains("bar"))), c(x = 1L, y = 2L, z = 3L))
   expect_equal(select_loc(cn, c(-contains("foo"), -contains("bar"))), c(x = 1L, y = 2L, z = 3L))
 })
+
+test_that("matches() can use stringr patterns", {
+  local_vars(c(".", "x", "X"))
+
+  expect_equal(matches(stringr::fixed(".")), 1)
+  expect_equal(matches(stringr::coll("x", ignore_case = TRUE)), c(2, 3))
+})
+
+test_that("matches() complains about bad stringr pattern usage", {
+  local_vars(c("x", "y"))
+
+  expect_snapshot(error = TRUE, {
+    matches(stringr::fixed("a"), perl = TRUE)
+    matches(stringr::fixed("a"), ignore.case = TRUE)
+    matches(stringr::fixed(c("a", "b")))
+  })
+})
