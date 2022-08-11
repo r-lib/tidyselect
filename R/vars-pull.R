@@ -34,6 +34,9 @@
 #' vars_pull(letters, !!var)
 vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = "var") {
   expr <- enquo(var)
+  if (quo_is_missing(expr)) {
+    expr <- -1
+  }
 
   n <- length(vars)
 
@@ -59,6 +62,13 @@ pull_as_location2 <- function(i, n, names, error_call = caller_env(), error_arg 
       arg = error_arg,
       call = error_call
     )
+
+    if (length(i) != 1) {
+      abort(
+        glue("`{error_arg}` must select exactly one column"),
+        call = error_call
+      )
+    }
 
     if (is.numeric(i)) {
       vctrs::num_as_location2(
