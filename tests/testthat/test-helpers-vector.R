@@ -58,3 +58,11 @@ test_that("all_of() and any_of() check their inputs", {
   expect_error(select_loc(letters2, all_of(TRUE)), class = "vctrs_error_subscript_type")
   expect_error(select_loc(letters2, any_of(TRUE)), class = "vctrs_error_subscript_type")
 })
+
+test_that("any_of generates informative error if ... not empty", {
+  local_vars(letters)
+
+  expect_snapshot(error = TRUE, {
+    any_of("b", "c", "d")
+  })
+})

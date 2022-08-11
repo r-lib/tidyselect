@@ -88,6 +88,12 @@ all_of <- function(x) {
 #' @export
 any_of <- function(x, ..., vars = NULL) {
   vars <- vars %||% peek_vars(fn = "any_of")
-  check_dots_empty()
+  if (!missing(...)) {
+    abort(c(
+      "`...` must be empty.",
+      i = "Did you forget `c()`?",
+      i = 'The expected syntax is `any_of(c("a", "b"))`, not `any_of("a", "b")`'
+    ))
+  }
   as_indices_impl(x, vars = vars, strict = FALSE)
 }
