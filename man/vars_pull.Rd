@@ -4,12 +4,7 @@
 \alias{vars_pull}
 \title{Select variable}
 \usage{
-vars_pull(
-  vars,
-  var = -1,
-  error_call = caller_env(),
-  error_arg = caller_arg(var)
-)
+vars_pull(vars, var = -1, error_call = caller_env(), error_arg = "var")
 }
 \arguments{
 \item{vars}{A character vector of existing column names.}
