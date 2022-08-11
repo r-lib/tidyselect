@@ -55,7 +55,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="tidyselect-development-version">tidyselect (development version)<a class="anchor" aria-label="anchor" href="#tidyselect-development-version"></a></h2>
-<ul><li><p><code>eval_select(allow_rename = FALSE)</code> no longer fails with empty selections (<a href="https://github.com/r-lib/tidyselect/issues/221" class="external-link">#221</a>, <a href="https://github.com/eutwt" class="external-link">@eutwt</a>).</p></li>
+<ul><li><p><code><a href="../reference/starts_with.html">matches()</a></code> recognises and correctly uses stringr pattern objects (<code>stringr::regexp()</code>, <code><a href="https://stringr.tidyverse.org/reference/modifiers.html" class="external-link">stringr::fixed()</a></code>, etc) (<a href="https://github.com/r-lib/tidyselect/issues/238" class="external-link">#238</a>).</p></li>
+<li><p><code>eval_select(allow_rename = FALSE)</code> no longer fails with empty selections (<a href="https://github.com/r-lib/tidyselect/issues/221" class="external-link">#221</a>, <a href="https://github.com/eutwt" class="external-link">@eutwt</a>).</p></li>
 <li><p><code><a href="../reference/where.html">where()</a></code> is now exported, like all other select helpers (<a href="https://github.com/r-lib/tidyselect/issues/201" class="external-link">#201</a>).</p></li>
 <li><p>Fixed error when selecting with predicates and <code>allow_rename =   FALSE</code> (<a href="https://github.com/r-lib/tidyselect/issues/225" class="external-link">#225</a>).</p></li>
 <li><p>Evaluation errors are now chained. The child error call is set to the <code>error_call</code> argument of <code><a href="../reference/eval_select.html">eval_select()</a></code> and <code><a href="../reference/eval_select.html">eval_rename()</a></code>.</p></li>
