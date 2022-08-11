@@ -3,6 +3,9 @@
 * `all_of()` (like `any_of()`) now fails when used outside of a
   tidyselect context (#269).
 
+* `eval_select(allow_rename = FALSE)` no longer fails with empty
+  selections (#221, @eutwt).
+
 * `where()` is now exported, like all other select helpers (#201).
 
 * Fixed error when selecting with predicates and `allow_rename =
