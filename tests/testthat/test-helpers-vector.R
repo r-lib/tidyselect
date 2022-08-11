@@ -38,21 +38,21 @@ test_that("any_of() is lax", {
 })
 
 test_that("all_of() and any_of() check their inputs", {
-  expect_snapshot(error = TRUE, {
-    select_loc(letters2, all_of(NA))
-    select_loc(letters2, any_of(NA))
+  expect_snapshot({
+    (expect_error(select_loc(letters2, all_of(NA))))
+    (expect_error(select_loc(letters2, any_of(NA))))
 
-    select_loc(letters2, all_of(TRUE))
-    select_loc(letters2, any_of(TRUE))
+    (expect_error(select_loc(letters2, all_of(TRUE))))
+    (expect_error(select_loc(letters2, any_of(TRUE))))
 
-    select_loc(letters2, any_of(is.factor))
-    select_loc(letters2, all_of(is.factor))
+    (expect_error(select_loc(letters2, any_of(is.factor))))
+    (expect_error(select_loc(letters2, all_of(is.factor))))
   })
 })
 
 test_that("any_of() and all_off() error out of context (#269)", {
-  expect_snapshot(error = TRUE, {
-    all_of()
-    any_of()
+  expect_snapshot({
+    (expect_error(all_of()))
+    (expect_error(any_of()))
   })
 })
