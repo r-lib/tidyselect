@@ -1,8 +1,7 @@
 test_that("errors for bad inputs", {
-  expect_error(
-    vars_pull(letters, letters),
-    class = "vctrs_error_subscript_type"
-  )
+  expect_error(vars_pull(letters, character()), "exactly one")
+  expect_error(vars_pull(letters, c("a", "b")), "exactly one")
+  expect_error(vars_pull(letters, !!c("a", "b")), "exactly one")
 
   # FIXME
   expect_error(
@@ -45,13 +44,12 @@ test_that("errors for bad inputs", {
     class = "vctrs_error_subscript_type"
   )
 
-  expect_error(
-    vars_pull(letters, !!c("a", "b")),
-    class = "vctrs_error_subscript_type"
-  )
 
   expect_snapshot(error = TRUE, {
-    vars_pull(letters, letters)
+    vars_pull(letters, character())
+    vars_pull(letters, c("a", "b"))
+    vars_pull(letters, !!c("a", "b"))
+
     vars_pull(letters, aa)
     vars_pull(letters, 0)
     vars_pull(letters, 100)
@@ -61,8 +59,12 @@ test_that("errors for bad inputs", {
     vars_pull(letters, NA)
     vars_pull(letters, na_int)
     vars_pull(letters, "foo")
-    vars_pull(letters, !!c("a", "b"))
   })
+})
+
+test_that("uses default if quosure is missing", {
+  f <- function(arg) vars_pull(letters, {{ arg }})
+  expect_equal(f(), "z")
 })
 
 test_that("can pull variables with missing elements", {

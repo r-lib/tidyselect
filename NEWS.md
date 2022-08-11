@@ -1,5 +1,7 @@
 # tidyselect (development version)
 
+* `vars_pull()` generates more informative error messages (#234, #258).
+
 * `matches()` recognises and correctly uses stringr pattern objects
   (`stringr::regexp()`, `stringr::fixed()`, etc) (#238). 
 
