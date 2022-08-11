@@ -64,8 +64,8 @@ pull_as_location2 <- function(i, n, names, error_call = caller_env(), error_arg 
     )
 
     if (length(i) != 1) {
-      abort(
-        glue("`{error_arg}` must select exactly one column"),
+      cli::cli_abort(
+        "{.arg {error_arg}} must select exactly one column.",
         call = error_call
       )
     }

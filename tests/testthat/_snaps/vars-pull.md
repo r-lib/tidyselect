@@ -4,17 +4,17 @@
       vars_pull(letters, character())
     Condition
       Error:
-      ! `var` must select exactly one column
+      ! `var` must select exactly one column.
     Code
       vars_pull(letters, c("a", "b"))
     Condition
       Error:
-      ! `var` must select exactly one column
+      ! `var` must select exactly one column.
     Code
       vars_pull(letters, !!c("a", "b"))
     Condition
       Error:
-      ! `var` must select exactly one column
+      ! `var` must select exactly one column.
     Code
       vars_pull(letters, aa)
     Condition
