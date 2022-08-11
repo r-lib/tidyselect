@@ -98,7 +98,7 @@ ensure_named <- function(pos,
     if (is_named(pos)) {
       abort("Can't rename variables in this context.", call = call)
     }
-    return(set_names(pos, NULL))
+    pos
   }
 
   nms <- names(pos) <- names2(pos)

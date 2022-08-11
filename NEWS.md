@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `eval_select()` always returns a named vector, even when renaming is not
+  permitted (#220).
+
 * `where()` is now exported, like all other select helpers (#201).
 
 * Fixed error when selecting with predicates and `allow_rename =
