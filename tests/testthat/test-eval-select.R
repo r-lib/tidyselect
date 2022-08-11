@@ -55,6 +55,14 @@ test_that("can forbid rename syntax (#178)", {
   expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), NULL)
 })
 
+test_that("can forbid empty selections", {
+  expect_snapshot(error = TRUE, {
+    select_loc(mtcars, allow_empty = FALSE)
+    select_loc(mtcars, integer(), allow_empty = FALSE)
+    select_loc(mtcars, starts_with("z"), allow_empty = FALSE)
+  })
+})
+
 test_that("eval_select() errors mention correct calls", {
   f <- function() stop("foo")
   expect_snapshot((expect_error(select_loc(mtcars, f()))))

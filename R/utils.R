@@ -6,6 +6,7 @@ select_loc <- function(x,
                        strict = TRUE,
                        name_spec = NULL,
                        allow_rename = TRUE,
+                       allow_empty = TRUE,
                        error_call = current_env()) {
   check_dots_empty()
 
@@ -17,6 +18,7 @@ select_loc <- function(x,
     strict = strict,
     name_spec = name_spec,
     allow_rename = allow_rename,
+    allow_empty = allow_empty,
     error_call = error_call
   )
 }

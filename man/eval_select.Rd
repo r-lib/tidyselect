@@ -25,6 +25,7 @@ eval_select(
   strict = TRUE,
   name_spec = NULL,
   allow_rename = TRUE,
+  allow_empty = TRUE,
   error_call = caller_env()
 )
 }
@@ -62,6 +63,10 @@ include or exclude from the selection.}
 \item{allow_rename}{If \code{TRUE} (the default), the renaming syntax
 \code{c(foo = bar)} is allowed. If \code{FALSE}, it causes an error. This
 is useful to implement purely selective behaviour.}
+
+\item{allow_empty}{If \code{TRUE} (default), its ok for \code{expr} to result
+in no variables. If \code{FALSE}, will error if \code{expr} yields an empty
+selection.}
 }
 \value{
 A named vector of numeric locations, one for each of the

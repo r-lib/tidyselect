@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `eval_select()` gains new `allow_empty` argument which allows you to prevent
+  empty selections with `allow_empty = FALSE` (#252).
+ 
 * `where()` is now exported, like all other select helpers (#201).
 
 * Fixed error when selecting with predicates and `allow_rename =
