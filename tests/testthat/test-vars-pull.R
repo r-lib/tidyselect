@@ -81,6 +81,12 @@ test_that("missing values are detected in vars_pull() (#72)", {
 test_that("can pull with strings", {
   expect_identical(vars_pull(letters, "b"), vars_pull(letters, b))
   expect_error(vars_pull(letters, "foo"), class = "vctrs_error_subscript_oob")
+
+  # even if those strings are numbers (#200)
+  vars <- c("-1", "0", "1")
+  expect_equal(vars_pull(vars, "-1"), "-1")
+  expect_equal(vars_pull(vars, "0"), "0")
+  expect_equal(vars_pull(vars, "1"), "1")
 })
 
 test_that("can pull with negative values", {
