@@ -150,13 +150,13 @@ matches <- function(match,
   if (inherits(match, "pattern") || inherits(match, "stringr_pattern")) {
     check_installed("stringr")
     if (!missing(ignore.case)) {
-      cli::cli_abort("{.arg ignore.case} not supported when {.arg match} is a stringr pattern")
+      cli::cli_abort("{.arg ignore.case} not supported when {.arg match} is a stringr pattern.")
     }
     if (!missing(perl)) {
-      cli::cli_abort("{.arg perl} not supported when {.arg match} is a stringr pattern")
+      cli::cli_abort("{.arg perl} not supported when {.arg match} is a stringr pattern.")
     }
     if (length(match) > 1) {
-      cli::cli_abort("stringr patterns must be length 1")
+      cli::cli_abort("stringr patterns must be length 1.")
     }
 
     stringr::str_which(vars, match)
