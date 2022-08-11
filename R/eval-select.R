@@ -162,7 +162,7 @@ eval_select_impl <- function(x,
   local_data(x)
 
   if (length(include)) {
-    expr <- quo(all_of(include) | !!expr)
+    expr <- quo((all_of(include) & !(!!expr)) | !!expr)
   }
   if (length(exclude)) {
     expr <- quo(!!expr & !any_of(exclude))

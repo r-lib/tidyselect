@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `eval_select()` with `include` now preserves the order of the variables 
+  if they're present in the selection (#224).
+
 * `where()` is now exported, like all other select helpers (#201).
 
 * Fixed error when selecting with predicates and `allow_rename =

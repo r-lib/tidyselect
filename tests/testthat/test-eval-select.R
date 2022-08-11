@@ -24,6 +24,16 @@ test_that("can specify inclusion and exclusion", {
   expect_identical(select_loc(x, -int(), exclude = c("a", "c")), c(b = 2L))
 })
 
+test_that("included variables added to front", {
+  x <- list(a = 1, b = 2, c = 3)
+  expect_named(select_loc(x, "a", include = "b"), c("b", "a"))
+  expect_named(select_loc(x, "c", include = "b"), c("b", "c"))
+
+  # but only if not already present
+  expect_named(select_loc(x, c("a", "b"), include = "b"), c("a", "b"))
+  expect_named(select_loc(x, c("b", "a"), include = "b"), c("b", "a"))
+})
+
 test_that("variables are excluded with non-strict `any_of()`", {
   expect_identical(
     select_loc(iris, 1:3, exclude = "foo"),
