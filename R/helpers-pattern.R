@@ -13,6 +13,8 @@
 #'
 #' @param match A character vector. If length > 1, the union of the
 #'   matches is taken.
+#'
+#'   For `matches()` only, this can be a stringr pattern.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
 #' @param vars A character vector of variable names. If not supplied,
@@ -144,7 +146,23 @@ matches <- function(match,
                     vars = NULL) {
   check_match(match)
   vars <- vars %||% peek_vars(fn = "matches")
-  flat_map_int(match, grep_vars, vars, ignore.case = ignore.case, perl = perl)
+
+  if (inherits(match, "pattern") || inherits(match, "stringr_pattern")) {
+    check_installed("stringr")
+    if (!missing(ignore.case)) {
+      cli::cli_abort("{.arg ignore.case} not supported when {.arg match} is a stringr pattern.")
+    }
+    if (!missing(perl)) {
+      cli::cli_abort("{.arg perl} not supported when {.arg match} is a stringr pattern.")
+    }
+    if (length(match) > 1) {
+      cli::cli_abort("stringr patterns must be length 1.")
+    }
+
+    stringr::str_which(vars, match)
+  } else {
+    flat_map_int(match, grep_vars, vars, ignore.case = ignore.case, perl = perl)
+  }
 }
 
 #' @rdname starts_with
