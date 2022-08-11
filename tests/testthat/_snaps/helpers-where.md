@@ -18,4 +18,9 @@
     Condition
       Error in `where()`:
       ! Predicate must return a single `TRUE` or `FALSE`, not a number.
+    Code
+      select_loc(iris, where(mean))
+    Condition
+      Error in `where()`:
+      ! Predicate must return a single `TRUE` or `FALSE`, not a number.
 

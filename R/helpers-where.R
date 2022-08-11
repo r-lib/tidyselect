@@ -62,15 +62,16 @@
 #' @export
 where <- function(fn) {
   predicate <- as_function(fn)
+  call <- current_call()
 
   function(x, ...) {
     out <- predicate(x, ...)
 
     if (!is_bool(out)) {
       not <- obj_type_friendly(out)
-      abort(
-        glue("Predicate must return a single `TRUE` or `FALSE`, not {not}."),
-        call = quote(where())
+      cli::cli_abort(
+        "Predicate must return a single {.arg TRUE} or {.arg FALSE}, not {not}.",
+        call = call
       )
     }
 
