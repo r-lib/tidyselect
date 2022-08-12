@@ -63,6 +63,11 @@ test_that("num_range selects numeric ranges", {
   expect_equal(select_loc(vars, num_range("x", 10:11, width = 2)), c(x10 = 5L, x11 = 6L))
 })
 
+test_that("num_range can use a suffix (#229)", {
+  vars <- set_names(c("x1", "x2", "x1_y", "x2_y"))
+  expect_named(select_loc(vars, num_range("x", 1:2, "_y")), c("x1_y", "x2_y"))
+})
+
 
 test_that("matchers accept length > 1 vectors (#50)", {
   expect_identical(
