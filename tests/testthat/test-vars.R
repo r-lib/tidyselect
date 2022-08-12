@@ -62,7 +62,10 @@ test_that("peek_data() fails informatively", {
 })
 
 test_that("generic error message is thrown if `fn` is not supplied", {
-  expect_error(peek_vars(), "Selection helpers must be used")
+  expect_snapshot(peek_vars(), error = TRUE)
+
+  withr::local_envvar(R_CLI_HYPERLINKS = "true")
+  expect_snapshot(peek_vars(), error = TRUE)
 })
 
 test_that("custom error message is thrown if `fn` is supplied", {

@@ -1,5 +1,7 @@
 # tidyselect (development version)
 
+* `peek_var()` error now generates hyperlink to docs with recent RStudio (#289).
+
 * `eval_select()` gains new `allow_empty` argument which allows you to prevent
   empty selections with `allow_empty = FALSE` (#252).
 
