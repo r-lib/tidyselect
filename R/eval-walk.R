@@ -103,7 +103,7 @@ ensure_named <- function(pos,
   check_empty(pos, allow_empty, call = call)
 
   if (!allow_rename) {
-    if (is_named(pos)) {
+    if (is_named(pos) && !is_empty(pos)) {
       abort("Can't rename variables in this context.", call = call)
     }
     return(set_names(pos, NULL))
