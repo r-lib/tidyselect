@@ -1,11 +1,20 @@
 # errors for bad inputs
 
     Code
-      vars_pull(letters, letters)
+      vars_pull(letters, character())
     Condition
-      Error in `pull_as_location2()`:
-      ! Must extract column with a single valid subscript.
-      x Subscript `var` has size 26 but must be size 1.
+      Error:
+      ! `var` must select exactly one column.
+    Code
+      vars_pull(letters, c("a", "b"))
+    Condition
+      Error:
+      ! `var` must select exactly one column.
+    Code
+      vars_pull(letters, !!c("a", "b"))
+    Condition
+      Error:
+      ! `var` must select exactly one column.
     Code
       vars_pull(letters, aa)
     Condition
@@ -14,7 +23,7 @@
     Code
       vars_pull(letters, 0)
     Condition
-      Error in `pull_as_location2()`:
+      Error:
       ! Must extract column with a single valid subscript.
       x Subscript `var` has value 0 but must be a positive location.
     Code
@@ -48,13 +57,13 @@
     Code
       vars_pull(letters, NA)
     Condition
-      Error in `pull_as_location2()`:
+      Error:
       ! Must extract column with a single valid subscript.
       x Subscript `var` can't be `NA`.
     Code
       vars_pull(letters, na_int)
     Condition
-      Error in `pull_as_location2()`:
+      Error:
       ! Must extract column with a single valid subscript.
       x Subscript `var` can't be `NA`.
     Code
@@ -63,12 +72,6 @@
       Error in `vec_as_location2_result()`:
       ! Can't extract columns that don't exist.
       x Column `foo` doesn't exist.
-    Code
-      vars_pull(letters, !!c("a", "b"))
-    Condition
-      Error in `pull_as_location2()`:
-      ! Must extract column with a single valid subscript.
-      x Subscript `var` has size 2 but must be size 1.
 
 # vars_pull() has informative errors
 

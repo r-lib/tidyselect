@@ -3,6 +3,11 @@
 * `all_of()` (like `any_of()`) now fails when used outside of a
   tidyselect context (#269).
 
+* `vars_pull()` generates more informative error messages (#234, #258).
+
+* `matches()` recognises and correctly uses stringr pattern objects
+  (`stringr::regexp()`, `stringr::fixed()`, etc) (#238). 
+
 * `eval_select(allow_rename = FALSE)` no longer fails with empty
   selections (#221, @eutwt).
 
