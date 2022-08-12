@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `eval_select()` gains new `allow_empty` argument which allows you to prevent
+  empty selections with `allow_empty = FALSE` (#252).
+
 * `any_of()` generates more informative error if you supply too many
   arguments (#241).
 

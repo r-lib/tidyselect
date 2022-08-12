@@ -1,3 +1,21 @@
+# can forbid empty selections
+
+    Code
+      select_loc(mtcars, allow_empty = FALSE)
+    Condition
+      Error in `select_loc()`:
+      ! Must select at least one item.
+    Code
+      select_loc(mtcars, integer(), allow_empty = FALSE)
+    Condition
+      Error in `select_loc()`:
+      ! Must select at least one item.
+    Code
+      select_loc(mtcars, starts_with("z"), allow_empty = FALSE)
+    Condition
+      Error in `select_loc()`:
+      ! Must select at least one item.
+
 # eval_select() errors mention correct calls
 
     Code
