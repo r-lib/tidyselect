@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `any_of()` generates more informative error if you supply too many
+  arguments (#241).
+
 * `vars_pull()` generates more informative error messages (#234, #258).
 
 * `matches()` recognises and correctly uses stringr pattern objects
