@@ -17,6 +17,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
+      ! Problem while evaluating `all_of(TRUE)`.
       Caused by error in `all_of()`:
       ! Must subset elements with a valid subscript vector.
       x Subscript has the wrong type `logical`.
@@ -26,6 +27,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
+      ! Problem while evaluating `any_of(TRUE)`.
       Caused by error in `any_of()`:
       ! Must subset elements with a valid subscript vector.
       x Subscript has the wrong type `logical`.
@@ -35,6 +37,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
+      ! Problem while evaluating `any_of(is.factor)`.
       Caused by error in `any_of()`:
       ! Must subset elements with a valid subscript vector.
       x Subscript has the wrong type `function`.
@@ -44,6 +47,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
+      ! Problem while evaluating `all_of(is.factor)`.
       Caused by error in `all_of()`:
       ! Must subset elements with a valid subscript vector.
       x Subscript has the wrong type `function`.
