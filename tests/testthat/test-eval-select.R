@@ -14,8 +14,14 @@ test_that("select() supports existing duplicates", {
   expect_identical(select(x, A = a), list(A = 1, A = 3))
 })
 
-test_that("can call `select_loc()` without arguments", {
-  expect_identical(select_loc(mtcars), set_names(int(), chr()))
+test_that("absent `sel` leads to empty selection", {
+  expect_identical(select_loc(mtcars), named(int()))
+  expect_identical(select_loc(data.frame()), named(int()))
+})
+
+test_that("zero-length vector `sel` leads to empty selection (#214)", {
+  expect_identical(select_loc(mtcars, character()), named(int()))
+  expect_identical(select_loc(data.frame(), character()), named(int()))
 })
 
 test_that("can specify inclusion and exclusion", {
