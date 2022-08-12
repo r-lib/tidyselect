@@ -64,8 +64,8 @@ include or exclude from the selection.}
 \code{c(foo = bar)} is allowed. If \code{FALSE}, it causes an error. This
 is useful to implement purely selective behaviour.}
 
-\item{allow_empty}{If \code{TRUE} (default), its ok for \code{expr} to result
-in no variables. If \code{FALSE}, will error if \code{expr} yields an empty
+\item{allow_empty}{If \code{TRUE} (the default), it is ok for \code{expr} to result
+in an empty selection. If \code{FALSE}, will error if \code{expr} yields an empty
 selection.}
 }
 \value{

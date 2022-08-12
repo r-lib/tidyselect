@@ -173,6 +173,6 @@
     Code
       ensure_named(integer(), allow_empty = FALSE)
     Condition
-      Error in `check_empty()`:
-      ! Must select at least one item
+      Error:
+      ! Must select at least one item.
 
