@@ -12,15 +12,15 @@
       select_loc(iris, where(~NA))
     Condition
       Error in `where()`:
-      ! Predicate must return a single `TRUE` or `FALSE`, not `NA`.
+      ! Predicate must return `TRUE` or `FALSE`, not `NA`.
     Code
       select_loc(iris, where(~1))
     Condition
       Error in `where()`:
-      ! Predicate must return a single `TRUE` or `FALSE`, not a number.
+      ! Predicate must return `TRUE` or `FALSE`, not a number.
     Code
       select_loc(iris, where(mean))
     Condition
       Error in `where()`:
-      ! Predicate must return a single `TRUE` or `FALSE`, not a number.
+      ! Predicate must return `TRUE` or `FALSE`, not a number.
 

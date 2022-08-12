@@ -180,7 +180,7 @@ as_indices_sel_impl <- function(x, vars, strict, data = NULL, call) {
 
     xs <- map(data, predicate)
     for (i in seq_along(xs)) {
-      check_predicate_output(xs[[i]], i, call = call)
+      check_predicate_output(xs[[i]], call = call)
     }
 
     x <- which(as.logical(xs))
@@ -189,10 +189,10 @@ as_indices_sel_impl <- function(x, vars, strict, data = NULL, call) {
   as_indices_impl(x, vars, call = call, strict = strict)
 }
 
-check_predicate_output <- function(x, i, call) {
+check_predicate_output <- function(x, call) {
   if (!is_bool(x)) {
     cli::cli_abort(
-      "Selecting functions must return `TRUE` or `FALSE`, not {obj_type_friendly(x)}.",
+      "Predicate must return `TRUE` or `FALSE`, not {obj_type_friendly(x)}.",
       call = call
     )
   }

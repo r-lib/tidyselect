@@ -66,14 +66,7 @@ where <- function(fn) {
 
   function(x, ...) {
     out <- predicate(x, ...)
-
-    if (!is_bool(out)) {
-      not <- obj_type_friendly(out)
-      cli::cli_abort(
-        "Predicate must return a single {.arg TRUE} or {.arg FALSE}, not {not}.",
-        call = call
-      )
-    }
+    check_predicate_output(out, call = call)
 
     out
   }
