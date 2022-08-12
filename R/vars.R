@@ -14,7 +14,7 @@ peeker <- function(what) {
         fn <- glue::glue("`{fn}()`")
       }
 
-      if (cli::ansi_has_hyperlink_support()) {
+      if (is_interactive() && cli::ansi_has_hyperlink_support()) {
         topic <- "tidyselect::faq-selection-context"
         link <- cli::style_hyperlink(paste0("?", topic), "ide:help", params = c(package = "tidyselect", topic = "faq-selection-context"))
       } else {
