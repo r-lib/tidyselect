@@ -101,6 +101,7 @@ your packages.</p>
 <span>  strict <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  name_spec <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  allow_rename <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  allow_empty <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  error_call <span class="op">=</span> <span class="fu">caller_env</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -157,6 +158,12 @@ include or exclude from the selection.</p></dd>
 <dd><p>If <code>TRUE</code> (the default), the renaming syntax
 <code>c(foo = bar)</code> is allowed. If <code>FALSE</code>, it causes an error. This
 is useful to implement purely selective behaviour.</p></dd>
+
+
+<dt>allow_empty</dt>
+<dd><p>If <code>TRUE</code> (the default), it is ok for <code>expr</code> to result
+in an empty selection. If <code>FALSE</code>, will error if <code>expr</code> yields an empty
+selection.</p></dd>
 
 </dl></div>
     <div class="section level2">
