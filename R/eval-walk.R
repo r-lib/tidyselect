@@ -100,14 +100,14 @@ ensure_named <- function(pos,
                          allow_rename = TRUE,
                          allow_empty = TRUE,
                          call = caller_env()) {
+  check_empty(pos, allow_empty, call = call)
+
   if (!allow_rename) {
     if (is_named(pos)) {
       abort("Can't rename variables in this context.", call = call)
     }
     return(set_names(pos, NULL))
   }
-
-  check_empty(pos, allow_empty, call = call)
 
   nms <- names(pos) <- names2(pos)
   nms_missing <- nms == ""

@@ -175,4 +175,9 @@
     Condition
       Error:
       ! Must select at least one item.
+    Code
+      ensure_named(integer(), allow_empty = FALSE, allow_rename = FALSE)
+    Condition
+      Error:
+      ! Must select at least one item.
 

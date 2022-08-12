@@ -350,5 +350,6 @@ test_that("eval_walk() has informative messages", {
 test_that("can forbid empty selection", {
   expect_snapshot(error = TRUE, {
     ensure_named(integer(), allow_empty = FALSE)
+    ensure_named(integer(), allow_empty = FALSE, allow_rename = FALSE)
   })
 })
