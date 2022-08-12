@@ -36,8 +36,8 @@
 #' @param allow_rename If `TRUE` (the default), the renaming syntax
 #'   `c(foo = bar)` is allowed. If `FALSE`, it causes an error. This
 #'   is useful to implement purely selective behaviour.
-#' @param allow_empty If `TRUE` (default), its ok for `expr` to result
-#'   in no variables. If `FALSE`, will error if `expr` yields an empty
+#' @param allow_empty If `TRUE` (the default), it is ok for `expr` to result
+#'   in an empty selection. If `FALSE`, will error if `expr` yields an empty
 #'   selection.
 #' @inheritParams rlang::args_dots_empty
 #'

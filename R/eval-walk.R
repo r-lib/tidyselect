@@ -99,7 +99,7 @@ ensure_named <- function(pos,
                          uniquely_named = FALSE,
                          allow_rename = TRUE,
                          allow_empty = TRUE,
-                         call) {
+                         call = caller_env()) {
   if (!allow_rename) {
     if (is_named(pos)) {
       abort("Can't rename variables in this context.", call = call)
@@ -123,7 +123,7 @@ ensure_named <- function(pos,
 
 check_empty <- function(x, allow_empty = TRUE, call = caller_env()) {
   if (!allow_empty && length(x) == 0) {
-    abort("Must select at least one item", call = call)
+    abort("Must select at least one item.", call = call)
   }
 }
 
