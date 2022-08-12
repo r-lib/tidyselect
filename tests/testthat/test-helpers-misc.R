@@ -6,6 +6,7 @@ test_that("last_col() selects last argument with offset", {
 
 test_that("last_col() checks its inputs", {
   expect_snapshot(error = TRUE, {
+    last_col(Inf, letters[1:3])
     last_col(3, letters[1:3])
     last_col(0, character())
     last_col(1:2, letters[1:3])
