@@ -36,6 +36,9 @@
 #' @param allow_rename If `TRUE` (the default), the renaming syntax
 #'   `c(foo = bar)` is allowed. If `FALSE`, it causes an error. This
 #'   is useful to implement purely selective behaviour.
+#' @param allow_empty If `TRUE` (the default), it is ok for `expr` to result
+#'   in an empty selection. If `FALSE`, will error if `expr` yields an empty
+#'   selection.
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -122,6 +125,7 @@ eval_select <- function(expr,
                         strict = TRUE,
                         name_spec = NULL,
                         allow_rename = TRUE,
+                        allow_empty = TRUE,
                         error_call = caller_env()) {
   check_dots_empty()
   eval_select_impl(
@@ -133,6 +137,7 @@ eval_select <- function(expr,
     strict = strict,
     name_spec = name_spec,
     allow_rename = allow_rename,
+    allow_empty = allow_empty,
     error_call = error_call,
   )
 }
@@ -146,6 +151,7 @@ eval_select_impl <- function(x,
                              name_spec = NULL,
                              uniquely_named = NULL,
                              allow_rename = TRUE,
+                             allow_empty = TRUE,
                              type = "select",
                              error_call = caller_env()) {
   if (!is_null(x)) {
@@ -177,6 +183,7 @@ eval_select_impl <- function(x,
       name_spec = name_spec,
       uniquely_named = uniquely_named,
       allow_rename = allow_rename,
+      allow_empty = allow_empty,
       type = type,
       error_call = error_call
     ),

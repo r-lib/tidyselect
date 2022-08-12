@@ -168,3 +168,16 @@
       Error in `select_loc()`:
       ! The RHS of `.data$rhs` must be a symbol.
 
+# can forbid empty selection
+
+    Code
+      ensure_named(integer(), allow_empty = FALSE)
+    Condition
+      Error:
+      ! Must select at least one item.
+    Code
+      ensure_named(integer(), allow_empty = FALSE, allow_rename = FALSE)
+    Condition
+      Error:
+      ! Must select at least one item.
+

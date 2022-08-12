@@ -5,12 +5,15 @@ vars_select_eval <- function(vars,
                              name_spec = NULL,
                              uniquely_named = NULL,
                              allow_rename = TRUE,
+                             allow_empty = TRUE,
                              type = "select",
                              error_call) {
   wrapped <- quo_get_expr2(expr, expr)
 
   if (is_missing(wrapped)) {
-    return(named(int()))
+    pos <- named(int())
+    check_empty(pos, allow_empty, call = error_call)
+    return(pos)
   }
 
   uniquely_named <- uniquely_named %||% is.data.frame(data)
@@ -27,8 +30,9 @@ vars_select_eval <- function(vars,
     pos <- ensure_named(
       pos,
       vars,
-      uniquely_named,
-      allow_rename,
+      uniquely_named = uniquely_named,
+      allow_rename = allow_rename,
+      allow_empty = allow_empty,
       call = error_call
     )
     return(pos)
@@ -83,19 +87,23 @@ vars_select_eval <- function(vars,
   ensure_named(
     pos,
     vars,
-    uniquely_named,
-    allow_rename,
+    uniquely_named = uniquely_named,
+    allow_rename = allow_rename,
+    allow_empty = allow_empty,
     call = error_call
   )
 }
 
 ensure_named <- function(pos,
                          vars,
-                         uniquely_named,
-                         allow_rename,
-                         call) {
+                         uniquely_named = FALSE,
+                         allow_rename = TRUE,
+                         allow_empty = TRUE,
+                         call = caller_env()) {
+  check_empty(pos, allow_empty, call = call)
+
   if (!allow_rename) {
-    if (is_named(pos)) {
+    if (is_named(pos) && !is_empty(pos)) {
       abort("Can't rename variables in this context.", call = call)
     }
     pos
@@ -111,6 +119,12 @@ ensure_named <- function(pos,
   }
 
   pos
+}
+
+check_empty <- function(x, allow_empty = TRUE, call = caller_env()) {
+  if (!allow_empty && length(x) == 0) {
+    abort("Must select at least one item.", call = call)
+  }
 }
 
 # `walk_data_tree()` is a recursive interpreter that implements a
