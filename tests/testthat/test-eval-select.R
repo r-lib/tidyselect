@@ -32,6 +32,15 @@ test_that("included variables added to front", {
   # but only if not already present
   expect_named(select_loc(x, c("a", "b"), include = "b"), c("a", "b"))
   expect_named(select_loc(x, c("b", "a"), include = "b"), c("b", "a"))
+
+  state <- 0L
+  fn <- fn <- function() {
+    state <<- state + 1L
+    "b"
+  }
+
+  select_loc(x, c("a", fn()), include = "b")
+  expect_equal(state, 1)
 })
 
 test_that("variables are excluded with non-strict `any_of()`", {

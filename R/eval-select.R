@@ -162,7 +162,21 @@ eval_select_impl <- function(x,
   local_data(x)
 
   if (length(include)) {
-    expr <- quo((all_of(include) & !(!!expr)) | !!expr)
+    # Recurse to transform `expr` into a vector of locations. This
+    # avoids double evaluation in the expression below.
+    full <- eval_select_impl(
+      x,
+      names,
+      expr,
+      strict = strict,
+      name_spec = name_spec,
+      uniquely_named = uniquely_named,
+      allow_rename = allow_rename,
+      type = type,
+      error_call = error_call
+    )
+    # `full` is included twice to make sure order is preserved (#224)
+    expr <- quo((all_of(include) & !all_of(full)) | all_of(full))
   }
   if (length(exclude)) {
     expr <- quo(!!expr & !any_of(exclude))
