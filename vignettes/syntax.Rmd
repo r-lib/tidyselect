@@ -65,8 +65,8 @@ Today, the syntax of tidyselect is generally designed around Boolean algebra,
 i.e. we recommend writing `starts_with("a") & !ends_with("z")`. Earlier
 versions of tidyselect had more of a flavour of set operations, so that 
 you'd write `starts_with("a") - ends_with("b")`. While the set operations are
-still supported, and how tidyselect represents variables internally, we no 
-longer recommend them, because the Boolean algebra is easy for people to
+still supported, and is how tidyselect represents variables internally, we no 
+longer recommend them because Boolean algebra is easy for people to
 understand.
 
 ### Bare names
