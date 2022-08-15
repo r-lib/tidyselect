@@ -61,10 +61,13 @@ match, they are treated as different elements in order to allow
 renaming a variable to multiple names (see section on Renaming
 variables).
 
-The syntax of tidyselect is generally designed for set combination.
-For instance, `c(foo(), bar())` represents the union of the variables
-in `foo()` and those in `bar()`.
-
+Today, the syntax of tidyselect is generally designed around Boolean algebra,
+i.e. we recommend writing `starts_with("a") & !ends_with("z")`. Earlier
+versions of tidyselect had more of a flavour of set operations, so that 
+you'd write `starts_with("a") - ends_with("b")`. While the set operations are
+still supported, and is how tidyselect represents variables internally, we no 
+longer recommend them because Boolean algebra is easy for people to
+understand.
 
 ### Bare names
 
@@ -73,11 +76,10 @@ represent their own locations, i.e. a set of size 1. The following
 expressions are equivalent:
 
 ```{r}
-mtcars %>% select_loc(mpg:hp, -cyl, vs)
+mtcars %>% select_loc(mpg:hp, !cyl, vs)
 
-mtcars %>% select_loc(1:4, -2, 8)
+mtcars %>% select_loc(1:4, !2, 8)
 ```
-
 
 ### The `:` operator
 
@@ -95,15 +97,7 @@ a range of variables:
 mtcars %>% select_loc(cyl:hp)
 ```
 
-
 ### Boolean operators
-
-Boolean operators provide a more intuitive approach to set
-combination. Though sets are internally represented with vectors of
-locations, they could equally be represented with a full logical
-vector of inclusion indicators (taking the `which()` of this vector
-would then recover the locations). The boolean operators should be
-considered in terms of the logical representation of sets.
 
 The `|` operator takes the __union__ of two sets:
 
@@ -130,11 +124,10 @@ __difference__:
 iris %>% select_loc(starts_with("Sepal") & !ends_with("Width"))
 ```
 
+### Dots and `c()`
 
-### Dots, `c()`, and unary `-`
-
-tidyselect functions can take dots like `dplyr::select()`, or a named
-argument like `tidyr::pivot_longer()`. In the latter case, the dots
+tidyselect functions can take dots, like `dplyr::select()`, or a named
+argument, like `tidyr::pivot_longer()`. In the latter case, the dots
 syntax is accessible via `c()`. In fact `...` syntax is implemented
 through `c(...)` and is thus completely equivalent.
 
@@ -144,71 +137,13 @@ mtcars %>% select_loc(mpg, disp:hp)
 mtcars %>% select_loc(c(mpg, disp:hp))
 ```
 
-Dots and `c()` are syntax for:
-
-* Set union or set difference
-* Renaming variables
-
-Non-negative inputs are recursively joined with `union()`. The
-precedence is left-associative, just like with boolean operators.
-These expressions are all syntax for _set union_:
+`c(x, y, z)` is a equivalent to `x | y | z`:
 
 ```{r}
 iris %>% select_loc(starts_with("Sepal"), ends_with("Width"), Species)
 
 iris %>% select_loc(starts_with("Sepal") | ends_with("Width") | Species)
-
-iris %>% select_loc(union(union(starts_with("Sepal"), ends_with("Width")), 5L))
 ```
-
-Unary `-` is normally syntax for _set difference_:
-
-```{r}
-iris %>% select_loc(starts_with("Sepal"), -ends_with("Width"), -Sepal.Length)
-
-iris %>% select_loc(setdiff(setdiff(starts_with("Sepal"), ends_with("Width")), 1L))
-```
-
-If the first `...` or `c()` input is negative, an implicit
-`everything()` is appended.
-
-```{r}
-iris %>% select_loc(-starts_with("Sepal"))
-
-iris %>% select_loc(everything(), -starts_with("Sepal"))
-
-iris %>% select_loc(setdiff(everything(), starts_with("Sepal")))
-```
-
-In this case, unary `-` is syntax for _set complement_. Unary `-` and
-`!` are equivalent:
-
-```{r}
-iris %>% select_loc(-starts_with("Sepal"))
-
-iris %>% select_loc(!starts_with("Sepal"))
-```
-
-Each level of `c()` is independent. In particular, a nested `c()`
-starting with `-` always stands for set complement:
-
-```{r}
-iris %>% select_loc(c(starts_with("Sepal"), -Sepal.Length))
-
-iris %>% select_loc(c(starts_with("Sepal"), c(-Sepal.Length)))
-```
-
-In boolean terms, these expressions are equivalent to:
-
-```{r}
-iris %>% select_loc(starts_with("Sepal") & !Sepal.Length)
-
-iris %>% select_loc(starts_with("Sepal") | !Sepal.Length)
-```
-
-In general, when unary `-` is used alone outside `...` or `c()`, it
-stands for set complement.
-
 
 ### Renaming variables
 

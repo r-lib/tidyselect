@@ -2,6 +2,9 @@
 
 * `num_range()` gains a `suffix` argument (#229).
 
+* `eval_select()` always returns a named vector, even when renaming is not
+  permitted (#220).
+
 * `eval_select()` gains new `allow_empty` argument which allows you to prevent
   empty selections with `allow_empty = FALSE` (#252).
 
