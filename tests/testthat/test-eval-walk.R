@@ -345,3 +345,17 @@ test_that("eval_walk() has informative messages", {
     (expect_error(select_loc(mtcars, .data$"foo")))
   })
 })
+
+test_that("can forbid empty selection", {
+  expect_snapshot(error = TRUE, {
+    ensure_named(integer(), allow_empty = FALSE)
+    ensure_named(integer(), allow_empty = FALSE, allow_rename = FALSE)
+  })
+})
+
+test_that("can make empty selection with allow_rename = FALSE", {
+  expect_identical(
+    select_loc(mtcars, character(), allow_rename = FALSE),
+    set_names(integer(0))
+  )
+})

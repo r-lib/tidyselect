@@ -14,8 +14,14 @@ test_that("select() supports existing duplicates", {
   expect_identical(select(x, A = a), list(A = 1, A = 3))
 })
 
-test_that("can call `select_loc()` without arguments", {
-  expect_identical(select_loc(mtcars), set_names(int(), chr()))
+test_that("absent `sel` leads to empty selection", {
+  expect_identical(select_loc(mtcars), named(int()))
+  expect_identical(select_loc(data.frame()), named(int()))
+})
+
+test_that("zero-length vector `sel` leads to empty selection (#214)", {
+  expect_identical(select_loc(mtcars, character()), named(int()))
+  expect_identical(select_loc(data.frame(), character()), named(int()))
 })
 
 test_that("can specify inclusion and exclusion", {
@@ -71,7 +77,15 @@ test_that("result is named even with constant inputs (#173)", {
 test_that("can forbid rename syntax (#178)", {
   expect_error(select_loc(mtcars, c(foo = cyl), allow_rename = FALSE), "Can't rename")
   expect_error(select_loc(mtcars, c(cyl, foo = cyl), allow_rename = FALSE), "Can't rename")
-  expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), NULL)
+  expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), c("cyl", "carb", "am"))
+})
+
+test_that("can forbid empty selections", {
+  expect_snapshot(error = TRUE, {
+    select_loc(mtcars, allow_empty = FALSE)
+    select_loc(mtcars, integer(), allow_empty = FALSE)
+    select_loc(mtcars, starts_with("z"), allow_empty = FALSE)
+  })
 })
 
 test_that("eval_select() errors mention correct calls", {
@@ -116,7 +130,7 @@ test_that("can select with predicate when `allow_rename` is `FALSE` (#225)", {
     mtcars,
     allow_rename = FALSE
   )
-  expect_equal(sel, seq_along(mtcars))
+  expect_equal(sel, set_names(seq_along(mtcars), names(mtcars)))
 })
 
 test_that("location must resolve to numeric variables throws error", {

@@ -20,7 +20,9 @@ num_range(prefix, range, width = NULL, vars = NULL)
 }
 \arguments{
 \item{match}{A character vector. If length > 1, the union of the
-matches is taken.}
+matches is taken.
+
+For \code{matches()} only, this can be a stringr pattern.}
 
 \item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}

@@ -61,15 +61,18 @@ everything <- function(vars = NULL) {
 #' @export
 #' @param offset Set it to `n` to select the nth var from the end.
 last_col <- function(offset = 0L, vars = NULL) {
-  stopifnot(is_integerish(offset))
+  if (!is_integerish(offset, n = 1)) {
+    not <- obj_type_friendly(offset)
+    cli::cli_abort("{.arg offset} must be a single integer, not {not}.")
+  }
 
   vars <- vars %||% peek_vars(fn = "last_col")
   n <- length(vars)
 
   if (offset && n <= offset) {
-    abort(glue("`offset` must be smaller than the number of { plural(vars) }"))
+    cli::cli_abort("{.arg offset} ({offset}) must be smaller than the number of { plural(vars) } ({n}).")
   } else if (n == 0) {
-    abort(glue("Can't select last { singular(vars) } when input is empty"))
+    cli::cli_abort("Can't select last { singular(vars) } when input is empty.")
   } else {
     n - as.integer(offset)
   }

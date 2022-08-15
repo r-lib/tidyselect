@@ -1,7 +1,24 @@
 # tidyselect (development version)
 
-* `eval_select()` with `include` now preserves the order of the variables 
+* `eval_select()` with `include` now preserves the order of the variables
   if they're present in the selection (#224).
+
+* `eval_select()` always returns a named vector, even when renaming is not
+  permitted (#220).
+
+* `eval_select()` gains new `allow_empty` argument which allows you to prevent
+  empty selections with `allow_empty = FALSE` (#252).
+
+* `any_of()` generates more informative error if you supply too many
+  arguments (#241).
+
+* `vars_pull()` generates more informative error messages (#234, #258).
+
+* `matches()` recognises and correctly uses stringr pattern objects
+  (`stringr::regexp()`, `stringr::fixed()`, etc) (#238). 
+
+* `eval_select(allow_rename = FALSE)` no longer fails with empty
+  selections (#221, @eutwt).
 
 * `where()` is now exported, like all other select helpers (#201).
 
