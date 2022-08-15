@@ -4,7 +4,8 @@
       (expect_error(select_loc(mtcars, f())))
     Output
       <error/rlang_error>
-      Error in `f()`:
+      Error in `select_loc()`:
+      Caused by error in `f()`:
       ! foo
 
 # predicate outputs are type-checked

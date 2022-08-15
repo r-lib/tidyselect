@@ -16,21 +16,14 @@ with_chained_errors <- function(expr, action, call, eval_expr = NULL) {
     expr,
     error = function(cnd) {
       eval_expr <- quo_squash(eval_expr)
-      # Only wrap error we would display more context than the default call
-      # This logic doesn't match the logic in abort() exactly, but getting it
-      # wrong is mostly harmless.
+      # Only display a message if there's useful context to add
       if (!is_call(eval_expr) || identical(cnd[["call"]], call2(eval_expr[[1]])) ) {
-        if (inherits(cnd, "rlang_error")) {
-          cnd_signal(cnd)
-        } else {
-          # Always generate an rlang_error for consistency
-          abort(conditionMessage(cnd), call = conditionCall(cnd))
-        }
+        msg <- ""
       } else {
         code <- as_label(eval_expr)
         msg <- cli::format_inline("Problem while evaluating {.code {code}}.")
-        abort(msg, call = call, parent = cnd)
       }
+      abort(msg, call = call, parent = cnd)
     }
   )
 }
