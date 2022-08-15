@@ -1,5 +1,7 @@
 # tidyselect (development version)
 
+* `num_range()` gains a `suffix` argument (#229).
+
 * `eval_select()` always returns a named vector, even when renaming is not
   permitted (#220).
 
