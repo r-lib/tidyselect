@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* New `eval_relocate()` for moving a selection. This powers `dplyr::relocate()`
+  (#232).
+
 * `eval_select()` with `include` now preserves the order of the variables
   if they're present in the selection (#224).
 
