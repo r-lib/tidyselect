@@ -64,7 +64,7 @@ test_that("peek_data() fails informatively", {
 test_that("generic error message is thrown if `fn` is not supplied", {
   expect_snapshot(peek_vars(), error = TRUE)
 
-  withr::local_envvar(R_CLI_HYPERLINKS = "true")
+  withr::local_options(cli.hyperlink = TRUE, rlang_interactive = TRUE)
   expect_snapshot(peek_vars(), error = TRUE)
 })
 
