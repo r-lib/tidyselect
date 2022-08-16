@@ -40,7 +40,7 @@
       Note: Using an external vector in selections is ambiguous.
       i Use `all_of(_vars_default)` instead of `_vars_default` to silence this message.
       i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-      This message is displayed once per session.
+      This message is displayed once every 8 hours.
     Code
       # Verbose
       with_options(tidyselect_verbosity = "verbose", {
@@ -92,7 +92,7 @@
         data %>% select(where(is_integer))
       
       i Please update your code.
-      This warning is displayed once per session.
+      This warning is displayed once every 8 hours.
     Code
       invisible(select_loc(iris, is.numeric))
     Condition
@@ -106,7 +106,7 @@
         data %>% select(where(is.numeric))
       
       i Please update your code.
-      This warning is displayed once per session.
+      This warning is displayed once every 8 hours.
     Code
       invisible(select_loc(iris, isTRUE))
     Condition
@@ -120,7 +120,7 @@
         data %>% select(where(isTRUE))
       
       i Please update your code.
-      This warning is displayed once per session.
+      This warning is displayed once every 8 hours.
     Code
       # Warning is not repeated
       invisible(select_loc(iris, is_integer))

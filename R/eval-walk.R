@@ -384,7 +384,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
           "",
           i = "Please update your code."
         ),
-        .frequency = "once",
+        .frequency = "regularly",
         .frequency_id = paste("tidyselect::predicate_warn_", name)
       )
     }
@@ -411,7 +411,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     if (is_string(verbosity, "verbose")) {
       cli::cli_inform(msg)
     } else {
-      cli::cli_inform(msg, .frequency = "once", .frequency_id = id)
+      cli::cli_inform(msg, .frequency = "regularly", .frequency_id = id)
     }
   }
 
