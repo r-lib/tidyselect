@@ -189,7 +189,7 @@ num_range <- function(prefix,
 
 check_match <- function(match) {
   if (!is_character(match) || !all(nzchar(match))) {
-    abort("`match` must be a character vector of non empty strings.")
+    cli::cli_abort("{.arg match} must be a character vector of non empty strings.")
   }
 }
 

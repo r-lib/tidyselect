@@ -70,6 +70,12 @@ test_that("rename_loc() allows fixing duplicates by locations", {
   )
 })
 
+test_that("rename_loc() works with predicate functions", {
+  x <- data.frame(a = 1, b = 2, c = "x", stringsAsFactors = FALSE)
+  expect_equal(rename_loc(x, c(var = where(is.numeric))), c(var1 = 1, var2 = 2))
+  expect_snapshot(rename_loc(x, where(is.numeric)), error = TRUE)
+})
+
 test_that("rename_loc() requires named inputs", {
   expect_error(rename_loc(iris, Species), "named")
   expect_error(rename_loc(iris, c(contains("Width"))), "named")

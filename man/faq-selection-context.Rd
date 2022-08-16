@@ -5,33 +5,54 @@
 \title{FAQ - Error: Must be used within a \emph{selecting} function}
 \description{
 Functions like \code{starts_with()}, \code{contains()} or \code{matches()} are
-\strong{selection helpers} that only work in a selection context.
-
-Examples of valid selection contexts are:
-\itemize{
-\item Inside \code{dplyr::select()}.
-\item The \code{cols} argument of \code{tidyr::pivot_longer()}.
-}
+\strong{selection helpers} that only work in a selection context, e.g.
+\code{dplyr::select()} or the \code{cols} argument of \code{tidyr::pivot_longer()}.
 
 Using a selection helper anywhere else results in an error:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starts_with("foo")
 #> Error:
 #> ! `starts_with()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
+#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
 
 mtcars[contains("foo")]
 #> Error:
 #> ! `contains()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
+#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
 
 subset(mtcars, select = matches("foo"))
 #> Error:
 #> ! `matches()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
+#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
 }\if{html}{\out{</div>}}
 
-If you see this error, you’ve probably used a selection helper in the
-wrong place, possibly as the result of a typo (e.g. misplaced comma or
-wrong argument name).
+If you see this error, you may have used a selection helper in the wrong
+place, possibly as the result of a typo (e.g. misplaced comma or wrong
+argument name). Alternatively, you may be deliberately trying to reduce
+duplication in your code by extracting out a selection into a variable:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{my_vars <- c(name, species, ends_with("color"))
+#> Error in eval(expr, envir, enclos): object 'name' not found
+}\if{html}{\out{</div>}}
+
+To make this work you’ll need to do two things:
+\itemize{
+\item Wrap the whole thing in a function
+\item Use \code{any_of()} or \code{all_of()} instead of bare variable names
+}
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{my_vars <- function() \{
+  c(any_of(c("name", "species")), ends_with("color"))
+\}
+dplyr::select(starwars, my_vars())
+#> # A tibble: 87 x 5
+#>   name           species hair_color skin_color  eye_color
+#>   <chr>          <chr>   <chr>      <chr>       <chr>    
+#> 1 Luke Skywalker Human   blond      fair        blue     
+#> 2 C-3PO          Droid   <NA>       gold        yellow   
+#> 3 R2-D2          Droid   <NA>       white, blue red      
+#> 4 Darth Vader    Human   none       white       yellow   
+#> # ... with 83 more rows
+#> # i Use `print(n = ...)` to see more rows
+}\if{html}{\out{</div>}}
 }

@@ -113,15 +113,17 @@ one_of <- function(..., .vars = NULL) {
   bad_input <- detect_index(keep, ~ !vec_is_coercible(., chr()))
   if (bad_input) {
     type <- obj_type_friendly(keep[[bad_input]])
-    msg <- glue::glue("Input { bad_input } must be a vector of column names, not {type}.")
-    abort(msg, "vctrs_error_incompatible_index_type")
+    cli::cli_abort(
+      "Input {bad_input} must be a vector of column names, not {type}.",
+      class = "vctrs_error_incompatible_index_type"
+    )
   }
 
   keep <- vctrs::vec_c(!!!keep, .ptype = character())
 
   if (!all(keep %in% .vars)) {
     bad <- setdiff(keep, .vars)
-    warn(glue("Unknown { plural(.vars) }: ", paste0("`", bad, "`", collapse = ", ")))
+    warn(glue("Unknown columns: ", paste0("`", bad, "`", collapse = ", ")))
   }
 
   match_vars(keep, .vars)

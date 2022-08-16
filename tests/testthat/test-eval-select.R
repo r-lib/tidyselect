@@ -182,3 +182,9 @@ test_that("middle (no-match) selector should not clear previous selectors (issue
     c(x = 1L, z = 3L)
   )
 })
+
+test_that("selecting with predicate + rename doesn't duplicate", {
+  x <- list(a = "x", b = "y", c = 1, d = 2)
+  expect_equal(select_loc(x, c(where(is.numeric), C = c)), c(C = 3, d = 4))
+  expect_equal(select_loc(x, c(where(is.numeric), A = a)), c(c = 3, d = 4, A = 1))
+})
