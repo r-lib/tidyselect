@@ -61,14 +61,14 @@
       <error/rlang_error>
       Error:
       ! `all_of()` must be used within a *selecting* function.
-      i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
+      i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
     Code
       (expect_error(any_of()))
     Output
       <error/rlang_error>
       Error:
       ! `any_of()` must be used within a *selecting* function.
-      i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>.
+      i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
 
 # any_of generates informative error if ... not empty
 
