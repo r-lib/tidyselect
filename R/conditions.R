@@ -16,7 +16,8 @@ with_chained_errors <- function(expr, action, call, eval_expr = NULL) {
     expr,
     error = function(cnd) {
       eval_expr <- quo_squash(eval_expr)
-      if (!is_call(eval_expr) || identical(cnd[["call"]], eval_expr) ) {
+      # Only display a message if there's useful context to add
+      if (!is_call(eval_expr) || identical(cnd[["call"]], call2(eval_expr[[1]])) ) {
         msg <- ""
       } else {
         code <- as_label(eval_expr)

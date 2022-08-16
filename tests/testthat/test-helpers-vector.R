@@ -1,20 +1,7 @@
-
-
 test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
   expect_identical(
     select_loc(letters2, all_of(c("a", "bar", "c")), strict = FALSE),
     c(a = 1L, c = 3L)
-  )
-})
-
-test_that("`all_of()` and `any_of()` require indices", {
-  expect_error(
-    select(iris, all_of(is.factor)),
-    class = "vctrs_error_subscript_type"
-  )
-  expect_error(
-    select(iris, any_of(is.factor)),
-    class = "vctrs_error_subscript_type"
   )
 })
 
@@ -51,12 +38,23 @@ test_that("any_of() is lax", {
 })
 
 test_that("all_of() and any_of() check their inputs", {
-  expect_error(select_loc(letters2, all_of(NA)), "missing")
-  expect_error(select_loc(letters2, any_of(NA)), "missing")
-  expect_error(select_loc(letters2, all_of(na_chr)), "missing")
-  expect_error(select_loc(letters2, any_of(na_chr)), "missing")
-  expect_error(select_loc(letters2, all_of(TRUE)), class = "vctrs_error_subscript_type")
-  expect_error(select_loc(letters2, any_of(TRUE)), class = "vctrs_error_subscript_type")
+  expect_snapshot({
+    (expect_error(select_loc(letters2, all_of(NA))))
+    (expect_error(select_loc(letters2, any_of(NA))))
+
+    (expect_error(select_loc(letters2, all_of(TRUE))))
+    (expect_error(select_loc(letters2, any_of(TRUE))))
+
+    (expect_error(select_loc(letters2, any_of(is.factor))))
+    (expect_error(select_loc(letters2, all_of(is.factor))))
+  })
+})
+
+test_that("any_of() and all_off() error out of context (#269)", {
+  expect_snapshot({
+    (expect_error(all_of()))
+    (expect_error(any_of()))
+  })
 })
 
 test_that("any_of generates informative error if ... not empty", {
