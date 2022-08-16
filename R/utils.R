@@ -40,6 +40,35 @@ rename_loc <- function(x,
   )
 }
 
+relocate_loc <- function(x,
+                         sel,
+                         ...,
+                         before = NULL,
+                         after = NULL,
+                         strict = TRUE,
+                         name_spec = NULL,
+                         allow_rename = TRUE,
+                         allow_empty = TRUE,
+                         before_arg = "before",
+                         after_arg = "after",
+                         error_call = current_env()) {
+  check_dots_empty()
+
+  eval_relocate(
+    expr = enquo(sel),
+    data = x,
+    before = enquo(before),
+    after = enquo(after),
+    strict = strict,
+    name_spec = name_spec,
+    allow_rename = allow_rename,
+    allow_empty = allow_empty,
+    before_arg = before_arg,
+    after_arg = after_arg,
+    error_call = error_call
+  )
+}
+
 are_empty_name <- function(nms) {
   if (!is_character(nms)) {
     abort("Expected a character vector")
