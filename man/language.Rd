@@ -10,7 +10,7 @@
 tidyselect implements a DSL for selecting variables. It provides helpers
 for selecting variables:
 \itemize{
-\item \code{var1:var10}: variables between \code{var1} on the left and \code{var2} on the right.
+\item \code{var1:var10}: variables between \code{var1} on the left and \code{var10} on the right.
 }
 \itemize{
 \item \code{\link[=starts_with]{starts_with("a")}}: names that start with \code{"a"}.
@@ -30,9 +30,9 @@ variables that exist.
 
 As well as operators for combining those selections:
 \itemize{
-\item \code{!selection}: only variable that don't match \code{selection}.
-\item \code{selection1 & selection2}: variables that match \code{selection1} and \code{selection2}
-\item \code{selection1 | selection2}: variables that match \code{selection1} or \code{selection2}
+\item \code{!selection}: only variables that don't match \code{selection}.
+\item \code{selection1 & selection2}: only variables included in both \code{selection1} and \code{selection2}
+\item \code{selection1 | selection2}: all variables that match either \code{selection1} or \code{selection2}
 }
 }
 }
