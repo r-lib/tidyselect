@@ -1,3 +1,11 @@
+# rename_loc() works with predicate functions
+
+    Code
+      rename_loc(x, where(is.numeric))
+    Condition
+      Error in `rename_loc()`:
+      ! All renaming inputs must be named.
+
 # rename_loc() throws helpful errors
 
     Code
