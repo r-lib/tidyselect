@@ -3,6 +3,18 @@
 * `all_of()` (like `any_of()`) now fails when used outside of a
   tidyselect context (#269).
 
+* `num_range()` gains a `suffix` argument (#229).
+
+* `eval_select()` always returns a named vector, even when renaming is not
+  permitted (#220).
+
+* `eval_select()` gains new `allow_empty` argument which allows you to prevent
+  empty selections with `allow_empty = FALSE` (#252).
+
+* `any_of()` generates more informative error if you supply too many
+  arguments (#241).
+
+>>>>>>> 4b26df5dffd8adec9bbb33ce866dc49ae800b390
 * `vars_pull()` generates more informative error messages (#234, #258).
 
 * `matches()` recognises and correctly uses stringr pattern objects
@@ -12,6 +24,7 @@
   selections (#221, @eutwt).
 
 * `where()` is now exported, like all other select helpers (#201).
+  It also gives more informative errors (#236).
 
 * Fixed error when selecting with predicates and `allow_rename =
   FALSE` (#225).

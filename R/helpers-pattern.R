@@ -150,13 +150,15 @@ matches <- function(match,
   if (inherits(match, "pattern") || inherits(match, "stringr_pattern")) {
     check_installed("stringr")
     if (!missing(ignore.case)) {
-      cli::cli_abort("{.arg ignore.case} not supported when {.arg match} is a stringr pattern.")
+      cli::cli_abort("{.arg ignore.case} not supported when {.arg match} is a {.pkg stringr} pattern.")
     }
     if (!missing(perl)) {
-      cli::cli_abort("{.arg perl} not supported when {.arg match} is a stringr pattern.")
+      cli::cli_abort("{.arg perl} not supported when {.arg match} is a {.pkg stringr} pattern.")
     }
+
+    # no [ or [[ methods for pattern objects
     if (length(match) > 1) {
-      cli::cli_abort("stringr patterns must be length 1.")
+      cli::cli_abort("{.pkg stringr} patterns must be length 1.")
     }
 
     stringr::str_which(vars, match)
@@ -166,13 +168,14 @@ matches <- function(match,
 }
 
 #' @rdname starts_with
-#' @param prefix A prefix that starts the numeric range.
+#' @param prefix,suffix A prefix/suffix added before/after the numeric range.
 #' @param range A sequence of integers, like `1:5`.
 #' @param width Optionally, the "width" of the numeric range. For example,
 #'   a range of 2 gives "01", a range of three "001", etc.
 #' @export
 num_range <- function(prefix,
                       range,
+                      suffix = "",
                       width = NULL,
                       vars = NULL) {
   vars <- vars %||% peek_vars(fn = "num_range")
@@ -181,7 +184,7 @@ num_range <- function(prefix,
     range <- sprintf(paste0("%0", width, "d"), range)
   }
 
-  match_vars(paste0(prefix, range), vars)
+  match_vars(paste0(prefix, range, suffix), vars)
 }
 
 check_match <- function(match) {

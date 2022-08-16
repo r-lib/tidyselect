@@ -56,3 +56,11 @@ test_that("any_of() and all_off() error out of context (#269)", {
     (expect_error(any_of()))
   })
 })
+
+test_that("any_of generates informative error if ... not empty", {
+  local_vars(letters)
+
+  expect_snapshot(error = TRUE, {
+    any_of("b", "c", "d")
+  })
+})
