@@ -33,7 +33,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
-      ! Selecting functions must return `TRUE` or `FALSE`, not `""`.
+      ! Predicate must return `TRUE` or `FALSE`, not `""`.
 
 # eval_select() produces correct backtraces
 
@@ -74,6 +74,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
+      ! Problem while evaluating `1 + ""`.
       Caused by error in `1 + ""`:
       ! non-numeric argument to binary operator
     Code

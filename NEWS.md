@@ -3,6 +3,11 @@
 * `eval_select()` with `include` now preserves the order of the variables
   if they're present in the selection (#224).
 
+* `all_of()` (like `any_of()`) now fails when used outside of a
+  tidyselect context (#269).
+
+* `num_range()` gains a `suffix` argument (#229).
+
 * `eval_select()` always returns a named vector, even when renaming is not
   permitted (#220).
 
@@ -21,6 +26,7 @@
   selections (#221, @eutwt).
 
 * `where()` is now exported, like all other select helpers (#201).
+  It also gives more informative errors (#236).
 
 * Fixed error when selecting with predicates and `allow_rename =
   FALSE` (#225).
