@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `eval_select()` with `include` now preserves the order of the variables
+  if they're present in the selection (#224).
+
 * `all_of()` now returns an integer vector to make it easier to
   combine in functions (#270, #294).
 

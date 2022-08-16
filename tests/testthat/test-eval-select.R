@@ -28,6 +28,37 @@ test_that("can specify inclusion and exclusion", {
   x <- list(a = 1, b = 2, c = 3)
   expect_identical(select_loc(x, int(), include = "b"), c(b = 2L))
   expect_identical(select_loc(x, -int(), exclude = c("a", "c")), c(b = 2L))
+
+  # Can exclude variables that don't exist
+  expect_identical(select_loc(x, 2, exclude = "d"), c(b = 2L))
+})
+
+test_that("included variables added to front", {
+  x <- list(a = 1, b = 2, c = 3)
+  expect_named(select_loc(x, "a", include = "b"), c("b", "a"))
+  expect_named(select_loc(x, "c", include = "b"), c("b", "c"))
+
+  # but only if not already present
+  expect_named(select_loc(x, c("a", "b"), include = "b"), c("a", "b"))
+  expect_named(select_loc(x, c("b", "a"), include = "b"), c("b", "a"))
+
+  state <- 0L
+  fn <- fn <- function() {
+    state <<- state + 1L
+    "b"
+  }
+
+  select_loc(x, c("a", fn()), include = "b")
+  expect_equal(state, 1)
+})
+
+test_that("include and exclude validate their inputs", {
+  expect_snapshot({
+    x <- list(a = 1, b = 2, c = 3)
+    (expect_error(select_loc(x, "a", include = 1)))
+    (expect_error(select_loc(x, "a", include = "d")))
+    (expect_error(select_loc(x, "a", exclude = 1)))
+  })
 })
 
 test_that("variables are excluded with non-strict `any_of()`", {
