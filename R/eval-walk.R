@@ -81,7 +81,7 @@ vars_select_eval <- function(vars,
   pos <- loc_validate(pos, vars, call = error_call)
 
   if (type == "rename" && !is_named(pos)) {
-    abort("All renaming inputs must be named.", call = error_call)
+    cli::cli_abort("All renaming inputs must be named.", call = error_call)
   }
 
   ensure_named(
@@ -104,7 +104,7 @@ ensure_named <- function(pos,
 
   if (!allow_rename) {
     if (is_named(pos) && !is_empty(pos)) {
-      abort("Can't rename variables in this context.", call = call)
+      cli::cli_abort("Can't rename variables in this context.", call = call)
     }
     pos
   }
@@ -123,7 +123,7 @@ ensure_named <- function(pos,
 
 check_empty <- function(x, allow_empty = TRUE, call = caller_env()) {
   if (!allow_empty && length(x) == 0) {
-    abort("Must select at least one item.", call = call)
+    cli::cli_abort("Must select at least one item.", call = call)
   }
 }
 
@@ -184,11 +184,13 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 as_indices_sel_impl <- function(x, vars, strict, data = NULL, call) {
   if (is.function(x)) {
     if (is_null(data)) {
-      msg <- c(
-        "This tidyselect interface doesn't support predicates yet.",
-        i = "Contact the package author and suggest using `eval_select()`."
+      cli::cli_abort(
+        c(
+          "This tidyselect interface doesn't support predicates yet.",
+          i = "Contact the package author and suggest using {.code eval_select()}."
+        ),
+        call = call
       )
-      abort(msg, call = call)
     }
     predicate <- x
 
@@ -235,7 +237,7 @@ as_indices_impl <- function(x, vars, strict, call = caller_env()) {
     character = chr_as_locations(x, vars, call = call),
     double = ,
     integer = x,
-    abort("Unexpected type.", .internal = TRUE)
+    cli::cli_abort("Unexpected type.", .internal = TRUE)
   )
 }
 
@@ -370,19 +372,21 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     }
 
     if (!is_string(verbosity(), "quiet")) {
-      msg <- paste_line(c(
-        "Predicate functions must be wrapped in `where()`.",
-        "",
-        "  # Bad",
-        glue::glue("  data %>% select({name})"),
-        "",
-        "  # Good",
-        glue::glue("  data %>% select(where({name}))"),
-        ""
-      ))
-      bullet <- format_error_bullets(c(i = "Please update your code."))
-
-      warn_once(paste_line(msg, bullet))
+      cli::cli_warn(
+        c(
+          "Predicate functions must be wrapped in `where()`.",
+          "",
+          " " = "  # Bad",
+          " " = "  data %>% select({name})",
+          " " = "",
+          " " = "  # Good",
+          " " = "  data %>% select(where({name}))",
+          "",
+          i = "Please update your code."
+        ),
+        .frequency = "once",
+        .frequency_id = paste("tidyselect::predicate_warn_", name)
+      )
     }
 
     return(value)
@@ -397,17 +401,17 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
 
   if (!is_string(verbosity, "quiet") && env_needs_advice(env)) {
     # Please keep in sync with faq.R.
-    msg <- glue_c(
+    msg <- c(
       "Note: Using an external vector in selections is ambiguous.",
       i = "Use `all_of({name})` instead of `{name}` to silence this message.",
       i = "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
     )
-    id <- paste0("strict_lookup_", name)
+    id <- paste0("tidyselect::strict_lookup_", name)
 
     if (is_string(verbosity, "verbose")) {
-      inform(msg)
+      cli::cli_inform(msg)
     } else {
-      inform_once(msg, id)
+      cli::cli_inform(msg, .frequency = "once", .frequency_id = id)
     }
   }
 
@@ -416,10 +420,16 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
 
 validate_dot_data <- function(expr, call) {
   if (is_call(expr, "$") && !is_symbol(expr[[3]])) {
-    abort("The RHS of `.data$rhs` must be a symbol.", call = call)
+    cli::cli_abort(
+      "The RHS of {.code .data$rhs} must be a symbol.",
+      call = call
+    )
   }
   if (is_call(expr, "[[") && is_symbolic(expr[[3]])) {
-    abort("The subscript of `.data[[subscript]]` must be a constant.", call = call)
+    cli::cli_abort(
+      "The subscript of {.code .data[[subscript]]} must be a constant.",
+      call = call
+    )
   }
 }
 

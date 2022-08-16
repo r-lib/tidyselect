@@ -70,9 +70,9 @@ last_col <- function(offset = 0L, vars = NULL) {
   n <- length(vars)
 
   if (offset && n <= offset) {
-    cli::cli_abort("{.arg offset} ({offset}) must be smaller than the number of { plural(vars) } ({n}).")
+    cli::cli_abort("{.arg offset} ({offset}) must be smaller than the number of columns ({n}).")
   } else if (n == 0) {
-    cli::cli_abort("Can't select last { singular(vars) } when input is empty.")
+    cli::cli_abort("Can't select last column when input is empty.")
   } else {
     n - as.integer(offset)
   }
