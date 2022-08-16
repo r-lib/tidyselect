@@ -1,5 +1,10 @@
 # tidyselect (development version)
 
+* `all_of()` now returns an integer vector to make it easier to
+  combine in functions (#270, #294).
+
+* `all_of()` now fails even when `strict` is set to `FALSE`.
+
 * `peek_var()` error now generates hyperlink to docs with recent RStudio (#289).
 
 * `all_of()` (like `any_of()`) now fails when used outside of a

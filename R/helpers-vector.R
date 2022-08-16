@@ -74,8 +74,8 @@
 #' @seealso `r rd_helpers_seealso()`
 #' @export
 all_of <- function(x) {
-  peek_vars(fn = "all_of")
-  vctrs::vec_as_subscript(x, logical = "error")
+  vars <- peek_vars(fn = "all_of")
+  as_indices_impl(x, vars = vars, strict = TRUE)
 }
 
 #' @rdname all_of
