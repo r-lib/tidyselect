@@ -4,40 +4,30 @@
 Overview of selection features:
 
 
-Tidyverse selections implement a dialect of R where operators make
-it easy to select variables:
-: for selecting a range of consecutive variables.
-! for taking the complement of a set of variables.
-&amp;amp; and | for selecting the intersection or the union of two
-sets of variables.
-c() for combining selections.
+tidyselect implements a DSL for selecting variables. It provides helpers
+for selecting variables:
+var1:var10: variables lying between var1 on the left and var10 on the right.
 
 
-In addition, you can use selection helpers. Some helpers select specific
-columns:
-everything(): Matches all variables.
-last_col(): Select last variable, possibly with an offset.
+starts_with(&quot;a&quot;): names that start with &quot;a&quot;.
+ends_with(&quot;z&quot;): names that end with &quot;z&quot;.
+contains(&quot;b&quot;): names that contain &quot;b&quot;.
+matches(&quot;x.y&quot;): names that match regular expression x.y.
+num_range(x, 1:4): names following the pattern, x1, x2, ..., x4.
+all_of(vars)/any_of(vars):
+matches names stored in the character vector vars. all_of(vars) will
+error if the variables aren't present; any_of(var) will match just the
+variables that exist.
+everything(): all variables.
+last_col(): furthest column on the right.
+where(is.numeric): all variables where
+is.numeric() returns TRUE.
 
 
-These helpers select variables by matching patterns in their names:
-starts_with(): Starts with a prefix.
-ends_with(): Ends with a suffix.
-contains(): Contains a literal string.
-matches(): Matches a regular expression.
-num_range(): Matches a numerical range like x01, x02, x03.
-
-
-These helpers select variables from a character vector:
-all_of(): Matches variable names in a character vector. All
-names must be present, otherwise an out-of-bounds error is
-thrown.
-any_of(): Same as all_of(), except that no error is thrown
-for names that don't exist.
-
-
-This helper selects variables with a function:
-where(): Applies a function to all variables and selects those
-for which the function returns TRUE.
+As well as operators for combining those selections:
+!selection: only variables that don't match selection.
+selection1 &amp;amp; selection2: only variables included in both selection1 and selection2.
+selection1 | selection2: all variables that match either selection1 or selection2.
 
 
 
@@ -46,40 +36,30 @@ for which the function returns TRUE.
 Overview of selection features:
 
 
-Tidyverse selections implement a dialect of R where operators make
-it easy to select variables:
-: for selecting a range of consecutive variables.
-! for taking the complement of a set of variables.
-&amp;amp; and | for selecting the intersection or the union of two
-sets of variables.
-c() for combining selections.
+tidyselect implements a DSL for selecting variables. It provides helpers
+for selecting variables:
+var1:var10: variables lying between var1 on the left and var10 on the right.
 
 
-In addition, you can use selection helpers. Some helpers select specific
-columns:
-everything(): Matches all variables.
-last_col(): Select last variable, possibly with an offset.
+starts_with(&quot;a&quot;): names that start with &quot;a&quot;.
+ends_with(&quot;z&quot;): names that end with &quot;z&quot;.
+contains(&quot;b&quot;): names that contain &quot;b&quot;.
+matches(&quot;x.y&quot;): names that match regular expression x.y.
+num_range(x, 1:4): names following the pattern, x1, x2, ..., x4.
+all_of(vars)/any_of(vars):
+matches names stored in the character vector vars. all_of(vars) will
+error if the variables aren't present; any_of(var) will match just the
+variables that exist.
+everything(): all variables.
+last_col(): furthest column on the right.
+where(is.numeric): all variables where
+is.numeric() returns TRUE.
 
 
-These helpers select variables by matching patterns in their names:
-starts_with(): Starts with a prefix.
-ends_with(): Ends with a suffix.
-contains(): Contains a literal string.
-matches(): Matches a regular expression.
-num_range(): Matches a numerical range like x01, x02, x03.
-
-
-These helpers select variables from a character vector:
-all_of(): Matches variable names in a character vector. All
-names must be present, otherwise an out-of-bounds error is
-thrown.
-any_of(): Same as all_of(), except that no error is thrown
-for names that don't exist.
-
-
-This helper selects variables with a function:
-where(): Applies a function to all variables and selects those
-for which the function returns TRUE.
+As well as operators for combining those selections:
+!selection: only variables that don't match selection.
+selection1 &amp;amp; selection2: only variables included in both selection1 and selection2.
+selection1 | selection2: all variables that match either selection1 or selection2.
 
 
 
@@ -144,27 +124,24 @@ for which the function returns TRUE.
 <h3 id="overview-of-selection-features-">Overview of selection features:<a class="anchor" aria-label="anchor" href="#overview-of-selection-features-"></a></h3>
 
 
-<p>Tidyverse selections implement a dialect of R where operators make
-it easy to select variables:</p><ul><li><p><code>:</code> for selecting a range of consecutive variables.</p></li>
-<li><p><code>!</code> for taking the complement of a set of variables.</p></li>
-<li><p><code>&amp;</code> and <code>|</code> for selecting the intersection or the union of two
-sets of variables.</p></li>
-<li><p><code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> for combining selections.</p></li>
-</ul><p>In addition, you can use <strong>selection helpers</strong>. Some helpers select specific
-columns:</p><ul><li><p><code><a href="everything.html">everything()</a></code>: Matches all variables.</p></li>
-<li><p><code><a href="everything.html">last_col()</a></code>: Select last variable, possibly with an offset.</p></li>
-</ul><p>These helpers select variables by matching patterns in their names:</p><ul><li><p><code><a href="starts_with.html">starts_with()</a></code>: Starts with a prefix.</p></li>
-<li><p><code><a href="starts_with.html">ends_with()</a></code>: Ends with a suffix.</p></li>
-<li><p><code><a href="starts_with.html">contains()</a></code>: Contains a literal string.</p></li>
-<li><p><code><a href="starts_with.html">matches()</a></code>: Matches a regular expression.</p></li>
-<li><p><code><a href="starts_with.html">num_range()</a></code>: Matches a numerical range like x01, x02, x03.</p></li>
-</ul><p>These helpers select variables from a character vector:</p><ul><li><p><code><a href="all_of.html">all_of()</a></code>: Matches variable names in a character vector. All
-names must be present, otherwise an out-of-bounds error is
-thrown.</p></li>
-<li><p><code><a href="all_of.html">any_of()</a></code>: Same as <code><a href="all_of.html">all_of()</a></code>, except that no error is thrown
-for names that don't exist.</p></li>
-</ul><p>This helper selects variables with a function:</p><ul><li><p><code><a href="where.html">where()</a></code>: Applies a function to all variables and selects those
-for which the function returns <code>TRUE</code>.</p></li>
+<p>tidyselect implements a DSL for selecting variables. It provides helpers
+for selecting variables:</p><ul><li><p><code>var1:var10</code>: variables lying between <code>var1</code> on the left and <code>var10</code> on the right.</p></li>
+</ul><ul><li><p><code><a href="starts_with.html">starts_with("a")</a></code>: names that start with <code>"a"</code>.</p></li>
+<li><p><code><a href="starts_with.html">ends_with("z")</a></code>: names that end with <code>"z"</code>.</p></li>
+<li><p><code><a href="starts_with.html">contains("b")</a></code>: names that contain <code>"b"</code>.</p></li>
+<li><p><code><a href="starts_with.html">matches("x.y")</a></code>: names that match regular expression <code>x.y</code>.</p></li>
+<li><p><code><a href="starts_with.html">num_range(x, 1:4)</a></code>: names following the pattern, <code>x1</code>, <code>x2</code>, ..., <code>x4</code>.</p></li>
+<li><p><code><a href="all_of.html">all_of(vars)</a></code>/<code><a href="all_of.html">any_of(vars)</a></code>:
+matches names stored in the character vector <code>vars</code>. <code>all_of(vars)</code> will
+error if the variables aren't present; <code>any_of(var)</code> will match just the
+variables that exist.</p></li>
+<li><p><code><a href="everything.html">everything()</a></code>: all variables.</p></li>
+<li><p><code><a href="everything.html">last_col()</a></code>: furthest column on the right.</p></li>
+<li><p><code><a href="where.html">where(is.numeric)</a></code>: all variables where
+<code><a href="https://rdrr.io/r/base/numeric.html" class="external-link">is.numeric()</a></code> returns <code>TRUE</code>.</p></li>
+</ul><p>As well as operators for combining those selections:</p><ul><li><p><code>!selection</code>: only variables that don't match <code>selection</code>.</p></li>
+<li><p><code>selection1 &amp; selection2</code>: only variables included in both <code>selection1</code> and <code>selection2</code>.</p></li>
+<li><p><code>selection1 | selection2</code>: all variables that match either <code>selection1</code> or <code>selection2</code>.</p></li>
 </ul></div>
 
     </div>
