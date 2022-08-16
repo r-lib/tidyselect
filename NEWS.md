@@ -14,7 +14,6 @@
 * `any_of()` generates more informative error if you supply too many
   arguments (#241).
 
->>>>>>> 4b26df5dffd8adec9bbb33ce866dc49ae800b390
 * `vars_pull()` generates more informative error messages (#234, #258).
 
 * `matches()` recognises and correctly uses stringr pattern objects
