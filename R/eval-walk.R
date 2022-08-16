@@ -330,8 +330,7 @@ eval_context <- function(expr, context_mask, call) {
   env <- context_mask$.__current__. %||% base_env()
   with_chained_errors(
     eval_tidy(as_quosure(expr, env), context_mask),
-    "select",
-    call,
+    call = call,
     eval_expr = expr
   )
 }

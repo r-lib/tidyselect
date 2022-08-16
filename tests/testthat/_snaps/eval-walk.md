@@ -72,6 +72,7 @@
       select_loc(iris, eval_tidy(foobar))
     Condition
       Error in `select_loc()`:
+      ! Problem while evaluating `eval_tidy(foobar)`.
       Caused by error:
       ! object 'foobar' not found
 

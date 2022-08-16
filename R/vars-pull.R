@@ -40,9 +40,8 @@ vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = "va
 
   n <- length(vars)
 
-  loc <- with_chained_errors(
-    eval_tidy(expr, set_names(seq_along(vars), vars)),
-    action = "pull",
+  with_chained_errors(
+    loc <- eval_tidy(expr, set_names(seq_along(vars), vars)),
     call = error_call,
     eval_expr = expr
   )

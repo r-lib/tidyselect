@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `all_of()` (like `any_of()`) now fails when used outside of a
+  tidyselect context (#269).
+
 * `num_range()` gains a `suffix` argument (#229).
 
 * `eval_select()` always returns a named vector, even when renaming is not
