@@ -112,8 +112,6 @@ test_that("predicate outputs are type-checked", {
 })
 
 test_that("eval_select() produces correct backtraces", {
-  skip_if(interactive()) # backtraces look different
-
   f <- function(base) g(base)
   g <- function(base) h(base)
   h <- function(base) if (base) stop("foo") else abort("foo")
