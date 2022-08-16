@@ -2,7 +2,7 @@
 tidyselect implements a DSL for selecting variables. It provides helpers
 for selecting variables:
 
-- `var1:var10`: variables between `var1` on the left and `var2` on the right.
+- `var1:var10`: variables between `var1` on the left and `var10` on the right.
 * [`starts_with("a")`][tidyselect::starts_with]: names that start with `"a"`.
 * [`ends_with("z")`][tidyselect::ends_with()]: names that end with `"z"`.
 * [`contains("b")`][tidyselect::contains()]: names that contain `"b"`.
@@ -19,6 +19,6 @@ for selecting variables:
 
 As well as operators for combining those selections:
 
-- `!selection`: only variable that don't match `selection`.
-- `selection1 & selection2`: variables that match `selection1` and `selection2`
-- `selection1 | selection2`: variables that match `selection1` or `selection2`
+- `!selection`: only variables that don't match `selection`.
+- `selection1 & selection2`: only variables included in both `selection1` and `selection2`
+- `selection1 | selection2`: all variables that match either `selection1` or `selection2`
