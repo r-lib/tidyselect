@@ -28,6 +28,9 @@ test_that("can specify inclusion and exclusion", {
   x <- list(a = 1, b = 2, c = 3)
   expect_identical(select_loc(x, int(), include = "b"), c(b = 2L))
   expect_identical(select_loc(x, -int(), exclude = c("a", "c")), c(b = 2L))
+
+  # Can exclude variables that don't exist
+  expect_identical(select_loc(x, 2, exclude = "d"), c(b = 2L))
 })
 
 test_that("included variables added to front", {
