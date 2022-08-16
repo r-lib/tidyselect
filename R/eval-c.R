@@ -105,8 +105,7 @@ combine_names <- function(x,
                           error_call) {
   if (uniquely_named && is_data_dups(x)) {
     name <- as_string(tag)
-    msg <- glue("Can't rename duplicate variables to `{name}`.")
-    abort(msg, call = error_call)
+    cli::cli_abort("Can't rename duplicate variables to `{name}`.", call = error_call)
   }
 
   vctrs::vec_c(!!tag := x, .name_spec = name_spec)

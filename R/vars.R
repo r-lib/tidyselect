@@ -22,11 +22,13 @@ peeker <- function(what) {
       }
 
       # Please keep in sync with faq.R.
-      msg <- glue_c(
-        "{fn} must be used within a *selecting* function.",
-        i = "See {link} for details."
+      cli::cli_abort(
+        c(
+          "{fn} must be used within a *selecting* function.",
+          i = "See {link} for details."
+        ),
+        call = NULL
       )
-      abort(msg, call = NULL)
     }
 
     x

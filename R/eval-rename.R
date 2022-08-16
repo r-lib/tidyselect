@@ -26,7 +26,7 @@ rename_impl <- function(x,
                         name_spec = NULL,
                         error_call) {
   if (is_null(names)) {
-    abort("Can't rename an unnamed vector.", call = error_call)
+    cli::cli_abort("Can't rename an unnamed vector.", call = error_call)
   }
 
   pos <- eval_select_impl(
