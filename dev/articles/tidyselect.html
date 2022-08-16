@@ -381,7 +381,7 @@
 <code class="sourceCode R"><span><span class="va">mtcars</span><span class="op">[</span><span class="fu">if_width</span><span class="op">(</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;">:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> `if_width()` must be used within a *selecting* function.</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;.</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt; for details.</span></span></code></pre></div>
 <p>Because the variables are inspected in a default argument, it is easy to override. This is mostly useful in unit tests:</p>
 <div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">if_width</span><span class="op">(</span><span class="fl">2</span>, vars <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span>
