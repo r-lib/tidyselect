@@ -58,7 +58,7 @@ test_that("result is named even with constant inputs (#173)", {
 test_that("can forbid rename syntax (#178)", {
   expect_error(select_loc(mtcars, c(foo = cyl), allow_rename = FALSE), "Can't rename")
   expect_error(select_loc(mtcars, c(cyl, foo = cyl), allow_rename = FALSE), "Can't rename")
-  expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), NULL)
+  expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), c("cyl", "carb", "am"))
 })
 
 test_that("can forbid empty selections", {
@@ -111,7 +111,7 @@ test_that("can select with predicate when `allow_rename` is `FALSE` (#225)", {
     mtcars,
     allow_rename = FALSE
   )
-  expect_equal(sel, seq_along(mtcars))
+  expect_equal(sel, set_names(seq_along(mtcars), names(mtcars)))
 })
 
 test_that("location must resolve to numeric variables throws error", {

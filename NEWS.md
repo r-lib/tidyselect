@@ -2,6 +2,11 @@
 
 * `peek_var()` error now generates hyperlink to docs with recent RStudio (#289).
 
+* `num_range()` gains a `suffix` argument (#229).
+
+* `eval_select()` always returns a named vector, even when renaming is not
+  permitted (#220).
+
 * `eval_select()` gains new `allow_empty` argument which allows you to prevent
   empty selections with `allow_empty = FALSE` (#252).
 
@@ -17,6 +22,7 @@
   selections (#221, @eutwt).
 
 * `where()` is now exported, like all other select helpers (#201).
+  It also gives more informative errors (#236).
 
 * Fixed error when selecting with predicates and `allow_rename =
   FALSE` (#225).

@@ -16,7 +16,7 @@ contains(match, ignore.case = TRUE, vars = NULL)
 
 matches(match, ignore.case = TRUE, perl = FALSE, vars = NULL)
 
-num_range(prefix, range, width = NULL, vars = NULL)
+num_range(prefix, range, suffix = "", width = NULL, vars = NULL)
 }
 \arguments{
 \item{match}{A character vector. If length > 1, the union of the
@@ -33,7 +33,7 @@ established by functions like \code{select()} or \code{pivot_longer()}).}
 
 \item{perl}{Should Perl-compatible regexps be used?}
 
-\item{prefix}{A prefix that starts the numeric range.}
+\item{prefix, suffix}{A prefix/suffix added before/after the numeric range.}
 
 \item{range}{A sequence of integers, like \code{1:5}.}
 
