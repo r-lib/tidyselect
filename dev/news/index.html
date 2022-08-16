@@ -55,7 +55,8 @@
 
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="development version" id="tidyselect-development-version">tidyselect (development version)<a class="anchor" aria-label="anchor" href="#tidyselect-development-version"></a></h2>
-<ul><li><p><code><a href="../reference/starts_with.html">num_range()</a></code> gains a <code>suffix</code> argument (<a href="https://github.com/r-lib/tidyselect/issues/229" class="external-link">#229</a>).</p></li>
+<ul><li><p><code><a href="../reference/all_of.html">all_of()</a></code> (like <code><a href="../reference/all_of.html">any_of()</a></code>) now fails when used outside of a tidyselect context (<a href="https://github.com/r-lib/tidyselect/issues/269" class="external-link">#269</a>).</p></li>
+<li><p><code><a href="../reference/starts_with.html">num_range()</a></code> gains a <code>suffix</code> argument (<a href="https://github.com/r-lib/tidyselect/issues/229" class="external-link">#229</a>).</p></li>
 <li><p><code><a href="../reference/eval_select.html">eval_select()</a></code> always returns a named vector, even when renaming is not permitted (<a href="https://github.com/r-lib/tidyselect/issues/220" class="external-link">#220</a>).</p></li>
 <li><p><code><a href="../reference/eval_select.html">eval_select()</a></code> gains new <code>allow_empty</code> argument which allows you to prevent empty selections with <code>allow_empty = FALSE</code> (<a href="https://github.com/r-lib/tidyselect/issues/252" class="external-link">#252</a>).</p></li>
 <li><p><code><a href="../reference/all_of.html">any_of()</a></code> generates more informative error if you supply too many arguments (<a href="https://github.com/r-lib/tidyselect/issues/241" class="external-link">#241</a>).</p></li>
