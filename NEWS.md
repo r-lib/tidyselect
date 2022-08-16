@@ -1,5 +1,9 @@
 # tidyselect (development version)
 
+* Use of `.data` in tidyselect expressions is now deprecated to more cleanly
+  separate tidy-select from data-masking. Use `any_of()` or `all_of()` instead
+  (#169).
+
 * `peek_var()` error now generates hyperlink to docs with recent RStudio (#289).
 
 * `all_of()` (like `any_of()`) now fails when used outside of a
