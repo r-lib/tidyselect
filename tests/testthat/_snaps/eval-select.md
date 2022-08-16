@@ -1,3 +1,26 @@
+# include and exclude validate their inputs
+
+    Code
+      x <- list(a = 1, b = 2, c = 3)
+      (expect_error(select_loc(x, "a", include = 1)))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! `include` must be a character vector.
+    Code
+      (expect_error(select_loc(x, "a", include = "d")))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! `include` must only include variables found in `data`.
+      i Unknown variables: d
+    Code
+      (expect_error(select_loc(x, "a", exclude = 1)))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! `include` must be a character vector.
+
 # can forbid empty selections
 
     Code

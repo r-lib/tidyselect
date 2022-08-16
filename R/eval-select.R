@@ -167,29 +167,8 @@ eval_select_impl <- function(x,
 
   local_data(x)
 
-  if (length(include)) {
-    # Recurse to transform `expr` into a vector of locations. This
-    # avoids double evaluation in the expression below.
-    full <- eval_select_impl(
-      x,
-      names,
-      expr,
-      strict = strict,
-      name_spec = name_spec,
-      uniquely_named = uniquely_named,
-      allow_rename = allow_rename,
-      type = type,
-      error_call = error_call
-    )
-    # `full` is included twice to make sure order is preserved (#224)
-    expr <- quo((all_of(include) & !all_of(full)) | all_of(full))
-  }
-  if (length(exclude)) {
-    expr <- quo(!!expr & !any_of(exclude))
-  }
-
   with_subscript_errors(
-    vars_select_eval(
+    out <- vars_select_eval(
       vars,
       expr,
       strict = strict,
@@ -203,6 +182,36 @@ eval_select_impl <- function(x,
     ),
     type = type
   )
+
+  if (length(include) > 0) {
+    if (!is.character(include)) {
+      cli::cli_abort("{.arg include} must be a character vector.", call = error_call)
+    }
+
+    missing <- setdiff(include, names)
+    if (length(missing) > 0) {
+      cli::cli_abort(c(
+        "{.arg include} must only include variables found in {.arg data}.",
+        i = "Unknown variables: {.and {missing}}"
+      ), call = error_call)
+    }
+
+    to_include <- vctrs::vec_match(include, names)
+    names(to_include) <- names[to_include]
+
+    out <- c(to_include[!to_include %in% out], out)
+  }
+
+  if (length(exclude) > 0) {
+    if (!is.character(exclude)) {
+      cli::cli_abort("{.arg include} must be a character vector.", call = error_call)
+    }
+
+    to_exclude <- vctrs::vec_match(intersect(exclude, names), names)
+    out <- out[!out %in% to_exclude]
+  }
+
+  out
 }
 
 # Example implementation mainly used for unit tests

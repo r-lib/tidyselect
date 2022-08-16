@@ -49,6 +49,15 @@ test_that("included variables added to front", {
   expect_equal(state, 1)
 })
 
+test_that("include and exclude validate their inputs", {
+  expect_snapshot({
+    x <- list(a = 1, b = 2, c = 3)
+    (expect_error(select_loc(x, "a", include = 1)))
+    (expect_error(select_loc(x, "a", include = "d")))
+    (expect_error(select_loc(x, "a", exclude = 1)))
+  })
+})
+
 test_that("variables are excluded with non-strict `any_of()`", {
   expect_identical(
     select_loc(iris, 1:3, exclude = "foo"),
