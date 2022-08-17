@@ -99,23 +99,23 @@
     Output
       <error/rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables when specifying `before`.
+      ! Can't rename variables when `before` is supplied.
     Code
       (expect_error(relocate_loc(x, b, before = c(new = c), before_arg = ".before")))
     Output
       <error/rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables when specifying `.before`.
+      ! Can't rename variables when `.before` is supplied.
     Code
       (expect_error(relocate_loc(x, b, after = c(new = c))))
     Output
       <error/rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables when specifying `after`.
+      ! Can't rename variables when `after` is supplied.
     Code
       (expect_error(relocate_loc(x, b, after = c(new = c), after_arg = ".after")))
     Output
       <error/rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables when specifying `.after`.
+      ! Can't rename variables when `.after` is supplied.
 

@@ -175,7 +175,7 @@ with_rename_errors <- function(expr, arg, error_call) {
     expr,
     `tidyselect:::error_disallowed_rename` = function(cnd) {
       cli::cli_abort(
-        "Can't rename variables when specifying {.arg {arg}}.",
+        "Can't rename variables when {.arg {arg}} is supplied.",
         call = error_call
       )
     }
