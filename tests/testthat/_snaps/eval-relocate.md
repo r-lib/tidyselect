@@ -22,21 +22,21 @@
     Output
       <error/vctrs_error_subscript_oob>
       Error in `relocate_loc()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `c` doesn't exist.
     Code
       (expect_error(relocate_loc(x, a, before = c)))
     Output
       <error/vctrs_error_subscript_oob>
       Error in `relocate_loc()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `c` doesn't exist.
     Code
       (expect_error(relocate_loc(x, a, after = c)))
     Output
       <error/vctrs_error_subscript_oob>
       Error in `relocate_loc()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `c` doesn't exist.
 
 # can relocate with out-of-bounds variables in `expr` if `strict = FALSE`
@@ -46,14 +46,14 @@
     Output
       <error/vctrs_error_subscript_oob>
       Error in `relocate_loc()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `c` doesn't exist.
     Code
       (expect_error(relocate_loc(x, a, after = c, strict = FALSE)))
     Output
       <error/vctrs_error_subscript_oob>
       Error in `relocate_loc()`:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `c` doesn't exist.
 
 # can forbid rename syntax

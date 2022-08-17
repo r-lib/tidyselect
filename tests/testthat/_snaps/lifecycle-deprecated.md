@@ -4,20 +4,20 @@
       vars_select(letters, TRUE)
     Condition
       Error:
-      ! Must subset columns with a valid subscript vector.
+      ! Must select columns with a valid subscript vector.
       x Subscript has the wrong type `logical`.
       i It must be numeric or character.
     Code
       vars_select(letters, 2.5)
     Condition
       Error:
-      ! Must subset columns with a valid subscript vector.
+      ! Must select columns with a valid subscript vector.
       x Can't convert from <double> to <integer> due to loss of precision.
     Code
       vars_select(letters, structure(1:3, class = "tidysel_foobar"))
     Condition
       Error:
-      ! Must subset columns with a valid subscript vector.
+      ! Must select columns with a valid subscript vector.
       x Subscript has the wrong type `tidysel_foobar`.
       i It must be numeric or character.
 
@@ -28,47 +28,47 @@
       vars_select(letters, foo)
     Condition
       Error:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       vars_select(letters, -foo)
     Condition
       Error:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       # Names
       vars_select(letters, "foo")
     Condition
       Error:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       vars_select(letters, a:"foo")
     Condition
       Error:
-      ! Can't subset columns that don't exist.
+      ! Can't select columns that don't exist.
       x Column `foo` doesn't exist.
     Code
       # Locations
       vars_select(letters, 30, 50, 100)
     Condition
       Error:
-      ! Can't subset columns past the end.
+      ! Can't select columns past the end.
       i Locations 30, 50, and 100 don't exist.
       i There are only 26 columns.
     Code
       vars_select(letters, -100)
     Condition
       Error:
-      ! Can't subset columns past the end.
+      ! Can't select columns past the end.
       i Location 100 doesn't exist.
       i There are only 26 columns.
     Code
       vars_select(letters, !100)
     Condition
       Error:
-      ! Can't subset columns past the end.
+      ! Can't select columns past the end.
       i Location 100 doesn't exist.
       i There are only 26 columns.
 

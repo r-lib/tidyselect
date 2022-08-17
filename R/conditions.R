@@ -1,6 +1,4 @@
-with_subscript_errors <- function(expr,
-                                  type = "select",
-                                  call = caller_env()) {
+with_subscript_errors <- function(expr, type = "select") {
   try_fetch(
     expr,
     vctrs_error_subscript = function(cnd) {
@@ -30,7 +28,7 @@ with_chained_errors <- function(expr, action, call, eval_expr = NULL) {
 
 subscript_action <- function(type) {
   switch(validate_type(type),
-    select = "subset",
+    select = "select",
     rename = "rename",
     pull = "extract"
   )
