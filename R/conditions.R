@@ -1,7 +1,7 @@
 with_subscript_errors <- function(expr,
                                   type = "select",
                                   call = caller_env()) {
-  tryCatch(
+  try_fetch(
     expr,
     vctrs_error_subscript = function(cnd) {
       cnd$subscript_action <- subscript_action(type)
