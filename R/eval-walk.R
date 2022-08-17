@@ -104,7 +104,11 @@ ensure_named <- function(pos,
 
   if (!allow_rename) {
     if (is_named(pos) && !is_empty(pos)) {
-      cli::cli_abort("Can't rename variables in this context.", call = call)
+      cli::cli_abort(
+        "Can't rename variables in this context.",
+        class = "tidyselect_error_disallowed_rename",
+        call = call
+      )
     }
     pos
   }

@@ -107,12 +107,16 @@ eval_relocate <- function(expr,
   }
 
   if (has_before) {
-    where <- eval_select(
-      expr = before,
-      data = data,
-      env = env,
-      error_call = error_call,
-      allow_rename = FALSE
+    where <- with_rename_errors(
+      eval_select(
+        expr = before,
+        data = data,
+        env = env,
+        error_call = error_call,
+        allow_rename = FALSE
+      ),
+      arg = before_arg,
+      error_call = error_call
     )
     where <- unname(where)
 
@@ -123,12 +127,16 @@ eval_relocate <- function(expr,
       where <- min(where)
     }
   } else if (has_after) {
-    where <- eval_select(
-      expr = after,
-      data = data,
-      env = env,
-      error_call = error_call,
-      allow_rename = FALSE
+    where <- with_rename_errors(
+      eval_select(
+        expr = after,
+        data = data,
+        env = env,
+        error_call = error_call,
+        allow_rename = FALSE
+      ),
+      arg = after_arg,
+      error_call = error_call
     )
     where <- unname(where)
 
@@ -160,4 +168,16 @@ eval_relocate <- function(expr,
   sel <- vctrs::vec_c(lhs, sel, rhs)
 
   sel
+}
+
+with_rename_errors <- function(expr, arg, error_call) {
+  tryCatch(
+    expr,
+    tidyselect_error_disallowed_rename = function(cnd) {
+      cli::cli_abort(
+        "Can't rename variables when specifying {.arg {arg}}.",
+        call = error_call
+      )
+    }
+  )
 }

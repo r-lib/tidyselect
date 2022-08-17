@@ -61,13 +61,13 @@
     Code
       (expect_error(relocate_loc(x, c(foo = b), allow_rename = FALSE)))
     Output
-      <error/rlang_error>
+      <error/tidyselect_error_disallowed_rename>
       Error in `relocate_loc()`:
       ! Can't rename variables in this context.
     Code
       (expect_error(relocate_loc(x, c(b, foo = b), allow_rename = FALSE)))
     Output
-      <error/rlang_error>
+      <error/tidyselect_error_disallowed_rename>
       Error in `relocate_loc()`:
       ! Can't rename variables in this context.
 
@@ -99,11 +99,23 @@
     Output
       <error/rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables in this context.
+      ! Can't rename variables when specifying `before`.
+    Code
+      (expect_error(relocate_loc(x, b, before = c(new = c), before_arg = ".before")))
+    Output
+      <error/rlang_error>
+      Error in `relocate_loc()`:
+      ! Can't rename variables when specifying `.before`.
     Code
       (expect_error(relocate_loc(x, b, after = c(new = c))))
     Output
       <error/rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables in this context.
+      ! Can't rename variables when specifying `after`.
+    Code
+      (expect_error(relocate_loc(x, b, after = c(new = c), after_arg = ".after")))
+    Output
+      <error/rlang_error>
+      Error in `relocate_loc()`:
+      ! Can't rename variables when specifying `.after`.
 

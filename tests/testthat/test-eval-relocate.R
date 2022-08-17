@@ -187,6 +187,9 @@ test_that("`before` and `after` forbid renaming", {
 
   expect_snapshot({
     (expect_error(relocate_loc(x, b, before = c(new = c))))
+    (expect_error(relocate_loc(x, b, before = c(new = c), before_arg = ".before")))
+
     (expect_error(relocate_loc(x, b, after = c(new = c))))
+    (expect_error(relocate_loc(x, b, after = c(new = c), after_arg = ".after")))
   })
 })
