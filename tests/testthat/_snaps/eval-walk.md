@@ -84,6 +84,7 @@
       Warning:
       Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
       Please use `any_of()` or `all_of()` instead.
+      Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
 
 # eval_walk() has informative messages
 
