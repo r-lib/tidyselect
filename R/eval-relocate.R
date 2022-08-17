@@ -101,7 +101,7 @@ eval_relocate <- function(expr,
 
   if (has_before && has_after) {
     cli::cli_abort(
-      "Can't supply both `{before_arg}` and `{after_arg}`.",
+      "Can't supply both {.arg {before_arg}} and {.arg {after_arg}}.",
       call = error_call
     )
   }
