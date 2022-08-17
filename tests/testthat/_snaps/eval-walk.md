@@ -79,7 +79,7 @@
 # eval_walk() has informative messages
 
     Code
-      # # Using a predicate without where() warns
+      # Using a predicate without where() warns
       invisible(select_loc(iris, is_integer))
     Condition
       Warning:
