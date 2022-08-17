@@ -171,7 +171,7 @@ eval_relocate <- function(expr,
 }
 
 with_rename_errors <- function(expr, arg, error_call) {
-  tryCatch(
+  try_fetch(
     expr,
     tidyselect_error_disallowed_rename = function(cnd) {
       cli::cli_abort(
