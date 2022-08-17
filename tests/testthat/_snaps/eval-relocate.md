@@ -22,8 +22,16 @@
     Output
       <error/vctrs_error_subscript_oob>
       Error in `relocate_loc()`:
-      ! Can't select columns that don't exist.
+      ! Can't relocate columns that don't exist.
       x Column `c` doesn't exist.
+    Code
+      (expect_error(relocate_loc(x, c(1, 3))))
+    Output
+      <error/vctrs_error_subscript_oob>
+      Error in `relocate_loc()`:
+      ! Can't relocate columns that don't exist.
+      i Location 3 doesn't exist.
+      i There are only 2 columns.
     Code
       (expect_error(relocate_loc(x, a, before = c)))
     Output

@@ -30,12 +30,13 @@ subscript_action <- function(type) {
   switch(validate_type(type),
     select = "select",
     rename = "rename",
+    relocate = "relocate",
     pull = "extract"
   )
 }
 validate_type <- function(type) {
   # We might add `recode` in the future
-  if (!is_string(type, c("select", "rename", "pull"))) {
+  if (!is_string(type, c("select", "rename", "relocate", "pull"))) {
     cli::cli_abort("Unexpected value for {.arg tidyselect_type}.", .internal = TRUE)
   }
   type

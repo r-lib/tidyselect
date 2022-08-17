@@ -130,6 +130,7 @@ test_that("can't relocate with out-of-bounds variables by default", {
 
   expect_snapshot({
     (expect_error(relocate_loc(x, c)))
+    (expect_error(relocate_loc(x, c(1, 3))))
     (expect_error(relocate_loc(x, a, before = c)))
     (expect_error(relocate_loc(x, a, after = c)))
   })
