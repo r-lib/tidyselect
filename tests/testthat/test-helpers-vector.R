@@ -1,7 +1,7 @@
-test_that("`all_of()` doesn't fail if `.strict` is FALSE", {
-  expect_identical(
-    select_loc(letters2, all_of(c("a", "bar", "c")), strict = FALSE),
-    c(a = 1L, c = 3L)
+test_that("`all_of()` fails even if `.strict` is FALSE", {
+  expect_snapshot(
+    error = TRUE,
+    select_loc(letters2, all_of(c("a", "bar", "c")), strict = FALSE)
   )
 })
 
@@ -63,4 +63,11 @@ test_that("any_of generates informative error if ... not empty", {
   expect_snapshot(error = TRUE, {
     any_of("b", "c", "d")
   })
+})
+
+test_that("all_of() returns an integer vector", {
+  with_vars(
+    letters,
+    expect_equal(all_of(c("b", "c", "d")), 2:4)
+  )
 })

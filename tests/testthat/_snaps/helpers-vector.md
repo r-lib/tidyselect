@@ -1,3 +1,14 @@
+# `all_of()` fails even if `.strict` is FALSE
+
+    Code
+      select_loc(letters2, all_of(c("a", "bar", "c")), strict = FALSE)
+    Condition
+      Error in `select_loc()`:
+      ! Problem while evaluating `all_of(c("a", "bar", "c"))`.
+      Caused by error in `all_of()`:
+      ! Can't subset elements that don't exist.
+      x Element `bar` doesn't exist.
+
 # all_of() and any_of() check their inputs
 
     Code

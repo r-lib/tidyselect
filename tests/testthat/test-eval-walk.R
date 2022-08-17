@@ -299,14 +299,20 @@ test_that("binary `/` is short for set difference", {
 
 test_that("can select names with unrepresentable characters", {
   skip_if_not_installed("rlang", "0.4.2.9000")
-  withr::with_locale(c(LC_CTYPE = "C"), {
-    name <- "\u4e2d"
-    tbl <- setNames(data.frame(a = 1), name)
-    expect_identical(
-      select_loc(tbl, !!sym(name)),
-      set_names(1L, name)
-    )
-  })
+
+  # R now emits a warning when converting to symbol. Since Windows
+  # gained UTF-8 support, supporting unrepresentable characters is no
+  # longer necessary.
+  suppressWarnings(
+    withr::with_locale(c(LC_CTYPE = "C"), {
+      name <- "\u4e2d"
+      tbl <- setNames(data.frame(a = 1), name)
+      expect_identical(
+        select_loc(tbl, !!sym(name)),
+        set_names(1L, name)
+      )
+    })
+  )
 })
 
 test_that("`-1:-2` is syntax for `-(1:2)` for compatibility", {

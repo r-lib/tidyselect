@@ -26,11 +26,14 @@ eval_and <- function(expr, data_mask, context_mask) {
     y <- eval_sym(y, data_mask, context_mask, strict = TRUE)
 
     if (!is_function(x) && !is_function(y)) {
-      msg <- glue_c(
-        "Can't take the intersection of two columns.",
-        i = "`{x_name} & {y_name}` is always an empty selection."
+      cli::cli_abort(
+        c(
+          "Can't take the intersection of two columns.",
+          # can't use {.code}: https://github.com/r-lib/cli/issues/422
+          i = "`{x_name} & {y_name}` is always an empty selection."
+        ),
+        call = mask_error_call(data_mask)
       )
-      abort(msg, call = mask_error_call(data_mask))
     }
   }
 
@@ -48,31 +51,34 @@ walk_operand <- function(expr, data_mask, context_mask) {
 }
 
 stop_bad_bool_op <- function(bad, ok, call) {
-  msg <- glue_c(
-    "Can't use scalar `{bad}` in selections.",
-    i = "Do you need `{ok}` instead?"
+  cli::cli_abort(
+    c(
+      "Can't use scalar {.code {bad}} in selections.",
+      i = "Do you need {.arg {ok}} instead?"
+    ),
+    call = call
   )
-  abort(msg, call = call)
 }
 
 stop_bad_arith_op <- function(op, call) {
-  msg <- glue_c(
-    "Can't use arithmetic operator `{op}` in selection context."
+  cli::cli_abort(
+    "Can't use arithmetic operator `{op}` in selection context.",
+    call = call
   )
-  abort(msg, call = call)
 }
 
 stop_formula <- function(expr, call) {
   f <- as_label(expr)
-  msg <- glue_line(c(
-    "Formula shorthand must be wrapped in `where()`.",
-    "",
-    "  # Bad",
-    "  data %>% select({f})",
-    "",
-    "  # Good",
-    "  data %>% select(where({f}))"
-  ))
-
-  abort(msg, call = call)
+  cli::cli_abort(
+    c(
+      "Formula shorthand must be wrapped in `where()`.",
+      "",
+      " " = "  # Bad",
+      " " = "  data %>% select({f})",
+      "",
+      " " = "  # Good",
+      " " = "  data %>% select(where({f}))"
+    ),
+    call = call
+  )
 }

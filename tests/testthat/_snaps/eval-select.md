@@ -1,3 +1,41 @@
+# include and exclude validate their inputs
+
+    Code
+      x <- list(a = 1, b = 2, c = 3)
+      (expect_error(select_loc(x, "a", include = 1)))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! `include` must be a character vector.
+    Code
+      (expect_error(select_loc(x, "a", include = "d")))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! `include` must only include variables found in `data`.
+      i Unknown variables: d
+    Code
+      (expect_error(select_loc(x, "a", exclude = 1)))
+    Output
+      <error/rlang_error>
+      Error in `select_loc()`:
+      ! `include` must be a character vector.
+
+# can forbid rename syntax (#178)
+
+    Code
+      (expect_error(select_loc(mtcars, c(foo = cyl), allow_rename = FALSE)))
+    Output
+      <error/tidyselect:::error_disallowed_rename>
+      Error in `select_loc()`:
+      ! Can't rename variables in this context.
+    Code
+      (expect_error(select_loc(mtcars, c(cyl, foo = cyl), allow_rename = FALSE)))
+    Output
+      <error/tidyselect:::error_disallowed_rename>
+      Error in `select_loc()`:
+      ! Can't rename variables in this context.
+
 # can forbid empty selections
 
     Code

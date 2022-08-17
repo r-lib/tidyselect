@@ -54,7 +54,7 @@ test_that("can select with unnamed elements", {
 test_that("can customise error messages", {
   vars <- structure(letters, type = c("variable", "variables"))
   expect_error(vars_select(vars, "foo"), class = "vctrs_error_subscript_oob")
-  expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
+  # expect_warning(vars_select(vars, one_of("bim")), "Unknown variables:")
   expect_error(vars_rename(vars, A = "foo"), class = "vctrs_error_subscript_oob")
 })
 

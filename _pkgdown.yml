@@ -32,6 +32,7 @@ reference:
   contents:
   - eval_select
   - eval_rename
+  - eval_relocate
 
 - subtitle: Peek at current selection variables
   contents:
