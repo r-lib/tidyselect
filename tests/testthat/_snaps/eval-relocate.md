@@ -61,13 +61,13 @@
     Code
       (expect_error(relocate_loc(x, c(foo = b), allow_rename = FALSE)))
     Output
-      <error/tidyselect_error_disallowed_rename>
+      <error/tidyselect:::error_disallowed_rename>
       Error in `relocate_loc()`:
       ! Can't rename variables in this context.
     Code
       (expect_error(relocate_loc(x, c(b, foo = b), allow_rename = FALSE)))
     Output
-      <error/tidyselect_error_disallowed_rename>
+      <error/tidyselect:::error_disallowed_rename>
       Error in `relocate_loc()`:
       ! Can't rename variables in this context.
 
