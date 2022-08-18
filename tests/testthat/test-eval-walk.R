@@ -271,10 +271,17 @@ test_that("selections provide informative errors", {
 })
 
 test_that("can select with .data pronoun (#2715)", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   expect_identical(select_loc(c(foo = "foo"), .data$foo), c(foo = 1L))
   expect_identical(select_loc(c(foo = "foo"), .data[["foo"]]), c(foo = 1L))
   expect_identical(select_loc(letters2, .data$a:.data$b), c(a = 1L, b = 2L))
   expect_identical(select_loc(letters2, .data[["a"]]:.data[["b"]]), c(a = 1L, b = 2L))
+})
+
+test_that("use of .data is deprecated", {
+  x <- list(a = 1, b = 2, c = 3)
+  expect_snapshot(x <- select_loc(x, .data$a))
 })
 
 test_that(".data in env-expression has the lexical definition", {
@@ -335,6 +342,7 @@ test_that("eval_sym() still supports predicate functions starting with `is`", {
 })
 
 test_that("eval_walk() has informative messages", {
+  withr::local_options(lifecycle_verbosity = "quiet")
   reset_warning_verbosity("tidyselect::predicate_warn_is_integer")
   reset_warning_verbosity("tidyselect::predicate_warn_is.numeric")
   reset_warning_verbosity("tidyselect::predicate_warn_isTRUE")

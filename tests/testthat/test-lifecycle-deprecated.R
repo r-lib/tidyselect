@@ -315,6 +315,8 @@ test_that("vars_rename() sets variable context", {
 })
 
 test_that("vars_rename() supports `.data` pronoun", {
+  withr::local_options(lifecycle_verbosity = "quiet")
+
   expect_identical(vars_rename(c("a", "b"), B = .data$b), c(a = "a", B = "b"))
 })
 

@@ -277,6 +277,11 @@ call_kind <- function(expr, error_call) {
   fn <- as_string(head)
 
   if (fn %in% c("$", "[[") && identical(node_cadr(expr), quote(.data))) {
+    lifecycle::deprecate_warn("1.2.0",
+      what = I("Use of .data in tidyselect expressions"),
+      with = I("`any_of()` or `all_of()`")
+    )
+
     validate_dot_data(expr, error_call)
     return(".data")
   }

@@ -1,5 +1,9 @@
 # tidyselect (development version)
 
+* Use of `.data` in tidyselect expressions is now deprecated to more cleanly
+  separate tidy-select from data-masking. Use `any_of()` or `all_of()` instead
+  (#169).
+
 * `eval_select()` out-of-bounds errors now use the verb "select" rather than
   "subset" in the error message for consistency with `dplyr::select()` (#271).
 

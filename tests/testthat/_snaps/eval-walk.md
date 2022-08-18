@@ -95,6 +95,16 @@
       Caused by error:
       ! object 'foobar' not found
 
+# use of .data is deprecated
+
+    Code
+      x <- select_loc(x, .data$a)
+    Condition
+      Warning:
+      Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+      Please use `any_of()` or `all_of()` instead.
+      Call `lifecycle::last_lifecycle_warnings()` to see where this warning was generated.
+
 # eval_walk() has informative messages
 
     Code
