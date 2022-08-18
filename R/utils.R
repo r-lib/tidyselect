@@ -89,7 +89,7 @@ vec_is_coercible <- function(x, to, ..., x_arg = "x", to_arg = "to") {
 }
 
 flat_map_int <- function(.x, .fn, ...) {
-  out <- map(.x, .fn, ...)
+  out <- map(unname(.x), .fn, ...)
   vctrs::vec_c(!!!out, .ptype = int())
 }
 

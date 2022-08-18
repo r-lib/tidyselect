@@ -181,3 +181,27 @@ test_that("matches() complains about bad stringr pattern usage", {
     matches(stringr::fixed(c("a", "b")))
   })
 })
+
+test_that("can supply named vectors to pattern helpers (#250)", {
+  exp <- c(cyl = 2L, carb = 11L)
+
+  expect_equal(
+    select_loc(mtcars, matches(c(foo = "^c"))),
+    exp
+  )
+
+  expect_equal(
+    select_loc(mtcars, starts_with(c(foo = "c"))),
+    exp
+  )
+
+  expect_equal(
+    select_loc(mtcars, ends_with(c(foo = "l", bar = "b"))),
+    exp
+  )
+
+  expect_equal(
+    select_loc(mtcars, contains(c(foo = "yl", bar = "rb"))),
+    exp
+  )
+})

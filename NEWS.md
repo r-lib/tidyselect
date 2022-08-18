@@ -1,5 +1,7 @@
 # tidyselect (development version)
 
+* Fixed issue preventing `matches()` from working with named vectors (#250).
+
 * Use of `.data` in tidyselect expressions is now deprecated to more cleanly
   separate tidy-select from data-masking. Use `any_of()` or `all_of()` instead
   (#169).
