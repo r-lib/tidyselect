@@ -4,6 +4,9 @@
   separate tidy-select from data-masking. Use `any_of()` or `all_of()` instead
   (#169).
 
+* `eval_select()` out-of-bounds errors now use the verb "select" rather than
+  "subset" in the error message for consistency with `dplyr::select()` (#271).
+
 * New `eval_relocate()` for moving a selection. This powers `dplyr::relocate()`
   (#232).
 

@@ -73,14 +73,17 @@ eval_relocate <- function(expr,
                           error_call = caller_env()) {
   check_dots_empty()
 
-  sel <- eval_select(
+  expr <- as_quosure(expr, env = env)
+
+  sel <- eval_select_impl(
+    x = data,
+    names = names(data),
     expr = expr,
-    data = data,
-    env = env,
     strict = strict,
     name_spec = name_spec,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
+    type = "relocate",
     error_call = error_call
   )
 
