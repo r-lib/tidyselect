@@ -233,17 +233,6 @@ test_that("vars_select() fails when renaming to same name", {
   expect_error(vars_select(letters[1:2], A = a, A = b), class = "vctrs_error_names_must_be_unique")
 })
 
-test_that("vars_select() fails informatively when renaming to same", {
-  skip("FIXME")
-  expect_snapshot(error = TRUE, {
-    "Renaming to same:"
-    vars_select(letters, foo = a, bar = b, foo = c, ok = d, bar = e)
-
-    "Renaming to existing:"
-    vars_select(letters, a = b, ok = c, d = e, everything())
-  })
-})
-
 test_that("vars_select() has consistent location errors", {
   expect_error(vars_select(letters, foo), class = "vctrs_error_subscript_oob")
   expect_error(vars_select(letters, -foo), class = "vctrs_error_subscript_oob")
