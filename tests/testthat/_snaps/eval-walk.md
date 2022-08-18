@@ -26,6 +26,25 @@
       Error in `select_loc()`:
       ! Can't use arithmetic operator `^` in selection context.
 
+# symbol lookup outside data informs caller about better practice
+
+    Code
+      vars <- c("a", "b")
+      select_loc(letters2, vars)
+    Message
+      Note: Using an external vector in selections is ambiguous.
+      i Use `all_of(vars)` instead of `vars` to silence this message.
+      i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+      This message is displayed once every 8 hours.
+    Output
+      a b 
+      1 2 
+    Code
+      select_loc(letters2, vars)
+    Output
+      a b 
+      1 2 
+
 # symbol evaluation only informs once (#184)
 
     Code

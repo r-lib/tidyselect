@@ -123,15 +123,12 @@ test_that("can use arithmetic operators in non-data context", {
 })
 
 test_that("symbol lookup outside data informs caller about better practice", {
-  skip("Non-deterministic failures")
-  local_options(tidyselect_verbosity = "verbose")
+  reset_message_verbosity("tidyselect::strict_lookup_vars")
 
-  vars1 <- c("a", "b")
-  expect_message(select_loc(letters2, vars1))
-
-  vars2 <- c("a", "b") # To force a message the second time
-  expect_snapshot(error = TRUE, {
-    select_loc(letters2, vars2)
+  expect_snapshot({
+    vars <- c("a", "b")
+    select_loc(letters2, vars)
+    select_loc(letters2, vars)
   })
 })
 
