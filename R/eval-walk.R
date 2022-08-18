@@ -394,7 +394,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
           i = "Please update your code."
         ),
         .frequency = "regularly",
-        .frequency_id = paste("tidyselect::predicate_warn_", name)
+        .frequency_id = paste0("tidyselect::predicate_warn_", name)
       )
     }
 

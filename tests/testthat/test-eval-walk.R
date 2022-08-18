@@ -123,19 +123,18 @@ test_that("can use arithmetic operators in non-data context", {
 })
 
 test_that("symbol lookup outside data informs caller about better practice", {
-  skip("Non-deterministic failures")
-  local_options(tidyselect_verbosity = "verbose")
+  reset_message_verbosity("tidyselect::strict_lookup_vars")
 
-  vars1 <- c("a", "b")
-  expect_message(select_loc(letters2, vars1))
-
-  vars2 <- c("a", "b") # To force a message the second time
-  expect_snapshot(error = TRUE, {
-    select_loc(letters2, vars2)
+  expect_snapshot({
+    vars <- c("a", "b")
+    select_loc(letters2, vars)
+    select_loc(letters2, vars)
   })
 })
 
 test_that("symbol evaluation only informs once (#184)", {
+  reset_message_verbosity("tidyselect::strict_lookup__vars_default")
+
   expect_snapshot({
     "Default"
     with_options(tidyselect_verbosity = NULL, {
@@ -164,6 +163,9 @@ test_that("symbol evaluation only informs once (#184)", {
 })
 
 test_that("symbol evaluation informs from global environment but not packages", {
+  reset_message_verbosity("tidyselect::strict_lookup_from-global-env")
+  reset_message_verbosity("tidyselect::strict_lookup_from-ns-env")
+
   fn <- function(name, select_loc) {
     assign(name, 1L)
     eval(bquote(select_loc(iris, .(as.symbol(name)))))
@@ -341,9 +343,12 @@ test_that("eval_sym() still supports predicate functions starting with `is`", {
 
 test_that("eval_walk() has informative messages", {
   withr::local_options(lifecycle_verbosity = "quiet")
+  reset_warning_verbosity("tidyselect::predicate_warn_is_integer")
+  reset_warning_verbosity("tidyselect::predicate_warn_is.numeric")
+  reset_warning_verbosity("tidyselect::predicate_warn_isTRUE")
 
   expect_snapshot({
-    "# Using a predicate without where() warns"
+    "Using a predicate without where() warns"
     invisible(select_loc(iris, is_integer))
     invisible(select_loc(iris, is.numeric))
     invisible(select_loc(iris, isTRUE))
