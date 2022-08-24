@@ -96,8 +96,7 @@ starts_with <- function(match,
   flat_map_int(match, starts_with_impl, vars)
 }
 starts_with_impl <- function(x, vars) {
-  n <- nchar(x)
-  which_vars(x, substr(vars, 1, n))
+  which(startsWith(vars, x))
 }
 
 #' @rdname starts_with
@@ -113,12 +112,10 @@ ends_with <- function(match,
     match <- tolower(match)
   }
 
-  length <- nchar(vars)
-  flat_map_int(match, ends_with_impl, vars, length)
+  flat_map_int(match, ends_with_impl, vars)
 }
-ends_with_impl <- function(x, vars, length) {
-  n <- nchar(x)
-  which_vars(x, substr(vars, pmax(1, length - n + 1), length))
+ends_with_impl <- function(x, vars) {
+  which(endsWith(vars, x))
 }
 
 #' @rdname starts_with
@@ -205,8 +202,4 @@ match_vars <- function(needle, haystack) {
 
 grep_vars <- function(needle, haystack, ...) {
   grep(needle, haystack, ...)
-}
-
-which_vars <- function(needle, haystack) {
-  which(needle == haystack)
 }
