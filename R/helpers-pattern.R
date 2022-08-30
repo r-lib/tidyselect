@@ -14,8 +14,9 @@
 #' @param match A character vector. If length > 1, the union of the
 #'   matches is taken.
 #'
-#'   For `matches()` only, this can be a stringr pattern. The other helpers
-#'   match only on fixed strings.
+#'   For `starts_with()`, `ends_with()`, and `contains()` this is an exact
+#'   match. For `matches()` this is a regular expression, and can be a
+#'   stringr pattern.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
 #' @param vars A character vector of variable names. If not supplied,

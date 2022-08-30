@@ -22,8 +22,9 @@ num_range(prefix, range, suffix = "", width = NULL, vars = NULL)
 \item{match}{A character vector. If length > 1, the union of the
 matches is taken.
 
-For \code{matches()} only, this can be a stringr pattern. The other helpers
-match only on fixed strings.}
+For \code{starts_with()}, \code{ends_with()}, and \code{contains()} this is an exact
+match. For \code{matches()} this is a regular expression, and can be a
+stringr pattern.}
 
 \item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}
