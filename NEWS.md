@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* `eval_select(allow_rename = FALSE)` now properly fails with partial
+  renaming (#305).
+
 * Fixed issue preventing `matches()` from working with named vectors (#250).
 
 * Use of `.data` in tidyselect expressions is now deprecated to more cleanly

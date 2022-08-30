@@ -90,6 +90,8 @@ test_that("can forbid rename syntax (#178)", {
   expect_snapshot({
     (expect_error(select_loc(mtcars, c(foo = cyl), allow_rename = FALSE)))
     (expect_error(select_loc(mtcars, c(cyl, foo = cyl), allow_rename = FALSE)))
+    (expect_error(select_loc(mtcars, c(cyl, foo = mpg), allow_rename = FALSE)))
+    (expect_error(select_loc(mtcars, c(foo = mpg, cyl), allow_rename = FALSE)))
   })
 
   expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), c("cyl", "carb", "am"))
