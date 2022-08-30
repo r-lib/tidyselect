@@ -15,7 +15,6 @@ mtcars %&amp;gt;% select(cyl, am, vs)
 #&amp;gt; 3     4     1     1
 #&amp;gt; 4     6     0     1
 #&amp;gt; # ... with 28 more rows
-#&amp;gt; # i Use `print(n = ...)` to see more rows
 
 mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; # A tibble: 32 x 3
@@ -26,7 +25,6 @@ mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; 3  22.8     4   108
 #&amp;gt; 4  21.4     6   258
 #&amp;gt; # ... with 28 more rows
-#&amp;gt; # i Use `print(n = ...)` to see more rows
 
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
@@ -37,7 +35,7 @@ result &amp;lt;- mtcars %&amp;gt;% select(vars)
 #&amp;gt; Note: Using an external vector in selections is ambiguous.
 #&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
 #&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
-#&amp;gt; This message is displayed once per session.
+#&amp;gt; This message is displayed once every 8 hours.
 
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
@@ -101,7 +99,6 @@ mtcars %&amp;gt;% select(cyl, am, vs)
 #&amp;gt; 3     4     1     1
 #&amp;gt; 4     6     0     1
 #&amp;gt; # ... with 28 more rows
-#&amp;gt; # i Use `print(n = ...)` to see more rows
 
 mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; # A tibble: 32 x 3
@@ -112,7 +109,6 @@ mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; 3  22.8     4   108
 #&amp;gt; 4  21.4     6   258
 #&amp;gt; # ... with 28 more rows
-#&amp;gt; # i Use `print(n = ...)` to see more rows
 
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
@@ -123,7 +119,7 @@ result &amp;lt;- mtcars %&amp;gt;% select(vars)
 #&amp;gt; Note: Using an external vector in selections is ambiguous.
 #&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
 #&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
-#&amp;gt; This message is displayed once per session.
+#&amp;gt; This message is displayed once every 8 hours.
 
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
@@ -243,7 +239,6 @@ the deprecation process.
 <span><span class="co">#&gt; 3     4     1     1</span></span>
 <span><span class="co">#&gt; 4     6     0     1</span></span>
 <span><span class="co">#&gt; # ... with 28 more rows</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span>
 <span></span>
 <span><span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 32 x 3</span></span>
@@ -253,8 +248,7 @@ the deprecation process.
 <span><span class="co">#&gt; 2  21       6   160</span></span>
 <span><span class="co">#&gt; 3  22.8     4   108</span></span>
 <span><span class="co">#&gt; 4  21.4     6   258</span></span>
-<span><span class="co">#&gt; # ... with 28 more rows</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 28 more rows</span></span></code></pre><p></p></div>
 <p>For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a note informing
 you that selecting with an external variable is ambiguous because it is
@@ -264,7 +258,7 @@ not clear whether you want a data frame column or an external object.</p>
 <span><span class="co">#&gt; Note: Using an external vector in selections is ambiguous.</span></span>
 <span><span class="co">#&gt; i Use `all_of(vars)` instead of `vars` to silence this message.</span></span>
 <span><span class="co">#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span>
-<span><span class="co">#&gt; This message is displayed once per session.</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; This message is displayed once every 8 hours.</span></span></code></pre><p></p></div>
 <p>This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame

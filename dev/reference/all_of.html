@@ -133,8 +133,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <span><span class="co">#&gt; 2          4.9         3  </span></span>
 <span><span class="co">#&gt; 3          4.7         3.2</span></span>
 <span><span class="co">#&gt; 4          4.6         3.1</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
 <p>To refer to these variables in selecting function, use <code>all_of()</code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 2</span></span>
@@ -145,7 +144,6 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <span><span class="co">#&gt; 3          4.7         3.2</span></span>
 <span><span class="co">#&gt; 4          4.6         3.1</span></span>
 <span><span class="co">#&gt; # ... with 146 more rows</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 300 x 5</span></span>
@@ -155,17 +153,17 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <span><span class="co">#&gt; 2          1.4         0.2 setosa  Sepal.Width    3.5</span></span>
 <span><span class="co">#&gt; 3          1.4         0.2 setosa  Sepal.Length   4.9</span></span>
 <span><span class="co">#&gt; 4          1.4         0.2 setosa  Sepal.Width    3  </span></span>
-<span><span class="co">#&gt; # ... with 296 more rows</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 296 more rows</span></span></code></pre><p></p></div>
 <p>If any of the variable is missing from the data frame, that's an error:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">starwars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error:</span></span>
-<span><span class="co">#&gt; ! Can't subset columns that don't exist.</span></span>
-<span><span class="co">#&gt; x Columns `Sepal.Length` and `Sepal.Width` don't exist.</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; ! Problem while evaluating `all_of(vars)`.</span></span>
+<span><span class="co">#&gt; Caused by error in `all_of()`:</span></span>
+<span><span class="co">#&gt; ! Can't subset elements that don't exist.</span></span>
+<span><span class="co">#&gt; x Elements `Sepal.Length` and `Sepal.Width` don't exist.</span></span></code></pre><p></p></div>
 <p>Use <code>any_of()</code> to allow missing variables:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">starwars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">any_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 87 x 0</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # A tibble: 87 x 0</span></span></code></pre><p></p></div>
 <p><code>any_of()</code> is especially useful to remove variables from a data
 frame because calling it again does not cause an error:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="../reference/all_of.html">any_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></span>
@@ -177,7 +175,6 @@ frame because calling it again does not cause an error:</p>
 <span><span class="co">#&gt; 3          1.3         0.2 setosa </span></span>
 <span><span class="co">#&gt; 4          1.5         0.2 setosa </span></span>
 <span><span class="co">#&gt; # ... with 146 more rows</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="../reference/all_of.html">any_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="../reference/all_of.html">any_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 3</span></span>
@@ -187,8 +184,7 @@ frame because calling it again does not cause an error:</p>
 <span><span class="co">#&gt; 2          1.4         0.2 setosa </span></span>
 <span><span class="co">#&gt; 3          1.3         0.2 setosa </span></span>
 <span><span class="co">#&gt; 4          1.5         0.2 setosa </span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span>
-<span><span class="co">#&gt; # i Use `print(n = ...)` to see more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
