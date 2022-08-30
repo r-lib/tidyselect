@@ -44,7 +44,6 @@ iris \%>\% select(where(is.factor))
 #> 3 setosa 
 #> 4 setosa 
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 
 is.numeric(iris[[4]])
 #> [1] TRUE
@@ -61,7 +60,6 @@ iris \%>\% select(where(is.numeric))
 #> 3          4.7         3.2          1.3         0.2
 #> 4          4.6         3.1          1.5         0.2
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 \subsection{The formula shorthand}{
 
@@ -77,7 +75,6 @@ function on the spot. These expressions are equivalent:
 #> 3          4.7         3.2          1.3         0.2
 #> 4          4.6         3.1          1.5         0.2
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 
 iris \%>\% select(where(function(x) is.numeric(x)))
 #> # A tibble: 150 x 4
@@ -88,7 +85,6 @@ iris \%>\% select(where(function(x) is.numeric(x)))
 #> 3          4.7         3.2          1.3         0.2
 #> 4          4.6         3.1          1.5         0.2
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 
 iris \%>\% select(where(~ is.numeric(.x)))
 #> # A tibble: 150 x 4
@@ -99,7 +95,6 @@ iris \%>\% select(where(~ is.numeric(.x)))
 #> 3          4.7         3.2          1.3         0.2
 #> 4          4.6         3.1          1.5         0.2
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 
 The shorthand is useful for adding logic inline. Here we select all
@@ -114,7 +109,6 @@ numeric variables whose mean is greater than 3.5:
 #> 3          4.7          1.3
 #> 4          4.6          1.5
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 }
 }
