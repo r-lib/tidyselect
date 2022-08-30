@@ -58,7 +58,6 @@ iris[, vars]
 #> 3          4.7         3.2
 #> 4          4.6         3.1
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 
 To refer to these variables in selecting function, use \code{all_of()}:
@@ -72,7 +71,6 @@ To refer to these variables in selecting function, use \code{all_of()}:
 #> 3          4.7         3.2
 #> 4          4.6         3.1
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 
 iris \%>\% pivot_longer(all_of(vars))
 #> # A tibble: 300 x 5
@@ -83,22 +81,22 @@ iris \%>\% pivot_longer(all_of(vars))
 #> 3          1.4         0.2 setosa  Sepal.Length   4.9
 #> 4          1.4         0.2 setosa  Sepal.Width    3  
 #> # ... with 296 more rows
-#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 
 If any of the variable is missing from the data frame, that's an error:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(all_of(vars))
 #> Error:
-#> ! Can't subset columns that don't exist.
-#> x Columns `Sepal.Length` and `Sepal.Width` don't exist.
+#> ! Problem while evaluating `all_of(vars)`.
+#> Caused by error in `all_of()`:
+#> ! Can't subset elements that don't exist.
+#> x Elements `Sepal.Length` and `Sepal.Width` don't exist.
 }\if{html}{\out{</div>}}
 
 Use \code{any_of()} to allow missing variables:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(any_of(vars))
 #> # A tibble: 87 x 0
-#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 
 \code{any_of()} is especially useful to remove variables from a data
@@ -113,7 +111,6 @@ frame because calling it again does not cause an error:
 #> 3          1.3         0.2 setosa 
 #> 4          1.5         0.2 setosa 
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 
 iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
 #> # A tibble: 150 x 3
@@ -124,7 +121,6 @@ iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
 #> 3          1.3         0.2 setosa 
 #> 4          1.5         0.2 setosa 
 #> # ... with 146 more rows
-#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 }
 

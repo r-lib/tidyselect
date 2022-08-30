@@ -18,7 +18,6 @@ With selecting functions like \code{dplyr::select()} or
 #> 3     4     1     1
 #> 4     6     0     1
 #> # ... with 28 more rows
-#> # i Use `print(n = ...)` to see more rows
 
 mtcars \%>\% select(mpg:disp)
 #> # A tibble: 32 x 3
@@ -29,7 +28,6 @@ mtcars \%>\% select(mpg:disp)
 #> 3  22.8     4   108
 #> 4  21.4     6   258
 #> # ... with 28 more rows
-#> # i Use `print(n = ...)` to see more rows
 }\if{html}{\out{</div>}}
 
 For historical reasons, it is also possible to refer an external vector
@@ -42,7 +40,7 @@ result <- mtcars \%>\% select(vars)
 #> Note: Using an external vector in selections is ambiguous.
 #> i Use `all_of(vars)` instead of `vars` to silence this message.
 #> i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-#> This message is displayed once per session.
+#> This message is displayed once every 8 hours.
 }\if{html}{\out{</div>}}
 
 This note will become a warning in the future, and then an error. We
