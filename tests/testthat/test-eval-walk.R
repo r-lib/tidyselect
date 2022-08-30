@@ -374,8 +374,12 @@ test_that("can forbid empty selection", {
 })
 
 test_that("can make empty selection with allow_rename = FALSE", {
-  expect_identical(
+  expect_equal(
     select_loc(mtcars, character(), allow_rename = FALSE),
     set_names(integer(0))
+  )
+  expect_equal(
+    select_loc(mtcars, c(cyl, am), allow_rename = FALSE),
+    c(cyl = 2L, am = 9L)
   )
 })
