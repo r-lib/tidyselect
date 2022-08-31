@@ -35,6 +35,18 @@
       <error/tidyselect:::error_disallowed_rename>
       Error in `select_loc()`:
       ! Can't rename variables in this context.
+    Code
+      (expect_error(select_loc(mtcars, c(cyl, foo = mpg), allow_rename = FALSE)))
+    Output
+      <error/tidyselect:::error_disallowed_rename>
+      Error in `select_loc()`:
+      ! Can't rename variables in this context.
+    Code
+      (expect_error(select_loc(mtcars, c(foo = mpg, cyl), allow_rename = FALSE)))
+    Output
+      <error/tidyselect:::error_disallowed_rename>
+      Error in `select_loc()`:
+      ! Can't rename variables in this context.
 
 # can forbid empty selections
 
