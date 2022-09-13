@@ -14,8 +14,11 @@ test_that("eval_*() respects proxy settings", {
   expect_equal(eval_rename(quote(c(x = everything())), foo), c(x1 = 1, x2 = 2))
 
   expect_snapshot(error = TRUE, {
-    eval_relocate(quote(where(is.numeric)), foo)
     eval_select(quote(where(is.numeric)), foo)
     eval_rename(quote(c(x = where(is.numeric))), foo)
+
+    eval_relocate(quote(where(is.numeric)), foo)
+    eval_relocate(quote(x), before = quote(where(is.numeric)), foo)
+    eval_relocate(quote(x), after = quote(where(is.numeric)), foo)
   })
 })
