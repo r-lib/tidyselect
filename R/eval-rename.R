@@ -9,6 +9,12 @@ eval_rename <- function(expr,
                         allow_predicates = TRUE,
                         error_call = caller_env()) {
   check_dots_empty()
+
+  if (is.na(allow_predicates)) {
+    allow_predicates <- tidyselect_data_supports_predicates(data)
+  }
+  data <- tidyselect_data_proxy(data)
+
   rename_impl(
     data,
     names(data),

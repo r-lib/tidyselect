@@ -27,7 +27,7 @@ eval_select(
   name_spec = NULL,
   allow_rename = TRUE,
   allow_empty = TRUE,
-  allow_predicates = TRUE,
+  allow_predicates = NA,
   error_call = caller_env()
 )
 }
@@ -55,7 +55,9 @@ expressions like \code{c(foo = c(bar = starts_with("foo")))}. See the
 valid name specs.}
 
 \item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
-use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.}
+use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.
+If \code{NA}, the default, calls \code{\link[=tidyselect_data_allows_predicates]{tidyselect_data_allows_predicates()}} on \code{data}
+to find out.}
 
 \item{error_call}{The execution environment of a currently
 running function, e.g. \code{caller_env()}. The function will be

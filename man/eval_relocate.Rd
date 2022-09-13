@@ -14,7 +14,7 @@ eval_relocate(
   name_spec = NULL,
   allow_rename = TRUE,
   allow_empty = TRUE,
-  allow_predicates = TRUE,
+  allow_predicates = NA,
   before_arg = "before",
   after_arg = "after",
   env = caller_env(),
@@ -55,7 +55,9 @@ in an empty selection. If \code{FALSE}, will error if \code{expr} yields an empt
 selection.}
 
 \item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
-use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.}
+use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.
+If \code{NA}, the default, calls \code{\link[=tidyselect_data_allows_predicates]{tidyselect_data_allows_predicates()}} on \code{data}
+to find out.}
 
 \item{before_arg, after_arg}{Argument names for \code{before} and \code{after}. These
 are used in error messages.}
