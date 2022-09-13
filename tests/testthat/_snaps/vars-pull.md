@@ -45,8 +45,7 @@
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Subscript `var` has the wrong type `double`.
-      i It must be numeric or character.
+      x Can't convert from `var` <double> to <integer> due to loss of precision.
     Code
       vars_pull(letters, TRUE)
     Condition

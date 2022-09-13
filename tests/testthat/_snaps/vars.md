@@ -14,5 +14,5 @@
     Condition
       Error:
       ! Selection helpers must be used within a *selecting* function.
-      i See ]8;package=tidyselect:topic=faq-selection-context;ide:help?tidyselect::faq-selection-context]8;; for details.
+      i See ]8;package = tidyselect:topic = faq-selection-context;ide:help?tidyselect::faq-selection-context]8;; for details.
 
