@@ -39,6 +39,8 @@
 #' @param allow_empty If `TRUE` (the default), it is ok for `expr` to result
 #'   in an empty selection. If `FALSE`, will error if `expr` yields an empty
 #'   selection.
+#' @param allow_predicates If `TRUE` (the default), it is ok for `expr` to
+#'   use predicate functions? If `FALSE`, will error if `expr` uses a predicate.
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -126,6 +128,7 @@ eval_select <- function(expr,
                         name_spec = NULL,
                         allow_rename = TRUE,
                         allow_empty = TRUE,
+                        allow_predicates = TRUE,
                         error_call = caller_env()) {
   check_dots_empty()
   eval_select_impl(
@@ -138,6 +141,7 @@ eval_select <- function(expr,
     name_spec = name_spec,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
+    allow_predicates = allow_predicates,
     error_call = error_call,
   )
 }
@@ -152,6 +156,7 @@ eval_select_impl <- function(x,
                              uniquely_named = NULL,
                              allow_rename = TRUE,
                              allow_empty = TRUE,
+                             allow_predicates = TRUE,
                              type = "select",
                              error_call = caller_env()) {
   if (!is_null(x)) {
@@ -177,6 +182,7 @@ eval_select_impl <- function(x,
       uniquely_named = uniquely_named,
       allow_rename = allow_rename,
       allow_empty = allow_empty,
+      allow_predicates = allow_predicates,
       type = type,
       error_call = error_call
     ),

@@ -26,6 +26,7 @@ eval_select(
   name_spec = NULL,
   allow_rename = TRUE,
   allow_empty = TRUE,
+  allow_predicates = TRUE,
   error_call = caller_env()
 )
 }
@@ -67,6 +68,9 @@ is useful to implement purely selective behaviour.}
 \item{allow_empty}{If \code{TRUE} (the default), it is ok for \code{expr} to result
 in an empty selection. If \code{FALSE}, will error if \code{expr} yields an empty
 selection.}
+
+\item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
+use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.}
 }
 \value{
 A named vector of numeric locations, one for each of the

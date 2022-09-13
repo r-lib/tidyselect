@@ -84,6 +84,14 @@
         invisible(NULL)
       })
 
+# can forbid use of predicates
+
+    Code
+      select_loc(iris, where(is.factor), allow_predicates = FALSE)
+    Condition
+      Error in `select_loc()`:
+      ! This tidyselect interface doesn't support predicates.
+
 # selections provide informative errors
 
     Code
