@@ -6,6 +6,7 @@ eval_rename <- function(expr,
                         ...,
                         strict = TRUE,
                         name_spec = NULL,
+                        allow_predicates = TRUE,
                         error_call = caller_env()) {
   check_dots_empty()
   rename_impl(
@@ -14,6 +15,7 @@ eval_rename <- function(expr,
     as_quosure(expr, env),
     strict = strict,
     name_spec = name_spec,
+    allow_predicates = allow_predicates,
     error_call = error_call
   )
 }
@@ -24,6 +26,7 @@ rename_impl <- function(x,
                         sel,
                         strict = TRUE,
                         name_spec = NULL,
+                        allow_predicates = TRUE,
                         error_call) {
   if (is_null(names)) {
     cli::cli_abort("Can't rename an unnamed vector.", call = error_call)
@@ -36,6 +39,7 @@ rename_impl <- function(x,
     strict = strict,
     name_spec = name_spec,
     type = "rename",
+    allow_predicates = allow_predicates,
     error_call = error_call
   )
 

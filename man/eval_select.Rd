@@ -12,6 +12,7 @@ eval_rename(
   ...,
   strict = TRUE,
   name_spec = NULL,
+  allow_predicates = TRUE,
   error_call = caller_env()
 )
 
@@ -53,6 +54,9 @@ expressions like \code{c(foo = c(bar = starts_with("foo")))}. See the
 \code{name_spec} argument of \code{\link[vctrs:vec_c]{vctrs::vec_c()}} for a description of
 valid name specs.}
 
+\item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
+use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.}
+
 \item{error_call}{The execution environment of a currently
 running function, e.g. \code{caller_env()}. The function will be
 mentioned in error messages as the source of the error. See the
@@ -68,9 +72,6 @@ is useful to implement purely selective behaviour.}
 \item{allow_empty}{If \code{TRUE} (the default), it is ok for \code{expr} to result
 in an empty selection. If \code{FALSE}, will error if \code{expr} yields an empty
 selection.}
-
-\item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
-use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.}
 }
 \value{
 A named vector of numeric locations, one for each of the
