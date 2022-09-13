@@ -12,7 +12,7 @@ eval_rename(
   ...,
   strict = TRUE,
   name_spec = NULL,
-  allow_predicates = TRUE,
+  allow_predicates = NA,
   error_call = caller_env()
 )
 
@@ -56,7 +56,7 @@ valid name specs.}
 
 \item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
 use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.
-If \code{NA}, the default, calls \code{\link[=tidyselect_data_allow_predicates]{tidyselect_data_allow_predicates()}} on \code{data}
+If \code{NA}, the default, calls \code{\link[=tidyselect_data_supports_predicates]{tidyselect_data_supports_predicates()}} on \code{data}
 to find out.}
 
 \item{error_call}{The execution environment of a currently
