@@ -1,4 +1,4 @@
-# multiplication works
+# eval_*() respects proxy settings
 
     Code
       eval_relocate(quote(where(is.numeric)), foo)
@@ -11,8 +11,8 @@
       Error:
       ! This tidyselect interface doesn't support predicates.
     Code
-      eval_rename(quote(where(is.numeric)), foo)
+      eval_rename(quote(c(x = where(is.numeric))), foo)
     Condition
       Error:
-      ! All renaming inputs must be named.
+      ! This tidyselect interface doesn't support predicates.
 

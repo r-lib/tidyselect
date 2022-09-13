@@ -41,7 +41,7 @@
 #'   selection.
 #' @param allow_predicates If `TRUE` (the default), it is ok for `expr` to
 #'   use predicate functions? If `FALSE`, will error if `expr` uses a predicate.
-#'   If `NA`, the default, calls [tidyselect_data_allows_predicates()] on `data`
+#'   If `NA`, the default, calls [tidyselect_data_supports_predicates()] on `data`
 #'   to find out.
 #' @inheritParams rlang::args_dots_empty
 #'

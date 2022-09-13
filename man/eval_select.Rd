@@ -56,7 +56,7 @@ valid name specs.}
 
 \item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
 use predicate functions? If \code{FALSE}, will error if \code{expr} uses a predicate.
-If \code{NA}, the default, calls \code{\link[=tidyselect_data_allows_predicates]{tidyselect_data_allows_predicates()}} on \code{data}
+If \code{NA}, the default, calls \code{\link[=tidyselect_data_allow_predicates]{tidyselect_data_allow_predicates()}} on \code{data}
 to find out.}
 
 \item{error_call}{The execution environment of a currently

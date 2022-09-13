@@ -6,7 +6,7 @@ eval_rename <- function(expr,
                         ...,
                         strict = TRUE,
                         name_spec = NULL,
-                        allow_predicates = TRUE,
+                        allow_predicates = NA,
                         error_call = caller_env()) {
   check_dots_empty()
 
