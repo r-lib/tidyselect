@@ -10,8 +10,8 @@ tidyselect_data_proxy(x)
 tidyselect_data_supports_predicates(x)
 }
 \arguments{
-\item{x}{A data-frame like object passed to \verb{[eval_select()]},
-\code{eval_rename()}, and friends.}
+\item{x}{A data-frame like object passed to \code{\link[=eval_select]{eval_select()}},
+\code{\link[=eval_rename]{eval_rename()}}, and friends.}
 }
 \description{
 \itemize{
