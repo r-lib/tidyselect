@@ -40,9 +40,9 @@
 #'   in an empty selection. If `FALSE`, will error if `expr` yields an empty
 #'   selection.
 #' @param allow_predicates If `TRUE` (the default), it is ok for `expr` to
-#'   use predicate functions? If `FALSE`, will error if `expr` uses a predicate.
-#'   If `NA`, the default, calls [tidyselect_data_supports_predicates()] on `data`
-#'   to find out.
+#'   use predicate (i.e. in `where()`). If `FALSE`, will error if `expr` uses a
+#'   predicate. If `NA`, the default, calls
+#'   [tidyselect_data_supports_predicates()] on `data` to find out.
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
