@@ -6,7 +6,8 @@ test_that("eval_*() respects proxy settings", {
     },
     tidyselect_data_supports_predicates.foo = function(x) {
       FALSE
-    }
+    },
+    .env = globalenv()
   )
 
   expect_equal(eval_relocate(quote(everything()), foo), c(x = 1, y = 2))
