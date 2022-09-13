@@ -33,6 +33,7 @@ reference:
   - eval_select
   - eval_rename
   - eval_relocate
+  - tidyselect_data_proxy
 
 - subtitle: Peek at current selection variables
   contents:
