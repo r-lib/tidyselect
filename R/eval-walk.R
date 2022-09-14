@@ -192,7 +192,8 @@ as_indices_sel_impl <- function(x, vars, strict, data = NULL, allow_predicates =
     if (!allow_predicates) {
       cli::cli_abort(
         "This tidyselect interface doesn't support predicates.",
-        call = call
+        call = call,
+        class = "tidyselect_predicates_unsupported"
       )
     }
     if (is_null(data)) {
