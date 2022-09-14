@@ -4,7 +4,7 @@ test_that("eval_*() respects proxy settings", {
     tidyselect_data_proxy.foo = function(x) {
       data.frame(x = 1, y = 2)
     },
-    tidyselect_data_supports_predicates.foo = function(x) {
+    tidyselect_data_has_predicates.foo = function(x) {
       FALSE
     },
     .env = globalenv()
