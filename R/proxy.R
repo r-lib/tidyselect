@@ -1,7 +1,7 @@
 #' tidyselect methods for custom types
 #'
 #' * `tidyselect_data_proxy()` should return a 0-row data frame.
-#' * `tidyselect_data_supports_predicates()` should return `FALSE` if
+#' * `tidyselect_data_has_predicates()` should return `FALSE` if
 #'   `tidyselect_data_proxy()` doesn't return actual types.
 #'
 #' @param x A data-frame like object passed to [eval_select()],
@@ -18,10 +18,10 @@ tidyselect_data_proxy.default <- function(x) {
 
 #' @rdname tidyselect_data_proxy
 #' @export
-tidyselect_data_supports_predicates <- function(x) {
-  UseMethod("tidyselect_data_supports_predicates")
+tidyselect_data_has_predicates <- function(x) {
+  UseMethod("tidyselect_data_has_predicates")
 }
 #' @export
-tidyselect_data_supports_predicates.default <- function(x) {
+tidyselect_data_has_predicates.default <- function(x) {
   TRUE
 }

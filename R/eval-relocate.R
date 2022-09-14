@@ -74,7 +74,7 @@ eval_relocate <- function(expr,
                           error_call = caller_env()) {
   check_dots_empty()
 
-  allow_predicates <- allow_predicates && tidyselect_data_supports_predicates(data)
+  allow_predicates <- allow_predicates && tidyselect_data_has_predicates(data)
   data <- tidyselect_data_proxy(data)
 
   expr <- as_quosure(expr, env = env)
