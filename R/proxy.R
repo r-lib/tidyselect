@@ -1,8 +1,12 @@
 #' tidyselect methods for custom types
 #'
-#' * `tidyselect_data_proxy()` should return a 0-row data frame.
-#' * `tidyselect_data_has_predicates()` should return `FALSE` if
-#'   `tidyselect_data_proxy()` doesn't return actual types.
+#' @description
+#' * `tidyselect_data_proxy()` returns a data frame.
+#' * `tidyselect_data_has_predicates()` returns `TRUE` or `FALSE`
+#'
+#' If your doesn't support predicate functions, return a 0-row data frame
+#' from `tidyselect_data_proxy()` and `FALSE` from
+#' `tidyselect_data_has_predicates()`.
 #'
 #' @param x A data-frame like object passed to [eval_select()],
 #'   [eval_rename()], and friends.

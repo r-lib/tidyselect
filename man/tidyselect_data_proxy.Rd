@@ -2,12 +2,12 @@
 % Please edit documentation in R/proxy.R
 \name{tidyselect_data_proxy}
 \alias{tidyselect_data_proxy}
-\alias{tidyselect_data_supports_predicates}
+\alias{tidyselect_data_has_predicates}
 \title{tidyselect methods for custom types}
 \usage{
 tidyselect_data_proxy(x)
 
-tidyselect_data_supports_predicates(x)
+tidyselect_data_has_predicates(x)
 }
 \arguments{
 \item{x}{A data-frame like object passed to \code{\link[=eval_select]{eval_select()}},
@@ -15,8 +15,11 @@ tidyselect_data_supports_predicates(x)
 }
 \description{
 \itemize{
-\item \code{tidyselect_data_proxy()} should return a 0-row data frame.
-\item \code{tidyselect_data_supports_predicates()} should return \code{FALSE} if
-\code{tidyselect_data_proxy()} doesn't return actual types.
+\item \code{tidyselect_data_proxy()} returns a data frame.
+\item \code{tidyselect_data_has_predicates()} returns \code{TRUE} or \code{FALSE}
 }
+
+If your doesn't support predicate functions, return a 0-row data frame
+from \code{tidyselect_data_proxy()} and \code{FALSE} from
+\code{tidyselect_data_has_predicates()}.
 }
