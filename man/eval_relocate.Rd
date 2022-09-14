@@ -14,7 +14,7 @@ eval_relocate(
   name_spec = NULL,
   allow_rename = TRUE,
   allow_empty = TRUE,
-  allow_predicates = NA,
+  allow_predicates = TRUE,
   before_arg = "before",
   after_arg = "after",
   env = caller_env(),
@@ -56,8 +56,8 @@ selection.}
 
 \item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
 use predicate (i.e. in \code{where()}). If \code{FALSE}, will error if \code{expr} uses a
-predicate. If \code{NA}, the default, calls
-\code{\link[=tidyselect_data_supports_predicates]{tidyselect_data_supports_predicates()}} on \code{data} to find out.}
+predicate. Will automatically be set to \code{FALSE} if \code{data} does not
+support predicates (as determined by \code{\link[=tidyselect_data_supports_predicates]{tidyselect_data_supports_predicates()}}.}
 
 \item{before_arg, after_arg}{Argument names for \code{before} and \code{after}. These
 are used in error messages.}

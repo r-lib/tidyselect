@@ -41,8 +41,8 @@
 #'   selection.
 #' @param allow_predicates If `TRUE` (the default), it is ok for `expr` to
 #'   use predicate (i.e. in `where()`). If `FALSE`, will error if `expr` uses a
-#'   predicate. If `NA`, the default, calls
-#'   [tidyselect_data_supports_predicates()] on `data` to find out.
+#'   predicate. Will automatically be set to `FALSE` if `data` does not
+#'   support predicates (as determined by [tidyselect_data_supports_predicates()].
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -130,13 +130,11 @@ eval_select <- function(expr,
                         name_spec = NULL,
                         allow_rename = TRUE,
                         allow_empty = TRUE,
-                        allow_predicates = NA,
+                        allow_predicates = TRUE,
                         error_call = caller_env()) {
   check_dots_empty()
 
-  if (is.na(allow_predicates)) {
-    allow_predicates <- tidyselect_data_supports_predicates(data)
-  }
+  allow_predicates <- allow_predicates && tidyselect_data_supports_predicates(data)
   data <- tidyselect_data_proxy(data)
 
   eval_select_impl(
