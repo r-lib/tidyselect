@@ -55,9 +55,9 @@ in an empty selection. If \code{FALSE}, will error if \code{expr} yields an empt
 selection.}
 
 \item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
-use predicate (i.e. in \code{where()}). If \code{FALSE}, will error if \code{expr} uses a
+use predicates (i.e. in \code{where()}). If \code{FALSE}, will error if \code{expr} uses a
 predicate. Will automatically be set to \code{FALSE} if \code{data} does not
-support predicates (as determined by \code{\link[=tidyselect_data_has_predicates]{tidyselect_data_has_predicates()}}.}
+support predicates (as determined by \code{\link[=tidyselect_data_has_predicates]{tidyselect_data_has_predicates()}}).}
 
 \item{before_arg, after_arg}{Argument names for \code{before} and \code{after}. These
 are used in error messages.}
