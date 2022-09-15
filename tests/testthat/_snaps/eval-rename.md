@@ -22,6 +22,7 @@
       ! Names must be unique.
       x These names are duplicated:
         * "foo" at locations 1 and 2.
+      i Use argument `"check_unique"` to specify repair strategy.
     Code
       # Unnamed inputs
       rename_loc(iris, Species)

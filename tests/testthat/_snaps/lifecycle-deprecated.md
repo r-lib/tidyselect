@@ -103,6 +103,7 @@
       ! Names must be unique.
       x These names are duplicated:
         * "foo" at locations 1 and 2.
+      i Use argument `"check_unique"` to specify repair strategy.
     Code
       # Existing column
       vars_rename(c("a", "b", "c"), c = a, c = b)
@@ -111,6 +112,7 @@
       ! Names must be unique.
       x These names are duplicated:
         * "c" at locations 1, 2, and 3.
+      i Use argument `"check_unique"` to specify repair strategy.
 
 # vars_rename() disallows renaming to existing columns (#70)
 
@@ -122,6 +124,7 @@
       ! Names must be unique.
       x These names are duplicated:
         * "b" at locations 1 and 2.
+      i Use argument `"check_unique"` to specify repair strategy.
     Code
       # Multiple columns
       vars_rename(c("a", "b", "c", "d"), c = a, d = b)
@@ -131,6 +134,7 @@
       x These names are duplicated:
         * "c" at locations 1 and 3.
         * "d" at locations 2 and 4.
+      i Use argument `"check_unique"` to specify repair strategy.
     Code
       # Overlapping rename with one duplicate column
       vars_rename(c("a", "b", "c"), b = a, c = b)
@@ -139,6 +143,7 @@
       ! Names must be unique.
       x These names are duplicated:
         * "c" at locations 2 and 3.
+      i Use argument `"check_unique"` to specify repair strategy.
 
 # vars_rename() type-checks arguments
 
