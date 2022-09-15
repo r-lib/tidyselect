@@ -22,7 +22,9 @@ num_range(prefix, range, suffix = "", width = NULL, vars = NULL)
 \item{match}{A character vector. If length > 1, the union of the
 matches is taken.
 
-For \code{matches()} only, this can be a stringr pattern.}
+For \code{starts_with()}, \code{ends_with()}, and \code{contains()} this is an exact
+match. For \code{matches()} this is a regular expression, and can be a
+stringr pattern.}
 
 \item{ignore.case}{If \code{TRUE}, the default, ignores case when matching
 names.}
@@ -44,8 +46,8 @@ a range of 2 gives "01", a range of three "001", etc.}
 These \link[=language]{selection helpers} match variables according
 to a given pattern.
 \itemize{
-\item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
-\item \code{\link[=ends_with]{ends_with()}}: Ends with a suffix.
+\item \code{\link[=starts_with]{starts_with()}}: Starts with an exact prefix.
+\item \code{\link[=ends_with]{ends_with()}}: Ends with an exact suffix.
 \item \code{\link[=contains]{contains()}}: Contains a literal string.
 \item \code{\link[=matches]{matches()}}: Matches a regular expression.
 \item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
@@ -124,8 +126,8 @@ iris \%>\% select(ends_with(c("Width", "Length")))
 #> # ... with 146 more rows
 }\if{html}{\out{</div>}}
 
-These helpers do not use regular expressions. To select with a
-regexp use \code{matches()}
+\code{starts_with()}, \code{ends_with()}, and \code{contains()} do not use regular expressions. To select with a
+regexp use \code{matches()}:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{# [pt] is matched literally:
 iris \%>\% select(contains("[pt]al"))

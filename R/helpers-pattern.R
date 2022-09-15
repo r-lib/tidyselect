@@ -5,8 +5,8 @@
 #' These [selection helpers][language] match variables according
 #' to a given pattern.
 #'
-#' * [starts_with()]: Starts with a prefix.
-#' * [ends_with()]: Ends with a suffix.
+#' * [starts_with()]: Starts with an exact prefix.
+#' * [ends_with()]: Ends with an exact suffix.
 #' * [contains()]: Contains a literal string.
 #' * [matches()]: Matches a regular expression.
 #' * [num_range()]: Matches a numerical range like x01, x02, x03.
@@ -14,7 +14,9 @@
 #' @param match A character vector. If length > 1, the union of the
 #'   matches is taken.
 #'
-#'   For `matches()` only, this can be a stringr pattern.
+#'   For `starts_with()`, `ends_with()`, and `contains()` this is an exact
+#'   match. For `matches()` this is a regular expression, and can be a
+#'   stringr pattern.
 #' @param ignore.case If `TRUE`, the default, ignores case when matching
 #'   names.
 #' @param vars A character vector of variable names. If not supplied,
@@ -60,8 +62,8 @@
 #' iris %>% select(contains("al"))
 #' ```
 #'
-#' These helpers do not use regular expressions. To select with a
-#' regexp use `matches()`
+#' `starts_with()`, `ends_with()`, and `contains()` do not use regular expressions. To select with a
+#' regexp use `matches()`:
 #'
 #' ```{r, comment = "#>", collapse = TRUE}
 #' # [pt] is matched literally:
