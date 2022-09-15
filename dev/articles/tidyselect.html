@@ -404,8 +404,7 @@
 <span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select()`:</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span></span>
 <span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span></span>
-<span><span class="co">#&gt;   * "foo" at locations 1 and 2.</span></span>
-<span><span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Use argument `"check_unique"` to specify repair strategy.</span></span></code></pre></div>
+<span><span class="co">#&gt;   * "foo" at locations 1 and 2.</span></span></code></pre></div>
 <p>And all the duplicates are selected if the input is not a data frame, as expected:</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">dups</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="fu">if_width</span><span class="op">(</span><span class="fl">3</span><span class="op">)</span><span class="op">)</span></span>
