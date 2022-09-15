@@ -1,5 +1,8 @@
 # tidyselect (development version)
 
+* New `tidyselect_data_proxy()` and `tidyselect_data_has_predicates()`
+  allows tidyselect to work with custom input types (#242).
+
 * `eval_select(allow_rename = FALSE)` now properly fails with partial
   renaming (#305).
 

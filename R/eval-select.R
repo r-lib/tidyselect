@@ -39,6 +39,10 @@
 #' @param allow_empty If `TRUE` (the default), it is ok for `expr` to result
 #'   in an empty selection. If `FALSE`, will error if `expr` yields an empty
 #'   selection.
+#' @param allow_predicates If `TRUE` (the default), it is ok for `expr` to
+#'   use predicates (i.e. in `where()`). If `FALSE`, will error if `expr` uses a
+#'   predicate. Will automatically be set to `FALSE` if `data` does not
+#'   support predicates (as determined by [tidyselect_data_has_predicates()]).
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -126,8 +130,13 @@ eval_select <- function(expr,
                         name_spec = NULL,
                         allow_rename = TRUE,
                         allow_empty = TRUE,
+                        allow_predicates = TRUE,
                         error_call = caller_env()) {
   check_dots_empty()
+
+  allow_predicates <- allow_predicates && tidyselect_data_has_predicates(data)
+  data <- tidyselect_data_proxy(data)
+
   eval_select_impl(
     data,
     names(data),
@@ -138,6 +147,7 @@ eval_select <- function(expr,
     name_spec = name_spec,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
+    allow_predicates = allow_predicates,
     error_call = error_call,
   )
 }
@@ -152,6 +162,7 @@ eval_select_impl <- function(x,
                              uniquely_named = NULL,
                              allow_rename = TRUE,
                              allow_empty = TRUE,
+                             allow_predicates = TRUE,
                              type = "select",
                              error_call = caller_env()) {
   if (!is_null(x)) {
@@ -177,6 +188,7 @@ eval_select_impl <- function(x,
       uniquely_named = uniquely_named,
       allow_rename = allow_rename,
       allow_empty = allow_empty,
+      allow_predicates = allow_predicates,
       type = type,
       error_call = error_call
     ),

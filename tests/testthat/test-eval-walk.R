@@ -212,6 +212,13 @@ test_that("can use predicates in selections", {
   expect_identical(select_loc(iris, where(is.numeric) | where(is.factor)), set_names(1:5, names(iris)))
 })
 
+test_that("can forbid use of predicates", {
+  expect_snapshot(
+    select_loc(iris, where(is.factor), allow_predicates = FALSE),
+    error = TRUE
+  )
+})
+
 test_that("inline functions are allowed", {
   expect_identical(
     select_loc(iris, !!is.numeric),

@@ -6,6 +6,7 @@ vars_select_eval <- function(vars,
                              uniquely_named = NULL,
                              allow_rename = TRUE,
                              allow_empty = TRUE,
+                             allow_predicates = TRUE,
                              type = "select",
                              error_call) {
   wrapped <- quo_get_expr2(expr, expr)
@@ -24,6 +25,7 @@ vars_select_eval <- function(vars,
       vars = vars,
       strict = strict,
       data = data,
+      allow_predicates = allow_predicates,
       call = error_call
     )
     pos <- loc_validate(pos, vars)
@@ -73,6 +75,7 @@ vars_select_eval <- function(vars,
     strict = strict,
     name_spec = name_spec,
     uniquely_named = uniquely_named,
+    allow_predicates = allow_predicates,
     error_call = error_call
   )
   data_mask$.__tidyselect__.$internal <- internal
@@ -172,18 +175,27 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   vars <- data_mask$.__tidyselect__.$internal$vars
   strict <- data_mask$.__tidyselect__.$internal$strict
   data <- data_mask$.__tidyselect__.$internal$data
+  allow_predicates <- data_mask$.__tidyselect__.$internal$allow_predicates
 
   as_indices_sel_impl(
     out,
     vars = vars,
     strict = strict,
     data = data,
+    allow_predicates = allow_predicates,
     call = error_call
   )
 }
 
-as_indices_sel_impl <- function(x, vars, strict, data = NULL, call) {
+as_indices_sel_impl <- function(x, vars, strict, data = NULL, allow_predicates = TRUE, call) {
   if (is.function(x)) {
+    if (!allow_predicates) {
+      cli::cli_abort(
+        "This tidyselect interface doesn't support predicates.",
+        call = call,
+        class = "tidyselect_error_predicates_unsupported"
+      )
+    }
     if (is_null(data)) {
       cli::cli_abort(
         c(

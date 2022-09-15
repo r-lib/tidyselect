@@ -67,11 +67,15 @@ eval_relocate <- function(expr,
                           name_spec = NULL,
                           allow_rename = TRUE,
                           allow_empty = TRUE,
+                          allow_predicates = TRUE,
                           before_arg = "before",
                           after_arg = "after",
                           env = caller_env(),
                           error_call = caller_env()) {
   check_dots_empty()
+
+  allow_predicates <- allow_predicates && tidyselect_data_has_predicates(data)
+  data <- tidyselect_data_proxy(data)
 
   expr <- as_quosure(expr, env = env)
 
@@ -83,6 +87,7 @@ eval_relocate <- function(expr,
     name_spec = name_spec,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
+    allow_predicates = allow_predicates,
     type = "relocate",
     error_call = error_call
   )
@@ -116,6 +121,7 @@ eval_relocate <- function(expr,
         data = data,
         env = env,
         error_call = error_call,
+        allow_predicates = allow_predicates,
         allow_rename = FALSE
       ),
       arg = before_arg,
@@ -136,6 +142,7 @@ eval_relocate <- function(expr,
         data = data,
         env = env,
         error_call = error_call,
+        allow_predicates = allow_predicates,
         allow_rename = FALSE
       ),
       arg = after_arg,

@@ -12,6 +12,7 @@ eval_rename(
   ...,
   strict = TRUE,
   name_spec = NULL,
+  allow_predicates = TRUE,
   error_call = caller_env()
 )
 
@@ -26,6 +27,7 @@ eval_select(
   name_spec = NULL,
   allow_rename = TRUE,
   allow_empty = TRUE,
+  allow_predicates = TRUE,
   error_call = caller_env()
 )
 }
@@ -51,6 +53,11 @@ propagate names. This is used only in case nested \code{c()}
 expressions like \code{c(foo = c(bar = starts_with("foo")))}. See the
 \code{name_spec} argument of \code{\link[vctrs:vec_c]{vctrs::vec_c()}} for a description of
 valid name specs.}
+
+\item{allow_predicates}{If \code{TRUE} (the default), it is ok for \code{expr} to
+use predicates (i.e. in \code{where()}). If \code{FALSE}, will error if \code{expr} uses a
+predicate. Will automatically be set to \code{FALSE} if \code{data} does not
+support predicates (as determined by \code{\link[=tidyselect_data_has_predicates]{tidyselect_data_has_predicates()}}).}
 
 \item{error_call}{The execution environment of a currently
 running function, e.g. \code{caller_env()}. The function will be
