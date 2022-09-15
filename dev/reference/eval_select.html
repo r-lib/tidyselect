@@ -72,7 +72,7 @@ your packages."><meta name="robots" content="noindex"><!-- mathjax --><script sr
     <p><code>eval_select()</code> and <code>eval_rename()</code> evaluate defused R code
 (i.e. quoted expressions) according to the special rules of the
 <a href="https://tidyselect.r-lib.org/articles/syntax.html">tidyselect syntax</a>. They
-power functions like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>, <code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">dplyr::rename()</a></code>, or
+power functions like <code><a href="https://rdrr.io/pkg/dplyr/man/select.html" class="external-link">dplyr::select()</a></code>, <code><a href="https://rdrr.io/pkg/dplyr/man/rename.html" class="external-link">dplyr::rename()</a></code>, or
 <code>tidyr::pivot_longer()</code>.</p>
 <p>See the <a href="https://tidyselect.r-lib.org/articles/tidyselect.html">Get started</a>
 vignette to learn how to use <code>eval_select()</code> and <code>eval_rename()</code> in
@@ -84,17 +84,17 @@ your packages.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">eval_rename</span><span class="op">(</span></span>
 <span>  <span class="va">expr</span>,</span>
 <span>  <span class="va">data</span>,</span>
-<span>  env <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  strict <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  name_spec <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  error_call <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  error_call <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">eval_select</span><span class="op">(</span></span>
 <span>  <span class="va">expr</span>,</span>
 <span>  <span class="va">data</span>,</span>
-<span>  env <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  env <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  <span class="va">...</span>,</span>
 <span>  include <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  exclude <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -102,7 +102,7 @@ your packages.</p>
 <span>  name_spec <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  allow_rename <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  allow_empty <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  error_call <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  error_call <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -121,7 +121,7 @@ implementations.</p></dd>
 
 <dt>env</dt>
 <dd><p>The environment in which to evaluate <code>expr</code>. Discarded
-if <code>expr</code> is a <a href="https://rlang.r-lib.org/reference/enquo.html" class="external-link">quosure</a>.</p></dd>
+if <code>expr</code> is a <a href="https://rdrr.io/pkg/rlang/man/enquo.html" class="external-link">quosure</a>.</p></dd>
 
 
 <dt>...</dt>
@@ -138,15 +138,15 @@ attempts to select or rename a variable that doesn't exist. If
 <dd><p>A name specification describing how to combine or
 propagate names. This is used only in case nested <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>
 expressions like <code>c(foo = c(bar = starts_with("foo")))</code>. See the
-<code>name_spec</code> argument of <code><a href="https://vctrs.r-lib.org/reference/vec_c.html" class="external-link">vctrs::vec_c()</a></code> for a description of
+<code>name_spec</code> argument of <code><a href="https://rdrr.io/pkg/vctrs/man/vec_c.html" class="external-link">vctrs::vec_c()</a></code> for a description of
 valid name specs.</p></dd>
 
 
 <dt>error_call</dt>
 <dd><p>The execution environment of a currently
-running function, e.g. <code><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env()</a></code>. The function will be
+running function, e.g. <code><a href="https://rdrr.io/pkg/rlang/man/stack.html" class="external-link">caller_env()</a></code>. The function will be
 mentioned in error messages as the source of the error. See the
-<code>call</code> argument of <code><a href="https://rlang.r-lib.org/reference/abort.html" class="external-link">abort()</a></code> for more information.</p></dd>
+<code>call</code> argument of <code><a href="https://rdrr.io/pkg/rlang/man/abort.html" class="external-link">abort()</a></code> for more information.</p></dd>
 
 
 <dt>include, exclude</dt>
@@ -205,36 +205,36 @@ description of the rules of evaluation.</p></div>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://rlang.r-lib.org" class="external-link">rlang</a></span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Interpret defused code as selection:</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">cyl</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">cyl</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">eval_select</span><span class="op">(</span><span class="va">x</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> mpg cyl </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1   2 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Interpret defused code as a renaming selection. All inputs must</span></span></span>
 <span class="r-in"><span><span class="co"># be named within `c()`:</span></span></span>
-<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">eval_rename</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">eval_rename</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Error in eval(expr, envir, enclos) : </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   All renaming inputs must be named.</span>
-<span class="r-in"><span><span class="fu">eval_rename</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">eval_rename</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span><span class="op">)</span>, <span class="va">mtcars</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> foo </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   1 </span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Within a function, use `enquo()` to defuse one argument:</span></span></span>
 <span class="r-in"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">eval_select</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html" class="external-link">enquo</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>, <span class="va">x</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">eval_select</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/enquo.html" class="external-link">enquo</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>, <span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If your function takes dots, evaluate a defused call to `c(...)`</span></span></span>
 <span class="r-in"><span><span class="co"># with `expr(c(...))`:</span></span></span>
 <span class="r-in"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">eval_select</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">.x</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">eval_select</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">.x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># If your function takes dots and a named argument, use `{{ }}`</span></span></span>
 <span class="r-in"><span><span class="co"># inside the defused expression to tunnel it inside the tidyselect DSL:</span></span></span>
 <span class="r-in"><span><span class="va">my_function</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.x</span>, <span class="va">.expr</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="fu">eval_select</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">{</span><span class="op">{</span> <span class="va">.expr</span> <span class="op">}</span><span class="op">}</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">.x</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">eval_select</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">{</span><span class="op">{</span> <span class="va">.expr</span> <span class="op">}</span><span class="op">}</span>, <span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">.x</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Note that the trick above works because `expr({{ arg }})` is the</span></span></span>
@@ -245,11 +245,11 @@ description of the rules of evaluation.</p></div>
 <span class="r-in"><span><span class="co"># examples of using these location vectors to implement `select()`</span></span></span>
 <span class="r-in"><span><span class="co"># and `rename()`:</span></span></span>
 <span class="r-in"><span><span class="va">select</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu">eval_select</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">.x</span><span class="op">)</span></span></span>
-<span class="r-in"><span>  <span class="fu"><a href="https://rlang.r-lib.org/reference/set_names.html" class="external-link">set_names</a></span><span class="op">(</span><span class="va">.x</span><span class="op">[</span><span class="va">pos</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu">eval_select</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">.x</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/pkg/rlang/man/set_names.html" class="external-link">set_names</a></span><span class="op">(</span><span class="va">.x</span><span class="op">[</span><span class="va">pos</span><span class="op">]</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-in"><span><span class="va">rename</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">.x</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span></span>
-<span class="r-in"><span>  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu">eval_rename</span><span class="op">(</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">.x</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="va">pos</span> <span class="op">&lt;-</span> <span class="fu">eval_rename</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/rlang/man/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">.x</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">.x</span><span class="op">)</span><span class="op">[</span><span class="va">pos</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">pos</span><span class="op">)</span></span></span>
 <span class="r-in"><span>  <span class="va">.x</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
