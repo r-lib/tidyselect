@@ -149,7 +149,7 @@ dplyr::select(starwars, my_vars())
     <div class="ref-description section level2">
     <p>Functions like <code><a href="starts_with.html">starts_with()</a></code>, <code><a href="starts_with.html">contains()</a></code> or <code><a href="starts_with.html">matches()</a></code> are
 <strong>selection helpers</strong> that only work in a selection context, e.g.
-<code><a href="https://rdrr.io/pkg/dplyr/man/select.html" class="external-link">dplyr::select()</a></code> or the <code>cols</code> argument of <code>tidyr::pivot_longer()</code>.</p>
+<code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> or the <code>cols</code> argument of <code>tidyr::pivot_longer()</code>.</p>
 <p>Using a selection helper anywhere else results in an error:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"foo"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error:</span></span>
@@ -179,7 +179,7 @@ duplication in your code by extracting out a selection into a variable:</p>
 </ul><p></p><div class="sourceCode r"><pre><code><span><span class="va">my_vars</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">any_of</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"name"</span>, <span class="st">"species"</span><span class="op">)</span><span class="op">)</span>, <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"color"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/dplyr/man/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="fu">my_vars</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">starwars</span>, <span class="fu">my_vars</span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 87 x 5</span></span>
 <span><span class="co">#&gt;   name           species hair_color skin_color  eye_color</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;          &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;       &lt;chr&gt;    </span></span>

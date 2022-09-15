@@ -70,6 +70,9 @@
     <loc>https://tidyselect.r-lib.org/dev/reference/tidyselect-package.html</loc>
   </url>
   <url>
+    <loc>https://tidyselect.r-lib.org/dev/reference/tidyselect_data_proxy.html</loc>
+  </url>
+  <url>
     <loc>https://tidyselect.r-lib.org/dev/reference/vars_pull.html</loc>
   </url>
   <url>
