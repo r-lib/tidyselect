@@ -28,15 +28,14 @@ with_chained_errors <- function(expr, action, call, eval_expr = NULL) {
 
 subscript_action <- function(type) {
   switch(validate_type(type),
-    select = "select",
+    select = "subset",
     rename = "rename",
-    relocate = "relocate",
     pull = "extract"
   )
 }
 validate_type <- function(type) {
   # We might add `recode` in the future
-  if (!is_string(type, c("select", "rename", "relocate", "pull"))) {
+  if (!is_string(type, c("select", "rename", "pull"))) {
     cli::cli_abort("Unexpected value for {.arg tidyselect_type}.", .internal = TRUE)
   }
   type

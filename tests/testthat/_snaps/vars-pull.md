@@ -29,14 +29,14 @@
     Code
       vars_pull(letters, 100)
     Condition
-      Error:
+      Error in `vec_as_location2_result()`:
       ! Can't extract columns past the end.
       i Location 100 doesn't exist.
       i There are only 26 columns.
     Code
       vars_pull(letters, -100)
     Condition
-      Error:
+      Error in `vec_as_location2_result()`:
       ! Can't extract columns past the end.
       i Location 100 doesn't exist.
       i There are only 26 columns.
@@ -45,7 +45,8 @@
     Condition
       Error:
       ! Must extract column with a single valid subscript.
-      x Can't convert from `var` <double> to <integer> due to loss of precision.
+      x Subscript `var` has the wrong type `double`.
+      i It must be numeric or character.
     Code
       vars_pull(letters, TRUE)
     Condition
@@ -68,7 +69,7 @@
     Code
       vars_pull(letters, "foo")
     Condition
-      Error:
+      Error in `vec_as_location2_result()`:
       ! Can't extract columns that don't exist.
       x Column `foo` doesn't exist.
 
