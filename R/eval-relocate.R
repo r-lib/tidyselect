@@ -88,7 +88,6 @@ eval_relocate <- function(expr,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
     allow_predicates = allow_predicates,
-    type = "relocate",
     error_call = error_call
   )
 
