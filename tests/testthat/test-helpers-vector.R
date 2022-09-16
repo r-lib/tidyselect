@@ -50,11 +50,15 @@ test_that("all_of() and any_of() check their inputs", {
   })
 })
 
-test_that("any_of() and all_off() error out of context (#269)", {
+test_that("any_of() errors out of context", {
   expect_snapshot({
-    (expect_error(all_of()))
     (expect_error(any_of()))
   })
+})
+
+test_that("all_of() is deprecated out of context (#269)", {
+  expect_snapshot(out <- all_of("x"))
+  expect_equal(out, "x")
 })
 
 test_that("any_of generates informative error if ... not empty", {

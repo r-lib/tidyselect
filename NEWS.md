@@ -15,10 +15,12 @@
   * `any_of()` generates a more informative error if you supply too many
     arguments (#241).
   
-  * `all_of()` (like `any_of()`) now fails when used outside of a
-    tidyselect context (#269), and (like `any_of()`) returns an integer 
-    vector to make it easier to combine in functions (#270, #294).
-    It also fails when it can't find variables even when `strict = FALSE`.
+  * `all_of()` (like `any_of()`) returns an integer vector to make it easier 
+    to combine in functions (#270, #294). It also fails when it can't find 
+    variables even when `strict = FALSE`.
+  
+  * Using `all_of()` outside of a tidyselect context is now deprecated (#269).
+    In the future it will error to be consistent with `any_of()`.
   
   * `matches()` recognises and correctly uses stringr pattern objects
     (`stringr::regex()`, `stringr::fixed()`, etc) (#238). It also now

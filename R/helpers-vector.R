@@ -74,6 +74,15 @@
 #' @seealso `r rd_helpers_seealso()`
 #' @export
 all_of <- function(x) {
+  if (!has_vars()) {
+    lifecycle::deprecate_warn(
+      "1.2.0",
+      I("Using `all_of()` outside of a selecting function"),
+      details = paste0("See details at", peek_vars_link())
+    )
+    return(x)
+  }
+
   vars <- peek_vars(fn = "all_of")
   as_indices_impl(x, vars = vars, strict = TRUE)
 }
