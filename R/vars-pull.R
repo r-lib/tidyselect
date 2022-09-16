@@ -35,7 +35,9 @@
 vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = "var") {
   expr <- enquo(var)
   if (quo_is_missing(expr)) {
-    expr <- -1
+    # No easy way to determine what var is in parent because it's likely
+    # to be embraced; so don't try and use error_arg + error_call here
+    cli::cli_abort("{.arg var} is absent but must be supplied.")
   }
 
   n <- length(vars)

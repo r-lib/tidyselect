@@ -73,6 +73,14 @@
       ! Can't extract columns that don't exist.
       x Column `foo` doesn't exist.
 
+# gives informative error if quosure is missing
+
+    Code
+      f()
+    Condition
+      Error in `vars_pull()`:
+      ! `var` is absent but must be supplied.
+
 # vars_pull() has informative errors
 
     Code

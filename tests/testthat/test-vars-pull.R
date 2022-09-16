@@ -62,9 +62,9 @@ test_that("errors for bad inputs", {
   })
 })
 
-test_that("uses default if quosure is missing", {
+test_that("gives informative error if quosure is missing", {
   f <- function(arg) vars_pull(letters, {{ arg }})
-  expect_equal(f(), "z")
+  expect_snapshot(f(), error = TRUE)
 })
 
 test_that("can pull variables with missing elements", {
