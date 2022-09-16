@@ -92,70 +92,6 @@ Run `cloud_details(, "baseballr")` for more info
     Execution halted
     ```
 
-# broom.helpers
-
-<details>
-
-* Version: 1.8.0
-* GitHub: https://github.com/larmarange/broom.helpers
-* Source code: https://github.com/cran/broom.helpers
-* Date/Publication: 2022-07-05 22:40:09 UTC
-* Number of recursive dependencies: 205
-
-Run `cloud_details(, "broom.helpers")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘broom.helpers-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: tidy_select_variables
-    > ### Title: Select variables to keep/drop
-    > ### Aliases: tidy_select_variables
-    > 
-    > ### ** Examples
-    > 
-    > res <- Titanic %>%
-    ...
-      <chr> <chr>   <chr>   <chr>     <int>   <dbl>   <dbl>   <dbl>    <dbl>   <dbl>
-    1 (Int… (Inter… <NA>    interc…      NA   2.18    0.176  12.4   3.08e-35   1.84 
-    2 AgeC… Age     charac… dichot…       2  -0.110   0.335  -0.328 7.43e- 1  -0.759
-    3 AgeC… Age:Sex <NA>    intera…      NA   1.90    0.433   4.39  1.12e- 5   1.04 
-    # … with 1 more variable: conf.high <dbl>, and abbreviated variable names
-    #   ¹​variable, ²​var_class, ³​var_type, ⁴​var_nlevels, ⁵​estimate, ⁶​std.error,
-    #   ⁷​statistic, ⁸​conf.low
-    > res %>% tidy_select_variables(include = all_categorical())
-    Error: Error in `include=` argument input. Select from ‘(Intercept)’, ‘Class’, ‘Age’, ‘Sex’, ‘Age:Sex’
-    Execution halted
-    ```
-
-*   checking tests ... ERROR
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        1. ├─testthat::expect_equal(...) at test-select_helpers.R:220:2
-        2. │ └─testthat::quasi_label(enquo(object), label, arg = "object")
-        3. │   └─rlang::eval_bare(expr, quo_get_env(quo))
-        4. ├─... %>% sum()
-        5. ├─... %in% "trt"
-        6. └─broom.helpers::tidy_add_header_rows(mod_tidy, show_single_row = all_dichotomous())
-        7.   └─broom.helpers::.select_to_varnames(...)
-        8.     └─base::tryCatch(...)
-        9.       └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-       10.         └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       11.           └─value[[3L]](cond)
-      
-      [ FAIL 2 | WARN 2 | SKIP 52 | PASS 460 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # bumbl
 
 <details>
@@ -462,45 +398,6 @@ Run `cloud_details(, "ggalluvial")` for more info
       Execution halted
     ```
 
-# GGally
-
-<details>
-
-* Version: 2.1.2
-* GitHub: https://github.com/ggobi/ggally
-* Source code: https://github.com/cran/GGally
-* Date/Publication: 2021-06-21 04:40:10 UTC
-* Number of recursive dependencies: 146
-
-Run `cloud_details(, "GGally")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        7. │ └─base::print(x)
-        8. ├─GGally::ggcoef_model(...)
-        9. │ └─GGally:::ggcoef_data(...)
-       10. │   └─broom.helpers::tidy_plus_plus(...)
-       11. │     └─res %>% ...
-       12. └─broom.helpers::tidy_add_reference_rows(...)
-       13.   └─broom.helpers::.select_to_varnames(...)
-       14.     └─base::tryCatch(...)
-       15.       └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-       16.         └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       17.           └─value[[3L]](cond)
-      
-      [ FAIL 1 | WARN 1252 | SKIP 3 | PASS 626 ]
-      Error: Test failures
-      Execution halted
-    ```
-
 # ggip
 
 <details>
@@ -537,103 +434,6 @@ Run `cloud_details(, "ggip")` for more info
       [ FAIL 1 | WARN 96 | SKIP 5 | PASS 93 ]
       Error: Test failures
       Execution halted
-    ```
-
-# gtreg
-
-<details>
-
-* Version: 0.1.1
-* GitHub: https://github.com/shannonpileggi/gtreg
-* Source code: https://github.com/cran/gtreg
-* Date/Publication: 2022-08-17 14:30:05 UTC
-* Number of recursive dependencies: 101
-
-Run `cloud_details(, "gtreg")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-        4. ├─purrr::when(...)
-        5. └─gtsummary::modify_header(...)
-        6.   └─gtsummary:::.combine_update_and_dots(x, update, ...)
-        7.     └─broom.helpers::.formula_list_to_named_list(...)
-        8.       ├─... %>% list()
-        9.       └─broom.helpers:::.single_formula_to_list(...)
-       10.         └─broom.helpers::.select_to_varnames(...)
-       11.           └─base::tryCatch(...)
-       12.             └─base (local) tryCatchList(expr, classes, parentenv, handlers)
-       13.               └─base (local) tryCatchOne(expr, names, parentenv, handlers[[1L]])
-       14.                 └─value[[3L]](cond)
-      
-      [ FAIL 2 | WARN 626 | SKIP 4 | PASS 49 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-*   checking re-building of vignette outputs ... WARNING
-    ```
-    Error(s) in re-building vignettes:
-      ...
-    --- re-building ‘counting-methods.Rmd’ using rmarkdown
-    Quitting from lines 92-101 (counting-methods.Rmd) 
-    Error: processing vignette 'counting-methods.Rmd' failed with diagnostics:
-    Error in `... or update=` argument input. Select from 'tbl_id1', 'tbl_id2', 'variable', 'var_type', 'var_label', 'row_type', 'label', 'stat_1', 'stat_2', 'stat_3'
-    --- failed re-building ‘counting-methods.Rmd’
-    
-    SUMMARY: processing the following file failed:
-      ‘counting-methods.Rmd’
-    
-    Error: Vignette re-building failed.
-    Execution halted
-    ```
-
-# gtsummary
-
-<details>
-
-* Version: 1.6.1
-* GitHub: https://github.com/ddsjoberg/gtsummary
-* Source code: https://github.com/cran/gtsummary
-* Date/Publication: 2022-06-22 07:40:11 UTC
-* Number of recursive dependencies: 183
-
-Run `cloud_details(, "gtsummary")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking examples ... ERROR
-    ```
-    Running examples in ‘gtsummary-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: add_p.tbl_summary
-    > ### Title: Adds p-values to summary tables
-    > ### Aliases: add_p.tbl_summary
-    > 
-    > ### ** Examples
-    > 
-    > # Example 1 ----------------------------------
-    ...
-    +   select(trt, age, marker) %>%
-    +   tbl_summary(by = trt, missing = "no") %>%
-    +   add_p(
-    +     # perform t-test for all variables
-    +     test = everything() ~ "t.test",
-    +     # assume equal variance in the t-test
-    +     test.args = all_tests("t.test") ~ list(var.equal = TRUE)
-    +   )
-    Error: Error in `test.args=` argument input. Select from ‘age’, ‘marker’
-    Execution halted
     ```
 
 # iNZightTools
@@ -1042,7 +842,7 @@ Run `cloud_details(, "spectralR")` for more info
       test_violin.plot.R............    2 tests [0;32mOK[0m 
       test_violin.plot.R............    3 tests [0;32mOK[0m 
       test_violin.plot.R............    4 tests [0;32mOK[0m 
-      test_violin.plot.R............    5 tests [0;32mOK[0m [0;36m79ms[0m
+      test_violin.plot.R............    5 tests [0;32mOK[0m [0;36m78ms[0m
       ----- FAILED[xcpt]: test_get.pixel.data.R<8--12>
        call| expect_silent(sf_df <- prepare.vector.data(shapefile_name = system.file("extdata/test_shapefile.shp", 
        call| -->    package = "spectralR"), label_field = "veget_type"))

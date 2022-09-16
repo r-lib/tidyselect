@@ -1,8 +1,8 @@
 ## revdepcheck results
 
-We checked 57 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 27 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 27 new problems
+ * We saw 23 new problems
  * We failed to check 0 packages
 
 Issues with CRAN packages are summarised below.
@@ -15,10 +15,6 @@ Issues with CRAN packages are summarised below.
 
 * baseballr
   checking re-building of vignette outputs ... WARNING
-
-* broom.helpers
-  checking examples ... ERROR
-  checking tests ... ERROR
 
 * bumbl
   checking tests ... ERROR
@@ -42,18 +38,8 @@ Issues with CRAN packages are summarised below.
 * ggalluvial
   checking tests ... ERROR
 
-* GGally
-  checking tests ... ERROR
-
 * ggip
   checking tests ... ERROR
-
-* gtreg
-  checking tests ... ERROR
-  checking re-building of vignette outputs ... WARNING
-
-* gtsummary
-  checking examples ... ERROR
 
 * iNZightTools
   checking tests ... ERROR

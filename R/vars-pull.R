@@ -38,6 +38,7 @@ vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = "va
     expr <- -1
   }
 
+  local_vars(vars)
   n <- length(vars)
 
   with_chained_errors(
@@ -45,12 +46,12 @@ vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = "va
     call = error_call,
     eval_expr = expr
   )
+
   loc <- pull_as_location2(loc, n, vars, error_arg = error_arg, error_call = error_call)
 
   if (loc < 0L) {
     loc <- n + 1L + loc
   }
-
   vars[[loc]]
 }
 
