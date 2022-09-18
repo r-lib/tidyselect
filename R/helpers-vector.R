@@ -75,7 +75,7 @@
 #' @export
 all_of <- function(x) {
   if (!has_vars()) {
-    lifecycle::deprecate_warn(
+    lifecycle::deprecate_soft(
       "1.2.0",
       I("Using `all_of()` outside of a selecting function"),
       details = paste0("See details at", peek_vars_link())
