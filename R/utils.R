@@ -212,41 +212,6 @@ named <- function(x) {
   set_names(x, names2(x))
 }
 
-verbosity <- function(default = "default") {
-  opt <- peek_option("tidyselect_verbosity") %||% default
-
-  if (!is_string(opt, c("default", "quiet", "verbose"))) {
-    options(tidyselect_verbosity = NULL)
-    warn(c(
-      "`tidyselect_verbosity` must be `\"quiet\"` or `\"verbose\"`.",
-      i = "Resetting to NULL."
-    ))
-
-    opt <- default
-  }
-
-  opt
-}
-
-env_needs_advice <- function(env) {
-  if (is_reference(topenv(env), global_env())) {
-    return(TRUE)
-  }
-
-  if (from_tests(env)) {
-    return(TRUE)
-  }
-
-  FALSE
-}
-from_tests <- function(env) {
-  testthat_pkg <- Sys.getenv("TESTTHAT_PKG")
-
-  nzchar(testthat_pkg) &&
-    identical(Sys.getenv("NOT_CRAN"), "true") &&
-    env_name(topenv(env)) == env_name(ns_env(testthat_pkg))
-}
-
 mask_error_call <- function(data_mask) {
   data_mask$.__tidyselect__.$internal$error_call
 }
