@@ -8,6 +8,18 @@
 * New `eval_relocate()` for moving a selection. This powers `dplyr::relocate()`
   (#232).
 
+## Lifecycle changes
+
+* Using `all_of()` outside of a tidyselect context is now deprecated (#269).
+  In the future it will error to be consistent with `any_of()`.
+
+* Use of `.data` in tidyselect expressions is now deprecated to more cleanly
+  separate tidy-select from data-masking. Use `any_of()` or `all_of()` instead
+  (#169).
+
+* Use of bare predicates (not wrapped in `where()`) and indirection (without
+  using `all_of()`) now warn on every use (#317).
+
 ## Minor improvements and bug fixes
 
 * Selection language:
@@ -19,9 +31,6 @@
     to combine in functions (#270, #294). It also fails when it can't find 
     variables even when `strict = FALSE`.
   
-  * Using `all_of()` outside of a tidyselect context is now deprecated (#269).
-    In the future it will error to be consistent with `any_of()`.
-  
   * `matches()` recognises and correctly uses stringr pattern objects
     (`stringr::regex()`, `stringr::fixed()`, etc) (#238). It also now
     works with named vectors (#250).
@@ -30,10 +39,6 @@
   
   * `where()` is now exported, like all other select helpers (#201),
     and gives more informative errors (#236).
-
-* Use of `.data` in tidyselect expressions is now deprecated to more cleanly
-  separate tidy-select from data-masking. Use `any_of()` or `all_of()` instead
-  (#169).
 
 * `eval_select()` with `include` now preserves the order of the variables
   if they're present in the selection (#224).
@@ -62,9 +67,6 @@
 * `tidyselect_verbosity` is no longer used; deprecation messaging is now
   controlled by `lifecycle_verbosity` like all other packages (#317).
   
-* Use of bare predicates (not wrapped in `where()`) and indirection (without
-  using `all_of()`) now warn on every use (#317).
-
 # tidyselect 1.1.2
 
 * Fix for CRAN checks.
