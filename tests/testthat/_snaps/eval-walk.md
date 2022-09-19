@@ -172,10 +172,6 @@
         data %>% select(where(~...))
     Code
       (expect_error(select_loc(mtcars, .data$"foo")))
-    Condition
-      Warning:
-      Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
-      Please use `any_of()` or `all_of()` instead.
     Output
       <error/rlang_error>
       Error in `select_loc()`:
