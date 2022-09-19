@@ -89,6 +89,10 @@ test_that("can pull with strings", {
   expect_equal(vars_pull(vars, "1"), "1")
 })
 
+test_that("can pull with all_of() without warning", {
+  expect_identical(vars_pull(letters, all_of("z")), "z")
+})
+
 test_that("can pull with negative values", {
   expect_identical(vars_pull(letters, -1), "z")
   expect_identical(vars_pull(letters, -3), "x")

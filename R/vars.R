@@ -14,24 +14,26 @@ peeker <- function(what) {
         fn <- glue::glue("`{fn}()`")
       }
 
-      if (is_interactive() && cli::ansi_has_hyperlink_support()) {
-        topic <- "tidyselect::faq-selection-context"
-        link <- cli::style_hyperlink(paste0("?", topic), "ide:help", params = c(package = "tidyselect", topic = "faq-selection-context"))
-      } else {
-        link <- "<https://tidyselect.r-lib.org/reference/faq-selection-context.html>"
-      }
-
       # Please keep in sync with faq.R.
       cli::cli_abort(
         c(
           "{fn} must be used within a *selecting* function.",
-          i = "See {link} for details."
+          i = "See {peek_vars_link()} for details."
         ),
         call = NULL
       )
     }
 
     x
+  }
+}
+
+peek_vars_link <- function() {
+  if (is_interactive() && cli::ansi_has_hyperlink_support()) {
+    topic <- "tidyselect::faq-selection-context"
+    cli::style_hyperlink(paste0("?", topic), "ide:help", params = c(package = "tidyselect", topic = "faq-selection-context"))
+  } else {
+    "<https://tidyselect.r-lib.org/reference/faq-selection-context.html>"
   }
 }
 

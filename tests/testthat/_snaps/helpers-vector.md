@@ -64,15 +64,8 @@
       x Subscript has the wrong type `function`.
       i It must be numeric or character.
 
-# any_of() and all_off() error out of context (#269)
+# any_of() errors out of context
 
-    Code
-      (expect_error(all_of()))
-    Output
-      <error/rlang_error>
-      Error:
-      ! `all_of()` must be used within a *selecting* function.
-      i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
     Code
       (expect_error(any_of()))
     Output
@@ -80,6 +73,15 @@
       Error:
       ! `any_of()` must be used within a *selecting* function.
       i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
+
+# all_of() is deprecated out of context (#269)
+
+    Code
+      out <- all_of("x")
+    Condition
+      Warning:
+      Using `all_of()` outside of a selecting function was deprecated in tidyselect 1.2.0.
+      See details at<https://tidyselect.r-lib.org/reference/faq-selection-context.html>
 
 # any_of generates informative error if ... not empty
 
