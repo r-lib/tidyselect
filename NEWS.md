@@ -14,8 +14,8 @@
   In the future it will error to be consistent with `any_of()`.
 
 * Use of `.data` in tidyselect expressions is now deprecated to more cleanly
-  separate tidy-select from data-masking. Use `any_of()` or `all_of()` instead
-  (#169).
+  separate tidy-select from data-masking. Replace `.data$x` with `"x"` and
+  `.data[[var]]` with `any_of(var)` or `all_of(var)` (#169).
 
 * Use of bare predicates (not wrapped in `where()`) and indirection (without
   using `all_of()`) now warn on every use (#317).

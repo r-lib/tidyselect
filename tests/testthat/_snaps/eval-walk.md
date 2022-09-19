@@ -72,7 +72,7 @@
     Condition
       Warning:
       Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
-      Please use `"a"` instead of `data$a`
+      Please use `"a"` instead of `.data$a`
 
 ---
 
@@ -81,7 +81,7 @@
     Condition
       Warning:
       Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
-      Please use `all_of(var)` (or `any_of(var)`) instead of `data[[var]]`
+      Please use `all_of(var)` (or `any_of(var)`) instead of `.data[[var]]`
 
 # eval_walk() has informative messages
 

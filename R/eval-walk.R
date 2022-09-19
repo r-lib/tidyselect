@@ -294,12 +294,12 @@ call_kind <- function(expr, error_call) {
       str <- encodeString(var, quote = '"')
 
       lifecycle::deprecate_soft("1.2.0", what,
-        details = cli::format_inline("Please use {.code {str}} instead of `data${var}`")
+        details = cli::format_inline("Please use {.code {str}} instead of `.data${var}`")
       )
     } else if (fn == "[[") {
       # .data[[ is an injection operator so can't give specific advice
       lifecycle::deprecate_soft("1.2.0", what,
-        details = cli::format_inline("Please use {.code all_of(var)} (or {.code any_of(var)}) instead of {.code data[[var]]}")
+        details = cli::format_inline("Please use {.code all_of(var)} (or {.code any_of(var)}) instead of {.code .data[[var]]}")
       )
     }
 
