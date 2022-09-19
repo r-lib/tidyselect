@@ -22,3 +22,5 @@ As well as operators for combining those selections:
 - `!selection`: only variables that don't match `selection`.
 - `selection1 & selection2`: only variables included in both `selection1` and `selection2`.
 - `selection1 | selection2`: all variables that match either `selection1` or `selection2`.
+
+When writing code inside packages you can substitute `"var"` for `var` to avoid `R CMD check` notes. 
