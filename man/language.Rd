@@ -34,6 +34,8 @@ As well as operators for combining those selections:
 \item \code{selection1 & selection2}: only variables included in both \code{selection1} and \code{selection2}.
 \item \code{selection1 | selection2}: all variables that match either \code{selection1} or \code{selection2}.
 }
+
+When writing code inside packages you can substitute \code{"var"} for \code{var} to avoid \verb{R CMD check} notes.
 }
 }
 \section{Simple examples}{
