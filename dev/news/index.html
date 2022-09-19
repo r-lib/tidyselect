@@ -79,6 +79,8 @@
 <li><p><code>peek_var()</code> error now generates hyperlink to docs with recent RStudio (<a href="https://github.com/r-lib/tidyselect/issues/289" class="external-link">#289</a>).</p></li>
 <li><p><code><a href="../reference/vars_pull.html">vars_pull()</a></code> generates more informative error messages (<a href="https://github.com/r-lib/tidyselect/issues/234" class="external-link">#234</a>, <a href="https://github.com/r-lib/tidyselect/issues/258" class="external-link">#258</a>) and gains an <code>error_call</code> argument.</p></li>
 <li><p>Errors produced by tidyselect should now be more informative. Evaluation errors are now chained, with the child error call is set to the <code>error_call</code> argument of <code><a href="../reference/eval_select.html">eval_select()</a></code> and <code><a href="../reference/eval_select.html">eval_rename()</a></code>. We’ve also improved backtraces of base errors, and done better at propagating the root <code>error_call</code> to vctrs input checkers.</p></li>
+<li><p><code>tidyselect_verbosity</code> is no longer used; deprecation messaging is now controlled by <code>lifecycle_verbosity</code> like all other packages (<a href="https://github.com/r-lib/tidyselect/issues/317" class="external-link">#317</a>).</p></li>
+<li><p>Use of bare predicates (not wrapped in <code><a href="../reference/where.html">where()</a></code>) and indirection (without using <code><a href="../reference/all_of.html">all_of()</a></code>) now warn on every use (<a href="https://github.com/r-lib/tidyselect/issues/317" class="external-link">#317</a>).</p></li>
 </ul></div>
 </div>
     <div class="section level2">
