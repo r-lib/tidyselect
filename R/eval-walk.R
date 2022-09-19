@@ -285,12 +285,12 @@ call_kind <- function(expr, error_call) {
 
   fn <- as_string(head)
 
-  if (fn %in% c("$", "[[") && identical(node_cadr(expr), quote(.data))) {
+  if (fn %in% c("$", "[[") && identical(expr[[2]], quote(.data))) {
     validate_dot_data(expr, error_call)
 
     what <- I("Use of .data in tidyselect expressions")
     if (fn == "$") {
-      var <- as.character(expr[[3]])
+      var <- as_string(expr[[3]])
       str <- encodeString(var, quote = '"')
 
       lifecycle::deprecate_warn("1.2.0", what,
