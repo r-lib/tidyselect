@@ -398,7 +398,8 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
         "",
         "  # Now:",
         glue("  data %>% select(where({name}))")
-      )
+      ),
+      always = TRUE
     )
 
     return(value)
@@ -412,15 +413,16 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   lifecycle::deprecate_warn("1.1.0",
     I("Using an external vector in selections"),
     I("`all_of()` or `any_of()`"),
-      details = paste_lines(
-        "  # Was:",
-        glue("  data %>% select({name})"),
-        "",
-        "  # Now:",
-        glue("  data %>% select(all_of({name}))"),
-        "",
-        "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
-      )
+    details = paste_lines(
+      "  # Was:",
+      glue("  data %>% select({name})"),
+      "",
+      "  # Now:",
+      glue("  data %>% select(all_of({name}))"),
+      "",
+      "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
+    ),
+    always = TRUE
   )
 
   value
