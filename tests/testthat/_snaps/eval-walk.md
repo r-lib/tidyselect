@@ -31,58 +31,20 @@
     Code
       vars <- c("a", "b")
       select_loc(letters2, vars)
-    Message
-      Note: Using an external vector in selections is ambiguous.
-      i Use `all_of(vars)` instead of `vars` to silence this message.
-      i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-      This message is displayed once every 8 hours.
+    Condition
+      Warning:
+      Using an external vector in selections was deprecated in tidyselect 1.1.0.
+      Please use `all_of()` or `any_of()` instead.
+        # Was:
+        data %>% select(vars)
+      
+        # Now:
+        data %>% select(all_of(vars))
+      
+      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
     Output
       a b 
       1 2 
-    Code
-      select_loc(letters2, vars)
-    Output
-      a b 
-      1 2 
-
-# symbol evaluation only informs once (#184)
-
-    Code
-      # Default
-      with_options(tidyselect_verbosity = NULL, {
-        `_vars_default` <- "cyl"
-        select_loc(mtcars, `_vars_default`)
-        select_loc(mtcars, `_vars_default`)
-        invisible(NULL)
-      })
-    Message
-      Note: Using an external vector in selections is ambiguous.
-      i Use `all_of(_vars_default)` instead of `_vars_default` to silence this message.
-      i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-      This message is displayed once every 8 hours.
-    Code
-      # Verbose
-      with_options(tidyselect_verbosity = "verbose", {
-        `_vars_verbose` <- "cyl"
-        select_loc(mtcars, `_vars_verbose`)
-        select_loc(mtcars, `_vars_verbose`)
-        invisible(NULL)
-      })
-    Message
-      Note: Using an external vector in selections is ambiguous.
-      i Use `all_of(_vars_verbose)` instead of `_vars_verbose` to silence this message.
-      i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-      Note: Using an external vector in selections is ambiguous.
-      i Use `all_of(_vars_verbose)` instead of `_vars_verbose` to silence this message.
-      i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-    Code
-      # Quiet
-      with_options(tidyselect_verbosity = "quiet", {
-        `_vars_quiet` <- "cyl"
-        select_loc(mtcars, `_vars_quiet`)
-        select_loc(mtcars, `_vars_quiet`)
-        invisible(NULL)
-      })
 
 # can forbid use of predicates
 
@@ -121,10 +83,10 @@
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
       Please use wrap predicates in `where()` instead.
-        # Bad
+        # Was:
         data %>% select(is_integer)
       
-        # Good
+        # Now:
         data %>% select(where(is_integer))
     Code
       invisible(select_loc(iris, is.numeric))
@@ -132,10 +94,10 @@
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
       Please use wrap predicates in `where()` instead.
-        # Bad
+        # Was:
         data %>% select(is.numeric)
       
-        # Good
+        # Now:
         data %>% select(where(is.numeric))
     Code
       invisible(select_loc(iris, isTRUE))
@@ -143,10 +105,10 @@
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
       Please use wrap predicates in `where()` instead.
-        # Bad
+        # Was:
         data %>% select(isTRUE)
       
-        # Good
+        # Now:
         data %>% select(where(isTRUE))
     Code
       # Warning is not repeated
@@ -155,10 +117,10 @@
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
       Please use wrap predicates in `where()` instead.
-        # Bad
+        # Was:
         data %>% select(is_integer)
       
-        # Good
+        # Now:
         data %>% select(where(is_integer))
     Code
       # formula shorthand must be wrapped

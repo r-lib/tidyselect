@@ -123,59 +123,10 @@ test_that("can use arithmetic operators in non-data context", {
 })
 
 test_that("symbol lookup outside data informs caller about better practice", {
-  reset_message_verbosity("tidyselect::strict_lookup_vars")
-
   expect_snapshot({
     vars <- c("a", "b")
     select_loc(letters2, vars)
-    select_loc(letters2, vars)
   })
-})
-
-test_that("symbol evaluation only informs once (#184)", {
-  reset_message_verbosity("tidyselect::strict_lookup__vars_default")
-
-  expect_snapshot({
-    "Default"
-    with_options(tidyselect_verbosity = NULL, {
-      `_vars_default` <- "cyl"
-      select_loc(mtcars, `_vars_default`)
-      select_loc(mtcars, `_vars_default`)
-      invisible(NULL)
-    })
-
-    "Verbose"
-    with_options(tidyselect_verbosity = "verbose", {
-      `_vars_verbose` <- "cyl"
-      select_loc(mtcars, `_vars_verbose`)
-      select_loc(mtcars, `_vars_verbose`)
-      invisible(NULL)
-    })
-
-    "Quiet"
-    with_options(tidyselect_verbosity = "quiet", {
-      `_vars_quiet` <- "cyl"
-      select_loc(mtcars, `_vars_quiet`)
-      select_loc(mtcars, `_vars_quiet`)
-      invisible(NULL)
-    })
-  })
-})
-
-test_that("symbol evaluation informs from global environment but not packages", {
-  reset_message_verbosity("tidyselect::strict_lookup_from-global-env")
-  reset_message_verbosity("tidyselect::strict_lookup_from-ns-env")
-
-  fn <- function(name, select_loc) {
-    assign(name, 1L)
-    eval(bquote(select_loc(iris, .(as.symbol(name)))))
-  }
-
-  environment(fn) <- env(global_env())
-  expect_message(fn("from-global-env", select_loc), "ambiguous")
-
-  environment(fn) <- ns_env("rlang")
-  expect_message(fn("from-ns-env", select_loc), NA)
 })
 
 test_that("selection helpers are in the context mask", {
