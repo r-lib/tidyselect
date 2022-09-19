@@ -59,6 +59,12 @@
   backtraces of base errors, and done better at propagating the root 
   `error_call` to vctrs input checkers.
 
+* `tidyselect_verbosity` is no longer used; deprecation messaging is now
+  controlled by `lifecycle_verbosity` like all other packages (#317).
+  
+* Use of bare predicates (not wrapped in `where()`) and indirection (without
+  using `all_of()`) now warn on every use (#317).
+
 # tidyselect 1.1.2
 
 * Fix for CRAN checks.

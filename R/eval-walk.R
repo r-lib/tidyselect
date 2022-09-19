@@ -400,23 +400,18 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
       return(name)
     }
 
-    if (!is_string(verbosity(), "quiet")) {
-      cli::cli_warn(
-        c(
-          "Predicate functions must be wrapped in `where()`.",
-          "",
-          " " = "  # Bad",
-          " " = "  data %>% select({name})",
-          " " = "",
-          " " = "  # Good",
-          " " = "  data %>% select(where({name}))",
-          "",
-          i = "Please update your code."
-        ),
-        .frequency = "regularly",
-        .frequency_id = paste0("tidyselect::predicate_warn_", name)
-      )
-    }
+    lifecycle::deprecate_warn("1.1.0",
+      what = I("Use of bare predicate functions"),
+      with = I("wrap predicates in `where()`"),
+      details = paste_lines(
+        "  # Was:",
+        glue("  data %>% select({name})"),
+        "",
+        "  # Now:",
+        glue("  data %>% select(where({name}))")
+      ),
+      always = TRUE
+    )
 
     return(value)
   }
@@ -426,23 +421,20 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     return(name)
   }
 
-  verbosity <- verbosity()
-
-  if (!is_string(verbosity, "quiet") && env_needs_advice(env)) {
-    # Please keep in sync with faq.R.
-    msg <- c(
-      "Note: Using an external vector in selections is ambiguous.",
-      i = "Use `all_of({name})` instead of `{name}` to silence this message.",
-      i = "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
-    )
-    id <- paste0("tidyselect::strict_lookup_", name)
-
-    if (is_string(verbosity, "verbose")) {
-      cli::cli_inform(msg)
-    } else {
-      cli::cli_inform(msg, .frequency = "regularly", .frequency_id = id)
-    }
-  }
+  lifecycle::deprecate_warn("1.1.0",
+    I("Using an external vector in selections"),
+    I("`all_of()` or `any_of()`"),
+    details = paste_lines(
+      "  # Was:",
+      glue("  data %>% select({name})"),
+      "",
+      "  # Now:",
+      glue("  data %>% select(all_of({name}))"),
+      "",
+      "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
+    ),
+    always = TRUE
+  )
 
   value
 }

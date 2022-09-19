@@ -1,8 +1,3 @@
-local_options(
-  lifecycle_verbosity = "quiet",
-  tidyselect_verbosity = "quiet"
-)
-
 # Once defunct, don't delete the tests, port them to `select_loc()`.
 # Better have some redundancy than accidentally losing coverage.
 
@@ -34,6 +29,8 @@ test_that("abort on unknown columns", {
 })
 
 test_that("data mask is not isolated from context (for now)", {
+  local_options(lifecycle_verbosity = "quiet")
+
   foo <- 10
   expect_identical(vars_select(letters, foo), c(j = "j"))
   expect_identical(vars_select(letters, ((foo))), c(j = "j"))
@@ -113,6 +110,8 @@ test_that("can select with length > 1 double vectors (#43)", {
 })
 
 test_that("missing values are detected in vars_select() (#72)", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_error(
     vars_select("foo", na_cpl),
     class = "vctrs_error_subscript_type"
@@ -329,6 +328,8 @@ test_that("vars_rename() unquotes named character vectors", {
 })
 
 test_that("missing values are detected in vars_rename() (#72)", {
+  local_options(lifecycle_verbosity = "quiet")
+
   expect_error(
     vars_rename(letters, A = na_cpl),
     class = "vctrs_error_subscript_type"
