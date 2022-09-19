@@ -62,7 +62,7 @@
 * `tidyselect_verbosity` is no longer used; deprecation messaging is now
   controlled by `lifecycle_verbosity` like all other packages (#317).
   
-* Use of bare predicates (not wrapped in `where()`) and indirection (with out
+* Use of bare predicates (not wrapped in `where()`) and indirection (without
   using `all_of()`) now warn on every use (#317).
 
 # tidyselect 1.1.2
