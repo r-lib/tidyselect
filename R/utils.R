@@ -250,3 +250,5 @@ from_tests <- function(env) {
 mask_error_call <- function(data_mask) {
   data_mask$.__tidyselect__.$internal$error_call
 }
+
+paste_lines <- function(...) paste(c(...), collapse = "\n")

@@ -389,23 +389,17 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
       return(name)
     }
 
-    if (!is_string(verbosity(), "quiet")) {
-      cli::cli_warn(
-        c(
-          "Predicate functions must be wrapped in `where()`.",
-          "",
-          " " = "  # Bad",
-          " " = "  data %>% select({name})",
-          " " = "",
-          " " = "  # Good",
-          " " = "  data %>% select(where({name}))",
-          "",
-          i = "Please update your code."
-        ),
-        .frequency = "regularly",
-        .frequency_id = paste0("tidyselect::predicate_warn_", name)
+    lifecycle::deprecate_warn("1.1.0",
+      what = I("Use of bare predicate functions"),
+      with = I("wrap predicates in `where()`"),
+      details = paste_lines(
+        "  # Bad",
+        glue("  data %>% select({name})"),
+        "",
+        "  # Good",
+        glue("  data %>% select(where({name}))")
       )
-    }
+    )
 
     return(value)
   }

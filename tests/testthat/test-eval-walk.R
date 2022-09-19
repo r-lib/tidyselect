@@ -342,18 +342,13 @@ test_that("eval_sym() doesn't look for functions in the context", {
 })
 
 test_that("eval_sym() still supports predicate functions starting with `is`", {
-  local_options(tidyselect_verbosity = "quiet")
+  local_options(lifecycle_verbosity = "quiet")
   expect_identical(select_loc(iris, is_integer), select_loc(iris, where(is_integer)))
   expect_identical(select_loc(iris, is.numeric), select_loc(iris, where(is.numeric)))
   expect_identical(select_loc(iris, isTRUE), select_loc(iris, where(isTRUE)))
 })
 
 test_that("eval_walk() has informative messages", {
-  withr::local_options(lifecycle_verbosity = "quiet")
-  reset_warning_verbosity("tidyselect::predicate_warn_is_integer")
-  reset_warning_verbosity("tidyselect::predicate_warn_is.numeric")
-  reset_warning_verbosity("tidyselect::predicate_warn_isTRUE")
-
   expect_snapshot({
     "Using a predicate without where() warns"
     invisible(select_loc(iris, is_integer))

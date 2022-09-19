@@ -119,47 +119,48 @@
       invisible(select_loc(iris, is_integer))
     Condition
       Warning:
-      Predicate functions must be wrapped in `where()`.
-      
+      Use of bare predicate functions was deprecated in tidyselect 1.1.0.
+      Please use wrap predicates in `where()` instead.
         # Bad
         data %>% select(is_integer)
-        
+      
         # Good
         data %>% select(where(is_integer))
-      
-      i Please update your code.
-      This warning is displayed once every 8 hours.
     Code
       invisible(select_loc(iris, is.numeric))
     Condition
       Warning:
-      Predicate functions must be wrapped in `where()`.
-      
+      Use of bare predicate functions was deprecated in tidyselect 1.1.0.
+      Please use wrap predicates in `where()` instead.
         # Bad
         data %>% select(is.numeric)
-        
+      
         # Good
         data %>% select(where(is.numeric))
-      
-      i Please update your code.
-      This warning is displayed once every 8 hours.
     Code
       invisible(select_loc(iris, isTRUE))
     Condition
       Warning:
-      Predicate functions must be wrapped in `where()`.
-      
+      Use of bare predicate functions was deprecated in tidyselect 1.1.0.
+      Please use wrap predicates in `where()` instead.
         # Bad
         data %>% select(isTRUE)
-        
+      
         # Good
         data %>% select(where(isTRUE))
-      
-      i Please update your code.
-      This warning is displayed once every 8 hours.
     Code
       # Warning is not repeated
       invisible(select_loc(iris, is_integer))
+    Condition
+      Warning:
+      Use of bare predicate functions was deprecated in tidyselect 1.1.0.
+      Please use wrap predicates in `where()` instead.
+        # Bad
+        data %>% select(is_integer)
+      
+        # Good
+        data %>% select(where(is_integer))
+    Code
       # formula shorthand must be wrapped
       (expect_error(select_loc(mtcars, ~ is.numeric(.x))))
     Output
@@ -200,6 +201,10 @@
         data %>% select(where(~...))
     Code
       (expect_error(select_loc(mtcars, .data$"foo")))
+    Condition
+      Warning:
+      Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+      Please use `any_of()` or `all_of()` instead.
     Output
       <error/rlang_error>
       Error in `select_loc()`:
