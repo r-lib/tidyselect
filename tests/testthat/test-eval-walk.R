@@ -239,7 +239,9 @@ test_that("can select with .data pronoun (#2715)", {
 
 test_that("use of .data is deprecated", {
   x <- list(a = 1, b = 2, c = 3)
+  var <- "a"
   expect_snapshot(x <- select_loc(x, .data$a))
+  expect_snapshot(x <- select_loc(x, .data[[var]]))
 })
 
 test_that(".data in env-expression has the lexical definition", {

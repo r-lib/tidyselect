@@ -285,13 +285,24 @@ call_kind <- function(expr, error_call) {
 
   fn <- as_string(head)
 
-  if (fn %in% c("$", "[[") && identical(node_cadr(expr), quote(.data))) {
-    lifecycle::deprecate_warn("1.2.0",
-      what = I("Use of .data in tidyselect expressions"),
-      with = I("`any_of()` or `all_of()`")
-    )
-
+  if (fn %in% c("$", "[[") && identical(expr[[2]], quote(.data))) {
     validate_dot_data(expr, error_call)
+
+    what <- I("Use of .data in tidyselect expressions")
+    if (fn == "$") {
+      var <- as_string(expr[[3]])
+      str <- encodeString(var, quote = '"')
+
+      lifecycle::deprecate_soft("1.2.0", what,
+        details = cli::format_inline("Please use {.code {str}} instead of `data${var}`")
+      )
+    } else if (fn == "[[") {
+      # .data[[ is an injection operator so can't give specific advice
+      lifecycle::deprecate_soft("1.2.0", what,
+        details = cli::format_inline("Please use {.code all_of(var)} (or {.code any_of(var)}) instead of {.code data[[var]]}")
+      )
+    }
+
     return(".data")
   }
 
