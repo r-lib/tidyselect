@@ -32,10 +32,15 @@
 #' # You can unquote variables:
 #' var <- 10
 #' vars_pull(letters, !!var)
-vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = "var") {
+vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = caller_arg(var)) {
   expr <- enquo(var)
   if (quo_is_missing(expr)) {
-    expr <- -1
+    # No easy way to determine what var is in parent because it's likely
+    # to be embraced; so don't try and use error_arg here
+    cli::cli_abort(
+      "{.arg var} is absent but must be supplied.",
+      call = error_call
+    )
   }
 
   local_vars(vars)

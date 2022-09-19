@@ -50,8 +50,8 @@
 
 * `peek_var()` error now generates hyperlink to docs with recent RStudio (#289).
 
-* `vars_pull()` generates more informative error messages (#234, #258)
-  and gains an `error_call` argument.
+* `vars_pull()` generates more informative error messages (#234, #258, #318)
+  and gains `error_call` and `error_arg` arguments.
 
 * Errors produced by tidyselect should now be more informative. Evaluation 
   errors are now chained, with the child error call is set to the `error_call` 
