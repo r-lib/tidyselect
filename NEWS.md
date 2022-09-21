@@ -18,7 +18,7 @@
   `.data[[var]]` with `any_of(var)` or `all_of(var)` (#169).
 
 * Use of bare predicates (not wrapped in `where()`) and indirection (without
-  using `all_of()`) now warn on every use (#317).
+  using `all_of()`) have been formally deprecated (#317).
 
 ## Minor improvements and bug fixes
 
