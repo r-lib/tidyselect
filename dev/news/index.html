@@ -64,7 +64,7 @@
 <h3 id="lifecycle-changes-development-version">Lifecycle changes<a class="anchor" aria-label="anchor" href="#lifecycle-changes-development-version"></a></h3>
 <ul><li><p>Using <code><a href="../reference/all_of.html">all_of()</a></code> outside of a tidyselect context is now deprecated (<a href="https://github.com/r-lib/tidyselect/issues/269" class="external-link">#269</a>). In the future it will error to be consistent with <code><a href="../reference/all_of.html">any_of()</a></code>.</p></li>
 <li><p>Use of <code>.data</code> in tidyselect expressions is now deprecated to more cleanly separate tidy-select from data-masking. Replace <code>.data$x</code> with <code>"x"</code> and <code>.data[[var]]</code> with <code>any_of(var)</code> or <code>all_of(var)</code> (<a href="https://github.com/r-lib/tidyselect/issues/169" class="external-link">#169</a>).</p></li>
-<li><p>Use of bare predicates (not wrapped in <code><a href="../reference/where.html">where()</a></code>) and indirection (without using <code><a href="../reference/all_of.html">all_of()</a></code>) now warn on every use (<a href="https://github.com/r-lib/tidyselect/issues/317" class="external-link">#317</a>).</p></li>
+<li><p>Use of bare predicates (not wrapped in <code><a href="../reference/where.html">where()</a></code>) and indirection (without using <code><a href="../reference/all_of.html">all_of()</a></code>) have been formally deprecated (<a href="https://github.com/r-lib/tidyselect/issues/317" class="external-link">#317</a>).</p></li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-improvements-and-bug-fixes-development-version">Minor improvements and bug fixes<a class="anchor" aria-label="anchor" href="#minor-improvements-and-bug-fixes-development-version"></a></h3>
@@ -127,7 +127,7 @@
 <li><p>Logical vectors now fail properly.</p></li>
 <li><p>Selected variables now must be unique. It was previously possible to return duplicate selections in some circumstances.</p></li>
 <li><p>The input names can no longer contain <code>NA</code> values.</p></li>
-</ul><p>Note that we recommend <code><a href="https://testthat.r-lib.org/reference/verify_output.html" class="external-link">testthat::verify_output()</a></code> for monitoring error messages thrown from packages that you don’t control. Unlike <code>expect_error()</code>, <code>verify_output()</code> does not cause CMD check failures when error messages have changed. See <a href="https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/" class="external-link uri">https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/</a> for more information.</p>
+</ul><p>Note that we recommend <code><a href="https://rdrr.io/pkg/testthat/man/verify_output.html" class="external-link">testthat::verify_output()</a></code> for monitoring error messages thrown from packages that you don’t control. Unlike <code>expect_error()</code>, <code>verify_output()</code> does not cause CMD check failures when error messages have changed. See <a href="https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/" class="external-link uri">https://www.tidyverse.org/blog/2019/11/testthat-2-3-0/</a> for more information.</p>
 </div>
 <div class="section level3">
 <h3 id="syntax-1-0-0">Syntax<a class="anchor" aria-label="anchor" href="#syntax-1-0-0"></a></h3>
