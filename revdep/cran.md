@@ -1,48 +1,39 @@
 ## revdepcheck results
 
-We checked 27 reverse dependencies, comparing R CMD check results across CRAN and dev versions of this package.
+We checked 3667 reverse dependencies (3659 from CRAN + 8 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 23 new problems
- * We failed to check 0 packages
+ * We saw 19 new problems
+ * We failed to check 10 packages
 
 Issues with CRAN packages are summarised below.
 
 ### New problems
 (This reports the first line of each new failure)
 
-* arrow
+* academictwitteR
   checking tests ... ERROR
 
-* baseballr
-  checking re-building of vignette outputs ... WARNING
-
-* bumbl
+* admiral
   checking tests ... ERROR
 
-* covidcast
+* bupaR
   checking tests ... ERROR
 
-* crosstable
+* d3r
   checking tests ... ERROR
 
-* cvCovEst
-  checking tests ... ERROR
-
-* datawizard
+* dm
   checking tests ... ERROR
 
 * edibble
   checking examples ... ERROR
   checking tests ... ERROR
 
-* ggalluvial
+* gratia
   checking tests ... ERROR
 
-* ggip
-  checking tests ... ERROR
-
-* iNZightTools
-  checking tests ... ERROR
+* hyperSpec
+  checking running R code from vignettes ... ERROR
 
 * metacore
   checking examples ... ERROR
@@ -53,26 +44,17 @@ Issues with CRAN packages are summarised below.
   checking examples ... ERROR
   checking tests ... ERROR
 
-* namedropR
+* opencage
   checking tests ... ERROR
 
-* NEONiso
+* parsnip
   checking tests ... ERROR
 
-* r2dii.analysis
+* r2dii.plot
   checking tests ... ERROR
 
-* r2dii.match
+* ssdtools
   checking tests ... ERROR
-
-* skimr
-  checking tests ... ERROR
-
-* spectralR
-  checking tests ... ERROR
-
-* statnipokladna
-  checking whether package ‘statnipokladna’ can be installed ... WARNING
 
 * SynthCast
   checking tests ... ERROR
@@ -80,6 +62,24 @@ Issues with CRAN packages are summarised below.
 * targets
   checking tests ... ERROR
 
-* textrecipes
+* tibble
   checking tests ... ERROR
 
+* workflowsets
+  checking tests ... ERROR
+
+* ypr
+  checking tests ... ERROR
+
+### Failed to check
+
+* CausalImpact  (NA)
+* elbird        (NA)
+* ggPMX         (NA)
+* loon.ggplot   (NA)
+* loon.shiny    (NA)
+* nlmixr2plot   (NA)
+* tidySEM       (NA)
+* vivid         (NA)
+* xpose.nlmixr  (NA)
+* xpose.nlmixr2 (NA)
