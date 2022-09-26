@@ -2,7 +2,7 @@
 
 We checked 3667 reverse dependencies (3659 from CRAN + 8 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
- * We saw 19 new problems
+ * We saw 15 new problems
  * We failed to check 10 packages
 
 Issues with CRAN packages are summarised below.
@@ -10,30 +10,27 @@ Issues with CRAN packages are summarised below.
 ### New problems
 (This reports the first line of each new failure)
 
-* academictwitteR
+* arrow
   checking tests ... ERROR
 
-* admiral
+* bumbl
   checking tests ... ERROR
 
-* bupaR
+* covidcast
   checking tests ... ERROR
 
-* d3r
-  checking tests ... ERROR
-
-* dm
+* crosstable
   checking tests ... ERROR
 
 * edibble
   checking examples ... ERROR
   checking tests ... ERROR
 
-* gratia
+* ggip
   checking tests ... ERROR
 
-* hyperSpec
-  checking running R code from vignettes ... ERROR
+* iNZightTools
+  checking tests ... ERROR
 
 * metacore
   checking examples ... ERROR
@@ -44,16 +41,13 @@ Issues with CRAN packages are summarised below.
   checking examples ... ERROR
   checking tests ... ERROR
 
-* opencage
+* namedropR
   checking tests ... ERROR
 
-* parsnip
+* r2dii.analysis
   checking tests ... ERROR
 
-* r2dii.plot
-  checking tests ... ERROR
-
-* ssdtools
+* r2dii.match
   checking tests ... ERROR
 
 * SynthCast
@@ -62,24 +56,18 @@ Issues with CRAN packages are summarised below.
 * targets
   checking tests ... ERROR
 
-* tibble
-  checking tests ... ERROR
-
-* workflowsets
-  checking tests ... ERROR
-
-* ypr
+* textrecipes
   checking tests ... ERROR
 
 ### Failed to check
 
-* CausalImpact  (NA)
-* elbird        (NA)
-* ggPMX         (NA)
-* loon.ggplot   (NA)
-* loon.shiny    (NA)
-* nlmixr2plot   (NA)
-* tidySEM       (NA)
-* vivid         (NA)
-* xpose.nlmixr  (NA)
-* xpose.nlmixr2 (NA)
+* elbird         (NA)
+* ggPMX          (NA)
+* loon.ggplot    (NA)
+* loon.shiny     (NA)
+* MarketMatching (NA)
+* nlmixr2plot    (NA)
+* tidySEM        (NA)
+* vivid          (NA)
+* xpose.nlmixr   (NA)
+* xpose.nlmixr2  (NA)

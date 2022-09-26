@@ -1,14 +1,14 @@
-# academictwitteR
+# arrow
 
 <details>
 
-* Version: 0.3.1
-* GitHub: https://github.com/cjbarrie/academictwitteR
-* Source code: https://github.com/cran/academictwitteR
-* Date/Publication: 2022-02-16 15:20:09 UTC
-* Number of recursive dependencies: 104
+* Version: 9.0.0.1
+* GitHub: https://github.com/apache/arrow
+* Source code: https://github.com/cran/arrow
+* Date/Publication: 2022-09-14 08:10:02 UTC
+* Number of recursive dependencies: 72
 
-Run `cloud_details(, "academictwitteR")` for more info
+Run `cloud_details(, "arrow")` for more info
 
 </details>
 
@@ -19,156 +19,49 @@ Run `cloud_details(, "academictwitteR")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      • !dir.exists("../testdata/reuters") is TRUE (1)
-      • !dir.exists("api.twitter.com") is TRUE (69)
-      • !file.exists("../testdata/hkx.RDS") is TRUE (1)
-      • !file.exists("../testdata/rate_limit_res.RDS") is TRUE (3)
-      • On CRAN (2)
+       15.       └─tidyselect:::eval_select_impl(...)
+       16.         ├─tidyselect:::with_subscript_errors(...)
+       17.         │ └─rlang::try_fetch(...)
+       18.         │   └─base::withCallingHandlers(...)
+       19.         └─tidyselect:::vars_select_eval(...)
+       20.           └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+       21.             └─tidyselect:::eval_c(expr, data_mask, context_mask)
+       22.               └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+       23.                 └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+       24.                   └─tidyselect:::expr_kind(expr, error_call)
+       25.                     └─tidyselect:::call_kind(expr, error_call)
       
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure (test-deprecate.R:2:3): bind_tweet_jsons ────────────────────────────
-      `bind_tweet_jsons("../testdata/commtwitter")` did not throw the expected warning.
-      ── Failure (test-deprecate.R:6:3): bind_user_jsons ─────────────────────────────
-      `bind_user_jsons("../testdata/commtwitter")` did not throw the expected warning.
-      
-      [ FAIL 2 | WARN 0 | SKIP 77 | PASS 60 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# admiral
-
-<details>
-
-* Version: 0.8.1
-* GitHub: https://github.com/pharmaverse/admiral
-* Source code: https://github.com/cran/admiral
-* Date/Publication: 2022-09-20 22:30:08 UTC
-* Number of recursive dependencies: 126
-
-Run `cloud_details(, "admiral")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      > test_check("admiral")
-      [1] "N" "Y" NA 
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 497 ]
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure (test-deprecation.R:207:3): derive_var_agegr_fda Test 1: A warning is issued if `derive_var_agegr_fda()` is called ──
-      `derive_var_agegr_fda(admiral_dm, age_var = AGE, new_var = AGEGR1)` did not produce any warnings.
-      Backtrace:
-          ▆
-       1. ├─rlang::with_options(...) at test-deprecation.R:207:2
-       2. └─testthat::expect_warning(...) at test-deprecation.R:208:4
-      
-      [ FAIL 1 | WARN 0 | SKIP 0 | PASS 497 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# bupaR
-
-<details>
-
-* Version: 0.5.0
-* GitHub: https://github.com/bupaverse/bupaR
-* Source code: https://github.com/cran/bupaR
-* Date/Publication: 2022-07-05 15:30:02 UTC
-* Number of recursive dependencies: 82
-
-Run `cloud_details(, "bupaR")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      ══ Skipped tests ═══════════════════════════════════════════════════════════════
-      • TODO: rewrite ordered fails (1)
-      • TODO: rewrite slice tests (2)
-      • codes fails on ordered (1)
-      • empty test (1)
-      • grouped_activitylog not fully functional yet (2)
-      • problem with grouped eventlogs (1)
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure (test_utils.R:10:3): test lifecycle_warning_eventlog ────────────────
-      `result1 <- case_labels(eventlog = patients)` did not produce any warnings.
-      
-      [ FAIL 1 | WARN 0 | SKIP 8 | PASS 275 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# d3r
-
-<details>
-
-* Version: 1.0.0
-* GitHub: https://github.com/timelyportfolio/d3r
-* Source code: https://github.com/cran/d3r
-* Date/Publication: 2021-08-15 18:00:06 UTC
-* Number of recursive dependencies: 64
-
-Run `cloud_details(, "d3r")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      • On CRAN (3)
-      • V8 cannot be loaded (1)
-      • github cannot be loaded (1)
-      • igraph cannot be loaded (1)
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure (test_deps.R:39:3): d3_dep-* src href is a valid url ────────────────
-      is_valid_url(file.path(jetpack_offline$src$href, jetpack$script)) is not TRUE
-      
-      `actual`:   FALSE
-      `expected`: TRUE 
-      
-      [ FAIL 1 | WARN 0 | SKIP 6 | PASS 18 ]
+      [ FAIL 6 | WARN 23 | SKIP 65 | PASS 8194 ]
       Error: Test failures
       Execution halted
     ```
 
 ## In both
 
-*   checking package dependencies ... NOTE
+*   checking installed package size ... NOTE
     ```
-    Packages which this enhances but not available for checking:
-      'igraph', 'partykit', 'treemap', 'V8'
+      installed size is 113.7Mb
+      sub-directories of 1Mb or more:
+        R       4.1Mb
+        libs  108.4Mb
     ```
 
-# dm
+*   checking Rd cross-references ... NOTE
+    ```
+    Package unavailable to check Rd xrefs: ‘readr’
+    ```
+
+# bumbl
 
 <details>
 
 * Version: 1.0.2
-* GitHub: https://github.com/cynkra/dm
-* Source code: https://github.com/cran/dm
-* Date/Publication: 2022-09-20 07:46:26 UTC
-* Number of recursive dependencies: 152
+* GitHub: https://github.com/Aariq/bumbl
+* Source code: https://github.com/cran/bumbl
+* Date/Publication: 2022-05-13 20:20:20 UTC
+* Number of recursive dependencies: 101
 
-Run `cloud_details(, "dm")` for more info
+Run `cloud_details(, "bumbl")` for more info
 
 </details>
 
@@ -179,48 +72,104 @@ Run `cloud_details(, "dm")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-       1. ├─dm:::expect_equivalent_dm(...) at test-db-interface.R:25:2
-       2. │ ├─dm_get_tables_impl(object) %>% map(collect) at tests/testthat/helper-expectations.R:6:2
-       3. │ └─dm:::dm_get_tables_impl(object)
-       4. │   └─dm:::dm_get_def(x, quiet)
-       5. │     └─dm:::check_dm(x)
-       6. │       └─dm::is_dm(dm)
-       7. ├─purrr::map(., collect)
-       8. └─dm:::expect_deprecated_obj(copy_dm_to(default_local_src(), dm_for_filter()))
-       9.   └─lifecycle::expect_deprecated(...)
-      ── Failure (test_dm_from_con.R:77:3): dm_from_src() deprecated ─────────────────
-      `dm_from_src(src_from_src_or_con(con_db), learn_keys = FALSE)` did not throw the expected warning.
+      Creating plots for 6 colonies...
+      [ FAIL 2 | WARN 26 | SKIP 1 | PASS 39 ]
       
-      [ FAIL 4 | WARN 0 | SKIP 191 | PASS 1333 ]
+      ══ Skipped tests ═══════════════════════════════════════════════════════════════
+      • On CRAN (1)
+      
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure (test-bumbl.R:56:3): no unexpected warnings ─────────────────────────
+      `bumbl(...)` produced warnings.
+      ── Failure (test-bumbl.R:57:3): no unexpected warnings ─────────────────────────
+      `bumbl(...)` produced warnings.
+      
+      [ FAIL 2 | WARN 26 | SKIP 1 | PASS 39 ]
+      Error: Test failures
+      Execution halted
+    ```
+
+# covidcast
+
+<details>
+
+* Version: 0.4.2
+* GitHub: https://github.com/cmu-delphi/covidcast
+* Source code: https://github.com/cran/covidcast
+* Date/Publication: 2021-05-04 07:00:12 UTC
+* Number of recursive dependencies: 92
+
+Run `cloud_details(, "covidcast")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+       18.       │ └─rlang::try_fetch(...)
+       19.       │   └─base::withCallingHandlers(...)
+       20.       └─tidyselect:::vars_select_eval(...)
+       21.         └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+       22.           └─tidyselect:::eval_c(expr, data_mask, context_mask)
+       23.             └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+       24.               └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+       25.                 └─tidyselect:::expr_kind(expr, error_call)
+       26.                   └─tidyselect:::call_kind(expr, error_call)
+      ── Failure (test-wrangle.R:286:3): can aggregate signals with different metadata ──
+      `aggregate_signals(list(foo, baz))` produced warnings.
+      
+      [ FAIL 5 | WARN 80 | SKIP 7 | PASS 55 ]
       Error: Test failures
       Execution halted
     ```
 
 ## In both
 
-*   checking examples ... ERROR
+*   checking data for non-ASCII characters ... NOTE
     ```
-    Running examples in ‘dm-Ex.R’ failed
-    The error most likely occurred in:
-    
-    > ### Name: dm_flatten_to_tbl
-    > ### Title: Flatten a part of a 'dm' into a wide table
-    > ### Aliases: dm_flatten_to_tbl
-    > 
-    > ### ** Examples
-    > 
-    > 
-    ...
-      8. │   └─dm:::check_dm(dm)
-      9. │     └─dm::is_dm(dm)
-     10. ├─dm::dm_financial()
-     11. │ ├─base::withVisible(eval(mc, parent.frame()))
-     12. │ └─base::eval(mc, parent.frame())
-     13. │   └─base::eval(mc, parent.frame())
-     14. └─dm (local) `<fn>`()
-     15.   └─dm:::financial_db_con()
-     16.     └─rlang::abort(...)
-    Execution halted
+      Note: found 20 marked UTF-8 strings
+    ```
+
+# crosstable
+
+<details>
+
+* Version: 0.5.0
+* GitHub: https://github.com/DanChaltiel/crosstable
+* Source code: https://github.com/cran/crosstable
+* Date/Publication: 2022-08-16 10:40:02 UTC
+* Number of recursive dependencies: 120
+
+Run `cloud_details(, "crosstable")` for more info
+
+</details>
+
+## Newly broken
+
+*   checking tests ... ERROR
+    ```
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      `.` produced warnings.
+      Backtrace:
+          ▆
+       1. ├─... %>% expect_silent() at test-selection.R:52:2
+       2. └─testthat::expect_silent(.)
+      ── Failure (test-selection.R:57:3): crosstable with external character vector ──
+      `.` produced warnings.
+      Backtrace:
+          ▆
+       1. ├─... %>% expect_silent() at test-selection.R:57:2
+       2. └─testthat::expect_silent(.)
+      
+      [ FAIL 2 | WARN 791 | SKIP 40 | PASS 343 ]
+      Error: Test failures
+      Execution halted
     ```
 
 # edibble
@@ -294,17 +243,17 @@ Run `cloud_details(, "edibble")` for more info
       All declared Imports should be used.
     ```
 
-# gratia
+# ggip
 
 <details>
 
-* Version: 0.7.3
-* GitHub: https://github.com/gavinsimpson/gratia
-* Source code: https://github.com/cran/gratia
-* Date/Publication: 2022-05-09 11:20:03 UTC
-* Number of recursive dependencies: 83
+* Version: 0.2.1
+* GitHub: https://github.com/davidchall/ggip
+* Source code: https://github.com/cran/ggip
+* Date/Publication: 2022-08-13 22:40:02 UTC
+* Number of recursive dependencies: 72
 
-Run `cloud_details(, "gratia")` for more info
+Run `cloud_details(, "ggip")` for more info
 
 </details>
 
@@ -312,92 +261,62 @@ Run `cloud_details(, "gratia")` for more info
 
 *   checking tests ... ERROR
     ```
-      Running ‘test-all.R’
-    Running the tests in ‘tests/test-all.R’ failed.
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      • hgam-paper/hgam-paper-bird-move-model-1.svg
-      • hgam-paper/hgam-paper-bird-move-model-2.svg
-      • hgam-paper/hgam-paper-bird-move-model-3.svg
-      • hgam-paper/hgam-paper-bird-move-model-5.svg
-      • hgam-paper/hgam-paper-co2-model-1.svg
-      • hgam-paper/hgam-paper-co2-model-2.svg
-      • hgam-paper/hgam-paper-co2-model-3.svg
-      • hgam-paper/hgam-paper-co2-model-4.svg
-      • hgam-paper/hgam-paper-co2-model-5.svg
-      • hgam-paper/hgam-paper-zoop-model-4.svg
-      • hgam-paper/hgam-paper-zoop-model-5.svg
-      • rootograms/draw-gaussian-rootogram.svg
-      • rootograms/draw-neg-bin-rootogram.svg
+      Loading required package: ipaddress
+      > 
+      > test_check("ggip")
+      [ FAIL 1 | WARN 96 | SKIP 5 | PASS 93 ]
+      
+      ══ Skipped tests ═══════════════════════════════════════════════════════════════
+      • On CRAN (5)
+      
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure (test-geom-hilbert-outline.R:89:3): networks outside 2D grid raise warning ──
+      `layer_grob(p + geom_hilbert_outline(na.rm = TRUE))` produced warnings.
+      
+      [ FAIL 1 | WARN 96 | SKIP 5 | PASS 93 ]
       Error: Test failures
       Execution halted
     ```
 
-# hyperSpec
+# iNZightTools
 
 <details>
 
-* Version: 0.100.0
-* GitHub: https://github.com/r-hyperspec/hyperSpec
-* Source code: https://github.com/cran/hyperSpec
-* Date/Publication: 2021-09-13 13:00:02 UTC
-* Number of recursive dependencies: 141
+* Version: 1.12.3
+* GitHub: https://github.com/iNZightVIT/iNZightTools
+* Source code: https://github.com/cran/iNZightTools
+* Date/Publication: 2022-08-22 20:20:02 UTC
+* Number of recursive dependencies: 86
 
-Run `cloud_details(, "hyperSpec")` for more info
+Run `cloud_details(, "iNZightTools")` for more info
 
 </details>
 
 ## Newly broken
 
-*   checking running R code from vignettes ... ERROR
+*   checking tests ... ERROR
     ```
-    Errors in running code in vignettes:
-    when running code in ‘plotting.Rnw’
-      ...
-      'x' values are not equispaced; output may be wrong
-    Warning in (function (x, y, z, subscripts, at = pretty(z), ..., col.regions = regions$col,  :
-      'y' values are not equispaced; output may be wrong
-    
-    > plotvoronoi(uneven)
-    Warning in (function (x, y, z, subscripts = TRUE, at = pretty(z), points = TRUE,  :
-      The 'use.tripack' argument is deprecated and ignored. See ?panel.voronoi
-    ...
-    
-    ... incomplete output.  Crash?
-    
-      ‘chondro.pdf.asis’ using ‘UTF-8’... OK
-      ‘fileio.pdf.asis’ using ‘UTF-8’... OK
-      ‘baseline.Rnw’ using ‘UTF-8’... OK
-      ‘flu.Rnw’ using ‘UTF-8’... OK
-      ‘hyperspec.Rnw’ using ‘UTF-8’... OK
-      ‘laser.Rnw’ using ‘UTF-8’... OK
-      ‘plotting.Rnw’ using ‘UTF-8’... failed to complete the test
-    ```
-
-## In both
-
-*   checking re-building of vignette outputs ... NOTE
-    ```
-    Error(s) in re-building vignettes:
-    --- re-building ‘chondro.pdf.asis’ using asis
-    --- finished re-building ‘chondro.pdf.asis’
-    
-    --- re-building ‘fileio.pdf.asis’ using asis
-    --- finished re-building ‘fileio.pdf.asis’
-    
-    --- re-building ‘baseline.Rnw’ using Sweave
-    Loading required package: lattice
-    Loading required package: grid
-    ...
-    Warning in (function (x, y, z, subscripts, at = pretty(z), ..., col.regions = regions$col,  :
-      'y' values are not equispaced; output may be wrong
-    Warning in (function (x, y, z, subscripts = TRUE, at = pretty(z), points = TRUE,  :
-      The 'use.tripack' argument is deprecated and ignored. See ?panel.voronoi
-    Killed
-    SUMMARY: processing the following files failed:
-      ‘baseline.Rnw’ ‘flu.Rnw’ ‘hyperspec.Rnw’ ‘laser.Rnw’ ‘plotting.Rnw’
-    
-    Error: Vignette re-building failed.
-    Execution halted
+      Running ‘testthat.R’
+    Running the tests in ‘tests/testthat.R’ failed.
+    Last 13 lines of output:
+      ══ Failed tests ════════════════════════════════════════════════════════════════
+      ── Failure (test_aggregateData.R:57:5): Aggregating survey data is valid ───────
+      `... <- NULL` produced warnings.
+      ── Failure (test_aggregateData.R:74:5): Aggregating survey data is valid ───────
+      `svy_agg <- aggregateData(svy, "stype", c("iqr"), c("api99", "api00"))` produced warnings.
+      ── Failure (test_aggregateData.R:84:5): Aggregating survey data is valid ───────
+      `... <- NULL` produced warnings.
+      ── Failure (test_filter_levels.R:25:5): Filtering survey design works ──────────
+      `svy_filtered <- filterLevels(svy, "stype", "E")` produced warnings.
+      ── Failure (test_filter_numeric.R:42:5): Filtering surveys is valid ────────────
+      `svy_filtered <- filterNumeric(svy, "api00", "<", 700)` produced warnings.
+      
+      [ FAIL 5 | WARN 8 | SKIP 5 | PASS 330 ]
+      Error: Test failures
+      Execution halted
     ```
 
 # metacore
@@ -543,22 +462,22 @@ Run `cloud_details(, "metatools")` for more info
        13.   └─dplyr (local) h(simpleError(msg, call))
        14.     └─rlang::abort(...)
       
-      [ FAIL 4 | WARN 0 | SKIP 0 | PASS 50 ]
+      [ FAIL 4 | WARN 438 | SKIP 0 | PASS 50 ]
       Error: Test failures
       Execution halted
     ```
 
-# opencage
+# namedropR
 
 <details>
 
-* Version: 0.2.2
-* GitHub: https://github.com/ropensci/opencage
-* Source code: https://github.com/cran/opencage
-* Date/Publication: 2021-02-20 01:00:02 UTC
-* Number of recursive dependencies: 78
+* Version: 2.4.1
+* GitHub: https://github.com/nucleic-acid/namedropR
+* Source code: https://github.com/cran/namedropR
+* Date/Publication: 2022-08-28 10:50:02 UTC
+* Number of recursive dependencies: 98
 
-Run `cloud_details(, "opencage")` for more info
+Run `cloud_details(, "namedropR")` for more info
 
 </details>
 
@@ -569,79 +488,34 @@ Run `cloud_details(, "opencage")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      ── Failure (test-deprecated.R:126:3): `opencage_key(quiet = FALSE)` messages ───
-      `opencage_key(quiet = FALSE)` did not produce any warnings.
+      bulk_res4$warnings[2] (`actual`) not equal to "No reference matches the given cite_keys. Please check that citation key(s) are correct." (`expected`).
+      
+      lines(actual) vs lines(expected)
+      - "Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0."
+      - "Please use `\"AUTHOR\"` instead of `.data$AUTHOR`"
+      + "No reference matches the given cite_keys. Please check that citation key(s) are correct."
       Backtrace:
           ▆
-       1. ├─testthat::expect_message(...) at test-deprecated.R:126:2
-       2. │ └─testthat:::quasi_capture(enquo(object), label, capture_messages)
-       3. │   ├─testthat (local) .capture(...)
-       4. │   │ └─base::withCallingHandlers(...)
-       5. │   └─rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
-       6. └─lifecycle::expect_deprecated(opencage_key(quiet = FALSE))
-       7.   └─testthat::expect_warning(...)
+       1. ├─withr::with_dir(...) at test-drop_name.R:145:2
+       2. │ └─base::force(code)
+       3. └─testthat::expect_equal(bulk_res4$warnings[2], "No reference matches the given cite_keys. Please check that citation key(s) are correct.") at test-drop_name.R:164:6
       
-      [ FAIL 6 | WARN 0 | SKIP 33 | PASS 223 ]
+      [ FAIL 2 | WARN 62 | SKIP 0 | PASS 57 ]
       Error: Test failures
       Execution halted
     ```
 
-# parsnip
+# r2dii.analysis
 
 <details>
 
-* Version: 1.0.1
-* GitHub: https://github.com/tidymodels/parsnip
-* Source code: https://github.com/cran/parsnip
-* Date/Publication: 2022-08-18 07:30:02 UTC
-* Number of recursive dependencies: 134
+* Version: 0.2.0
+* GitHub: https://github.com/2DegreesInvesting/r2dii.analysis
+* Source code: https://github.com/cran/r2dii.analysis
+* Date/Publication: 2022-05-05 12:50:02 UTC
+* Number of recursive dependencies: 76
 
-Run `cloud_details(, "parsnip")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      
-      [ FAIL 1 | WARN 0 | SKIP 67 | PASS 944 ]
-      
-      ══ Skipped tests ═══════════════════════════════════════════════════════════════
-      • On CRAN (59)
-      • flexsurv cannot be loaded (2)
-      • tune_check() is TRUE (6)
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure (test_surv_reg.R:21:3): deprecation warning ─────────────────────────
-      `surv_reg()` did not throw the expected warning.
-      
-      [ FAIL 1 | WARN 0 | SKIP 67 | PASS 944 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-## In both
-
-*   checking Rd cross-references ... NOTE
-    ```
-    Packages unavailable to check Rd xrefs: ‘rules’, ‘h2o’, ‘agua’, ‘baguette’, ‘ipred’, ‘dbarts’, ‘lightgbm’, ‘bonsai’, ‘mboost’, ‘mda’, ‘sda’, ‘sparsediscrim’, ‘klaR’, ‘workflows’, ‘brulee’, ‘glmnet’, ‘rstan’, ‘rstanarm’, ‘naivebayes’, ‘plsmod’, ‘pscl’, ‘randomForest’, ‘xrf’, ‘flexsurv’, ‘broom’
-    ```
-
-# r2dii.plot
-
-<details>
-
-* Version: 0.3.0
-* GitHub: https://github.com/2DegreesInvesting/r2dii.plot
-* Source code: https://github.com/cran/r2dii.plot
-* Date/Publication: 2022-05-05 23:20:10 UTC
-* Number of recursive dependencies: 91
-
-Run `cloud_details(, "r2dii.plot")` for more info
+Run `cloud_details(, "r2dii.analysis")` for more info
 
 </details>
 
@@ -653,34 +527,34 @@ Run `cloud_details(, "r2dii.plot")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      `plot_techmix(example_tech_mix())` did not generate error with class 'warning'
-      Backtrace:
-          ▆
-       1. └─testthat::expect_snapshot_error(...) at test-plot_techmix.R:296:2
-       2.   └─testthat:::expect_snapshot_condition(...)
-      ── Failure (test-plot_trajectory.R:204:3): throws expected warning about API change ──
-      `plot_trajectory(example_market_share())` did not generate error with class 'warning'
-      Backtrace:
-          ▆
-       1. └─testthat::expect_snapshot_error(...) at test-plot_trajectory.R:204:2
-       2.   └─testthat:::expect_snapshot_condition(...)
+       14.       └─tidyselect:::eval_select_impl(...)
+       15.         ├─tidyselect:::with_subscript_errors(...)
+       16.         │ └─rlang::try_fetch(...)
+       17.         │   └─base::withCallingHandlers(...)
+       18.         └─tidyselect:::vars_select_eval(...)
+       19.           └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+       20.             └─tidyselect:::eval_c(expr, data_mask, context_mask)
+       21.               └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+       22.                 └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+       23.                   └─tidyselect:::expr_kind(expr, error_call)
+       24.                     └─tidyselect:::call_kind(expr, error_call)
       
-      [ FAIL 3 | WARN 0 | SKIP 43 | PASS 103 ]
+      [ FAIL 1 | WARN 1243 | SKIP 4 | PASS 265 ]
       Error: Test failures
       Execution halted
     ```
 
-# ssdtools
+# r2dii.match
 
 <details>
 
-* Version: 1.0.2
-* GitHub: https://github.com/bcgov/ssdtools
-* Source code: https://github.com/cran/ssdtools
-* Date/Publication: 2022-05-14 23:50:02 UTC
-* Number of recursive dependencies: 143
+* Version: 0.1.1
+* GitHub: https://github.com/2DegreesInvesting/r2dii.match
+* Source code: https://github.com/cran/r2dii.match
+* Date/Publication: 2022-09-05 12:50:05 UTC
+* Number of recursive dependencies: 71
 
-Run `cloud_details(, "ssdtools")` for more info
+Run `cloud_details(, "r2dii.match")` for more info
 
 </details>
 
@@ -688,35 +562,25 @@ Run `cloud_details(, "ssdtools")` for more info
 
 *   checking tests ... ERROR
     ```
+      Running ‘spelling.R’
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      • ssd-plot/boron_breaks.png
-      • ssd-plot/boron_cens_pred.png
-      • ssd-plot/boron_cens_pred_ribbon.png
-      • ssd-plot/boron_cens_pred_species.png
-      • ssd-plot/boron_pred.png
-      • ssd-plot/boron_pred_label.png
-      • ssd-plot/boron_pred_ribbon.png
-      • ssd-plot/boron_pred_shift_x.png
-      • ssd-plot/missing_order.png
-      • tidy/tidy.csv
-      • weibull/hc_anona.csv
-      • weibull/tidy.csv
-      • weibull/tidy_anona.csv
+       19.       └─tidyselect:::eval_select_impl(...)
+       20.         ├─tidyselect:::with_subscript_errors(...)
+       21.         │ └─rlang::try_fetch(...)
+       22.         │   └─base::withCallingHandlers(...)
+       23.         └─tidyselect:::vars_select_eval(...)
+       24.           └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+       25.             └─tidyselect:::eval_c(expr, data_mask, context_mask)
+       26.               └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+       27.                 └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+       28.                   └─tidyselect:::expr_kind(expr, error_call)
+       29.                     └─tidyselect:::call_kind(expr, error_call)
+      
+      [ FAIL 1 | WARN 759 | SKIP 5 | PASS 169 ]
       Error: Test failures
       Execution halted
-    ```
-
-## In both
-
-*   checking installed package size ... NOTE
-    ```
-      installed size is 23.9Mb
-      sub-directories of 1Mb or more:
-        doc    1.2Mb
-        help   1.0Mb
-        libs  21.3Mb
     ```
 
 # SynthCast
@@ -795,94 +659,17 @@ Run `cloud_details(, "targets")` for more info
       Execution halted
     ```
 
-# tibble
-
-<details>
-
-* Version: 3.1.8
-* GitHub: https://github.com/tidyverse/tibble
-* Source code: https://github.com/cran/tibble
-* Date/Publication: 2022-07-22 06:10:02 UTC
-* Number of recursive dependencies: 103
-
-Run `cloud_details(, "tibble")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      `code` did not throw the expected warning.
-      ── Failure (test-zzz-name-repair.R:189:3): names<-() and set_names() reject non-minimal names ──
-      `code` did not throw the expected warning.
-      ── Failure (test-zzz-name-repair.R:195:3): names<-() and set_names() reject non-minimal names ──
-      `code` did not throw the expected warning.
-      ── Failure (test-zzz-name-repair.R:201:3): names<-() and set_names() reject non-minimal names ──
-      `code` did not throw the expected warning.
-      ── Failure (test-zzz-data-frame.R:618:3): `validate` triggers deprecation message, but then works ──
-      `df <- as_tibble(list(a = 1, "hi", a = 2), validate = FALSE)` did not throw the expected warning.
-      ── Failure (test-zzz-data-frame.R:627:3): `validate` triggers deprecation message, but then works ──
-      `df <- as_tibble(df, validate = FALSE)` did not throw the expected warning.
-      
-      [ FAIL 21 | WARN 8 | SKIP 144 | PASS 1315 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# workflowsets
+# textrecipes
 
 <details>
 
 * Version: 1.0.0
-* GitHub: https://github.com/tidymodels/workflowsets
-* Source code: https://github.com/cran/workflowsets
-* Date/Publication: 2022-07-12 23:20:01 UTC
-* Number of recursive dependencies: 123
+* GitHub: https://github.com/tidymodels/textrecipes
+* Source code: https://github.com/cran/textrecipes
+* Date/Publication: 2022-07-02 07:10:02 UTC
+* Number of recursive dependencies: 121
 
-Run `cloud_details(, "workflowsets")` for more info
-
-</details>
-
-## Newly broken
-
-*   checking tests ... ERROR
-    ```
-      Running ‘spelling.R’
-      Running ‘testthat.R’
-    Running the tests in ‘tests/testthat.R’ failed.
-    Last 13 lines of output:
-      • rlang::is_installed("rlang") is TRUE (1)
-      
-      ══ Failed tests ════════════════════════════════════════════════════════════════
-      ── Failure (test-pull.R:20:3): pulling objects ─────────────────────────────────
-      `expect_equal(car_set_1 %>% pull_workflow("reg_lm"), car_set_1$info[[1]]$workflow[[1]])` did not throw the expected warning.
-      ── Failure (test-pull.R:28:3): pulling objects ─────────────────────────────────
-      `expect_equal(...)` did not throw the expected warning.
-      ── Failure (test-pull.R:36:3): pulling objects ─────────────────────────────────
-      `expect_error(...)` did not throw the expected warning.
-      ── Failure (test-pull.R:44:3): pulling objects ─────────────────────────────────
-      `expect_error(...)` did not throw the expected warning.
-      
-      [ FAIL 4 | WARN 0 | SKIP 10 | PASS 373 ]
-      Error: Test failures
-      Execution halted
-    ```
-
-# ypr
-
-<details>
-
-* Version: 0.6.0
-* GitHub: https://github.com/poissonconsulting/ypr
-* Source code: https://github.com/cran/ypr
-* Date/Publication: 2022-08-29 22:30:03 UTC
-* Number of recursive dependencies: 99
-
-Run `cloud_details(, "ypr")` for more info
+Run `cloud_details(, "textrecipes")` for more info
 
 </details>
 
@@ -893,20 +680,27 @@ Run `cloud_details(, "ypr")` for more info
       Running ‘testthat.R’
     Running the tests in ‘tests/testthat.R’ failed.
     Last 13 lines of output:
-      • tabulate-sr/srpopulationRk.csv
-      • tabulate-yield/almostpopulationextinct.csv
-      • tabulate-yield/ecotypes.csv
-      • tabulate-yield/ecotypes1.csv
-      • tabulate-yield/inst2inter.csv
-      • tabulate-yield/population.csv
-      • tabulate-yield/populationall.csv
-      • tabulate-yield/populationextinct.csv
-      • tabulate-yield/populations.csv
-      • tabulate-yield/populationsall.csv
-      • tabulate-yields/ecotypes.csv
-      • tabulate-yields/populations01.csv
-      • tabulate-yields/populations01all.csv
+       18.     └─tidyselect:::eval_select_impl(...)
+       19.       ├─tidyselect:::with_subscript_errors(...)
+       20.       │ └─rlang::try_fetch(...)
+       21.       │   └─base::withCallingHandlers(...)
+       22.       └─tidyselect:::vars_select_eval(...)
+       23.         └─tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+       24.           └─tidyselect:::eval_c(expr, data_mask, context_mask)
+       25.             └─tidyselect:::reduce_sels(node, data_mask, context_mask, init = init)
+       26.               └─tidyselect:::walk_data_tree(new, data_mask, context_mask)
+       27.                 └─tidyselect:::expr_kind(expr, error_call)
+       28.                   └─tidyselect:::call_kind(expr, error_call)
+      
+      [ FAIL 2 | WARN 17 | SKIP 88 | PASS 344 ]
       Error: Test failures
       Execution halted
+    ```
+
+## In both
+
+*   checking data for non-ASCII characters ... NOTE
+    ```
+      Note: found 4 marked UTF-8 strings
     ```
 
