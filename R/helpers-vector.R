@@ -78,7 +78,7 @@ all_of <- function(x) {
     lifecycle::deprecate_soft(
       "1.2.0",
       I("Using `all_of()` outside of a selecting function"),
-      details = paste0("See details at", peek_vars_link())
+      details = paste("See details at", peek_vars_link())
     )
     return(x)
   }
