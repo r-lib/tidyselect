@@ -1,3 +1,67 @@
+# CausalImpact
+
+<details>
+
+* Version: 1.2.7
+* GitHub: NA
+* Source code: https://github.com/cran/CausalImpact
+* Date/Publication: 2021-06-07 06:40:02 UTC
+* Number of recursive dependencies: 73
+
+Run `cloud_details(, "CausalImpact")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+* using log directory ‘/tmp/workdir/CausalImpact/new/CausalImpact.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘CausalImpact/DESCRIPTION’ ... OK
+* this is package ‘CausalImpact’ version ‘1.2.7’
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Packages required but not available: 'bsts', 'Boom'
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
+### CRAN
+
+```
+* using log directory ‘/tmp/workdir/CausalImpact/old/CausalImpact.Rcheck’
+* using R version 4.1.1 (2021-08-10)
+* using platform: x86_64-pc-linux-gnu (64-bit)
+* using session charset: UTF-8
+* using option ‘--no-manual’
+* checking for file ‘CausalImpact/DESCRIPTION’ ... OK
+* this is package ‘CausalImpact’ version ‘1.2.7’
+* checking package namespace information ... OK
+* checking package dependencies ... ERROR
+Packages required but not available: 'bsts', 'Boom'
+
+See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
+manual.
+* DONE
+Status: 1 ERROR
+
+
+
+
+
+```
 # NA
 
 <details>
@@ -171,14 +235,114 @@ Status: 1 ERROR, 2 NOTEs
 
 
 ```
+# jagstargets
+
+<details>
+
+* Version: 1.0.3
+* GitHub: https://github.com/ropensci/jagstargets
+* Source code: https://github.com/cran/jagstargets
+* Date/Publication: 2022-06-24 15:30:02 UTC
+* Number of recursive dependencies: 100
+
+Run `cloud_details(, "jagstargets")` for more info
+
+</details>
+
+## In both
+
+*   checking whether package ‘jagstargets’ can be installed ... ERROR
+    ```
+    Installation failed.
+    See ‘/tmp/workdir/jagstargets/new/jagstargets.Rcheck/00install.out’ for details.
+    ```
+
+*   checking package dependencies ... NOTE
+    ```
+    Package suggested but not available for checking: ‘fs’
+    ```
+
+## Installation
+
+### Devel
+
+```
+* installing *source* package ‘jagstargets’ ...
+** package ‘jagstargets’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]) : 
+  there is no package called ‘fs’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘jagstargets’
+* removing ‘/tmp/workdir/jagstargets/new/jagstargets.Rcheck/jagstargets’
+
+
+```
+### CRAN
+
+```
+* installing *source* package ‘jagstargets’ ...
+** package ‘jagstargets’ successfully unpacked and MD5 sums checked
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading
+Error in loadNamespace(j <- i[[1L]], c(lib.loc, .libPaths()), versionCheck = vI[[j]]) : 
+  there is no package called ‘fs’
+Calls: <Anonymous> ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart
+Execution halted
+ERROR: lazy loading failed for package ‘jagstargets’
+* removing ‘/tmp/workdir/jagstargets/old/jagstargets.Rcheck/jagstargets’
+
+
+```
+# NA
+
+<details>
+
+* Version: NA
+* GitHub: NA
+* Source code: https://github.com/cran/NA
+* Number of recursive dependencies: 0
+
+Run `cloud_details(, "NA")` for more info
+
+</details>
+
+## Error before installation
+
+### Devel
+
+```
+
+
+
+
+
+
+```
+### CRAN
+
+```
+
+
+
+
+
+
+```
 # loon.ggplot
 
 <details>
 
-* Version: 1.3.1
+* Version: 1.3.2
 * GitHub: https://github.com/great-northern-diver/loon.ggplot
 * Source code: https://github.com/cran/loon.ggplot
-* Date/Publication: 2022-02-07 21:50:06 UTC
+* Date/Publication: 2022-10-03 14:50:02 UTC
 * Number of recursive dependencies: 104
 
 Run `cloud_details(, "loon.ggplot")` for more info
@@ -197,7 +361,7 @@ Run `cloud_details(, "loon.ggplot")` for more info
 * using option ‘--no-manual’
 * checking for file ‘loon.ggplot/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘loon.ggplot’ version ‘1.3.1’
+* this is package ‘loon.ggplot’ version ‘1.3.2’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... ERROR
@@ -225,7 +389,7 @@ Status: 1 ERROR
 * using option ‘--no-manual’
 * checking for file ‘loon.ggplot/DESCRIPTION’ ... OK
 * checking extension type ... Package
-* this is package ‘loon.ggplot’ version ‘1.3.1’
+* this is package ‘loon.ggplot’ version ‘1.3.2’
 * package encoding: UTF-8
 * checking package namespace information ... OK
 * checking package dependencies ... ERROR
@@ -311,17 +475,16 @@ Status: 1 ERROR
 
 
 ```
-# MarketMatching
+# NA
 
 <details>
 
-* Version: 1.2.0
+* Version: NA
 * GitHub: NA
-* Source code: https://github.com/cran/MarketMatching
-* Date/Publication: 2021-01-08 20:10:02 UTC
-* Number of recursive dependencies: 72
+* Source code: https://github.com/cran/NA
+* Number of recursive dependencies: 0
 
-Run `cloud_details(, "MarketMatching")` for more info
+Run `cloud_details(, "NA")` for more info
 
 </details>
 
@@ -330,22 +493,7 @@ Run `cloud_details(, "MarketMatching")` for more info
 ### Devel
 
 ```
-* using log directory ‘/tmp/workdir/MarketMatching/new/MarketMatching.Rcheck’
-* using R version 4.1.1 (2021-08-10)
-* using platform: x86_64-pc-linux-gnu (64-bit)
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘MarketMatching/DESCRIPTION’ ... OK
-* checking extension type ... Package
-* this is package ‘MarketMatching’ version ‘1.2.0’
-* checking package namespace information ... OK
-* checking package dependencies ... ERROR
-Packages required but not available: 'CausalImpact', 'bsts', 'Boom'
 
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-* DONE
-Status: 1 ERROR
 
 
 
@@ -355,22 +503,7 @@ Status: 1 ERROR
 ### CRAN
 
 ```
-* using log directory ‘/tmp/workdir/MarketMatching/old/MarketMatching.Rcheck’
-* using R version 4.1.1 (2021-08-10)
-* using platform: x86_64-pc-linux-gnu (64-bit)
-* using session charset: UTF-8
-* using option ‘--no-manual’
-* checking for file ‘MarketMatching/DESCRIPTION’ ... OK
-* checking extension type ... Package
-* this is package ‘MarketMatching’ version ‘1.2.0’
-* checking package namespace information ... OK
-* checking package dependencies ... ERROR
-Packages required but not available: 'CausalImpact', 'bsts', 'Boom'
 
-See section ‘The DESCRIPTION file’ in the ‘Writing R Extensions’
-manual.
-* DONE
-Status: 1 ERROR
 
 
 
@@ -848,7 +981,7 @@ Status: 2 NOTEs
 * GitHub: NA
 * Source code: https://github.com/cran/xpose.nlmixr
 * Date/Publication: 2022-06-06 18:40:02 UTC
-* Number of recursive dependencies: 91
+* Number of recursive dependencies: 92
 
 Run `cloud_details(, "xpose.nlmixr")` for more info
 
@@ -916,7 +1049,7 @@ Status: 1 ERROR
 * GitHub: NA
 * Source code: https://github.com/cran/xpose.nlmixr2
 * Date/Publication: 2022-06-08 09:10:02 UTC
-* Number of recursive dependencies: 148
+* Number of recursive dependencies: 149
 
 Run `cloud_details(, "xpose.nlmixr2")` for more info
 
