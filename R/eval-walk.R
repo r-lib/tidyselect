@@ -183,11 +183,18 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
     strict = strict,
     data = data,
     allow_predicates = allow_predicates,
-    call = error_call
+    call = error_call,
+    arg = as_label(expr)
   )
 }
 
-as_indices_sel_impl <- function(x, vars, strict, data = NULL, allow_predicates = TRUE, call) {
+as_indices_sel_impl <- function(x,
+                                vars,
+                                strict,
+                                data = NULL,
+                                allow_predicates = TRUE,
+                                call,
+                                arg = NULL) {
   if (is.function(x)) {
     if (!allow_predicates) {
       cli::cli_abort(
@@ -215,7 +222,7 @@ as_indices_sel_impl <- function(x, vars, strict, data = NULL, allow_predicates =
     x <- which(as.logical(xs))
   }
 
-  as_indices_impl(x, vars, call = call, strict = strict)
+  as_indices_impl(x, vars, call = call, arg = arg, strict = strict)
 }
 
 check_predicate_output <- function(x, call) {
@@ -227,12 +234,17 @@ check_predicate_output <- function(x, call) {
   }
 }
 
-as_indices_impl <- function(x, vars, strict, call = caller_env()) {
+as_indices_impl <- function(x, vars, strict, call = caller_env(), arg = NULL) {
   if (is_null(x)) {
     return(int())
   }
 
-  x <- vctrs::vec_as_subscript(x, logical = "error", call = call)
+  x <- vctrs::vec_as_subscript(
+    x,
+    logical = "error",
+    call = call,
+    arg = arg
+  )
 
   if (!strict) {
     # Remove out-of-bounds elements if non-strict. We do this eagerly
@@ -247,19 +259,20 @@ as_indices_impl <- function(x, vars, strict, call = caller_env()) {
 
   switch(
     typeof(x),
-    character = chr_as_locations(x, vars, call = call),
+    character = chr_as_locations(x, vars, call = call, arg = arg),
     double = ,
     integer = x,
     cli::cli_abort("Unexpected type.", .internal = TRUE)
   )
 }
 
-chr_as_locations <- function(x, vars, call = caller_env()) {
+chr_as_locations <- function(x, vars, call = caller_env(), arg = NULL) {
   out <- vctrs::vec_as_location(
     x,
     n = length(vars),
     names = vars,
-    call = call
+    call = call,
+    arg = arg
   )
   set_names(out, names(x))
 }

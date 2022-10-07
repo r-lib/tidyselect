@@ -5,20 +5,20 @@
     Condition
       Error:
       ! Must subset columns with a valid subscript vector.
-      x Subscript has the wrong type `logical`.
+      x Subscript `TRUE` has the wrong type `logical`.
       i It must be numeric or character.
     Code
       vars_select(letters, 2.5)
     Condition
       Error:
       ! Must subset columns with a valid subscript vector.
-      x Can't convert from <double> to <integer> due to loss of precision.
+      x Can't convert from `2.5` <double> to <integer> due to loss of precision.
     Code
       vars_select(letters, structure(1:3, class = "tidysel_foobar"))
     Condition
       Error:
       ! Must subset columns with a valid subscript vector.
-      x Subscript has the wrong type `tidysel_foobar`.
+      x Subscript `structure(1:3, class = "tidysel_foobar")` has the wrong type `tidysel_foobar`.
       i It must be numeric or character.
 
 # vars_select() has consistent location errors
@@ -147,19 +147,19 @@
     Condition
       Error:
       ! Must rename columns with a valid subscript vector.
-      x Subscript has the wrong type `logical`.
+      x Subscript `TRUE` has the wrong type `logical`.
       i It must be numeric or character.
     Code
       vars_rename(letters, A = 1.5)
     Condition
       Error:
       ! Must rename columns with a valid subscript vector.
-      x Can't convert from <double> to <integer> due to loss of precision.
+      x Can't convert from `1.5` <double> to <integer> due to loss of precision.
     Code
       vars_rename(letters, A = list())
     Condition
       Error:
       ! Must rename columns with a valid subscript vector.
-      x Subscript has the wrong type `list`.
+      x Subscript `list()` has the wrong type `list`.
       i It must be numeric or character.
 
