@@ -152,7 +152,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
   error_call <- data_mask$.__tidyselect__.$internal$error_call
 
   out <- switch(
-    expr_kind(expr, error_call),
+    expr_kind(expr, context_mask, error_call),
     literal = expr,
     symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
@@ -282,19 +282,21 @@ as_indices <- function(x, vars, strict = TRUE, call) {
   vctrs::vec_as_location(inds, length(vars), vars, convert_values = NULL)
 }
 
-expr_kind <- function(expr, error_call) {
+expr_kind <- function(expr, context_mask, error_call) {
   switch(
     typeof(expr),
     symbol = "symbol",
-    language = call_kind(expr, error_call),
+    language = call_kind(expr, context_mask, error_call),
     "literal"
   )
 }
-call_kind <- function(expr, error_call) {
+call_kind <- function(expr, context_mask, error_call) {
   head <- node_car(expr)
   if (!is_symbol(head)) {
     return("call")
   }
+
+  env <- context_mask$.__current__.
 
   fn <- as_string(head)
 
@@ -307,12 +309,14 @@ call_kind <- function(expr, error_call) {
       str <- encodeString(var, quote = '"')
 
       lifecycle::deprecate_soft("1.2.0", what,
-        details = cli::format_inline("Please use {.code {str}} instead of `.data${var}`")
+        details = cli::format_inline("Please use {.code {str}} instead of `.data${var}`"),
+        user_env = env
       )
     } else if (fn == "[[") {
       # .data[[ is an injection operator so can't give specific advice
       lifecycle::deprecate_soft("1.2.0", what,
-        details = cli::format_inline("Please use {.code all_of(var)} (or {.code any_of(var)}) instead of {.code .data[[var]]}")
+        details = cli::format_inline("Please use {.code all_of(var)} (or {.code any_of(var)}) instead of {.code .data[[var]]}"),
+        user_env = env
       )
     }
 
@@ -423,7 +427,8 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
         "",
         " " = "# Now:",
         " " = glue("data %>% select(where({name}))")
-      )
+      ),
+      user_env = env
     )
 
     return(value)
@@ -446,7 +451,8 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
       " " = glue("data %>% select(all_of({name}))"),
       "",
       "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
-    )
+    ),
+    user_env = env
   )
 
   value
