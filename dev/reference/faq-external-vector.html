@@ -32,10 +32,17 @@ you that selecting with an external variable is ambiguous because it is
 not clear whether you want a data frame column or an external object.
 vars &amp;lt;- c("cyl", "am", "vs")
 result &amp;lt;- mtcars %&amp;gt;% select(vars)
-#&amp;gt; Note: Using an external vector in selections is ambiguous.
-#&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
-#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
-#&amp;gt; This message is displayed once every 8 hours.
+#&amp;gt; Warning: Using an external vector in selections was deprecated in
+#&amp;gt; tidyselect 1.1.0.
+#&amp;gt; i Please use `all_of()` or `any_of()` instead.
+#&amp;gt;   # Was:
+#&amp;gt;   data %&amp;gt;% select(vars)
+#&amp;gt; 
+#&amp;gt;   # Now:
+#&amp;gt;   data %&amp;gt;% select(all_of(vars))
+#&amp;gt; 
+#&amp;gt; See
+#&amp;gt; &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
 
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
@@ -116,10 +123,17 @@ you that selecting with an external variable is ambiguous because it is
 not clear whether you want a data frame column or an external object.
 vars &amp;lt;- c("cyl", "am", "vs")
 result &amp;lt;- mtcars %&amp;gt;% select(vars)
-#&amp;gt; Note: Using an external vector in selections is ambiguous.
-#&amp;gt; i Use `all_of(vars)` instead of `vars` to silence this message.
-#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
-#&amp;gt; This message is displayed once every 8 hours.
+#&amp;gt; Warning: Using an external vector in selections was deprecated in
+#&amp;gt; tidyselect 1.1.0.
+#&amp;gt; i Please use `all_of()` or `any_of()` instead.
+#&amp;gt;   # Was:
+#&amp;gt;   data %&amp;gt;% select(vars)
+#&amp;gt; 
+#&amp;gt;   # Now:
+#&amp;gt;   data %&amp;gt;% select(all_of(vars))
+#&amp;gt; 
+#&amp;gt; See
+#&amp;gt; &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
 
 This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
@@ -255,10 +269,17 @@ you that selecting with an external variable is ambiguous because it is
 not clear whether you want a data frame column or an external object.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span>, <span class="st">"vs"</span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">vars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Note: Using an external vector in selections is ambiguous.</span></span>
-<span><span class="co">#&gt; i Use `all_of(vars)` instead of `vars` to silence this message.</span></span>
-<span><span class="co">#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span>
-<span><span class="co">#&gt; This message is displayed once every 8 hours.</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; Warning: Using an external vector in selections was deprecated in</span></span>
+<span><span class="co">#&gt; tidyselect 1.1.0.</span></span>
+<span><span class="co">#&gt; i Please use `all_of()` or `any_of()` instead.</span></span>
+<span><span class="co">#&gt;   # Was:</span></span>
+<span><span class="co">#&gt;   data %&gt;% select(vars)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   # Now:</span></span>
+<span><span class="co">#&gt;   data %&gt;% select(all_of(vars))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; See</span></span>
+<span><span class="co">#&gt; &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span></code></pre><p></p></div>
 <p>This note will become a warning in the future, and then an error. We
 have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame

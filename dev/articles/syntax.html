@@ -364,6 +364,16 @@
 <p>Note that currently, env-vars are still allowed in some data-expressions, for compatibility. However this is in the process of being deprecated and you should see a note recommending to use <code><a href="../reference/all_of.html">all_of()</a></code> instead. This note will become a deprecation warning in the future, and then an error.</p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl_pos</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Using an external vector in selections was deprecated in tidyselect</span></span>
+<span><span class="co">#&gt; 1.1.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `all_of()` or `any_of()` instead.</span></span>
+<span><span class="co">#&gt;   # Was:</span></span>
+<span><span class="co">#&gt;   data %&gt;% select(cyl_pos)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   # Now:</span></span>
+<span><span class="co">#&gt;   data %&gt;% select(all_of(cyl_pos))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span>
 <span><span class="co">#&gt; cyl </span></span>
 <span><span class="co">#&gt;   2</span></span></code></pre></div>
 </div>
