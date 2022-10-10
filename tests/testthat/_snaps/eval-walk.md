@@ -34,7 +34,7 @@
     Condition
       Warning:
       Using an external vector in selections was deprecated in tidyselect 1.1.0.
-      Please use `all_of()` or `any_of()` instead.
+      i Please use `all_of()` or `any_of()` instead.
         # Was:
         data %>% select(vars)
       
@@ -72,7 +72,7 @@
     Condition
       Warning:
       Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
-      Please use `"a"` instead of `.data$a`
+      i Please use `"a"` instead of `.data$a`
 
 ---
 
@@ -81,7 +81,7 @@
     Condition
       Warning:
       Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
-      Please use `all_of(var)` (or `any_of(var)`) instead of `.data[[var]]`
+      i Please use `all_of(var)` (or `any_of(var)`) instead of `.data[[var]]`
 
 # eval_walk() has informative messages
 
@@ -91,7 +91,7 @@
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
-      Please use wrap predicates in `where()` instead.
+      i Please use wrap predicates in `where()` instead.
         # Was:
         data %>% select(is_integer)
       
@@ -102,7 +102,7 @@
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
-      Please use wrap predicates in `where()` instead.
+      i Please use wrap predicates in `where()` instead.
         # Was:
         data %>% select(is.numeric)
       
@@ -113,7 +113,7 @@
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
-      Please use wrap predicates in `where()` instead.
+      i Please use wrap predicates in `where()` instead.
         # Was:
         data %>% select(isTRUE)
       
@@ -125,7 +125,7 @@
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
-      Please use wrap predicates in `where()` instead.
+      i Please use wrap predicates in `where()` instead.
         # Was:
         data %>% select(is_integer)
       
