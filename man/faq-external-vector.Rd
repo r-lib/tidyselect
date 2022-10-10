@@ -37,10 +37,17 @@ not clear whether you want a data frame column or an external object.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vars <- c("cyl", "am", "vs")
 result <- mtcars \%>\% select(vars)
-#> Note: Using an external vector in selections is ambiguous.
-#> i Use `all_of(vars)` instead of `vars` to silence this message.
-#> i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
-#> This message is displayed once every 8 hours.
+#> Warning: Using an external vector in selections was deprecated in
+#> tidyselect 1.1.0.
+#> i Please use `all_of()` or `any_of()` instead.
+#>   # Was:
+#>   data \%>\% select(vars)
+#> 
+#>   # Now:
+#>   data \%>\% select(all_of(vars))
+#> 
+#> See
+#> <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
 }\if{html}{\out{</div>}}
 
 This note will become a warning in the future, and then an error. We
