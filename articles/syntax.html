@@ -4,258 +4,182 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="tidyselect">
 <title>Technical description of tidyselect • tidyselect</title>
-<!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script><!-- Bootstrap --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha256-bZLfwXAP04zRMK2BjiO8iu9pf4FbLqX6zitd+tIvLhE=" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script><!-- bootstrap-toc --><link rel="stylesheet" href="../bootstrap-toc.css">
-<script src="../bootstrap-toc.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.2/font.css" rel="stylesheet">
+<link href="../deps/Source_Code_Pro-0.4.2/font.css" rel="stylesheet">
+<!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
-<script src="../pkgdown.js"></script><meta property="og:title" content="Technical description of tidyselect">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Technical description of tidyselect">
 <meta property="og:description" content="tidyselect">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-<![endif]--><!-- Global site tag (gtag.js) - Google Analytics --><script async src="https://www.googletagmanager.com/gtag/js?id=UA-115082821-1"></script><script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-115082821-1');
-</script>
+<![endif]--><script defer data-domain="tidyselect.r-lib.org,all.tidyverse.org" src="https://plausible.io/js/plausible.js"></script>
 </head>
-<body data-spy="scroll" data-target="#toc">
+<body>
+    <a href="#container" class="visually-hidden-focusable">Skip to content</a>
     
 
-    <div class="container template-article">
-      <header><div class="navbar navbar-default navbar-fixed-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <span class="navbar-brand">
-        <a class="navbar-link" href="../index.html">tidyselect</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1.9000</span>
-      </span>
-    </div>
+    <nav class="navbar fixed-top navbar-light navbar-expand-lg bg-none"><div class="container">
+    
+    <a class="navbar-brand me-2" href="../index.html">tidyselect</a>
 
-    <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../articles/syntax.html">Technical description of tidyselect</a>
-    </li>
-  </ul>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+
+    
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div id="navbar" class="collapse navbar-collapse ms-3">
+      <ul class="navbar-nav me-auto">
+<li class="nav-item">
+  <a class="nav-link" href="../articles/tidyselect.html">Get started</a>
 </li>
-      </ul>
-<ul class="nav navbar-nav navbar-right">
-<li>
-  <a href="../reference/index.html">Reference</a>
+<li class="nav-item">
+  <a class="nav-link" href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    News
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-<li>
-      <a href="../news/index.html">Changelog</a>
-    </li>
-  </ul>
-</li>
-<li>
-  <a href="https://github.com/r-lib/tidyselect/" class="external-link">
-    <span class="fab fa-github fa-lg"></span>
-     
-  </a>
-</li>
-      </ul>
-</div>
-<!--/.nav-collapse -->
+<li class="active nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/syntax.html">Technical description of tidyselect</a>
   </div>
-<!--/.container -->
+</li>
+<li class="nav-item">
+  <a class="nav-link" href="../news/index.html">Changelog</a>
+</li>
+      </ul>
+<form class="form-inline my-2 my-lg-0" role="search">
+        <input type="search" class="form-control me-sm-2" aria-label="Toggle navigation" name="search-input" data-search-index="../search.json" id="search-input" placeholder="Search for" autocomplete="off">
+</form>
+
+      <ul class="navbar-nav">
+<li class="nav-item">
+  <a class="external-link nav-link" href="https://github.com/r-lib/tidyselect/" aria-label="github">
+    <span class="fab fa fab fa-github fa-lg"></span>
+     
+  </a>
+</li>
+      </ul>
 </div>
-<!--/.navbar -->
 
-      
+    
+  </div>
+</nav><div class="container template-article" id="container">
 
-      </header><script src="syntax_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
-  <div class="col-md-9 contents">
-    <div class="page-header toc-ignore">
-      <h1 data-toc-skip>Technical description of tidyselect</h1>
+
+
+
+<div class="row">
+  <main id="main" class="col-md-9"><div class="page-header">
+      <img src="" class="logo" alt=""><h1>Technical description of tidyselect</h1>
             
       
       <small class="dont-index">Source: <a href="https://github.com/r-lib/tidyselect/blob/HEAD/vignettes/syntax.Rmd" class="external-link"><code>vignettes/syntax.Rmd</code></a></small>
-      <div class="hidden name"><code>syntax.Rmd</code></div>
-
+      <div class="d-none name"><code>syntax.Rmd</code></div>
     </div>
 
     
     
 <p>This is a technical description of the tidyselect syntax.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyselect.r-lib.org">tidyselect</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span>
-
-<span class="co"># For better printing</span>
-<span class="va">mtcars</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span>
-<span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyselect.r-lib.org">tidyselect</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://magrittr.tidyverse.org" class="external-link">magrittr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># For better printing</span></span>
+<span><span class="va">mtcars</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span></span>
+<span><span class="va">iris</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/as_tibble.html" class="external-link">as_tibble</a></span><span class="op">(</span><span class="va">iris</span><span class="op">)</span></span></code></pre></div>
 <p>To illustrate the semantics of tidyselect, we’ll use variants of <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code> and <code><a href="https://dplyr.tidyverse.org/reference/rename.html" class="external-link">dplyr::rename()</a></code> that return the named vector of locations for the selected or renamed elements:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">select_loc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/eval_select.html">eval_select</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">data</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="va">rename_loc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu"><a href="../reference/eval_select.html">eval_rename</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">data</span><span class="op">)</span>
-<span class="op">}</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">select_loc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/eval_select.html">eval_select</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">data</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">rename_loc</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">...</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu"><a href="../reference/eval_select.html">eval_rename</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/expr.html" class="external-link">expr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">...</span><span class="op">)</span><span class="op">)</span>, <span class="va">data</span><span class="op">)</span></span>
+<span><span class="op">}</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="sets-of-variables">Sets of variables<a class="anchor" aria-label="anchor" href="#sets-of-variables"></a>
 </h2>
 <p>The tidyselect syntax is all about <strong>sets</strong> of variables, internally represented by integer vectors of <strong>locations</strong>. For example, <code>c(1L, 2L)</code> represents the set of the first and second variables, as does <code>c(1L, 2L, 1L)</code>.</p>
 <p>If a vector of locations contains duplicates, they are normally treated as the same element, since they represent sets. An exception to this occurs with named elements whose names differ. If the names don’t match, they are treated as different elements in order to allow renaming a variable to multiple names (see section on Renaming variables).</p>
-<p>The syntax of tidyselect is generally designed for set combination. For instance, <code>c(foo(), bar())</code> represents the union of the variables in <code>foo()</code> and those in <code><a href="https://rdrr.io/r/grDevices/plotmath.html" class="external-link">bar()</a></code>.</p>
+<p>Today, the syntax of tidyselect is generally designed around Boolean algebra, i.e. we recommend writing <code>starts_with("a") &amp; !ends_with("z")</code>. Earlier versions of tidyselect had more of a flavour of set operations, so that you’d write <code>starts_with("a") - ends_with("b")</code>. While the set operations are still supported, and is how tidyselect represents variables internally, we no longer recommend them because Boolean algebra is easy for people to understand.</p>
 <div class="section level3">
 <h3 id="bare-names">Bare names<a class="anchor" aria-label="anchor" href="#bare-names"></a>
 </h3>
 <p>Within <em>data-expressions</em> (see Evaluation section), bare names represent their own locations, i.e. a set of size 1. The following expressions are equivalent:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">hp</span>, <span class="op">-</span><span class="va">cyl</span>, <span class="va">vs</span><span class="op">)</span>
-<span class="co">#&gt;  mpg disp   hp   vs </span>
-<span class="co">#&gt;    1    3    4    8</span>
-
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">-</span><span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span>
-<span class="co">#&gt;  mpg disp   hp   vs </span>
-<span class="co">#&gt;    1    3    4    8</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">hp</span>, <span class="op">!</span><span class="va">cyl</span>, <span class="va">vs</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span></span>
+<span><span class="co">#&gt;    1    2    3    4    5    6    7    8    9   10   11</span></span>
+<span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span>, <span class="op">!</span><span class="fl">2</span>, <span class="fl">8</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  mpg  cyl disp   hp drat   wt qsec   vs   am gear carb </span></span>
+<span><span class="co">#&gt;    1    2    3    4    5    6    7    8    9   10   11</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="the-operator">The <code>:</code> operator<a class="anchor" aria-label="anchor" href="#the-operator"></a>
 </h3>
 <p><code>:</code> can be used to select consecutive variables between two locations. It returns the corresponding sequence of locations.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span>
-<span class="co">#&gt;  cyl disp   hp </span>
-<span class="co">#&gt;    2    3    4</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fl">4</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  cyl disp   hp </span></span>
+<span><span class="co">#&gt;    2    3    4</span></span></code></pre></div>
 <p>Because bare names represent their own locations, it is easy to select a range of variables:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span><span class="op">:</span><span class="va">hp</span><span class="op">)</span>
-<span class="co">#&gt;  cyl disp   hp </span>
-<span class="co">#&gt;    2    3    4</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span><span class="op">:</span><span class="va">hp</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  cyl disp   hp </span></span>
+<span><span class="co">#&gt;    2    3    4</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="boolean-operators">Boolean operators<a class="anchor" aria-label="anchor" href="#boolean-operators"></a>
 </h3>
-<p>Boolean operators provide a more intuitive approach to set combination. Though sets are internally represented with vectors of locations, they could equally be represented with a full logical vector of inclusion indicators (taking the <code><a href="https://rdrr.io/r/base/which.html" class="external-link">which()</a></code> of this vector would then recover the locations). The boolean operators should be considered in terms of the logical representation of sets.</p>
 <p>The <code>|</code> operator takes the <strong>union</strong> of two sets:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width </span>
-<span class="co">#&gt;            1            2            4</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width </span></span>
+<span><span class="co">#&gt;            1            2            4</span></span></code></pre></div>
 <p>The <code>&amp;</code> operator takes the <strong>intersection</strong> of two sets:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Width </span>
-<span class="co">#&gt;           2</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Width </span></span>
+<span><span class="co">#&gt;           2</span></span></code></pre></div>
 <p>The <code>!</code> operator takes the <strong>complement</strong> of a set:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length Petal.Length      Species </span>
-<span class="co">#&gt;            1            3            5</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length Petal.Length      Species </span></span>
+<span><span class="co">#&gt;            1            3            5</span></span></code></pre></div>
 <p>Taking the intersection with a complement produces a set <strong>difference</strong>:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length </span>
-<span class="co">#&gt;            1</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length </span></span>
+<span><span class="co">#&gt;            1</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="dots-c-and-unary--">Dots, <code>c()</code>, and unary <code>-</code><a class="anchor" aria-label="anchor" href="#dots-c-and-unary--"></a>
+<h3 id="dots-and-c">Dots and <code>c()</code><a class="anchor" aria-label="anchor" href="#dots-and-c"></a>
 </h3>
-<p>tidyselect functions can take dots like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>, or a named argument like <code>tidyr::pivot_longer()</code>. In the latter case, the dots syntax is accessible via <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. In fact <code>...</code> syntax is implemented through <code>c(...)</code> and is thus completely equivalent.</p>
+<p>tidyselect functions can take dots, like <code><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">dplyr::select()</a></code>, or a named argument, like <code>tidyr::pivot_longer()</code>. In the latter case, the dots syntax is accessible via <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. In fact <code>...</code> syntax is implemented through <code>c(...)</code> and is thus completely equivalent.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span>, <span class="va">disp</span><span class="op">:</span><span class="va">hp</span><span class="op">)</span>
-<span class="co">#&gt;  mpg disp   hp </span>
-<span class="co">#&gt;    1    3    4</span>
-
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">disp</span><span class="op">:</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt;  mpg disp   hp </span>
-<span class="co">#&gt;    1    3    4</span></code></pre></div>
-<p>Dots and <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> are syntax for:</p>
-<ul>
-<li>Set union or set difference</li>
-<li>Renaming variables</li>
-</ul>
-<p>Non-negative inputs are recursively joined with <code><a href="https://rdrr.io/r/base/sets.html" class="external-link">union()</a></code>. The precedence is left-associative, just like with boolean operators. These expressions are all syntax for <em>set union</em>:</p>
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span>, <span class="va">disp</span><span class="op">:</span><span class="va">hp</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  mpg disp   hp </span></span>
+<span><span class="co">#&gt;    1    3    4</span></span>
+<span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">disp</span><span class="op">:</span><span class="va">hp</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  mpg disp   hp </span></span>
+<span><span class="co">#&gt;    1    3    4</span></span></code></pre></div>
+<p><code>c(x, y, z)</code> is a equivalent to <code>x | y | z</code>:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span>, <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span>, <span class="va">Species</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span>
-<span class="co">#&gt;            1            2            4            5</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span>
-<span class="co">#&gt;            1            2            4            5</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">union</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">union</a></span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span>, <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">5L</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span>
-<span class="co">#&gt;            1            2            4            5</span></code></pre></div>
-<p>Unary <code>-</code> is normally syntax for <em>set difference</em>:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span>, <span class="op">-</span><span class="va">Sepal.Length</span><span class="op">)</span>
-<span class="co">#&gt; named integer(0)</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span>, <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span>, <span class="fl">1L</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; named integer(0)</span></code></pre></div>
-<p>If the first <code>...</code> or <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> input is negative, an implicit <code><a href="../reference/everything.html">everything()</a></code> is appended.</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Petal.Length  Petal.Width      Species </span>
-<span class="co">#&gt;            3            4            5</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="op">-</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Petal.Length  Petal.Width      Species </span>
-<span class="co">#&gt;            3            4            5</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/sets.html" class="external-link">setdiff</a></span><span class="op">(</span><span class="fu"><a href="../reference/everything.html">everything</a></span><span class="op">(</span><span class="op">)</span>, <span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Petal.Length  Petal.Width      Species </span>
-<span class="co">#&gt;            3            4            5</span></code></pre></div>
-<p>In this case, unary <code>-</code> is syntax for <em>set complement</em>. Unary <code>-</code> and <code>!</code> are equivalent:</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Petal.Length  Petal.Width      Species </span>
-<span class="co">#&gt;            3            4            5</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Petal.Length  Petal.Width      Species </span>
-<span class="co">#&gt;            3            4            5</span></code></pre></div>
-<p>Each level of <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> is independent. In particular, a nested <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code> starting with <code>-</code> always stands for set complement:</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span>, <span class="op">-</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Width </span>
-<span class="co">#&gt;           2</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">-</span><span class="va">Sepal.Length</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
-<span class="co">#&gt;            1            2            3            4            5</span></code></pre></div>
-<p>In boolean terms, these expressions are equivalent to:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="op">!</span><span class="va">Sepal.Length</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Width </span>
-<span class="co">#&gt;           2</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">|</span> <span class="op">!</span><span class="va">Sepal.Length</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
-<span class="co">#&gt;            1            2            3            4            5</span></code></pre></div>
-<p>In general, when unary <code>-</code> is used alone outside <code>...</code> or <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, it stands for set complement.</p>
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span>, <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span>, <span class="va">Species</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span></span>
+<span><span class="co">#&gt;            1            2            4            5</span></span>
+<span></span>
+<span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"Sepal"</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span> <span class="op">|</span> <span class="va">Species</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width  Petal.Width      Species </span></span>
+<span><span class="co">#&gt;            1            2            4            5</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="renaming-variables">Renaming variables<a class="anchor" aria-label="anchor" href="#renaming-variables"></a>
@@ -264,32 +188,32 @@
 <h4 id="name-combination-and-propagation">Name combination and propagation<a class="anchor" aria-label="anchor" href="#name-combination-and-propagation"></a>
 </h4>
 <p>When named inputs are provided in <code>...</code> or <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>, the selection is renamed. If the inputs are already named, the outer and inner names are <strong>combined</strong> with a <code>...</code> separator:</p>
-<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bar <span class="op">=</span> <span class="va">mpg</span>, baz <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; foo...bar foo...baz </span>
-<span class="co">#&gt;         1         2</span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bar <span class="op">=</span> <span class="va">mpg</span>, baz <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo...bar foo...baz </span></span>
+<span><span class="co">#&gt;         1         2</span></span></code></pre></div>
 <p>Otherwise the outer names is <strong>propagated</strong> to the selected elements according to the following rules:</p>
 <ul>
 <li>
 <p>With data frames, a numeric suffix is appended because columns must be uniquely named.</p>
-<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">cyl</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; foo1 foo2 </span>
-<span class="co">#&gt;    1    2</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo1 foo2 </span></span>
+<span><span class="co">#&gt;    1    2</span></span></code></pre></div>
 </li>
 <li>
 <p>With normal vectors, the name is simply assigned to all selected inputs.</p>
-<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">cyl</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; foo foo </span>
-<span class="co">#&gt;   1   2</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">cyl</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo foo </span></span>
+<span><span class="co">#&gt;   1   2</span></span></code></pre></div>
 </li>
 </ul>
 <p>Combination and propagation can be composed by using nested <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>:</p>
-<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; foo...bar1 foo...bar2 </span>
-<span class="co">#&gt;          1          2</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>bar <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">mpg</span>, <span class="va">cyl</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo...bar1 foo...bar2 </span></span>
+<span><span class="co">#&gt;          1          2</span></span></code></pre></div>
 </div>
 <div class="section level4">
 <h4 id="set-combination-with-named-variables">Set combination with named variables<a class="anchor" aria-label="anchor" href="#set-combination-with-named-variables"></a>
@@ -309,31 +233,31 @@
 <code>c(foo = a) | c(bar = a)</code> is equivalent to <code>c(foo = a, bar = a)</code>.</li>
 </ul>
 <p>Because unnamed elements match any named ones, it is possible to select multiple elements and rename one of them:</p>
-<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="op">!</span><span class="va">Species</span>, foo <span class="op">=</span> <span class="va">Sepal.Width</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length          foo Petal.Length  Petal.Width </span>
-<span class="co">#&gt;            1            2            3            4</span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="op">!</span><span class="va">Species</span>, foo <span class="op">=</span> <span class="va">Sepal.Width</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length          foo Petal.Length  Petal.Width </span></span>
+<span><span class="co">#&gt;            1            2            3            4</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level3">
 <h3 id="predicate-functions">Predicate functions<a class="anchor" aria-label="anchor" href="#predicate-functions"></a>
 </h3>
 <p>Predicate function objects can be supplied as input in an env-expression, typically with the selection helper <code><a href="../reference/where.html">where()</a></code>. They are applied to all elements of the data, and should return <code>TRUE</code> or <code>FALSE</code> to indicate inclusion. Predicates in env-expressions are effectively expanded to the set of variables that they represent:</p>
-<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
-<span class="co">#&gt;            1            2            3            4</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Species </span>
-<span class="co">#&gt;       5</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span>
-<span class="co">#&gt;            1            2            3            4            5</span>
-
-<span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; named integer(0)</span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
+<span><span class="co">#&gt;            1            2            3            4</span></span>
+<span></span>
+<span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Species </span></span>
+<span><span class="co">#&gt;       5</span></span>
+<span></span>
+<span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span> <span class="op">|</span> <span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width      Species </span></span>
+<span><span class="co">#&gt;            1            2            3            4            5</span></span>
+<span></span>
+<span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu"><a href="../reference/where.html">where</a></span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; named integer(0)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -354,24 +278,24 @@
 <ul>
 <li>
 <p>Vectors of locations:</p>
-<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length Petal.Length </span>
-<span class="co">#&gt;            1            3</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length Petal.Length </span></span>
+<span><span class="co">#&gt;            1            3</span></span></code></pre></div>
 </li>
 <li>
 <p>Vectors of names. These are matched and transformed to locations.</p>
-<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length Petal.Length </span>
-<span class="co">#&gt;            1            3</span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Sepal.Length"</span>, <span class="st">"Petal.Length"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length Petal.Length </span></span>
+<span><span class="co">#&gt;            1            3</span></span></code></pre></div>
 </li>
 <li>
 <p>Predicate functions. These are applied to all elements to determine inclusion.</p>
-<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span>
-<span class="co">#&gt;            1            2            3            4</span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/force.html" class="external-link">force</a></span><span class="op">(</span><span class="va">is.numeric</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Sepal.Length  Sepal.Width Petal.Length  Petal.Width </span></span>
+<span><span class="co">#&gt;            1            2            3            4</span></span></code></pre></div>
 </li>
 </ul>
 </div>
@@ -382,80 +306,88 @@
 <h3 id="data-expressions-and-env-expressions">Data-expressions and env-expressions<a class="anchor" aria-label="anchor" href="#data-expressions-and-env-expressions"></a>
 </h3>
 <p>tidyselect is not a typical tidy evaluation UI. The main difference is that there is no data masking. In a typical tidy eval function, expressions are evaluated with data-vars first in scope, followed by env-vars:</p>
-<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mask</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">{</span>
-  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html" class="external-link">eval_tidy</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html" class="external-link">enquo</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>, <span class="va">data</span><span class="op">)</span>
-<span class="op">}</span>
-
-<span class="va">foo</span> <span class="op">&lt;-</span> <span class="fl">10</span>
-<span class="va">cyl</span> <span class="op">&lt;-</span> <span class="fl">200</span>
-
-<span class="co"># `cyl` represents the data frame column here:</span>
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mask</span><span class="op">(</span><span class="va">cyl</span> <span class="op">*</span> <span class="va">foo</span><span class="op">)</span>
-<span class="co">#&gt;  [1] 60 60 40 60 80 60 80 40 40 60 60 80 80 80 80 80 80 40 40 40 40 80 80 80 80</span>
-<span class="co">#&gt; [26] 40 40 40 80 60 80 40</span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mask</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">data</span>, <span class="va">expr</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/eval_tidy.html" class="external-link">eval_tidy</a></span><span class="op">(</span><span class="fu">rlang</span><span class="fu">::</span><span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html" class="external-link">enquo</a></span><span class="op">(</span><span class="va">expr</span><span class="op">)</span>, <span class="va">data</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="va">foo</span> <span class="op">&lt;-</span> <span class="fl">10</span></span>
+<span><span class="va">cyl</span> <span class="op">&lt;-</span> <span class="fl">200</span></span>
+<span></span>
+<span><span class="co"># `cyl` represents the data frame column here:</span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mask</span><span class="op">(</span><span class="va">cyl</span> <span class="op">*</span> <span class="va">foo</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] 60 60 40 60 80 60 80 40 40 60 60 80 80 80 80 80 80 40 40 40 40 80 80</span></span>
+<span><span class="co">#&gt; [24] 80 80 40 40 40 80 60 80 40</span></span></code></pre></div>
 <p>It is possible to bypass the data frame variables by forcing symbols to be looked up in the environment with <code>!!</code> or <code>.env</code>:</p>
-<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mask</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">cyl</span> <span class="op">*</span> <span class="va">foo</span><span class="op">)</span>
-<span class="co">#&gt; [1] 2000</span>
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mask</span><span class="op">(</span><span class="va">.env</span><span class="op">$</span><span class="va">cyl</span> <span class="op">*</span> <span class="va">foo</span><span class="op">)</span>
-<span class="co">#&gt; [1] 2000</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mask</span><span class="op">(</span><span class="op">!</span><span class="op">!</span><span class="va">cyl</span> <span class="op">*</span> <span class="va">foo</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 2000</span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mask</span><span class="op">(</span><span class="va">.env</span><span class="op">$</span><span class="va">cyl</span> <span class="op">*</span> <span class="va">foo</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 2000</span></span></code></pre></div>
 <p>With tidyselect, there is no such hierarchical data masking. Instead, expressions are evaluated either in the context of the data frame or in the user environment, without overlap. The scope of lookup depends on the kind of expression:</p>
 <ol style="list-style-type: decimal">
 <li>
 <p><strong>data-expressions</strong> are evaluated in the data frame only. This includes bare symbols, the boolean operators, <code>-</code>, <code>:</code>, and <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. You can’t refer to environment-variables in a data-expression:</p>
-<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">cyl_pos</span> <span class="op">&lt;-</span> <span class="fl">2</span>
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span> <span class="op">|</span> <span class="va">cyl_pos</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't subset columns past the end.</span>
-<span class="co">#&gt; <span style="color: #BB0000;">✖</span> Column `cyl_pos` doesn't exist.</span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">cyl_pos</span> <span class="op">&lt;-</span> <span class="fl">2</span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span> <span class="op">|</span> <span class="va">cyl_pos</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't subset columns that don't exist.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> Column `cyl_pos` doesn't exist.</span></span></code></pre></div>
 </li>
 <li>
 <p><strong>env-expressions</strong> are evaluated in the environment. This includes all calls other than those mentioned above, as well as symbols that are part of those calls. You can’t refer to data-variables in a data-expression:</p>
-<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `all_of()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> object 'mpg' not found</span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Problem while evaluating `all_of(mpg)`.</span></span>
+<span><span class="co">#&gt; <span style="font-weight: bold;">Caused by error in `as_indices_impl()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> object 'mpg' not found</span></span></code></pre></div>
 </li>
 </ol>
 <p>Because the scoping is unambiguous, you can safely refer to env-vars in an env-expression, without having to worry about potential naming clashes with data-vars:</p>
-<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span>, z <span class="op">=</span> <span class="fl">7</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span>
-
-<span class="co"># `ncol(x)` is an env-expression, so `x` represents the data frame in</span>
-<span class="co"># the environment rather than the column in the data frame</span>
-<span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; y z </span>
-<span class="co">#&gt; 2 3</span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, y <span class="op">=</span> <span class="fl">4</span><span class="op">:</span><span class="fl">6</span>, z <span class="op">=</span> <span class="fl">7</span><span class="op">:</span><span class="fl">9</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># `ncol(x)` is an env-expression, so `x` represents the data frame in</span></span>
+<span><span class="co"># the environment rather than the column in the data frame</span></span>
+<span><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fl">2</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; y z </span></span>
+<span><span class="co">#&gt; 2 3</span></span></code></pre></div>
 <p>If you have variable names in a character vector, it is safe to refer to the env-var containing the names with <code><a href="../reference/all_of.html">all_of()</a></code> because it is an env-expression:</p>
-<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span>
-<span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; y z </span>
-<span class="co">#&gt; 2 3</span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">y</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"y"</span>, <span class="st">"z"</span><span class="op">)</span></span>
+<span><span class="va">x</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">y</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; y z </span></span>
+<span><span class="co">#&gt; 2 3</span></span></code></pre></div>
 <p>Note that currently, env-vars are still allowed in some data-expressions, for compatibility. However this is in the process of being deprecated and you should see a note recommending to use <code><a href="../reference/all_of.html">all_of()</a></code> instead. This note will become a deprecation warning in the future, and then an error.</p>
-<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl_pos</span><span class="op">)</span>
-<span class="co">#&gt; Note: Using an external vector in selections is ambiguous.</span>
-<span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> Use `all_of(cyl_pos)` instead of `cyl_pos` to silence this message.</span>
-<span class="co">#&gt; <span style="color: #0000BB;">ℹ</span> See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span>
-<span class="co">#&gt; <span style="color: #555555;">This message is displayed once per session.</span></span>
-<span class="co">#&gt; cyl </span>
-<span class="co">#&gt;   2</span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl_pos</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Warning: Using an external vector in selections was deprecated in tidyselect</span></span>
+<span><span class="co">#&gt; 1.1.0.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `all_of()` or `any_of()` instead.</span></span>
+<span><span class="co">#&gt;   # Was:</span></span>
+<span><span class="co">#&gt;   data %&gt;% select(cyl_pos)</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   # Now:</span></span>
+<span><span class="co">#&gt;   data %&gt;% select(all_of(cyl_pos))</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt; See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span>
+<span><span class="co">#&gt; cyl </span></span>
+<span><span class="co">#&gt;   2</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="arithmetic-operators">Arithmetic operators<a class="anchor" aria-label="anchor" href="#arithmetic-operators"></a>
 </h3>
 <p>Within data-expressions (see Evaluation section), <code>+</code>, <code>*</code> and <code>/</code> are overridden to cause an error. This is to prevent confusion stemming from normal data masking usage where variables can be transformed on the fly:</p>
-<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use arithmetic operator `^` in selection context.</span>
-
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span> <span class="op">*</span> <span class="va">wt</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use arithmetic operator `*` in selection context.</span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span><span class="op">^</span><span class="fl">2</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use arithmetic operator `^` in selection context.</span></span>
+<span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span> <span class="op">*</span> <span class="va">wt</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Can't use arithmetic operator `*` in selection context.</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -466,60 +398,60 @@
 <h3 id="all-renaming-inputs-must-be-named">All renaming inputs must be named<a class="anchor" aria-label="anchor" href="#all-renaming-inputs-must-be-named"></a>
 </h3>
 <p>Unlike <code><a href="../reference/eval_select.html">eval_select()</a></code> which can select without renaming, <code><a href="../reference/eval_select.html">eval_rename()</a></code> expects a fully named selection. If one or several names are missing, an error is thrown.</p>
-<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; mpg </span>
-<span class="co">#&gt;   1</span>
-
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; mpg </span></span>
+<span><span class="co">#&gt;   1</span></span>
+<span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="renaming-to-an-existing-variable-name">Renaming to an existing variable name<a class="anchor" aria-label="anchor" href="#renaming-to-an-existing-variable-name"></a>
 </h3>
 <p>If the input data is a data frame, tidyselect generally throws an error when duplicate column names are selected, in order to respect the invariant of unique column names.</p>
-<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># Lists can have duplicates</span>
-<span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span>, foo <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span>
-<span class="co">#&gt; foo foo </span>
-<span class="co">#&gt;   1   2</span>
-
-<span class="co"># Data frames cannot</span>
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span>, foo <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
-<span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
-<span class="co">#&gt;   * "foo" at locations 1 and 2.</span></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># Lists can have duplicates</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">as.list</a></span><span class="op">(</span><span class="va">mtcars</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span>, foo <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo foo </span></span>
+<span><span class="co">#&gt;   1   2</span></span>
+<span></span>
+<span><span class="co"># Data frames cannot</span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">mpg</span>, foo <span class="op">=</span> <span class="va">cyl</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span></span>
+<span><span class="co">#&gt;   * "foo" at locations 1 and 2.</span></span></code></pre></div>
 <p>A selection can rename a variable to an existing name if the latter is not part of the selection:</p>
-<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
-<span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
-<span class="co">#&gt;   * "cyl" at locations 1 and 2.</span>
-
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">disp</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; disp  cyl </span>
-<span class="co">#&gt;    3    1</span></code></pre></div>
+<div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span></span>
+<span><span class="co">#&gt;   * "cyl" at locations 1 and 2.</span></span>
+<span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">disp</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; disp  cyl </span></span>
+<span><span class="co">#&gt;    3    1</span></span></code></pre></div>
 <p>This is not possible when renaming.</p>
-<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span>
-
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">disp</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span></span>
+<span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span><span class="va">disp</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `rename_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> All renaming inputs must be named.</span></span></code></pre></div>
 <p>However, the name conflict can be solved by renaming the existing variable to another name:</p>
-<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; foo cyl </span>
-<span class="co">#&gt;   2   1</span>
-
-<span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span>
-<span class="co">#&gt; foo cyl </span>
-<span class="co">#&gt;   2   1</span></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo cyl </span></span>
+<span><span class="co">#&gt;   2   1</span></span>
+<span></span>
+<span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="va">cyl</span>, cyl <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo cyl </span></span>
+<span><span class="co">#&gt;   2   1</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -527,74 +459,63 @@
 </h2>
 <p>Normally a data frame shouldn’t have duplicate names. However, the real world is messy and duplicates do happen in the wild. tidyselect tries to be as permissive as it can with these duplicates so that users can restore unique names with <code>select()</code> or <code>rename()</code>.</p>
 <p>First let’s create a data frame with duplicate names:</p>
-<div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dups</span> <span class="op">&lt;-</span> <span class="fu">vctrs</span><span class="fu">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/new_data_frame.html" class="external-link">new_data_frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">2</span>, x <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dups</span> <span class="op">&lt;-</span> <span class="fu">vctrs</span><span class="fu">::</span><span class="fu"><a href="https://vctrs.r-lib.org/reference/new_data_frame.html" class="external-link">new_data_frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">1</span>, y <span class="op">=</span> <span class="fl">2</span>, x <span class="op">=</span> <span class="fl">3</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>If the duplicates are not part of the selection, they are simply ignored:</p>
-<div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">y</span><span class="op">)</span>
-<span class="co">#&gt; y </span>
-<span class="co">#&gt; 2</span></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">y</span><span class="op">)</span></span>
+<span><span class="co">#&gt; y </span></span>
+<span><span class="co">#&gt; 2</span></span></code></pre></div>
 <p>If the duplicates are selected, this is an error:</p>
-<div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span>
-<span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span>
-<span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span>
-<span class="co">#&gt;   * "x" at locations 1 and 2.</span></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">x</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00; font-weight: bold;">Error</span><span style="font-weight: bold;"> in `select_loc()`:</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BBBB00;">!</span> Names must be unique.</span></span>
+<span><span class="co">#&gt; <span style="color: #BB0000;">✖</span> These names are duplicated:</span></span>
+<span><span class="co">#&gt;   * "x" at locations 1 and 2.</span></span></code></pre></div>
 <p>The duplicate names can be repaired by renaming chosen locations:</p>
-<div class="sourceCode" id="cb42"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">x</span>, foo <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt;   x foo </span>
-<span class="co">#&gt;   1   3</span>
-
-<span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
-<span class="co">#&gt; foo </span>
-<span class="co">#&gt;   3</span></code></pre></div>
+<div class="sourceCode" id="cb37"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select_loc</span><span class="op">(</span><span class="va">x</span>, foo <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt;   x foo </span></span>
+<span><span class="co">#&gt;   1   3</span></span>
+<span></span>
+<span><span class="va">dups</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">rename_loc</span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span><span class="co">#&gt; foo </span></span>
+<span><span class="co">#&gt;   3</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="acknowledgements">Acknowledgements<a class="anchor" aria-label="anchor" href="#acknowledgements"></a>
 </h2>
 <p>The tidyselect syntax was inspired by the <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">base::subset()</a></code> function written by Peter Dalgaard. The <code>select</code> parameter of <code><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset.data.frame()</a></code> is evaluated in a data mask where the column names are bound to their locations in the data frame. This allows <code>:</code> to create sequences of variable locations. The locations can be combined with <code><a href="https://rdrr.io/r/base/c.html" class="external-link">c()</a></code>. This selection interface set the tone for the development of the tidyselect syntax.</p>
-<div class="sourceCode" id="cb43"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span>select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">hp</span><span class="op">:</span><span class="va">wt</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; <span style="color: #949494;"># A tibble: 32 × 4</span></span>
-<span class="co">#&gt;     cyl    hp  drat    wt</span>
-<span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     6   110  3.9   2.62</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     6   110  3.9   2.88</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     4    93  3.85  2.32</span>
-<span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     6   110  3.08  3.22</span>
-<span class="co">#&gt; <span style="color: #949494;"># … with 28 more rows</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span>select <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">cyl</span>, <span class="va">hp</span><span class="op">:</span><span class="va">wt</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 32 × 4</span></span></span>
+<span><span class="co">#&gt;     cyl    hp  drat    wt</span></span>
+<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>     6   110  3.9   2.62</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span>     6   110  3.9   2.88</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span>     4    93  3.85  2.32</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">4</span>     6   110  3.08  3.22</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># … with 28 more rows</span></span></span></code></pre></div>
 </div>
-  </div>
-
-  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-
-        <nav id="toc" data-toggle="toc"><h2 data-toc-skip>Contents</h2>
-    </nav>
-</div>
-
+  </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
+    </nav></aside>
 </div>
 
 
 
-      <footer><div class="copyright">
+   </div>
+  <footer><div class="container">
+  <div class="pkgdown-footer-left">
   <p></p>
-<p>Developed by Lionel Henry, Hadley Wickham.</p>
+<p>Developed by <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
 </div>
 
-<div class="pkgdown">
+<div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
-      </footer>
-</div>
-
-  
-
-
-  
-
-  </body>
+  </div></footer>
+</body>
 </html>

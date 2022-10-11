@@ -4,6 +4,9 @@
     <loc>https://tidyselect.r-lib.org/404.html</loc>
   </url>
   <url>
+    <loc>https://tidyselect.r-lib.org/CODE_OF_CONDUCT.html</loc>
+  </url>
+  <url>
     <loc>https://tidyselect.r-lib.org/LICENSE-text.html</loc>
   </url>
   <url>
@@ -29,6 +32,9 @@
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/all_of.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/reference/eval_relocate.html</loc>
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/eval_select.html</loc>
@@ -65,6 +71,9 @@
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/tidyselect-package.html</loc>
+  </url>
+  <url>
+    <loc>https://tidyselect.r-lib.org/reference/tidyselect_data_proxy.html</loc>
   </url>
   <url>
     <loc>https://tidyselect.r-lib.org/reference/vars_pull.html</loc>
