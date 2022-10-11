@@ -12,3 +12,4 @@
 ^\.covrignore$
 ^rsconnect$
 ^LICENSE\.md$
+^CRAN-SUBMISSION$
