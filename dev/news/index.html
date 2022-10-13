@@ -67,7 +67,7 @@
 <div class="section level3">
 <h3 id="lifecycle-changes-1-2-0">Lifecycle changes<a class="anchor" aria-label="anchor" href="#lifecycle-changes-1-2-0"></a></h3>
 <ul><li><p>Using <code><a href="../reference/all_of.html">all_of()</a></code> outside of a tidyselect context is now deprecated (<a href="https://github.com/r-lib/tidyselect/issues/269" class="external-link">#269</a>). In the future it will error to be consistent with <code><a href="../reference/all_of.html">any_of()</a></code>.</p></li>
-<li><p>Use of <code>.data</code> in tidyselect expressions is now deprecated to more cleanly separate tidy-select from data-masking. Replace <code>.data$x</code> with <code>"x"</code> and <code>.data[[var]]</code> with <code>any_of(var)</code> or <code>all_of(var)</code> (<a href="https://github.com/r-lib/tidyselect/issues/169" class="external-link">#169</a>).</p></li>
+<li><p>Use of <code>.data</code> in tidyselect expressions is now deprecated to more cleanly separate tidy-select from data-masking. Replace <code>.data$x</code> with <code>"x"</code> and <code>.data[[var]]</code> with <code>all_of(var)</code> (<a href="https://github.com/r-lib/tidyselect/issues/169" class="external-link">#169</a>).</p></li>
 <li><p>Use of bare predicates (not wrapped in <code><a href="../reference/where.html">where()</a></code>) and indirection (without using <code><a href="../reference/all_of.html">all_of()</a></code>) have been formally deprecated (<a href="https://github.com/r-lib/tidyselect/issues/317" class="external-link">#317</a>).</p></li>
 </ul></div>
 <div class="section level3">
