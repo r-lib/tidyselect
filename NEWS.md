@@ -20,7 +20,7 @@
 
 * Use of `.data` in tidyselect expressions is now deprecated to more cleanly
   separate tidy-select from data-masking. Replace `.data$x` with `"x"` and
-  `.data[[var]]` with `any_of(var)` or `all_of(var)` (#169).
+  `.data[[var]]` with `all_of(var)` (#169).
 
 * Use of bare predicates (not wrapped in `where()`) and indirection (without
   using `all_of()`) have been formally deprecated (#317).
