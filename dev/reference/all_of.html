@@ -157,7 +157,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <p>If any of the variable is missing from the data frame, that's an error:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">starwars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error:</span></span>
-<span><span class="co">#&gt; ! Problem while evaluating `all_of(vars)`.</span></span>
+<span><span class="co">#&gt; i In argument: `all_of(vars)`.</span></span>
 <span><span class="co">#&gt; Caused by error in `all_of()`:</span></span>
 <span><span class="co">#&gt; ! Can't subset elements that don't exist.</span></span>
 <span><span class="co">#&gt; x Elements `Sepal.Length` and `Sepal.Width` don't exist.</span></span></code></pre><p></p></div>
