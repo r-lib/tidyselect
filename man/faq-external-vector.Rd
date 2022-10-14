@@ -31,9 +31,10 @@ mtcars \%>\% select(mpg:disp)
 }\if{html}{\out{</div>}}
 
 For historical reasons, it is also possible to refer an external vector
-of variable names. You get the correct result, but with a note informing
-you that selecting with an external variable is ambiguous because it is
-not clear whether you want a data frame column or an external object.
+of variable names. You get the correct result, but with a warning
+informing you that selecting with an external variable is ambiguous
+because it is not clear whether you want a data frame column or an
+external object.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vars <- c("cyl", "am", "vs")
 result <- mtcars \%>\% select(vars)
@@ -46,12 +47,10 @@ result <- mtcars \%>\% select(vars)
 #>   # Now:
 #>   data \%>\% select(all_of(vars))
 #> 
-#> See
-#> <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+#> See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
 }\if{html}{\out{</div>}}
 
-This note will become a warning in the future, and then an error. We
-have decided to deprecate this particular approach to using external
+We have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
 contains a column with the same name as your external variable.
 

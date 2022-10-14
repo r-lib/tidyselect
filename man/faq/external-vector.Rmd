@@ -14,20 +14,20 @@ mtcars %>% select(mpg:disp)
 ```
 
 For historical reasons, it is also possible to refer an external
-vector of variable names. You get the correct result, but with a note
-informing you that selecting with an external variable is ambiguous
-because it is not clear whether you want a data frame column or an
-external object.
+vector of variable names. You get the correct result, but with a
+warning informing you that selecting with an external variable is
+ambiguous because it is not clear whether you want a data frame column
+or an external object.
 
 ```{r}
 vars <- c("cyl", "am", "vs")
 result <- mtcars %>% select(vars)
 ```
 
-This note will become a warning in the future, and then an error. We
-have decided to deprecate this particular approach to using external
-vectors because they introduce ambiguity. Imagine that the data
-frame contains a column with the same name as your external variable.
+We have decided to deprecate this particular approach to using
+external vectors because they introduce ambiguity. Imagine that the
+data frame contains a column with the same name as your external
+variable.
 
 ```{r}
 some_df <- mtcars[1:4, ]
