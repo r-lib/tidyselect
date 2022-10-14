@@ -87,7 +87,7 @@ If any of the variable is missing from the data frame, that's an error:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(all_of(vars))
 #> Error:
-#> ! Problem while evaluating `all_of(vars)`.
+#> i In argument: `all_of(vars)`.
 #> Caused by error in `all_of()`:
 #> ! Can't subset elements that don't exist.
 #> x Elements `Sepal.Length` and `Sepal.Width` don't exist.

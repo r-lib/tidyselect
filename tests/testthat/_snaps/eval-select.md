@@ -92,7 +92,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
-      ! Problem while evaluating `f(base = TRUE)`.
+      i In argument: `f(base = TRUE)`.
       Caused by error in `h()`:
       ! foo
       ---
@@ -107,7 +107,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
-      ! Problem while evaluating `f(base = FALSE)`.
+      i In argument: `f(base = FALSE)`.
       Caused by error in `h()`:
       ! foo
       ---
@@ -124,7 +124,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
-      ! Problem while evaluating `1 + ""`.
+      i In argument: `1 + ""`.
       Caused by error in `1 + ""`:
       ! non-numeric argument to binary operator
     Code
@@ -133,7 +133,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
-      ! Problem while evaluating `f()`.
+      i In argument: `f()`.
       Caused by error in `1 + ""`:
       ! non-numeric argument to binary operator
 

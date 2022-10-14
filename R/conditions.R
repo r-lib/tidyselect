@@ -19,9 +19,9 @@ with_chained_errors <- function(expr, action, call, eval_expr = NULL) {
         msg <- ""
       } else {
         code <- as_label(eval_expr)
-        msg <- cli::format_inline("Problem while evaluating {.code {code}}.")
+        msg <- cli::format_inline("In argument: {.code {code}}.")
       }
-      abort(msg, call = call, parent = cnd)
+      cli::cli_abort(c("i" = msg), call = call, parent = cnd)
     }
   )
 }

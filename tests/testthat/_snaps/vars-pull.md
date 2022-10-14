@@ -106,7 +106,7 @@
     Output
       <error/rlang_error>
       Error:
-      ! Problem while evaluating `f(base = TRUE)`.
+      i In argument: `f(base = TRUE)`.
       Caused by error in `h()`:
       ! foo
       ---
@@ -121,7 +121,7 @@
     Output
       <error/rlang_error>
       Error:
-      ! Problem while evaluating `f(base = FALSE)`.
+      i In argument: `f(base = FALSE)`.
       Caused by error in `h()`:
       ! foo
       ---
