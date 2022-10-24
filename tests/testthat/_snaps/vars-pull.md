@@ -24,8 +24,8 @@
       vars_pull(letters, 0)
     Condition
       Error:
-      ! Must extract column with a single valid subscript.
-      x Subscript `0` has value 0 but must be a positive location.
+      ! Can't extract column with `0`.
+      x Subscript `0` must be a positive location, not 0.
     Code
       vars_pull(letters, 100)
     Condition
@@ -44,27 +44,26 @@
       vars_pull(letters, -Inf)
     Condition
       Error:
-      ! Must extract column with a single valid subscript.
+      ! Can't extract column with `-Inf`.
       x Can't convert from `-Inf` <double> to <integer> due to loss of precision.
     Code
       vars_pull(letters, TRUE)
     Condition
       Error:
-      ! Must extract column with a single valid subscript.
-      x Subscript `TRUE` has the wrong type `logical`.
-      i It must be numeric or character.
+      ! Can't extract column with `TRUE`.
+      x `TRUE` must be numeric or character, not `TRUE`.
     Code
       vars_pull(letters, NA)
     Condition
       Error:
-      ! Must extract column with a single valid subscript.
-      x Subscript `NA` can't be `NA`.
+      ! Can't extract column with `NA`.
+      x Subscript `NA` must be a location, not an integer `NA`.
     Code
       vars_pull(letters, na_int)
     Condition
       Error:
-      ! Must extract column with a single valid subscript.
-      x Subscript `na_int` can't be `NA`.
+      ! Can't extract column with `na_int`.
+      x Subscript `na_int` must be a location, not an integer `NA`.
     Code
       vars_pull(letters, "foo")
     Condition

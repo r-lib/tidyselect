@@ -4,22 +4,20 @@
       vars_select(letters, TRUE)
     Condition
       Error:
-      ! Must select columns with a valid subscript vector.
-      x Subscript `TRUE` has the wrong type `logical`.
-      i It must be numeric or character.
+      ! Can't select columns with `TRUE`.
+      x `TRUE` must be numeric or character, not `TRUE`.
     Code
       vars_select(letters, 2.5)
     Condition
       Error:
-      ! Must select columns with a valid subscript vector.
+      ! Can't select columns with `2.5`.
       x Can't convert from `2.5` <double> to <integer> due to loss of precision.
     Code
       vars_select(letters, structure(1:3, class = "tidysel_foobar"))
     Condition
       Error:
-      ! Must select columns with a valid subscript vector.
-      x Subscript `structure(1:3, class = "tidysel_foobar")` has the wrong type `tidysel_foobar`.
-      i It must be numeric or character.
+      ! Can't select columns with `structure(1:3, class = "tidysel_foobar")`.
+      x `structure(1:3, class = "tidysel_foobar")` must be numeric or character, not a <tidysel_foobar> object.
 
 # vars_select() has consistent location errors
 
@@ -146,20 +144,18 @@
       vars_rename(letters, A = TRUE)
     Condition
       Error:
-      ! Must rename columns with a valid subscript vector.
-      x Subscript `TRUE` has the wrong type `logical`.
-      i It must be numeric or character.
+      ! Can't rename columns with `TRUE`.
+      x `TRUE` must be numeric or character, not `TRUE`.
     Code
       vars_rename(letters, A = 1.5)
     Condition
       Error:
-      ! Must rename columns with a valid subscript vector.
+      ! Can't rename columns with `1.5`.
       x Can't convert from `1.5` <double> to <integer> due to loss of precision.
     Code
       vars_rename(letters, A = list())
     Condition
       Error:
-      ! Must rename columns with a valid subscript vector.
-      x Subscript `list()` has the wrong type `list`.
-      i It must be numeric or character.
+      ! Can't rename columns with `list()`.
+      x `list()` must be numeric or character, not an empty list.
 
