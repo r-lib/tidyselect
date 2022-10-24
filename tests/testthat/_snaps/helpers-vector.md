@@ -30,9 +30,8 @@
       Error in `select_loc()`:
       i In argument: `all_of(TRUE)`.
       Caused by error in `all_of()`:
-      ! Must subset elements with a valid subscript vector.
-      x Subscript has the wrong type `logical`.
-      i It must be numeric or character.
+      ! Can't subset elements.
+      x Subscript must be numeric or character, not `TRUE`.
     Code
       (expect_error(select_loc(letters2, any_of(TRUE))))
     Output
@@ -40,9 +39,8 @@
       Error in `select_loc()`:
       i In argument: `any_of(TRUE)`.
       Caused by error in `any_of()`:
-      ! Must subset elements with a valid subscript vector.
-      x Subscript has the wrong type `logical`.
-      i It must be numeric or character.
+      ! Can't subset elements.
+      x Subscript must be numeric or character, not `TRUE`.
     Code
       (expect_error(select_loc(letters2, any_of(is.factor))))
     Output
@@ -50,9 +48,8 @@
       Error in `select_loc()`:
       i In argument: `any_of(is.factor)`.
       Caused by error in `any_of()`:
-      ! Must subset elements with a valid subscript vector.
-      x Subscript has the wrong type `function`.
-      i It must be numeric or character.
+      ! Can't subset elements.
+      x Subscript must be numeric or character, not a function.
     Code
       (expect_error(select_loc(letters2, all_of(is.factor))))
     Output
@@ -60,9 +57,8 @@
       Error in `select_loc()`:
       i In argument: `all_of(is.factor)`.
       Caused by error in `all_of()`:
-      ! Must subset elements with a valid subscript vector.
-      x Subscript has the wrong type `function`.
-      i It must be numeric or character.
+      ! Can't subset elements.
+      x Subscript must be numeric or character, not a function.
 
 # any_of() errors out of context
 
