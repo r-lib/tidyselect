@@ -389,9 +389,11 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   top <- data_mask$.top_env
   cur <- data_mask
   value <- missing_arg()
+  sentinel <- missing_sentinel()
   while (!is_reference(cur, top)) {
-    if (env_has(cur, name)) {
-      value <- env_get(cur, name)
+    candidate <- env_get(cur, name, default = sentinel)
+    if (!is_missing_sentinel(candidate)) {
+      value <- candidate
       break
     }
     cur <- env_parent(cur)
@@ -456,6 +458,16 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   )
 
   value
+}
+
+is_missing_sentinel <- function(x) {
+  inherits(x, "tidyselect:::missing_sentinel")
+}
+missing_sentinel <- function() {
+  # Much faster than `structure()`
+  out <- list()
+  class(out) <- "tidyselect:::missing_sentinel"
+  out
 }
 
 validate_dot_data <- function(expr, call) {
