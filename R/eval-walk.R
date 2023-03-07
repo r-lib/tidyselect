@@ -389,11 +389,11 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   top <- data_mask$.top_env
   cur <- data_mask
   value <- missing_arg()
-  sentinel <- missing_sentinel()
   while (!is_reference(cur, top)) {
-    candidate <- env_get(cur, name, default = sentinel)
-    if (!is_missing_sentinel(candidate)) {
-      value <- candidate
+    if (env_has(cur, name)) {
+      # TODO: Remove unnecessary `default` specification after
+      # https://github.com/r-lib/rlang/issues/1582
+      value <- env_get(cur, name, default = NULL)
       break
     }
     cur <- env_parent(cur)
@@ -458,16 +458,6 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   )
 
   value
-}
-
-is_missing_sentinel <- function(x) {
-  inherits(x, "tidyselect:::missing_sentinel")
-}
-missing_sentinel <- function() {
-  # Much faster than `structure()`
-  out <- list()
-  class(out) <- "tidyselect:::missing_sentinel"
-  out
 }
 
 validate_dot_data <- function(expr, call) {
