@@ -250,7 +250,7 @@ as_indices_impl <- function(x, vars, strict, call = caller_env(), arg = NULL) {
     # Remove out-of-bounds elements if non-strict. We do this eagerly
     # because names vectors must be converted to locations here.
     x <- switch(typeof(x),
-      character = set_intersect(x, c(vars, na_chr)),
+      character = vctrs::vec_set_intersect(x, c(vars, na_chr)),
       double = ,
       integer = x[x <= length(vars)],
       x
