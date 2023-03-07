@@ -2,25 +2,28 @@
 # The `sel_` prefixed operations match on both values and names, with
 # unnamed elements matching named ones
 sel_union <- function(x, y) {
-  if (is_null(names(x)) && is_null(names(y))) {
-    set_union(x, y)
-  } else {
+  if (any_valid_names(names(x)) || any_valid_names(names(y))) {
     sel_operation(x, y, set_union)
+  } else {
+    set_union(x, y)
   }
 }
 sel_intersect <- function(x, y) {
-  if (is_null(names(x)) && is_null(names(y))) {
-    set_intersect(x, y)
-  } else {
+  if (any_valid_names(names(x)) || any_valid_names(names(y))) {
     sel_operation(x, y, set_intersect)
+  } else {
+    set_intersect(x, y)
   }
 }
 sel_unique <- function(x) {
-  x <- vctrs::new_data_frame(list(value = x, names = names2(x)))
-  x <- propagate_names(x)
-
-  out <- vctrs::vec_unique(x)
-  set_names(out$value, out$names)
+  if (any_valid_names(names(x))) {
+    x <- vctrs::new_data_frame(list(value = x, names = names2(x)))
+    x <- propagate_names(x)
+    out <- vctrs::vec_unique(x)
+    set_names(out$value, out$names)
+  } else {
+    vctrs::vec_unique(x)
+  }
 }
 
 # Set difference and set complement must validate their RHS eagerly,
@@ -29,10 +32,10 @@ sel_diff <- function(x, y, vars = NULL, error_call = caller_env()) {
   if (!is_null(vars)) {
     y <- loc_validate(y, vars, call = error_call)
   }
-  if (is_null(names(x)) || is_null(names(y))) {
-    set_diff(x, y)
-  } else {
+  if (any_valid_names(names(x)) && any_valid_names(names(y))) {
     sel_operation(x, y, set_diff)
+  } else {
+    set_diff(x, y)
   }
 }
 sel_complement <- function(x, vars = NULL, error_call = caller_env()) {
