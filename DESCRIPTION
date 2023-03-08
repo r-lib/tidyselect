@@ -2,9 +2,9 @@ Package: tidyselect
 Title: Select from a Set of Strings
 Version: 1.2.0.9000
 Authors@R: c(
-    person("Lionel", "Henry", , "lionel@rstudio.com", role = c("aut", "cre")),
-    person("Hadley", "Wickham", , "hadley@rstudio.com", role = "aut"),
-    person("RStudio", role = c("cph", "fnd"))
+    person("Lionel", "Henry", , "lionel@posit.co", role = c("aut", "cre")),
+    person("Hadley", "Wickham", , "hadley@posit.co", role = "aut"),
+    person("Posit Software, PBC", role = c("cph", "fnd"))
   )
 Description: A backend for the selecting functions of the 'tidyverse'.  It
     makes it easy to implement select-like functions in your own packages
