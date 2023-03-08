@@ -71,6 +71,14 @@ relocate_loc <- function(x,
   )
 }
 
+any_valid_names <- function(nms) {
+  if (is_null(nms)) {
+    FALSE
+  } else {
+    !all(are_empty_name(nms))
+  }
+}
+
 are_empty_name <- function(nms) {
   if (!is_character(nms)) {
     abort("Expected a character vector")
