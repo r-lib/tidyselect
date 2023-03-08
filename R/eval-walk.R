@@ -391,7 +391,9 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   value <- missing_arg()
   while (!is_reference(cur, top)) {
     if (env_has(cur, name)) {
-      value <- env_get(cur, name)
+      # TODO: Remove unnecessary `default` specification after
+      # https://github.com/r-lib/rlang/issues/1582
+      value <- env_get(cur, name, default = NULL)
       break
     }
     cur <- env_parent(cur)
