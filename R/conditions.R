@@ -1,5 +1,5 @@
 with_subscript_errors <- function(expr, type = "select") {
-  try_fetch(
+  withCallingHandlers(
     expr,
     vctrs_error_subscript = function(cnd) {
       cnd$subscript_action <- subscript_action(type)
@@ -10,7 +10,7 @@ with_subscript_errors <- function(expr, type = "select") {
 }
 
 with_chained_errors <- function(expr, action, call, eval_expr = NULL) {
-  try_fetch(
+  withCallingHandlers(
     expr,
     error = function(cnd) {
       eval_expr <- quo_squash(eval_expr)

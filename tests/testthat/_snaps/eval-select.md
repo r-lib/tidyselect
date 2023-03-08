@@ -98,10 +98,10 @@
       ---
       Backtrace:
         1. base::print(expect_error(select_loc(mtcars, f(base = TRUE))))
-       25. tidyselect (local) f(base = TRUE)
-       26. tidyselect (local) g(base)
-       27. tidyselect (local) h(base)
-       28. base::stop("foo")
+       19. tidyselect (local) f(base = TRUE)
+       20. tidyselect (local) g(base)
+       21. tidyselect (local) h(base)
+       22. base::stop("foo")
     Code
       print(expect_error(select_loc(mtcars, f(base = FALSE))))
     Output
@@ -113,9 +113,9 @@
       ---
       Backtrace:
         1. base::print(expect_error(select_loc(mtcars, f(base = FALSE))))
-       25. tidyselect (local) f(base = FALSE)
-       26. tidyselect (local) g(base)
-       27. tidyselect (local) h(base)
+       19. tidyselect (local) f(base = FALSE)
+       20. tidyselect (local) g(base)
+       21. tidyselect (local) h(base)
 
 # eval_select() produces correct chained errors
 
