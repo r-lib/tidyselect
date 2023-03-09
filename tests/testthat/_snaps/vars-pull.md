@@ -111,10 +111,10 @@
       ---
       Backtrace:
         1. base::print(expect_error(vars_pull(letters, f(base = TRUE))))
-       17. tidyselect (local) f(base = TRUE)
-       18. tidyselect (local) g(base)
-       19. tidyselect (local) h(base)
-       20. base::stop("foo")
+       12. tidyselect (local) f(base = TRUE)
+       13. tidyselect (local) g(base)
+       14. tidyselect (local) h(base)
+       15. base::stop("foo")
     Code
       print(expect_error(vars_pull(letters, f(base = FALSE))))
     Output
@@ -126,7 +126,7 @@
       ---
       Backtrace:
         1. base::print(expect_error(vars_pull(letters, f(base = FALSE))))
-       17. tidyselect (local) f(base = FALSE)
-       18. tidyselect (local) g(base)
-       19. tidyselect (local) h(base)
+       12. tidyselect (local) f(base = FALSE)
+       13. tidyselect (local) g(base)
+       14. tidyselect (local) h(base)
 
