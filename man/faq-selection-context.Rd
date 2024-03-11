@@ -13,20 +13,23 @@ Using a selection helper anywhere else results in an error:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starts_with("foo")
 #> Error:
 #> ! `starts_with()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for
-#>   details.
+#> i See
+#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
+#>   for details.
 
 mtcars[contains("foo")]
 #> Error:
 #> ! `contains()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for
-#>   details.
+#> i See
+#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
+#>   for details.
 
 subset(mtcars, select = matches("foo"))
 #> Error:
 #> ! `matches()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for
-#>   details.
+#> i See
+#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
+#>   for details.
 }\if{html}{\out{</div>}}
 
 If you see this error, you may have used a selection helper in the wrong
