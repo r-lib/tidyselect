@@ -1,7 +1,10 @@
 # tidyselect (development version)
 
+* Fix for CRAN checks.
+
 * `eval_select()` out-of-bounds errors now use the verb "select" rather than
   "subset" in the error message for consistency with `dplyr::select()` (#271).
+
 
 # tidyselect 1.2.0
 

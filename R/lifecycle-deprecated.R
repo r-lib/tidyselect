@@ -7,7 +7,7 @@
 #' `vignette("tidyselect")` to get started.
 #'
 #' @param .vars A character vector of existing column names.
-#' @param ...,args Selection inputs. See the help for [selection
+#' @param ... Selection inputs. See the help for [selection
 #'   helpers][language].
 #' @param .include,.exclude Character vector of column names to always
 #'   include/exclude.

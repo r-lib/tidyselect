@@ -18,7 +18,7 @@ vars_rename(.vars, ..., .strict = TRUE)
 \arguments{
 \item{.vars}{A character vector of existing column names.}
 
-\item{..., args}{Selection inputs. See the help for \link[=language]{selection helpers}.}
+\item{...}{Selection inputs. See the help for \link[=language]{selection helpers}.}
 
 \item{.include, .exclude}{Character vector of column names to always
 include/exclude.}
