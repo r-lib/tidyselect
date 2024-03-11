@@ -57,7 +57,7 @@ iris[, vars]
 #> 2          4.9         3  
 #> 3          4.7         3.2
 #> 4          4.6         3.1
-#> # ... with 146 more rows
+#> # i 146 more rows
 }\if{html}{\out{</div>}}
 
 To refer to these variables in selecting function, use \code{all_of()}:
@@ -70,7 +70,7 @@ To refer to these variables in selecting function, use \code{all_of()}:
 #> 2          4.9         3  
 #> 3          4.7         3.2
 #> 4          4.6         3.1
-#> # ... with 146 more rows
+#> # i 146 more rows
 
 iris \%>\% pivot_longer(all_of(vars))
 #> # A tibble: 300 x 5
@@ -80,7 +80,7 @@ iris \%>\% pivot_longer(all_of(vars))
 #> 2          1.4         0.2 setosa  Sepal.Width    3.5
 #> 3          1.4         0.2 setosa  Sepal.Length   4.9
 #> 4          1.4         0.2 setosa  Sepal.Width    3  
-#> # ... with 296 more rows
+#> # i 296 more rows
 }\if{html}{\out{</div>}}
 
 If any of the variable is missing from the data frame, that's an error:
@@ -88,7 +88,7 @@ If any of the variable is missing from the data frame, that's an error:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(all_of(vars))
 #> Error:
 #> i In argument: `all_of(vars)`.
-#> Caused by error in `all_of()`:
+#> Caused by error in `all_of()` at rlang/R/eval-tidy.R:121:3:
 #> ! Can't subset elements that don't exist.
 #> x Elements `Sepal.Length` and `Sepal.Width` don't exist.
 }\if{html}{\out{</div>}}
@@ -110,7 +110,7 @@ frame because calling it again does not cause an error:
 #> 2          1.4         0.2 setosa 
 #> 3          1.3         0.2 setosa 
 #> 4          1.5         0.2 setosa 
-#> # ... with 146 more rows
+#> # i 146 more rows
 
 iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
 #> # A tibble: 150 x 3
@@ -120,7 +120,7 @@ iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
 #> 2          1.4         0.2 setosa 
 #> 3          1.3         0.2 setosa 
 #> 4          1.5         0.2 setosa 
-#> # ... with 146 more rows
+#> # i 146 more rows
 }\if{html}{\out{</div>}}
 }
 

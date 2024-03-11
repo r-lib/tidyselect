@@ -64,7 +64,7 @@ Select variables by name:
 #> 2    167
 #> 3     96
 #> 4    202
-#> # ... with 83 more rows
+#> # i 83 more rows
 
 iris \%>\% pivot_longer(Sepal.Length)
 #> # A tibble: 150 x 6
@@ -74,7 +74,7 @@ iris \%>\% pivot_longer(Sepal.Length)
 #> 2         3            1.4         0.2 setosa  Sepal.Length   4.9
 #> 3         3.2          1.3         0.2 setosa  Sepal.Length   4.7
 #> 4         3.1          1.5         0.2 setosa  Sepal.Length   4.6
-#> # ... with 146 more rows
+#> # i 146 more rows
 }\if{html}{\out{</div>}}
 
 Select multiple variables by separating them with commas. Note how
@@ -88,7 +88,7 @@ the order of columns is determined by the order of inputs:
 #> 2 Tatooine     167    75
 #> 3 Naboo         96    32
 #> 4 Tatooine     202   136
-#> # ... with 83 more rows
+#> # i 83 more rows
 }\if{html}{\out{</div>}}
 
 Functions like \code{tidyr::pivot_longer()} don't take variables with
@@ -102,7 +102,7 @@ dots. In this case use \code{c()} to select multiple variables:
 #> 2         3.5         0.2 setosa  Petal.Length   1.4
 #> 3         3           0.2 setosa  Sepal.Length   4.9
 #> 4         3           0.2 setosa  Petal.Length   1.4
-#> # ... with 296 more rows
+#> # i 296 more rows
 }\if{html}{\out{</div>}}
 \subsection{Operators:}{
 
@@ -116,22 +116,21 @@ The \code{:} operator selects a range of consecutive variables:
 #> 2 C-3PO             167    75
 #> 3 R2-D2              96    32
 #> 4 Darth Vader       202   136
-#> # ... with 83 more rows
+#> # i 83 more rows
 }\if{html}{\out{</div>}}
 
 The \code{!} operator negates a selection:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(!(name:mass))
 #> # A tibble: 87 x 11
-#>   hair_color skin_c~1 eye_c~2 birth~3 sex   gender homew~4 species films vehic~5
-#>   <chr>      <chr>    <chr>     <dbl> <chr> <chr>  <chr>   <chr>   <lis> <list> 
-#> 1 blond      fair     blue       19   male  mascu~ Tatooi~ Human   <chr> <chr>  
-#> 2 <NA>       gold     yellow    112   none  mascu~ Tatooi~ Droid   <chr> <chr>  
-#> 3 <NA>       white, ~ red        33   none  mascu~ Naboo   Droid   <chr> <chr>  
-#> 4 none       white    yellow     41.9 male  mascu~ Tatooi~ Human   <chr> <chr>  
-#> # ... with 83 more rows, 1 more variable: starships <list>, and abbreviated
-#> #   variable names 1: skin_color, 2: eye_color, 3: birth_year, 4: homeworld,
-#> #   5: vehicles
+#>   hair_color skin_color  eye_color birth_year sex   gender    homeworld species
+#>   <chr>      <chr>       <chr>          <dbl> <chr> <chr>     <chr>     <chr>  
+#> 1 blond      fair        blue            19   male  masculine Tatooine  Human  
+#> 2 <NA>       gold        yellow         112   none  masculine Tatooine  Droid  
+#> 3 <NA>       white, blue red             33   none  masculine Naboo     Droid  
+#> 4 none       white       yellow          41.9 male  masculine Tatooine  Human  
+#> # i 83 more rows
+#> # i 3 more variables: films <list>, vehicles <list>, starships <list>
 
 iris \%>\% select(!c(Sepal.Length, Petal.Length))
 #> # A tibble: 150 x 3
@@ -141,7 +140,7 @@ iris \%>\% select(!c(Sepal.Length, Petal.Length))
 #> 2         3           0.2 setosa 
 #> 3         3.2         0.2 setosa 
 #> 4         3.1         0.2 setosa 
-#> # ... with 146 more rows
+#> # i 146 more rows
 
 iris \%>\% select(!ends_with("Width"))
 #> # A tibble: 150 x 3
@@ -151,7 +150,7 @@ iris \%>\% select(!ends_with("Width"))
 #> 2          4.9          1.4 setosa 
 #> 3          4.7          1.3 setosa 
 #> 4          4.6          1.5 setosa 
-#> # ... with 146 more rows
+#> # i 146 more rows
 }\if{html}{\out{</div>}}
 
 \code{&} and \code{|} take the intersection or the union of two selections:
@@ -164,7 +163,7 @@ iris \%>\% select(!ends_with("Width"))
 #> 2         0.2
 #> 3         0.2
 #> 4         0.2
-#> # ... with 146 more rows
+#> # i 146 more rows
 
 iris \%>\% select(starts_with("Petal") | ends_with("Width"))
 #> # A tibble: 150 x 3
@@ -174,7 +173,7 @@ iris \%>\% select(starts_with("Petal") | ends_with("Width"))
 #> 2          1.4         0.2         3  
 #> 3          1.3         0.2         3.2
 #> 4          1.5         0.2         3.1
-#> # ... with 146 more rows
+#> # i 146 more rows
 }\if{html}{\out{</div>}}
 
 To take the difference between two selections, combine the \code{&} and
@@ -188,7 +187,7 @@ To take the difference between two selections, combine the \code{&} and
 #> 2          1.4
 #> 3          1.3
 #> 4          1.5
-#> # ... with 146 more rows
+#> # i 146 more rows
 }\if{html}{\out{</div>}}
 }
 }

@@ -18,16 +18,16 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Lionel Henry \email{lionel@rstudio.com}
+\strong{Maintainer}: Lionel Henry \email{lionel@posit.co}
 
 Authors:
 \itemize{
-  \item Hadley Wickham \email{hadley@rstudio.com}
+  \item Hadley Wickham \email{hadley@posit.co}
 }
 
 Other contributors:
 \itemize{
-  \item RStudio [copyright holder, funder]
+  \item Posit Software, PBC [copyright holder, funder]
 }
 
 }

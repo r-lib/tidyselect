@@ -13,19 +13,22 @@ Using a selection helper anywhere else results in an error:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starts_with("foo")
 #> Error:
 #> ! `starts_with()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
+#> i See
+#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
 #>   for details.
 
 mtcars[contains("foo")]
 #> Error:
 #> ! `contains()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
+#> i See
+#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
 #>   for details.
 
 subset(mtcars, select = matches("foo"))
 #> Error:
 #> ! `matches()` must be used within a *selecting* function.
-#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
+#> i See
+#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
 #>   for details.
 }\if{html}{\out{</div>}}
 
@@ -55,6 +58,6 @@ dplyr::select(starwars, my_vars())
 #> 2 C-3PO          Droid   <NA>       gold        yellow   
 #> 3 R2-D2          Droid   <NA>       white, blue red      
 #> 4 Darth Vader    Human   none       white       yellow   
-#> # ... with 83 more rows
+#> # i 83 more rows
 }\if{html}{\out{</div>}}
 }

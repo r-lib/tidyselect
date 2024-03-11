@@ -17,7 +17,7 @@ With selecting functions like \code{dplyr::select()} or
 #> 2     6     1     0
 #> 3     4     1     1
 #> 4     6     0     1
-#> # ... with 28 more rows
+#> # i 28 more rows
 
 mtcars \%>\% select(mpg:disp)
 #> # A tibble: 32 x 3
@@ -27,7 +27,7 @@ mtcars \%>\% select(mpg:disp)
 #> 2  21       6   160
 #> 3  22.8     4   108
 #> 4  21.4     6   258
-#> # ... with 28 more rows
+#> # i 28 more rows
 }\if{html}{\out{</div>}}
 
 For historical reasons, it is also possible to refer an external vector
@@ -38,8 +38,8 @@ external object.
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{vars <- c("cyl", "am", "vs")
 result <- mtcars \%>\% select(vars)
-#> Warning: Using an external vector in selections was deprecated in
-#> tidyselect 1.1.0.
+#> Warning: Using an external vector in selections was deprecated in tidyselect
+#> 1.1.0.
 #> i Please use `all_of()` or `any_of()` instead.
 #>   # Was:
 #>   data \%>\% select(vars)
@@ -47,7 +47,11 @@ result <- mtcars \%>\% select(vars)
 #>   # Now:
 #>   data \%>\% select(all_of(vars))
 #> 
-#> See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+#> See
+#> <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+#> This warning is displayed once every 8 hours.
+#> Call `lifecycle::last_lifecycle_warnings()` to see where this
+#> warning was generated.
 }\if{html}{\out{</div>}}
 
 We have decided to deprecate this particular approach to using external
