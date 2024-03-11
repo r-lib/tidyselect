@@ -97,11 +97,29 @@
       ! foo
       ---
       Backtrace:
-        1. base::print(expect_error(select_loc(mtcars, f(base = TRUE))))
-       19. tidyselect (local) f(base = TRUE)
-       20. tidyselect (local) g(base)
-       21. tidyselect (local) h(base)
-       22. base::stop("foo")
+           x
+        1. +-base::print(expect_error(select_loc(mtcars, f(base = TRUE))))
+        2. +-testthat::expect_error(select_loc(mtcars, f(base = TRUE)))
+        3. | \-testthat:::expect_condition_matching(...)
+        4. |   \-testthat:::quasi_capture(...)
+        5. |     +-testthat (local) .capture(...)
+        6. |     | \-base::withCallingHandlers(...)
+        7. |     \-rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+        8. +-tidyselect:::select_loc(mtcars, f(base = TRUE))
+        9. | \-tidyselect::eval_select(...)
+       10. |   \-tidyselect:::eval_select_impl(...)
+       11. |     +-tidyselect:::with_subscript_errors(...)
+       12. |     | \-base::withCallingHandlers(...)
+       13. |     \-tidyselect:::vars_select_eval(...)
+       14. |       \-tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+       15. |         \-tidyselect:::eval_context(expr, context_mask, call = error_call)
+       16. |           +-tidyselect:::with_chained_errors(...)
+       17. |           | \-base::withCallingHandlers(...)
+       18. |           \-rlang::eval_tidy(as_quosure(expr, env), context_mask)
+       19. \-tidyselect (local) f(base = TRUE)
+       20.   \-tidyselect (local) g(base)
+       21.     \-tidyselect (local) h(base)
+       22.       \-base::stop("foo")
     Code
       print(expect_error(select_loc(mtcars, f(base = FALSE))))
     Output
@@ -112,10 +130,28 @@
       ! foo
       ---
       Backtrace:
-        1. base::print(expect_error(select_loc(mtcars, f(base = FALSE))))
-       19. tidyselect (local) f(base = FALSE)
-       20. tidyselect (local) g(base)
-       21. tidyselect (local) h(base)
+           x
+        1. +-base::print(expect_error(select_loc(mtcars, f(base = FALSE))))
+        2. +-testthat::expect_error(select_loc(mtcars, f(base = FALSE)))
+        3. | \-testthat:::expect_condition_matching(...)
+        4. |   \-testthat:::quasi_capture(...)
+        5. |     +-testthat (local) .capture(...)
+        6. |     | \-base::withCallingHandlers(...)
+        7. |     \-rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+        8. +-tidyselect:::select_loc(mtcars, f(base = FALSE))
+        9. | \-tidyselect::eval_select(...)
+       10. |   \-tidyselect:::eval_select_impl(...)
+       11. |     +-tidyselect:::with_subscript_errors(...)
+       12. |     | \-base::withCallingHandlers(...)
+       13. |     \-tidyselect:::vars_select_eval(...)
+       14. |       \-tidyselect:::walk_data_tree(expr, data_mask, context_mask)
+       15. |         \-tidyselect:::eval_context(expr, context_mask, call = error_call)
+       16. |           +-tidyselect:::with_chained_errors(...)
+       17. |           | \-base::withCallingHandlers(...)
+       18. |           \-rlang::eval_tidy(as_quosure(expr, env), context_mask)
+       19. \-tidyselect (local) f(base = FALSE)
+       20.   \-tidyselect (local) g(base)
+       21.     \-tidyselect (local) h(base)
 
 # eval_select() produces correct chained errors
 

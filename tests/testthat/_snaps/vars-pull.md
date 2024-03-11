@@ -110,11 +110,22 @@
       ! foo
       ---
       Backtrace:
-        1. base::print(expect_error(vars_pull(letters, f(base = TRUE))))
-       12. tidyselect (local) f(base = TRUE)
-       13. tidyselect (local) g(base)
-       14. tidyselect (local) h(base)
-       15. base::stop("foo")
+           x
+        1. +-base::print(expect_error(vars_pull(letters, f(base = TRUE))))
+        2. +-testthat::expect_error(vars_pull(letters, f(base = TRUE)))
+        3. | \-testthat:::expect_condition_matching(...)
+        4. |   \-testthat:::quasi_capture(...)
+        5. |     +-testthat (local) .capture(...)
+        6. |     | \-base::withCallingHandlers(...)
+        7. |     \-rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+        8. +-tidyselect::vars_pull(letters, f(base = TRUE))
+        9. | +-tidyselect:::with_chained_errors(...)
+       10. | | \-base::withCallingHandlers(...)
+       11. | \-rlang::eval_tidy(expr, set_names(seq_along(vars), vars))
+       12. \-tidyselect (local) f(base = TRUE)
+       13.   \-tidyselect (local) g(base)
+       14.     \-tidyselect (local) h(base)
+       15.       \-base::stop("foo")
     Code
       print(expect_error(vars_pull(letters, f(base = FALSE))))
     Output
@@ -125,8 +136,19 @@
       ! foo
       ---
       Backtrace:
-        1. base::print(expect_error(vars_pull(letters, f(base = FALSE))))
-       12. tidyselect (local) f(base = FALSE)
-       13. tidyselect (local) g(base)
-       14. tidyselect (local) h(base)
+           x
+        1. +-base::print(expect_error(vars_pull(letters, f(base = FALSE))))
+        2. +-testthat::expect_error(vars_pull(letters, f(base = FALSE)))
+        3. | \-testthat:::expect_condition_matching(...)
+        4. |   \-testthat:::quasi_capture(...)
+        5. |     +-testthat (local) .capture(...)
+        6. |     | \-base::withCallingHandlers(...)
+        7. |     \-rlang::eval_bare(quo_get_expr(.quo), quo_get_env(.quo))
+        8. +-tidyselect::vars_pull(letters, f(base = FALSE))
+        9. | +-tidyselect:::with_chained_errors(...)
+       10. | | \-base::withCallingHandlers(...)
+       11. | \-rlang::eval_tidy(expr, set_names(seq_along(vars), vars))
+       12. \-tidyselect (local) f(base = FALSE)
+       13.   \-tidyselect (local) g(base)
+       14.     \-tidyselect (local) h(base)
 

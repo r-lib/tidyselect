@@ -4,7 +4,7 @@
       where(NA)
     Condition
       Error in `where()`:
-      ! Can't convert `fn`, `NA`, to a function.
+      ! Can't convert `fn`, a logical vector, to a function.
 
 ---
 
