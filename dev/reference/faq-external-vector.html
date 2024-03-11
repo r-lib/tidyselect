@@ -14,7 +14,7 @@ mtcars %&amp;gt;% select(cyl, am, vs)
 #&amp;gt; 2     6     1     0
 #&amp;gt; 3     4     1     1
 #&amp;gt; 4     6     0     1
-#&amp;gt; # ... with 28 more rows
+#&amp;gt; # i 28 more rows
 
 mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; # A tibble: 32 x 3
@@ -24,7 +24,7 @@ mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; 2  21       6   160
 #&amp;gt; 3  22.8     4   108
 #&amp;gt; 4  21.4     6   258
-#&amp;gt; # ... with 28 more rows
+#&amp;gt; # i 28 more rows
 
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a warning
@@ -33,8 +33,7 @@ because it is not clear whether you want a data frame column or an
 external object.
 vars &amp;lt;- c("cyl", "am", "vs")
 result &amp;lt;- mtcars %&amp;gt;% select(vars)
-#&amp;gt; Warning: Using an external vector in selections was deprecated in
-#&amp;gt; tidyselect 1.1.0.
+#&amp;gt; Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
 #&amp;gt; i Please use `all_of()` or `any_of()` instead.
 #&amp;gt;   # Was:
 #&amp;gt;   data %&amp;gt;% select(vars)
@@ -43,6 +42,9 @@ result &amp;lt;- mtcars %&amp;gt;% select(vars)
 #&amp;gt;   data %&amp;gt;% select(all_of(vars))
 #&amp;gt; 
 #&amp;gt; See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
+#&amp;gt; This warning is displayed once every 8 hours.
+#&amp;gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#&amp;gt; generated.
 
 We have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
@@ -89,7 +91,7 @@ For more information or if you have comments about this, please see the
 Github issue tracking
 the deprecation process.
 
-'><title>FAQ - Note: Using an external vector in selections is ambiguous — faq-external-vector • tidyselect</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.2.2/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.2.2/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.5/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.5/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="FAQ - Note: Using an external vector in selections is ambiguous — faq-external-vector"><meta property="og:description" content='
+'><title>FAQ - Note: Using an external vector in selections is ambiguous — faq-external-vector • tidyselect</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.8/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.8/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="FAQ - Note: Using an external vector in selections is ambiguous — faq-external-vector"><meta property="og:description" content='
 
 Ambiguity between columns and external variables
 
@@ -104,7 +106,7 @@ mtcars %&amp;gt;% select(cyl, am, vs)
 #&amp;gt; 2     6     1     0
 #&amp;gt; 3     4     1     1
 #&amp;gt; 4     6     0     1
-#&amp;gt; # ... with 28 more rows
+#&amp;gt; # i 28 more rows
 
 mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; # A tibble: 32 x 3
@@ -114,7 +116,7 @@ mtcars %&amp;gt;% select(mpg:disp)
 #&amp;gt; 2  21       6   160
 #&amp;gt; 3  22.8     4   108
 #&amp;gt; 4  21.4     6   258
-#&amp;gt; # ... with 28 more rows
+#&amp;gt; # i 28 more rows
 
 For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a warning
@@ -123,8 +125,7 @@ because it is not clear whether you want a data frame column or an
 external object.
 vars &amp;lt;- c("cyl", "am", "vs")
 result &amp;lt;- mtcars %&amp;gt;% select(vars)
-#&amp;gt; Warning: Using an external vector in selections was deprecated in
-#&amp;gt; tidyselect 1.1.0.
+#&amp;gt; Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
 #&amp;gt; i Please use `all_of()` or `any_of()` instead.
 #&amp;gt;   # Was:
 #&amp;gt;   data %&amp;gt;% select(vars)
@@ -133,6 +134,9 @@ result &amp;lt;- mtcars %&amp;gt;% select(vars)
 #&amp;gt;   data %&amp;gt;% select(all_of(vars))
 #&amp;gt; 
 #&amp;gt; See &amp;lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&amp;gt;.
+#&amp;gt; This warning is displayed once every 8 hours.
+#&amp;gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+#&amp;gt; generated.
 
 We have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
@@ -250,7 +254,7 @@ the deprecation process.
 <span><span class="co">#&gt; 2     6     1     0</span></span>
 <span><span class="co">#&gt; 3     4     1     1</span></span>
 <span><span class="co">#&gt; 4     6     0     1</span></span>
-<span><span class="co">#&gt; # ... with 28 more rows</span></span>
+<span><span class="co">#&gt; # i 28 more rows</span></span>
 <span></span>
 <span><span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">mpg</span><span class="op">:</span><span class="va">disp</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 32 x 3</span></span>
@@ -260,7 +264,7 @@ the deprecation process.
 <span><span class="co">#&gt; 2  21       6   160</span></span>
 <span><span class="co">#&gt; 3  22.8     4   108</span></span>
 <span><span class="co">#&gt; 4  21.4     6   258</span></span>
-<span><span class="co">#&gt; # ... with 28 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # i 28 more rows</span></span></code></pre><p></p></div>
 <p>For historical reasons, it is also possible to refer an external vector
 of variable names. You get the correct result, but with a warning
 informing you that selecting with an external variable is ambiguous
@@ -268,8 +272,7 @@ because it is not clear whether you want a data frame column or an
 external object.</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cyl"</span>, <span class="st">"am"</span>, <span class="st">"vs"</span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">mtcars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="va">vars</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning: Using an external vector in selections was deprecated in</span></span>
-<span><span class="co">#&gt; tidyselect 1.1.0.</span></span>
+<span><span class="co">#&gt; Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.</span></span>
 <span><span class="co">#&gt; i Please use `all_of()` or `any_of()` instead.</span></span>
 <span><span class="co">#&gt;   # Was:</span></span>
 <span><span class="co">#&gt;   data %&gt;% select(vars)</span></span>
@@ -277,7 +280,10 @@ external object.</p>
 <span><span class="co">#&gt;   # Now:</span></span>
 <span><span class="co">#&gt;   data %&gt;% select(all_of(vars))</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co">#&gt; generated.</span></span></code></pre><p></p></div>
 <p>We have decided to deprecate this particular approach to using external
 vectors because they introduce ambiguity. Imagine that the data frame
 contains a column with the same name as your external variable.</p>
@@ -331,7 +337,7 @@ the deprecation process.</p>
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="https://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
