@@ -7,7 +7,7 @@ contains(): Contains a literal string.
 matches(): Matches a regular expression.
 num_range(): Matches a numerical range like x01, x02, x03.
 
-"><title>Select variables that match a pattern — starts_with • tidyselect</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.2/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.2/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Select variables that match a pattern — starts_with"><meta property="og:description" content="These selection helpers match variables according
+"><title>Select variables that match a pattern — starts_with • tidyselect</title><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"><link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet"><script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.8/font.css" rel="stylesheet"><link href="../deps/Source_Code_Pro-0.4.8/font.css" rel="stylesheet"><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous"><!-- bootstrap-toc --><script src="https://cdn.jsdelivr.net/gh/afeld/bootstrap-toc@v1.0.1/dist/bootstrap-toc.min.js" integrity="sha256-4veVQbu7//Lk5TSmc7YV48MxtMy98e26cf5MrgZYnwo=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Select variables that match a pattern — starts_with"><meta property="og:description" content="These selection helpers match variables according
 to a given pattern.
 starts_with(): Starts with an exact prefix.
 ends_with(): Ends with an exact suffix.
@@ -26,7 +26,7 @@ num_range(): Matches a numerical range like x01, x02, x03.
     
     <a class="navbar-brand me-2" href="../index.html">tidyselect</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Released version">1.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -151,7 +151,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <span><span class="co">#&gt; 2          4.9         3  </span></span>
 <span><span class="co">#&gt; 3          4.7         3.2</span></span>
 <span><span class="co">#&gt; 4          4.6         3.1</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span>
+<span><span class="co">#&gt; # i 146 more rows</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"Width"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 2</span></span>
@@ -161,7 +161,7 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <span><span class="co">#&gt; 2         3           0.2</span></span>
 <span><span class="co">#&gt; 3         3.2         0.2</span></span>
 <span><span class="co">#&gt; 4         3.1         0.2</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # i 146 more rows</span></span></code></pre><p></p></div>
 <p>You can supply multiple prefixes or suffixes. Note how the order of
 variables depends on the order of the suffixes and prefixes:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Petal"</span>, <span class="st">"Sepal"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
@@ -172,7 +172,7 @@ variables depends on the order of the suffixes and prefixes:</p>
 <span><span class="co">#&gt; 2          1.4         0.2          4.9         3  </span></span>
 <span><span class="co">#&gt; 3          1.3         0.2          4.7         3.2</span></span>
 <span><span class="co">#&gt; 4          1.5         0.2          4.6         3.1</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span>
+<span><span class="co">#&gt; # i 146 more rows</span></span>
 <span></span>
 <span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Width"</span>, <span class="st">"Length"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 4</span></span>
@@ -182,7 +182,7 @@ variables depends on the order of the suffixes and prefixes:</p>
 <span><span class="co">#&gt; 2         3           0.2          4.9          1.4</span></span>
 <span><span class="co">#&gt; 3         3.2         0.2          4.7          1.3</span></span>
 <span><span class="co">#&gt; 4         3.1         0.2          4.6          1.5</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # i 146 more rows</span></span></code></pre><p></p></div>
 <p><code>contains()</code> selects columns whose names contain a word:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">iris</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"al"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 150 x 4</span></span>
@@ -192,7 +192,7 @@ variables depends on the order of the suffixes and prefixes:</p>
 <span><span class="co">#&gt; 2          4.9         3            1.4         0.2</span></span>
 <span><span class="co">#&gt; 3          4.7         3.2          1.3         0.2</span></span>
 <span><span class="co">#&gt; 4          4.6         3.1          1.5         0.2</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # i 146 more rows</span></span></code></pre><p></p></div>
 <p><code>starts_with()</code>, <code>ends_with()</code>, and <code>contains()</code> do not use regular expressions. To select with a
 regexp use <code>matches()</code>:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="co"># [pt] is matched literally:</span></span>
@@ -208,7 +208,7 @@ regexp use <code>matches()</code>:</p>
 <span><span class="co">#&gt; 2          4.9         3            1.4         0.2</span></span>
 <span><span class="co">#&gt; 3          4.7         3.2          1.3         0.2</span></span>
 <span><span class="co">#&gt; 4          4.6         3.1          1.5         0.2</span></span>
-<span><span class="co">#&gt; # ... with 146 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # i 146 more rows</span></span></code></pre><p></p></div>
 <p><code>starts_with()</code> selects all variables starting with a prefix. To
 select a range, use <code>num_range()</code>. Compare:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">billboard</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"wk"</span><span class="op">)</span><span class="op">)</span></span>
@@ -219,8 +219,9 @@ select a range, use <code>num_range()</code>. Compare:</p>
 <span><span class="co">#&gt; 2    91    87    92    NA    NA    NA    NA    NA    NA    NA    NA    NA    NA</span></span>
 <span><span class="co">#&gt; 3    81    70    68    67    66    57    54    53    51    51    51    51    47</span></span>
 <span><span class="co">#&gt; 4    76    76    72    69    67    65    55    59    62    61    61    59    61</span></span>
-<span><span class="co">#&gt; # ... with 313 more rows, and 63 more variables: wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;, wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, ...</span></span>
+<span><span class="co">#&gt; # i 313 more rows</span></span>
+<span><span class="co">#&gt; # i 63 more variables: wk14 &lt;dbl&gt;, wk15 &lt;dbl&gt;, wk16 &lt;dbl&gt;, wk17 &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   wk18 &lt;dbl&gt;, wk19 &lt;dbl&gt;, wk20 &lt;dbl&gt;, wk21 &lt;dbl&gt;, ...</span></span>
 <span></span>
 <span><span class="va">billboard</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/starts_with.html">num_range</a></span><span class="op">(</span><span class="st">"wk"</span>, <span class="fl">10</span><span class="op">:</span><span class="fl">15</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 317 x 6</span></span>
@@ -230,7 +231,7 @@ select a range, use <code>num_range()</code>. Compare:</p>
 <span><span class="co">#&gt; 2    NA    NA    NA    NA    NA    NA</span></span>
 <span><span class="co">#&gt; 3    51    51    51    47    44    38</span></span>
 <span><span class="co">#&gt; 4    61    61    59    61    66    72</span></span>
-<span><span class="co">#&gt; # ... with 313 more rows</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; # i 313 more rows</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
@@ -244,11 +245,11 @@ select a range, use <code>num_range()</code>. Compare:</p>
    </div>
   <footer><div class="container">
   <div class="pkgdown-footer-left">
-  <p></p><p>Developed by <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="http://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://www.rstudio.com" class="external-link"><img src="https://www.tidyverse.org/rstudio-logo.svg" alt="RStudio" width="72"></a>.</p>
+  <p></p><p>Developed by <a href="https://github.com/lionel-" class="external-link">Lionel Henry</a>, <a href="https://hadley.nz" class="external-link">Hadley Wickham</a>, <a href="https://www.posit.co" class="external-link"><img src="https://www.tidyverse.org/posit-logo.svg" alt="Posit" height="16" style="margin-bottom: 3px;"></a>.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
   </div></footer></body></html>
