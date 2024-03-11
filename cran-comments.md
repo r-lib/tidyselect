@@ -2,26 +2,22 @@
 
 0 errors | 0 warnings | 0 notes
 
+
 ## revdepcheck results
 
-We checked 3667 (direct and indirect) reverse dependencies (3659 from CRAN + 8 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
+The authors of ipumsr and pointblank were notified. The failures only concern superficial unit tests, no behaviour has been broken.
 
- * We saw 8 new problems
- * We failed to check 11 packages
+We checked 485 reverse dependencies (452 from CRAN + 33 from Bioconductor), comparing R CMD check results across CRAN and dev versions of this package.
 
-All packages with new failures received a patch (
-details at https://github.com/r-lib/tidyselect/issues/312), and were notified of the upcoming release on Sept 26 (two weeks ago).
+ * We saw 2 new problems
 
-### Failed to check
+Issues with CRAN packages are summarised below.
 
-* CausalImpact  (NA)
-* elbird        (NA)
-* ggPMX         (NA)
-* jagstargets   (NA)
-* loon.ggplot   (NA)
-* loon.shiny    (NA)
-* nlmixr2plot   (NA)
-* tidySEM       (NA)
-* vivid         (NA)
-* xpose.nlmixr  (NA)
-* xpose.nlmixr2 (NA)
+### New problems
+(This reports the first line of each new failure)
+
+* ipumsr
+  checking tests ... ERROR
+
+* pointblank
+  checking tests ... ERROR

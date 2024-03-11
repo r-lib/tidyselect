@@ -1,4 +1,4 @@
-# tidyselect (development version)
+# tidyselect 1.2.1
 
 * Performance improvements (#337, #338, #339, #341)
 
