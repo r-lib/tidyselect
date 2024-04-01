@@ -422,7 +422,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     # Formally deprecated in 1.2.0
     lifecycle::deprecate_soft("1.1.0",
       what = I("Use of bare predicate functions"),
-      with = I("wrap predicates in `where()`"),
+      with = I("`where()` to wrap predicate functions"),
       details = c(
         " " = "# Was:",
         " " = glue("data %>% select({name})"),
