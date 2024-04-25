@@ -106,6 +106,7 @@
 #' # same as `enquo(arg)`.
 #'
 #' # give a better error message if you don't want empty selection
+#' # if supplying `error_arg`
 #' select_not_empty <- function(x, cols) {
 #'   eval_select(expr = enquo(cols), data = x, allow_empty = FALSE, error_arg = "cols")
 #' }
