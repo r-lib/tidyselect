@@ -28,6 +28,7 @@ eval_select(
   allow_rename = TRUE,
   allow_empty = TRUE,
   allow_predicates = TRUE,
+  error_arg = NULL,
   error_call = caller_env()
 )
 }
@@ -74,6 +75,8 @@ is useful to implement purely selective behaviour.}
 \item{allow_empty}{If \code{TRUE} (the default), it is ok for \code{expr} to result
 in an empty selection. If \code{FALSE}, will error if \code{expr} yields an empty
 selection.}
+
+\item{error_arg}{Argument name to include in error message.}
 }
 \value{
 A named vector of numeric locations, one for each of the
