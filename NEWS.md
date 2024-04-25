@@ -1,5 +1,10 @@
 # tidyselect (development version)
 
+* `eval_select(allow_empty = FALSE)` gains a new argument to yield a better error
+  message in case of empty selection (@olivroy, #327)
+  
+* `eval_select(allow_empty = FALSE)` now throws a classed error message (@olivroy, #347).
+
 # tidyselect 1.2.1
 
 * Performance improvements (#337, #338, #339, #341)

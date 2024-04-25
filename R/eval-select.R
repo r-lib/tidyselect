@@ -43,7 +43,8 @@
 #'   use predicates (i.e. in `where()`). If `FALSE`, will error if `expr` uses a
 #'   predicate. Will automatically be set to `FALSE` if `data` does not
 #'   support predicates (as determined by [tidyselect_data_has_predicates()]).
-#' @param error_arg Argument name to include in error message.
+#' @param error_arg Argument name to include in error message if `allow_empty = FALSE`.
+#'   Will give a better error message if the selection ends up empty.
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -104,6 +105,11 @@
 #' # Note that the trick above works because `expr({{ arg }})` is the
 #' # same as `enquo(arg)`.
 #'
+#' # give a better error message if you don't want empty selection
+#' select_not_empty <- function(x, cols) {
+#'   eval_select(expr = enquo(cols), data = x, allow_empty = FALSE, error_arg = "cols")
+#' }
+#' try(select_not_empty(mtcars, cols = starts_with("vs2")))
 #'
 #' # The evaluators return a named vector of locations. Here are
 #' # examples of using these location vectors to implement `select()`

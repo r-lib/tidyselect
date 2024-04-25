@@ -89,6 +89,7 @@ eval_relocate <- function(expr,
     allow_empty = allow_empty,
     allow_predicates = allow_predicates,
     type = "relocate",
+    error_arg = NULL, # TODO need to know which to use. can `before_arg` or `after_arg` be passed here?
     error_call = error_call
   )
 
@@ -122,7 +123,8 @@ eval_relocate <- function(expr,
         env = env,
         error_call = error_call,
         allow_predicates = allow_predicates,
-        allow_rename = FALSE
+        allow_rename = FALSE,
+        error_arg = before_arg
       ),
       arg = before_arg,
       error_call = error_call
@@ -143,7 +145,8 @@ eval_relocate <- function(expr,
         env = env,
         error_call = error_call,
         allow_predicates = allow_predicates,
-        allow_rename = FALSE
+        allow_rename = FALSE,
+        error_arg = after_arg
       ),
       arg = after_arg,
       error_call = error_call

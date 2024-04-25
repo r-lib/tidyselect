@@ -13,23 +13,20 @@ Using a selection helper anywhere else results in an error:
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starts_with("foo")
 #> Error:
 #> ! `starts_with()` must be used within a *selecting* function.
-#> i See
-#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
-#>   for details.
+#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for
+#>   details.
 
 mtcars[contains("foo")]
 #> Error:
 #> ! `contains()` must be used within a *selecting* function.
-#> i See
-#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
-#>   for details.
+#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for
+#>   details.
 
 subset(mtcars, select = matches("foo"))
 #> Error:
 #> ! `matches()` must be used within a *selecting* function.
-#> i See
-#>   <https://tidyselect.r-lib.org/reference/faq-selection-context.html>
-#>   for details.
+#> i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for
+#>   details.
 }\if{html}{\out{</div>}}
 
 If you see this error, you may have used a selection helper in the wrong
@@ -38,7 +35,7 @@ argument name). Alternatively, you may be deliberately trying to reduce
 duplication in your code by extracting out a selection into a variable:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{my_vars <- c(name, species, ends_with("color"))
-#> Error in eval(expr, envir, enclos): object 'name' not found
+#> Error in eval(expr, envir, enclos): objet 'name' introuvable
 }\if{html}{\out{</div>}}
 
 To make this work you’ll need to do two things:

@@ -76,7 +76,8 @@ is useful to implement purely selective behaviour.}
 in an empty selection. If \code{FALSE}, will error if \code{expr} yields an empty
 selection.}
 
-\item{error_arg}{Argument name to include in error message.}
+\item{error_arg}{Argument name to include in error message if \code{allow_empty = FALSE}.
+Will give a better error message if the selection ends up empty.}
 }
 \value{
 A named vector of numeric locations, one for each of the
@@ -143,6 +144,11 @@ my_function <- function(.x, .expr, ...) {
 # Note that the trick above works because `expr({{ arg }})` is the
 # same as `enquo(arg)`.
 
+# give a better error message if you don't want empty selection
+select_not_empty <- function(x, cols) {
+  eval_select(expr = enquo(cols), data = x, allow_empty = FALSE, error_arg = "cols")
+}
+try(select_not_empty(mtcars, cols = starts_with("vs2")))
 
 # The evaluators return a named vector of locations. Here are
 # examples of using these location vectors to implement `select()`

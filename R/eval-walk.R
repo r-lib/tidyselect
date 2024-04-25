@@ -131,7 +131,19 @@ ensure_named <- function(pos,
 
 check_empty <- function(x, allow_empty = TRUE, error_arg = NULL, call = caller_env()) {
   if (!allow_empty && length(x) == 0) {
-    cli::cli_abort("Must select at least one item.", call = call)
+    if (is.null(error_arg)) {
+      cli::cli_abort(
+        "Must select at least one item.",
+        call = call,
+        class = "tidyselect:::error_disallowed_empty"
+      )
+    } else {
+      cli::cli_abort(
+        "{.or {.arg {error_arg}}} must select at least one column.",
+        call = call,
+        class = "tidyselect:::error_disallowed_empty"
+        )
+    }
   }
 }
 

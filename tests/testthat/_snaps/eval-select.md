@@ -66,6 +66,24 @@
       Error in `select_loc()`:
       ! Must select at least one item.
 
+# can forbid empty selections with informative error
+
+    Code
+      select_loc(mtcars, allow_empty = FALSE, error_arg = "cols")
+    Condition
+      Error in `select_loc()`:
+      ! `cols` must select at least one column.
+    Code
+      select_loc(mtcars, integer(), allow_empty = FALSE, error_arg = "x")
+    Condition
+      Error in `select_loc()`:
+      ! `x` must select at least one column.
+    Code
+      select_loc(mtcars, starts_with("z"), allow_empty = FALSE, error_arg = "y")
+    Condition
+      Error in `select_loc()`:
+      ! `y` must select at least one column.
+
 # eval_select() errors mention correct calls
 
     Code

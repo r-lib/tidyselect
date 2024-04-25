@@ -84,19 +84,19 @@
     Code
       (expect_error(relocate_loc(x, allow_empty = FALSE)))
     Output
-      <error/rlang_error>
+      <error/tidyselect:::error_disallowed_empty>
       Error in `relocate_loc()`:
       ! Must select at least one item.
     Code
       (expect_error(relocate_loc(mtcars, integer(), allow_empty = FALSE)))
     Output
-      <error/rlang_error>
+      <error/tidyselect:::error_disallowed_empty>
       Error in `relocate_loc()`:
       ! Must select at least one item.
     Code
       (expect_error(relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)))
     Output
-      <error/rlang_error>
+      <error/tidyselect:::error_disallowed_empty>
       Error in `relocate_loc()`:
       ! Must select at least one item.
 
