@@ -148,7 +148,7 @@ eval_select <- function(expr,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
     allow_predicates = allow_predicates,
-    error_call = error_call,
+    error_call = error_call
   )
 }
 
