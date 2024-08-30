@@ -71,6 +71,15 @@
 #' iris %>% select(-any_of(vars)) %>% select(-any_of(vars))
 #' ```
 #'
+#' When the vector `x` is named, `all_of()` and `any_of()` will 
+#' select columns using the values of x, but then return those columns
+#' renamed with the corresponding names from names(x).
+#'
+#' ```{r, comment = "#>", collapse = TRUE}
+#' colors <- c(color_of_hair = "hair_color", color_of_eyes = "eye_color")
+#' starwars %>% select(all_of(colors))
+#' ```
+#'
 #' @seealso `r rd_helpers_seealso()`
 #' @export
 all_of <- function(x) {
