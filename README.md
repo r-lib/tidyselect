@@ -1,9 +1,9 @@
 # tidyselect
 
 <!-- badges: start -->
-[![Codecov test coverage](https://codecov.io/gh/r-lib/tidyselect/branch/main/graph/badge.svg)](https://app.codecov.io/gh/r-lib/tidyselect?branch=main)
 [![CRAN status](https://www.r-pkg.org/badges/version/tidyselect)](https://cran.r-project.org/package=tidyselect)
 [![R-CMD-check](https://github.com/r-lib/tidyselect/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/r-lib/tidyselect/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/r-lib/tidyselect/graph/badge.svg)](https://app.codecov.io/gh/r-lib/tidyselect)
 <!-- badges: end -->
 
 ## Overview

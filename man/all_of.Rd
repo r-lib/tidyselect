@@ -83,7 +83,7 @@ iris \%>\% pivot_longer(all_of(vars))
 #> # i 296 more rows
 }\if{html}{\out{</div>}}
 
-If any of the variable is missing from the data frame, that's an error:
+If any of these variables are missing from the data frame, that's an error:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{starwars \%>\% select(all_of(vars))
 #> Error:
@@ -121,6 +121,21 @@ iris \%>\% select(-any_of(vars)) \%>\% select(-any_of(vars))
 #> 3          1.3         0.2 setosa 
 #> 4          1.5         0.2 setosa 
 #> # i 146 more rows
+}\if{html}{\out{</div>}}
+
+Supply named vectors to \code{all_of()} and \code{any_of()} to select and rename
+columns at the same time:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{colors <- c(color_of_hair = "hair_color", color_of_eyes = "eye_color")
+starwars \%>\% select(all_of(colors))
+#> # A tibble: 87 x 2
+#>   color_of_hair color_of_eyes
+#>   <chr>         <chr>        
+#> 1 blond         blue         
+#> 2 <NA>          yellow       
+#> 3 <NA>          red          
+#> 4 none          yellow       
+#> # i 83 more rows
 }\if{html}{\out{</div>}}
 }
 
