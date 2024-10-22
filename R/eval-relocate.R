@@ -77,6 +77,13 @@ eval_relocate <- function(expr,
   allow_predicates <- allow_predicates && tidyselect_data_has_predicates(data)
   data <- tidyselect_data_proxy(data)
 
+  error_arg <- NULL
+  if (!is.null(before)) {
+    error_arg <- before_arg
+  }
+  if (!is.null(after)) {
+    error_arg <- c(error_arg, after_arg)
+  }
   expr <- as_quosure(expr, env = env)
   sel <- eval_select_impl(
     x = data,
@@ -88,7 +95,7 @@ eval_relocate <- function(expr,
     allow_empty = allow_empty,
     allow_predicates = allow_predicates,
     type = "relocate",
-    error_arg = c(before_arg, after_arg), 
+    error_arg = error_arg, 
     error_call = error_call
   )
 

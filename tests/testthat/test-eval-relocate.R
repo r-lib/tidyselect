@@ -186,10 +186,11 @@ test_that("can forbid empty selections", {
 test_that("can forbid empty selections", {
   x <- c(a = 1, b = 2, c = 3)
   
-  expect_snapshot({
-    (expect_error(relocate_loc(mtcars, before = integer(), allow_empty = FALSE)))
-    (expect_error(relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)))
-  })
+  expect_snapshot(
+    error = TRUE, {
+    relocate_loc(mtcars, before = integer(), allow_empty = FALSE)
+    relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)
+  }, cnd_class = TRUE)
 })
 
 

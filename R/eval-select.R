@@ -43,8 +43,9 @@
 #'   use predicates (i.e. in `where()`). If `FALSE`, will error if `expr` uses a
 #'   predicate. Will automatically be set to `FALSE` if `data` does not
 #'   support predicates (as determined by [tidyselect_data_has_predicates()]).
-#' @param error_arg Argument name to include in error message if `allow_empty = FALSE`.
-#'   Will give a better error message if the selection ends up empty.
+#' @param error_arg Argument names for `expr`. These
+#'   are used in error messages. (You can use `"..."` if `expr = c(...)`).
+#'   For now, this is used when `allow_empty = FALSE`.
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
