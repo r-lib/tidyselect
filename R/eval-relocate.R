@@ -78,10 +78,10 @@ eval_relocate <- function(expr,
   data <- tidyselect_data_proxy(data)
 
   error_arg <- NULL
-  if (!is.null(before)) {
+  if (!quo_is_null(before)) {
     error_arg <- before_arg
   }
-  if (!is.null(after)) {
+  if (!quo_is_null(after)) {
     error_arg <- c(error_arg, after_arg)
   }
   expr <- as_quosure(expr, env = env)

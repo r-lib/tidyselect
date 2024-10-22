@@ -86,19 +86,19 @@
     Output
       <error/tidyselect_error_empty_selection>
       Error in `relocate_loc()`:
-      ! `before` and `after` must select at least one column.
+      ! Must select at least one item.
     Code
       (expect_error(relocate_loc(mtcars, integer(), allow_empty = FALSE)))
     Output
       <error/tidyselect_error_empty_selection>
       Error in `relocate_loc()`:
-      ! `before` and `after` must select at least one column.
+      ! Must select at least one item.
     Code
       (expect_error(relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)))
     Output
       <error/tidyselect_error_empty_selection>
       Error in `relocate_loc()`:
-      ! `before` and `after` must select at least one column.
+      ! Must select at least one item.
 
 ---
 
@@ -106,12 +106,12 @@
       relocate_loc(mtcars, before = integer(), allow_empty = FALSE)
     Condition <tidyselect_error_empty_selection>
       Error in `relocate_loc()`:
-      ! `before` and `after` must select at least one column.
+      ! `before` must select at least one column.
     Code
       relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)
     Condition <tidyselect_error_empty_selection>
       Error in `relocate_loc()`:
-      ! `before` and `after` must select at least one column.
+      ! Must select at least one item.
 
 # `before` and `after` forbid renaming
 
