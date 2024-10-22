@@ -82,21 +82,34 @@
 # can forbid empty selections
 
     Code
-      (expect_error(relocate_loc(x, allow_empty = FALSE)))
+      (expect_error(relocate_loc(x, allow_empty = FALSE, error_arg = "...")))
     Output
-      <error/rlang_error>
+      <error/tidyselect_error_empty_selection>
       Error in `relocate_loc()`:
-      ! Must select at least one item.
+      ! `...` must select at least one column.
     Code
       (expect_error(relocate_loc(mtcars, integer(), allow_empty = FALSE)))
     Output
-      <error/rlang_error>
+      <error/tidyselect_error_empty_selection>
       Error in `relocate_loc()`:
       ! Must select at least one item.
     Code
       (expect_error(relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)))
     Output
-      <error/rlang_error>
+      <error/tidyselect_error_empty_selection>
+      Error in `relocate_loc()`:
+      ! Must select at least one item.
+
+---
+
+    Code
+      relocate_loc(mtcars, before = integer(), allow_empty = FALSE)
+    Condition <tidyselect_error_empty_selection>
+      Error in `relocate_loc()`:
+      ! Must select at least one item.
+    Code
+      relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)
+    Condition <tidyselect_error_empty_selection>
       Error in `relocate_loc()`:
       ! Must select at least one item.
 

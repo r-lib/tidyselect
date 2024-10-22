@@ -8,12 +8,13 @@ vars_select_eval <- function(vars,
                              allow_empty = TRUE,
                              allow_predicates = TRUE,
                              type = "select",
+                             error_arg = NULL,
                              error_call) {
   wrapped <- quo_get_expr2(expr, expr)
 
   if (is_missing(wrapped)) {
     pos <- named(int())
-    check_empty(pos, allow_empty, call = error_call)
+    check_empty(pos, allow_empty, error_arg, call = error_call)
     return(pos)
   }
 
@@ -35,6 +36,7 @@ vars_select_eval <- function(vars,
       uniquely_named = uniquely_named,
       allow_rename = allow_rename,
       allow_empty = allow_empty,
+      error_arg = error_arg,
       call = error_call
     )
     return(pos)
@@ -93,6 +95,7 @@ vars_select_eval <- function(vars,
     uniquely_named = uniquely_named,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
+    error_arg = error_arg,
     call = error_call
   )
 }
@@ -102,8 +105,9 @@ ensure_named <- function(pos,
                          uniquely_named = FALSE,
                          allow_rename = TRUE,
                          allow_empty = TRUE,
+                         error_arg = NULL,
                          call = caller_env()) {
-  check_empty(pos, allow_empty, call = call)
+  check_empty(pos, allow_empty, error_arg, call = call)
 
   if (!allow_rename && any(names2(pos) != "")) {
     cli::cli_abort(
@@ -125,9 +129,21 @@ ensure_named <- function(pos,
   pos
 }
 
-check_empty <- function(x, allow_empty = TRUE, call = caller_env()) {
+check_empty <- function(x, allow_empty = TRUE, error_arg = NULL, call = caller_env()) {
   if (!allow_empty && length(x) == 0) {
-    cli::cli_abort("Must select at least one item.", call = call)
+    if (is.null(error_arg)) {
+      cli::cli_abort(
+        "Must select at least one item.",
+        call = call,
+        class = "tidyselect_error_empty_selection"
+      )
+    } else {
+      cli::cli_abort(
+        "{.arg {error_arg}} must select at least one column.",
+        call = call,
+        class = "tidyselect_error_empty_selection"
+        )
+    }
   }
 }
 
@@ -422,7 +438,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     # Formally deprecated in 1.2.0
     lifecycle::deprecate_soft("1.1.0",
       what = I("Use of bare predicate functions"),
-      with = I("wrap predicates in `where()`"),
+      with = I("`where()` to wrap predicate functions"),
       details = c(
         " " = "# Was:",
         " " = glue("data %>% select({name})"),

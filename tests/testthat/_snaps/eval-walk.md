@@ -91,7 +91,7 @@
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
-      i Please use wrap predicates in `where()` instead.
+      i Please use `where()` to wrap predicate functions instead.
         # Was:
         data %>% select(is_integer)
       
@@ -102,7 +102,7 @@
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
-      i Please use wrap predicates in `where()` instead.
+      i Please use `where()` to wrap predicate functions instead.
         # Was:
         data %>% select(is.numeric)
       
@@ -113,7 +113,7 @@
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
-      i Please use wrap predicates in `where()` instead.
+      i Please use `where()` to wrap predicate functions instead.
         # Was:
         data %>% select(isTRUE)
       
@@ -125,7 +125,7 @@
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
-      i Please use wrap predicates in `where()` instead.
+      i Please use `where()` to wrap predicate functions instead.
         # Was:
         data %>% select(is_integer)
       

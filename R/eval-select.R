@@ -43,6 +43,9 @@
 #'   use predicates (i.e. in `where()`). If `FALSE`, will error if `expr` uses a
 #'   predicate. Will automatically be set to `FALSE` if `data` does not
 #'   support predicates (as determined by [tidyselect_data_has_predicates()]).
+#' @param error_arg Argument names for `expr`. These
+#'   are used in error messages. (You can use `"..."` if `expr = c(...)`).
+#'   For now, this is used when `allow_empty = FALSE`.
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -103,6 +106,12 @@
 #' # Note that the trick above works because `expr({{ arg }})` is the
 #' # same as `enquo(arg)`.
 #'
+#' # Supply `error_arg` to improve the error message in case of
+#' # unexpected empty selection:
+#' select_not_empty <- function(x, cols) {
+#'   eval_select(expr = enquo(cols), data = x, allow_empty = FALSE, error_arg = "cols")
+#' }
+#' try(select_not_empty(mtcars, cols = starts_with("vs2")))
 #'
 #' # The evaluators return a named vector of locations. Here are
 #' # examples of using these location vectors to implement `select()`
@@ -131,6 +140,7 @@ eval_select <- function(expr,
                         allow_rename = TRUE,
                         allow_empty = TRUE,
                         allow_predicates = TRUE,
+                        error_arg  = NULL,
                         error_call = caller_env()) {
   check_dots_empty()
 
@@ -148,6 +158,7 @@ eval_select <- function(expr,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
     allow_predicates = allow_predicates,
+    error_arg = error_arg,
     error_call = error_call
   )
 }
@@ -163,6 +174,7 @@ eval_select_impl <- function(x,
                              allow_rename = TRUE,
                              allow_empty = TRUE,
                              allow_predicates = TRUE,
+                             error_arg = NULL,
                              type = "select",
                              error_call = caller_env()) {
   if (!is_null(x)) {
@@ -190,6 +202,7 @@ eval_select_impl <- function(x,
       allow_empty = allow_empty,
       allow_predicates = allow_predicates,
       type = type,
+      error_arg = error_arg,
       error_call = error_call
     ),
     type = type

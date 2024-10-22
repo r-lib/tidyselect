@@ -15,6 +15,7 @@ eval_relocate(
   allow_rename = TRUE,
   allow_empty = TRUE,
   allow_predicates = TRUE,
+  error_arg = NULL,
   before_arg = "before",
   after_arg = "after",
   env = caller_env(),
@@ -58,6 +59,10 @@ selection.}
 use predicates (i.e. in \code{where()}). If \code{FALSE}, will error if \code{expr} uses a
 predicate. Will automatically be set to \code{FALSE} if \code{data} does not
 support predicates (as determined by \code{\link[=tidyselect_data_has_predicates]{tidyselect_data_has_predicates()}}).}
+
+\item{error_arg}{Argument names for \code{expr}. These
+are used in error messages. (You can use \code{"..."} if \code{expr = c(...)}).
+For now, this is used when \code{allow_empty = FALSE}.}
 
 \item{before_arg, after_arg}{Argument names for \code{before} and \code{after}. These
 are used in error messages.}

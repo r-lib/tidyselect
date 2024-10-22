@@ -105,6 +105,14 @@ test_that("can forbid empty selections", {
   })
 })
 
+test_that("can forbid empty selections with informative error", {
+  expect_snapshot(error = TRUE, {
+    select_loc(mtcars, allow_empty = FALSE,  error_arg = "cols")
+    select_loc(mtcars, integer(), allow_empty = FALSE, error_arg = "x")
+    select_loc(mtcars, starts_with("z"), allow_empty = FALSE, error_arg = "y")
+  })
+})
+
 test_that("eval_select() errors mention correct calls", {
   f <- function() stop("foo")
   expect_snapshot((expect_error(select_loc(mtcars, f()))))

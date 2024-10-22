@@ -50,7 +50,7 @@
 #' iris %>% pivot_longer(all_of(vars))
 #' ```
 #'
-#' If any of the variable is missing from the data frame, that's an error:
+#' If any of these variables are missing from the data frame, that's an error:
 #'
 #' ```{r, error = TRUE}
 #' starwars %>% select(all_of(vars))
@@ -69,6 +69,14 @@
 #' iris %>% select(-any_of(vars))
 #'
 #' iris %>% select(-any_of(vars)) %>% select(-any_of(vars))
+#' ```
+#'
+#' Supply named vectors to `all_of()` and `any_of()` to select and rename
+#' columns at the same time:
+#'
+#' ```{r, comment = "#>", collapse = TRUE}
+#' colors <- c(color_of_hair = "hair_color", color_of_eyes = "eye_color")
+#' starwars %>% select(all_of(colors))
 #' ```
 #'
 #' @seealso `r rd_helpers_seealso()`
