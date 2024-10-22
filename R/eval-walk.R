@@ -135,13 +135,13 @@ check_empty <- function(x, allow_empty = TRUE, error_arg = NULL, call = caller_e
       cli::cli_abort(
         "Must select at least one item.",
         call = call,
-        class = "tidyselect:::error_disallowed_empty"
+        class = "tidyselect_error_empty_selection"
       )
     } else {
       cli::cli_abort(
-        "{.or {.arg {error_arg}}} must select at least one column.",
+        "{.arg {error_arg}} must select at least one column.",
         call = call,
-        class = "tidyselect:::error_disallowed_empty"
+        class = "tidyselect_error_empty_selection"
         )
     }
   }

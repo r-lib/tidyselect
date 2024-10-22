@@ -144,8 +144,8 @@ my_function <- function(.x, .expr, ...) {
 # Note that the trick above works because `expr({{ arg }})` is the
 # same as `enquo(arg)`.
 
-# give a better error message if you don't want empty selection
-# if supplying `error_arg`
+# Supply `error_arg` to improve the error message in case of
+# unexpected empty selection:
 select_not_empty <- function(x, cols) {
   eval_select(expr = enquo(cols), data = x, allow_empty = FALSE, error_arg = "cols")
 }

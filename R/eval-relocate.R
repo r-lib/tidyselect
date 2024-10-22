@@ -78,7 +78,6 @@ eval_relocate <- function(expr,
   data <- tidyselect_data_proxy(data)
 
   expr <- as_quosure(expr, env = env)
-
   sel <- eval_select_impl(
     x = data,
     names = names(data),
@@ -89,7 +88,7 @@ eval_relocate <- function(expr,
     allow_empty = allow_empty,
     allow_predicates = allow_predicates,
     type = "relocate",
-    error_arg = NULL, # TODO need to know which to use. can `before_arg` or `after_arg` be passed here?
+    error_arg = c(before_arg, after_arg), 
     error_call = error_call
   )
 

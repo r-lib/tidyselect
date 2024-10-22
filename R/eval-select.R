@@ -105,8 +105,8 @@
 #' # Note that the trick above works because `expr({{ arg }})` is the
 #' # same as `enquo(arg)`.
 #'
-#' # give a better error message if you don't want empty selection
-#' # if supplying `error_arg`
+#' # Supply `error_arg` to improve the error message in case of
+#' # unexpected empty selection:
 #' select_not_empty <- function(x, cols) {
 #'   eval_select(expr = enquo(cols), data = x, allow_empty = FALSE, error_arg = "cols")
 #' }
@@ -182,6 +182,7 @@ eval_select_impl <- function(x,
   if (is_null(names)) {
     cli::cli_abort("Can't select within an unnamed vector.", call = error_call)
   }
+
   # Put vars in scope and peek validated vars
   local_vars(names)
   vars <- peek_vars()
