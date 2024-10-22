@@ -140,11 +140,11 @@ or <code>tidyr::pivot_longer()</code>. Let's first attach the tidyverse:</p>
 <span><span class="co">#&gt; 3          1.4         0.2 setosa  Sepal.Length   4.9</span></span>
 <span><span class="co">#&gt; 4          1.4         0.2 setosa  Sepal.Width    3</span></span>
 <span><span class="co">#&gt; # i 296 more rows</span></span></code></pre><p></p></div>
-<p>If any of the variable is missing from the data frame, that's an error:</p>
+<p>If any of these variables are missing from the data frame, that's an error:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">starwars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">vars</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error:</span></span>
 <span><span class="co">#&gt; i In argument: `all_of(vars)`.</span></span>
-<span><span class="co">#&gt; Caused by error in `all_of()` at rlang/R/eval-tidy.R:121:3:</span></span>
+<span><span class="co">#&gt; Caused by error in `all_of()`:</span></span>
 <span><span class="co">#&gt; ! Can't subset elements that don't exist.</span></span>
 <span><span class="co">#&gt; x Elements `Sepal.Length` and `Sepal.Width` don't exist.</span></span></code></pre><p></p></div>
 <p>Use <code>any_of()</code> to allow missing variables:</p>
@@ -171,6 +171,18 @@ frame because calling it again does not cause an error:</p>
 <span><span class="co">#&gt; 3          1.3         0.2 setosa</span></span>
 <span><span class="co">#&gt; 4          1.5         0.2 setosa</span></span>
 <span><span class="co">#&gt; # i 146 more rows</span></span></code></pre><p></p></div>
+<p>Supply named vectors to <code>all_of()</code> and <code>any_of()</code> to select and rename
+columns at the same time:</p>
+<p></p><div class="sourceCode r"><pre><code><span><span class="va">colors</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>color_of_hair <span class="op">=</span> <span class="st">"hair_color"</span>, color_of_eyes <span class="op">=</span> <span class="st">"eye_color"</span><span class="op">)</span></span>
+<span><span class="va">starwars</span> <span class="op">%&gt;%</span> <span class="fu">select</span><span class="op">(</span><span class="fu"><a href="../reference/all_of.html">all_of</a></span><span class="op">(</span><span class="va">colors</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 87 x 2</span></span>
+<span><span class="co">#&gt;   color_of_hair color_of_eyes</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;         &lt;chr&gt;</span></span>
+<span><span class="co">#&gt; 1 blond         blue</span></span>
+<span><span class="co">#&gt; 2 &lt;NA&gt;          yellow</span></span>
+<span><span class="co">#&gt; 3 &lt;NA&gt;          red</span></span>
+<span><span class="co">#&gt; 4 none          yellow</span></span>
+<span><span class="co">#&gt; # i 83 more rows</span></span></code></pre><p></p></div>
     </div>
     <div class="section level2">
     <h2 id="see-also">See also<a class="anchor" aria-label="anchor" href="#see-also"></a></h2>
