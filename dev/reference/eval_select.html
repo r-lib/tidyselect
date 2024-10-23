@@ -88,6 +88,7 @@ your packages.</p>
 <span>  allow_rename <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  allow_empty <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  allow_predicates <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  error_arg <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  error_call <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/stack.html" class="external-link">caller_env</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -160,6 +161,12 @@ is useful to implement purely selective behaviour.</p></dd>
 in an empty selection. If <code>FALSE</code>, will error if <code>expr</code> yields an empty
 selection.</p></dd>
 
+
+<dt id="arg-error-arg">error_arg<a class="anchor" aria-label="anchor" href="#arg-error-arg"></a></dt>
+<dd><p>Argument names for <code>expr</code>. These
+are used in error messages. (You can use <code>"..."</code> if <code>expr = c(...)</code>).
+For now, this is used when <code>allow_empty = FALSE</code>.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -228,6 +235,14 @@ description of the rules of evaluation.</p></div>
 <span class="r-in"><span><span class="co"># Note that the trick above works because `expr({{ arg }})` is the</span></span></span>
 <span class="r-in"><span><span class="co"># same as `enquo(arg)`.</span></span></span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Supply `error_arg` to improve the error message in case of</span></span></span>
+<span class="r-in"><span><span class="co"># unexpected empty selection:</span></span></span>
+<span class="r-in"><span><span class="va">select_not_empty</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span>, <span class="va">cols</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">eval_select</span><span class="op">(</span>expr <span class="op">=</span> <span class="fu"><a href="https://rlang.r-lib.org/reference/enquo.html" class="external-link">enquo</a></span><span class="op">(</span><span class="va">cols</span><span class="op">)</span>, data <span class="op">=</span> <span class="va">x</span>, allow_empty <span class="op">=</span> <span class="cn">FALSE</span>, error_arg <span class="op">=</span> <span class="st">"cols"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-in"><span><span class="kw"><a href="https://rdrr.io/r/base/try.html" class="external-link">try</a></span><span class="op">(</span><span class="fu">select_not_empty</span><span class="op">(</span><span class="va">mtcars</span>, cols <span class="op">=</span> <span class="fu"><a href="starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"vs2"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Error in select_not_empty(mtcars, cols = starts_with("vs2")) : </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   `cols` must select at least one column.</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># The evaluators return a named vector of locations. Here are</span></span></span>
 <span class="r-in"><span><span class="co"># examples of using these location vectors to implement `select()`</span></span></span>

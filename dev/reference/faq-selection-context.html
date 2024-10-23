@@ -6,30 +6,27 @@ Using a selection helper anywhere else results in an error:
 starts_with(&quot;foo&quot;)
 #&amp;gt; Error:
 #&amp;gt; ! `starts_with()` must be used within a *selecting* function.
-#&amp;gt; i See
-#&amp;gt;   &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;
-#&amp;gt;   for details.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt; for
+#&amp;gt;   details.
 
 mtcars[contains(&quot;foo&quot;)]
 #&amp;gt; Error:
 #&amp;gt; ! `contains()` must be used within a *selecting* function.
-#&amp;gt; i See
-#&amp;gt;   &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;
-#&amp;gt;   for details.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt; for
+#&amp;gt;   details.
 
 subset(mtcars, select = matches(&quot;foo&quot;))
 #&amp;gt; Error:
 #&amp;gt; ! `matches()` must be used within a *selecting* function.
-#&amp;gt; i See
-#&amp;gt;   &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;
-#&amp;gt;   for details.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt; for
+#&amp;gt;   details.
 
 If you see this error, you may have used a selection helper in the wrong
 place, possibly as the result of a typo (e.g. misplaced comma or wrong
 argument name). Alternatively, you may be deliberately trying to reduce
 duplication in your code by extracting out a selection into a variable:
 my_vars &amp;lt;- c(name, species, ends_with(&quot;color&quot;))
-#&amp;gt; Error in eval(expr, envir, enclos): object 'name' not found
+#&amp;gt; Error: objet 'name' introuvable
 
 To make this work you’ll need to do two things:
 Wrap the whole thing in a function
@@ -55,30 +52,27 @@ Using a selection helper anywhere else results in an error:
 starts_with(&quot;foo&quot;)
 #&amp;gt; Error:
 #&amp;gt; ! `starts_with()` must be used within a *selecting* function.
-#&amp;gt; i See
-#&amp;gt;   &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;
-#&amp;gt;   for details.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt; for
+#&amp;gt;   details.
 
 mtcars[contains(&quot;foo&quot;)]
 #&amp;gt; Error:
 #&amp;gt; ! `contains()` must be used within a *selecting* function.
-#&amp;gt; i See
-#&amp;gt;   &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;
-#&amp;gt;   for details.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt; for
+#&amp;gt;   details.
 
 subset(mtcars, select = matches(&quot;foo&quot;))
 #&amp;gt; Error:
 #&amp;gt; ! `matches()` must be used within a *selecting* function.
-#&amp;gt; i See
-#&amp;gt;   &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt;
-#&amp;gt;   for details.
+#&amp;gt; i See &amp;lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&amp;gt; for
+#&amp;gt;   details.
 
 If you see this error, you may have used a selection helper in the wrong
 place, possibly as the result of a typo (e.g. misplaced comma or wrong
 argument name). Alternatively, you may be deliberately trying to reduce
 duplication in your code by extracting out a selection into a variable:
 my_vars &amp;lt;- c(name, species, ends_with(&quot;color&quot;))
-#&amp;gt; Error in eval(expr, envir, enclos): object 'name' not found
+#&amp;gt; Error: objet 'name' introuvable
 
 To make this work you’ll need to do two things:
 Wrap the whole thing in a function
@@ -144,29 +138,26 @@ dplyr::select(starwars, my_vars())
 <p></p><div class="sourceCode r"><pre><code><span><span class="fu"><a href="../reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"foo"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error:</span></span>
 <span><span class="co">#&gt; ! `starts_with()` must be used within a *selecting* function.</span></span>
-<span><span class="co">#&gt; i See</span></span>
-<span><span class="co">#&gt;   &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;</span></span>
-<span><span class="co">#&gt;   for details.</span></span>
+<span><span class="co">#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt; for</span></span>
+<span><span class="co">#&gt;   details.</span></span>
 <span></span>
 <span><span class="va">mtcars</span><span class="op">[</span><span class="fu"><a href="../reference/starts_with.html">contains</a></span><span class="op">(</span><span class="st">"foo"</span><span class="op">)</span><span class="op">]</span></span>
 <span><span class="co">#&gt; Error:</span></span>
 <span><span class="co">#&gt; ! `contains()` must be used within a *selecting* function.</span></span>
-<span><span class="co">#&gt; i See</span></span>
-<span><span class="co">#&gt;   &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;</span></span>
-<span><span class="co">#&gt;   for details.</span></span>
+<span><span class="co">#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt; for</span></span>
+<span><span class="co">#&gt;   details.</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/subset.html" class="external-link">subset</a></span><span class="op">(</span><span class="va">mtcars</span>, select <span class="op">=</span> <span class="fu"><a href="../reference/starts_with.html">matches</a></span><span class="op">(</span><span class="st">"foo"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Error:</span></span>
 <span><span class="co">#&gt; ! `matches()` must be used within a *selecting* function.</span></span>
-<span><span class="co">#&gt; i See</span></span>
-<span><span class="co">#&gt;   &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt;</span></span>
-<span><span class="co">#&gt;   for details.</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; i See &lt;https://tidyselect.r-lib.org/reference/faq-selection-context.html&gt; for</span></span>
+<span><span class="co">#&gt;   details.</span></span></code></pre><p></p></div>
 <p>If you see this error, you may have used a selection helper in the wrong
 place, possibly as the result of a typo (e.g. misplaced comma or wrong
 argument name). Alternatively, you may be deliberately trying to reduce
 duplication in your code by extracting out a selection into a variable:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">my_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">species</span>, <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"color"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error in eval(expr, envir, enclos): object 'name' not found</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; Error: objet 'name' introuvable</span></span></code></pre><p></p></div>
 <p>To make this work you’ll need to do two things:</p><ul><li><p>Wrap the whole thing in a function</p></li>
 <li><p>Use <code><a href="all_of.html">any_of()</a></code> or <code><a href="all_of.html">all_of()</a></code> instead of bare variable names</p></li>
 </ul><p></p><div class="sourceCode r"><pre><code><span><span class="va">my_vars</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
