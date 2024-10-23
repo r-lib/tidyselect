@@ -98,16 +98,13 @@ test_that("can pull with negative values", {
   expect_identical(vars_pull(letters, -3), "x")
 })
 
-test_that("vars_pull() has informative errors", {
-  expect_snapshot({
-    "# vars_pull() instruments base errors"
-    (expect_error(vars_pull(letters, foobar), ""))
-  })
+test_that("vars_pull() are base errors", {
+  expect_snapshot(vars_pull(letters, foobar), error = TRUE, cnd_class = TRUE)
 })
 
 test_that("vars_pull() errors mention correct calls", {
   f <- function() stop("foo")
-  expect_snapshot((expect_error(vars_pull(letters, f()))))
+  expect_snapshot(vars_pull(letters, f()), error = TRUE, cnd_class = TRUE)
 })
 
 test_that("vars_pull() produces correct backtraces", {
@@ -116,7 +113,7 @@ test_that("vars_pull() produces correct backtraces", {
   h <- function(base) if (base) stop("foo") else abort("foo")
 
   local_options(
-    rlang_trace_trop_env = current_env(),
+    rlang_trace_top_env = current_env(),
     rlang_trace_format_srcrefs = FALSE
   )
 

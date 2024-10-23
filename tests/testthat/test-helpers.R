@@ -1,11 +1,10 @@
 
 test_that("one_of gives useful errors", {
-  expect_snapshot({
-    (expect_error(
-      one_of(1L, .vars = c("x", "y")),
-      class = "vctrs_error_incompatible_index_type"
-    ))
-  })
+  expect_snapshot(error = TRUE, {
+    one_of(1L, .vars = c("x", "y"))
+    },
+    cnd_class = TRUE
+  )
 })
 
 test_that("one_of tolerates but warns for unknown columns", {

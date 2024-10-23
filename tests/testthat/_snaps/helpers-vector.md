@@ -12,48 +12,42 @@
 # all_of() and any_of() check their inputs
 
     Code
-      (expect_error(select_loc(letters2, all_of(NA))))
-    Output
-      <error/rlang_error>
+      select_loc(letters2, all_of(NA))
+    Condition <rlang_error>
       Error in `select_loc()`:
       ! Selections can't have missing values.
     Code
-      (expect_error(select_loc(letters2, any_of(NA))))
-    Output
-      <error/rlang_error>
+      select_loc(letters2, any_of(NA))
+    Condition <rlang_error>
       Error in `select_loc()`:
       ! Selections can't have missing values.
     Code
-      (expect_error(select_loc(letters2, all_of(TRUE))))
-    Output
-      <error/rlang_error>
+      select_loc(letters2, all_of(TRUE))
+    Condition <rlang_error>
       Error in `select_loc()`:
       i In argument: `all_of(TRUE)`.
       Caused by error in `all_of()`:
       ! Can't subset elements.
       x Subscript must be numeric or character, not `TRUE`.
     Code
-      (expect_error(select_loc(letters2, any_of(TRUE))))
-    Output
-      <error/rlang_error>
+      select_loc(letters2, any_of(TRUE))
+    Condition <rlang_error>
       Error in `select_loc()`:
       i In argument: `any_of(TRUE)`.
       Caused by error in `any_of()`:
       ! Can't subset elements.
       x Subscript must be numeric or character, not `TRUE`.
     Code
-      (expect_error(select_loc(letters2, any_of(is.factor))))
-    Output
-      <error/rlang_error>
+      select_loc(letters2, any_of(is.factor))
+    Condition <rlang_error>
       Error in `select_loc()`:
       i In argument: `any_of(is.factor)`.
       Caused by error in `any_of()`:
       ! Can't subset elements.
       x Subscript must be numeric or character, not a function.
     Code
-      (expect_error(select_loc(letters2, all_of(is.factor))))
-    Output
-      <error/rlang_error>
+      select_loc(letters2, all_of(is.factor))
+    Condition <rlang_error>
       Error in `select_loc()`:
       i In argument: `all_of(is.factor)`.
       Caused by error in `all_of()`:
@@ -63,9 +57,8 @@
 # any_of() errors out of context
 
     Code
-      (expect_error(any_of()))
-    Output
-      <error/rlang_error>
+      any_of()
+    Condition <rlang_error>
       Error:
       ! `any_of()` must be used within a *selecting* function.
       i See <https://tidyselect.r-lib.org/reference/faq-selection-context.html> for details.
