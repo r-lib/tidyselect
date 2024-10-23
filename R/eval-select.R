@@ -201,8 +201,8 @@ eval_select_impl <- function(x,
       allow_rename = allow_rename,
       allow_empty = allow_empty,
       allow_predicates = allow_predicates,
-      type = type,
       error_arg = error_arg,
+      type = type,
       error_call = error_call
     ),
     type = type
