@@ -11,7 +11,7 @@
     Condition <rlang_error>
       Error in `select_loc()`:
       ! `include` must only include variables found in `data`.
-      i Unknown variables: d
+      i Unknown variables: `d`
     Code
       select_loc(x, "a", exclude = 1)
     Condition <rlang_error>
@@ -40,6 +40,12 @@
     Condition <tidyselect:::error_disallowed_rename>
       Error in `select_loc()`:
       ! Can't rename variables in this context.
+    Code
+      select_loc(mtcars, c(foo = mpg, cyl), error_arg = "x", allow_rename = FALSE)
+    Condition <tidyselect:::error_disallowed_rename>
+      Error in `select_loc()`:
+      ! Can't rename variables in this context.
+      i `x` can't be renamed.
 
 # can forbid empty selections
 

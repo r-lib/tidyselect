@@ -172,6 +172,8 @@ test_that("can forbid rename syntax", {
   expect_snapshot(error = TRUE, {
     relocate_loc(x, c(foo = b), allow_rename = FALSE)
     relocate_loc(x, c(b, foo = b), allow_rename = FALSE)
+    relocate_loc(x, c(b, foo = b), allow_rename = FALSE, error_arg = "...")
+    
     },
     cnd_class = TRUE
   )
@@ -184,6 +186,7 @@ test_that("can forbid empty selections", {
 
   expect_snapshot(error = TRUE, {
     relocate_loc(x, allow_empty = FALSE, error_arg = "...")
+    
     relocate_loc(mtcars, integer(), allow_empty = FALSE)
     relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)
   })

@@ -1,6 +1,6 @@
 # tidyselect (development version)
   
-* `eval_select()` and `eval_relocate()` gain a new `error_arg` argument that can be specified to throw a better error message when `allow_empty = FALSE` (@olivroy, #327).
+* `eval_select()` and `eval_relocate()` gain a new `error_arg` argument that can be specified to throw a better error message when `allow_empty = FALSE`  or `allow_rename = FALSE` (@olivroy, #327).
 
 * `eval_select()` and `eval_relocate()` throw a classed error message when `allow_empty = FALSE` (@olivroy, #347).
 

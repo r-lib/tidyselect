@@ -78,7 +78,7 @@ selection.}
 
 \item{error_arg}{Argument names for \code{expr}. These
 are used in error messages. (You can use \code{"..."} if \code{expr = c(...)}).
-For now, this is used when \code{allow_empty = FALSE}.}
+For now, this is used when \code{allow_empty = FALSE} or \code{allow_rename = FALSE}.}
 }
 \value{
 A named vector of numeric locations, one for each of the

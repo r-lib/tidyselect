@@ -65,7 +65,7 @@ are used in error messages.}
 
 \item{error_arg}{Argument names for \code{expr}. These
 are used in error messages. (You can use \code{"..."} if \code{expr = c(...)}).
-For now, this is used when \code{allow_empty = FALSE}.}
+For now, this is used when \code{allow_empty = FALSE} or \code{allow_rename = FALSE}.}
 
 \item{env}{The environment in which to evaluate \code{expr}. Discarded
 if \code{expr} is a \link[rlang:enquo]{quosure}.}
