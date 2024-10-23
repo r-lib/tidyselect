@@ -101,7 +101,7 @@
     Output
       <error/rlang_error>
       Error in `select_loc()`:
-      ! Predicate must return `TRUE` or `FALSE`, not `""`.
+      ! Predicate must return `TRUE` or `FALSE`, not the empty string "".
 
 # eval_select() produces correct backtraces
 
