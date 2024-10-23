@@ -209,15 +209,13 @@ eval_select_impl <- function(x,
   )
 
   if (length(include) > 0) {
-    if (!is.character(include)) {
-      cli::cli_abort("{.arg include} must be a character vector.", call = error_call)
-    }
+    check_character(include, call = error_call)
 
     missing <- setdiff(include, names)
     if (length(missing) > 0) {
       cli::cli_abort(c(
         "{.arg include} must only include variables found in {.arg data}.",
-        i = "Unknown variables: {.and {missing}}"
+        i = "Unknown variables: {.var {missing}}"
       ), call = error_call)
     }
 
@@ -228,9 +226,7 @@ eval_select_impl <- function(x,
   }
 
   if (length(exclude) > 0) {
-    if (!is.character(exclude)) {
-      cli::cli_abort("{.arg include} must be a character vector.", call = error_call)
-    }
+    check_character(exclude, call = error_call)
 
     to_exclude <- vctrs::vec_match(intersect(exclude, names), names)
     out <- out[!out %in% to_exclude]

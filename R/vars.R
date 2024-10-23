@@ -190,9 +190,7 @@ has_vars <- function() {
 }
 
 vars_validate <- function(vars) {
-  if (!is_character(vars)) {
-    abort("`vars` must be a character vector")
-  }
+  check_character(vars)
 
   # Named `vars` makes it harder to implement select helpers
   unname(vars)

@@ -84,9 +84,7 @@ any_valid_names <- function(nms) {
 }
 
 are_empty_name <- function(nms) {
-  if (!is_character(nms)) {
-    abort("Expected a character vector")
-  }
+  check_character(nms)
 
   nms == "" | is.na(nms)
 }
@@ -153,9 +151,7 @@ quo_set_expr2 <- function(x, value, default) {
 
 # Always returns a fresh non-shared call
 call_expand_dots <- function(call, env) {
-  if (!is_call(call)) {
-    abort("`call` must be a call.")
-  }
+  check_call(call)
 
   call <- duplicate(call, shallow = TRUE)
 
