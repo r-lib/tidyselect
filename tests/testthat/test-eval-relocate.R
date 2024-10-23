@@ -128,11 +128,11 @@ test_that("can't supply both `before` and `after`", {
 test_that("can't relocate with out-of-bounds variables by default", {
   x <- c(a = 1, b = 2)
 
-  expect_snapshot({
-    (expect_error(relocate_loc(x, c)))
-    (expect_error(relocate_loc(x, c(1, 3))))
-    (expect_error(relocate_loc(x, a, before = c)))
-    (expect_error(relocate_loc(x, a, after = c)))
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
+    relocate_loc(x, c)
+    relocate_loc(x, c(1, 3))
+    relocate_loc(x, a, before = c)
+    relocate_loc(x, a, after = c)
   })
 })
 
@@ -143,9 +143,9 @@ test_that("can relocate with out-of-bounds variables in `expr` if `strict = FALS
   expect_identical(relocate_loc(x, c(d = b, e = c), strict = FALSE), c(d = 2L, a = 1L))
 
   # But still not with OOB variables in `before` or `after`
-  expect_snapshot({
-    (expect_error(relocate_loc(x, a, before = c, strict = FALSE)))
-    (expect_error(relocate_loc(x, a, after = c, strict = FALSE)))
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
+    relocate_loc(x, a, before = c, strict = FALSE)
+    relocate_loc(x, a, after = c, strict = FALSE)
   })
 })
 
@@ -165,9 +165,9 @@ test_that("accepts name spec", {
 test_that("can forbid rename syntax", {
   x <- c(a = 1, b = 2, c = 3)
 
-  expect_snapshot({
-    (expect_error(relocate_loc(x, c(foo = b), allow_rename = FALSE)))
-    (expect_error(relocate_loc(x, c(b, foo = b), allow_rename = FALSE)))
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
+    relocate_loc(x, c(foo = b), allow_rename = FALSE)
+    relocate_loc(x, c(b, foo = b), allow_rename = FALSE)
   })
 
   expect_named(relocate_loc(x, c(c, b), allow_rename = FALSE), c("c", "b", "a"))
@@ -176,32 +176,32 @@ test_that("can forbid rename syntax", {
 test_that("can forbid empty selections", {
   x <- c(a = 1, b = 2, c = 3)
 
-  expect_snapshot({
-    (expect_error(relocate_loc(x, allow_empty = FALSE, error_arg = "...")))
-    (expect_error(relocate_loc(mtcars, integer(), allow_empty = FALSE)))
-    (expect_error(relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)))
+  expect_snapshot(error = TRUE, {
+    relocate_loc(x, allow_empty = FALSE, error_arg = "...")
+    
+    relocate_loc(mtcars, integer(), allow_empty = FALSE)
+    relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)
   })
 })
 
 test_that("can forbid empty selections", {
   x <- c(a = 1, b = 2, c = 3)
   
-  expect_snapshot(
-    error = TRUE, {
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
     relocate_loc(mtcars, before = integer(), allow_empty = FALSE)
     relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)
-  }, cnd_class = TRUE)
+  })
 })
 
 
 test_that("`before` and `after` forbid renaming", {
   x <- c(a = 1, b = 2, c = 3)
 
-  expect_snapshot({
-    (expect_error(relocate_loc(x, b, before = c(new = c))))
-    (expect_error(relocate_loc(x, b, before = c(new = c), before_arg = ".before")))
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
+    relocate_loc(x, b, before = c(new = c))
+    relocate_loc(x, b, before = c(new = c), before_arg = ".before")
 
-    (expect_error(relocate_loc(x, b, after = c(new = c))))
-    (expect_error(relocate_loc(x, b, after = c(new = c), after_arg = ".after")))
+    relocate_loc(x, b, after = c(new = c))
+    relocate_loc(x, b, after = c(new = c), after_arg = ".after")
   })
 })
