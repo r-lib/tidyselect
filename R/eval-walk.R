@@ -29,7 +29,7 @@ vars_select_eval <- function(vars,
       allow_predicates = allow_predicates,
       call = error_call
     )
-    pos <- loc_validate(pos, vars)
+    pos <- loc_validate(pos, vars, call = error_call)
     pos <- ensure_named(
       pos,
       vars,
