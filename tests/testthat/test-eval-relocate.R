@@ -165,9 +165,10 @@ test_that("accepts name spec", {
 test_that("can forbid rename syntax", {
   x <- c(a = 1, b = 2, c = 3)
 
-  expect_snapshot({
-    (expect_error(relocate_loc(x, c(foo = b), allow_rename = FALSE)))
-    (expect_error(relocate_loc(x, c(b, foo = b), allow_rename = FALSE)))
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
+    relocate_loc(x, c(foo = b), allow_rename = FALSE)
+    relocate_loc(x, c(b, foo = b), allow_rename = FALSE)
+    relocate_loc(x, c(b, foo = b), allow_rename = FALSE, error_arg = "...")
   })
 
   expect_named(relocate_loc(x, c(c, b), allow_rename = FALSE), c("c", "b", "a"))
@@ -176,10 +177,11 @@ test_that("can forbid rename syntax", {
 test_that("can forbid empty selections", {
   x <- c(a = 1, b = 2, c = 3)
 
-  expect_snapshot({
-    (expect_error(relocate_loc(x, allow_empty = FALSE, error_arg = "...")))
-    (expect_error(relocate_loc(mtcars, integer(), allow_empty = FALSE)))
-    (expect_error(relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)))
+  expect_snapshot(error = TRUE, {
+    relocate_loc(x, allow_empty = FALSE, error_arg = "...")
+    
+    relocate_loc(mtcars, integer(), allow_empty = FALSE)
+    relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)
   })
 })
 

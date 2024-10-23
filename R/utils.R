@@ -53,9 +53,9 @@ relocate_loc <- function(x,
                          name_spec = NULL,
                          allow_rename = TRUE,
                          allow_empty = TRUE,
-                         error_arg = NULL,
                          before_arg = "before",
                          after_arg = "after",
+                         error_arg = NULL,
                          error_call = current_env()) {
   check_dots_empty()
 
@@ -68,9 +68,9 @@ relocate_loc <- function(x,
     name_spec = name_spec,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
-    error_arg = error_arg,
     before_arg = before_arg,
     after_arg = after_arg,
+    error_arg = error_arg,
     error_call = error_call
   )
 }

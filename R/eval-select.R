@@ -45,7 +45,7 @@
 #'   support predicates (as determined by [tidyselect_data_has_predicates()]).
 #' @param error_arg Argument names for `expr`. These
 #'   are used in error messages. (You can use `"..."` if `expr = c(...)`).
-#'   For now, this is used when `allow_empty = FALSE`.
+#'   For now, this is used when `allow_empty = FALSE` or `allow_rename = FALSE`.
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -201,8 +201,8 @@ eval_select_impl <- function(x,
       allow_rename = allow_rename,
       allow_empty = allow_empty,
       allow_predicates = allow_predicates,
-      type = type,
       error_arg = error_arg,
+      type = type,
       error_call = error_call
     ),
     type = type

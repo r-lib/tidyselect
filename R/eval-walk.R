@@ -110,11 +110,22 @@ ensure_named <- function(pos,
   check_empty(pos, allow_empty, error_arg, call = call)
 
   if (!allow_rename && any(names2(pos) != "")) {
-    cli::cli_abort(
-      "Can't rename variables in this context.",
-      class = "tidyselect:::error_disallowed_rename",
-      call = call
-    )
+    if (is.null(error_arg)) {
+      cli::cli_abort(
+        "Can't rename variables in this context.",
+        class = "tidyselect:::error_disallowed_rename",
+        call = call
+      )
+    } else {
+      cli::cli_abort(c(
+        "Can't rename variables in this context.",
+        i = "{.arg {error_arg}} can't be renamed."
+        ),
+        class = "tidyselect:::error_disallowed_rename",
+        call = call
+      )
+    }
+
   }
 
   nms <- names(pos) <- names2(pos)
