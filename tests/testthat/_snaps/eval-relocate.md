@@ -67,36 +67,37 @@
 # can forbid rename syntax
 
     Code
-      (expect_error(relocate_loc(x, c(foo = b), allow_rename = FALSE)))
-    Output
-      <error/tidyselect:::error_disallowed_rename>
+      relocate_loc(x, c(foo = b), allow_rename = FALSE)
+    Condition <tidyselect:::error_disallowed_rename>
       Error in `relocate_loc()`:
       ! Can't rename variables in this context.
     Code
-      (expect_error(relocate_loc(x, c(b, foo = b), allow_rename = FALSE)))
-    Output
-      <error/tidyselect:::error_disallowed_rename>
+      relocate_loc(x, c(b, foo = b), allow_rename = FALSE)
+    Condition <tidyselect:::error_disallowed_rename>
       Error in `relocate_loc()`:
       ! Can't rename variables in this context.
+    Code
+      relocate_loc(x, c(b, foo = b), allow_rename = FALSE, error_arg = "...")
+    Condition <tidyselect:::error_disallowed_rename>
+      Error in `relocate_loc()`:
+      ! Can't rename variables in this context.
+      i `...` can't be renamed.
 
 # can forbid empty selections
 
     Code
-      (expect_error(relocate_loc(x, allow_empty = FALSE, error_arg = "...")))
-    Output
-      <error/tidyselect_error_empty_selection>
+      relocate_loc(x, allow_empty = FALSE, error_arg = "...")
+    Condition
       Error in `relocate_loc()`:
       ! `...` must select at least one column.
     Code
-      (expect_error(relocate_loc(mtcars, integer(), allow_empty = FALSE)))
-    Output
-      <error/tidyselect_error_empty_selection>
+      relocate_loc(mtcars, integer(), allow_empty = FALSE)
+    Condition
       Error in `relocate_loc()`:
       ! Must select at least one item.
     Code
-      (expect_error(relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)))
-    Output
-      <error/tidyselect_error_empty_selection>
+      relocate_loc(mtcars, starts_with("z"), allow_empty = FALSE)
+    Condition
       Error in `relocate_loc()`:
       ! Must select at least one item.
 
