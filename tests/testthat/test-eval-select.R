@@ -53,14 +53,12 @@ test_that("included variables added to front", {
 })
 
 test_that("include and exclude validate their inputs", {
-  expect_snapshot(error = TRUE, {
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
     x <- list(a = 1, b = 2, c = 3)
     select_loc(x, "a", include = 1)
     select_loc(x, "a", include = "d")
     select_loc(x, "a", exclude = 1)
-    },
-    cnd_class = TRUE
-  )
+  })
 })
 
 test_that("variables are excluded with non-strict `any_of()`", {
@@ -89,15 +87,13 @@ test_that("result is named even with constant inputs (#173)", {
 })
 
 test_that("can forbid rename syntax (#178)", {
-  expect_snapshot(error = TRUE, {
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
     select_loc(mtcars, c(foo = cyl), allow_rename = FALSE)
     select_loc(mtcars, c(cyl, foo = cyl), allow_rename = FALSE)
     select_loc(mtcars, c(cyl, foo = mpg), allow_rename = FALSE)
     select_loc(mtcars, c(foo = mpg, cyl), allow_rename = FALSE)
     select_loc(mtcars, c(foo = mpg, cyl), error_arg = "x", allow_rename = FALSE)
-    },
-    cnd_class = TRUE
-  )
+  })
 
   expect_named(select_loc(mtcars, starts_with("c") | all_of("am"), allow_rename = FALSE), c("cyl", "carb", "am"))
 })
@@ -144,14 +140,12 @@ test_that("eval_select() produces correct backtraces", {
 })
 
 test_that("eval_select() produces correct chained errors", {
-  expect_snapshot(error = TRUE, {
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
     select_loc(mtcars, 1 + "")
-
+    
     f <- function() 1 + ""
     select_loc(mtcars, f())
-    },
-    cnd_class = TRUE
-  )
+  })
 })
 
 test_that("can select with predicate when `allow_rename` is `FALSE` (#225)", {

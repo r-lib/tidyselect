@@ -1,10 +1,8 @@
 
 test_that("one_of gives useful errors", {
-  expect_snapshot(error = TRUE, {
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
     one_of(1L, .vars = c("x", "y"))
-    },
-    cnd_class = TRUE
-  )
+  })
 })
 
 test_that("one_of tolerates but warns for unknown columns", {

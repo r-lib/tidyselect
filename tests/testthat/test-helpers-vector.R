@@ -38,7 +38,7 @@ test_that("any_of() is lax", {
 })
 
 test_that("all_of() and any_of() check their inputs", {
-  expect_snapshot(error = TRUE, {
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
     select_loc(letters2, all_of(NA))
     select_loc(letters2, any_of(NA))
 
@@ -47,9 +47,7 @@ test_that("all_of() and any_of() check their inputs", {
 
     select_loc(letters2, any_of(is.factor))
     select_loc(letters2, all_of(is.factor))
-    },
-    cnd_class = TRUE
-  )
+  })
 })
 
 test_that("any_of() errors out of context", {

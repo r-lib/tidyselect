@@ -311,15 +311,13 @@ test_that("eval_walk() warns when using a predicate without where()", {
 })
 
 test_that("eval_walk() errors when formula shorthand are not wrapped", {
-  expect_snapshot(error = TRUE, {
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
     select_loc(mtcars, ~ is.numeric(.x))
     select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x))
     select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x) ||
                                is.numeric(.x) || is.factor(.x) || is.character(.x))
     select_loc(mtcars, .data$"foo")
-    },
-    cnd_class = TRUE
-  )
+  })
 })
 
 test_that("can forbid empty selection", {
