@@ -83,6 +83,15 @@
       Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
       i Please use `all_of(var)` (or `any_of(var)`) instead of `.data[[var]]`
 
+---
+
+    Code
+      x <- vars_pull("a", .data[[var]])
+    Condition
+      Warning:
+      Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
+      i Please use `all_of(var)` (or `any_of(var)`) instead of `.data[[var]]`
+
 # eval_walk() warns when using a predicate without where()
 
     Code

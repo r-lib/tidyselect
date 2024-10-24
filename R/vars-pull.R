@@ -34,6 +34,7 @@
 #' vars_pull(letters, !!var)
 vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = caller_arg(var)) {
   expr <- enquo(var)
+
   if (quo_is_missing(expr)) {
     # No easy way to determine what var is in parent because it's likely
     # to be embraced; so don't try and use error_arg here
@@ -42,6 +43,8 @@ vars_pull <- function(vars, var = -1, error_call = caller_env(), error_arg = cal
       call = error_call
     )
   }
+
+  check_dot_data(expr, env = quo_get_env(expr), error_call = error_call)
 
   local_vars(vars)
   n <- length(vars)
