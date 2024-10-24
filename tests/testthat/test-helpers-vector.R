@@ -38,22 +38,20 @@ test_that("any_of() is lax", {
 })
 
 test_that("all_of() and any_of() check their inputs", {
-  expect_snapshot({
-    (expect_error(select_loc(letters2, all_of(NA))))
-    (expect_error(select_loc(letters2, any_of(NA))))
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
+    select_loc(letters2, all_of(NA))
+    select_loc(letters2, any_of(NA))
 
-    (expect_error(select_loc(letters2, all_of(TRUE))))
-    (expect_error(select_loc(letters2, any_of(TRUE))))
+    select_loc(letters2, all_of(TRUE))
+    select_loc(letters2, any_of(TRUE))
 
-    (expect_error(select_loc(letters2, any_of(is.factor))))
-    (expect_error(select_loc(letters2, all_of(is.factor))))
+    select_loc(letters2, any_of(is.factor))
+    select_loc(letters2, all_of(is.factor))
   })
 })
 
 test_that("any_of() errors out of context", {
-  expect_snapshot({
-    (expect_error(any_of()))
-  })
+  expect_snapshot(any_of(), error = TRUE, cnd_class = TRUE)
 })
 
 test_that("all_of() is deprecated out of context (#269)", {

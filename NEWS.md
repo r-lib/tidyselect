@@ -2,6 +2,19 @@
   
 * `eval_select()` and `eval_relocate()` gain a new `error_arg` argument that can be specified to throw a better error message when `allow_empty = FALSE`  or `allow_rename = FALSE` (@olivroy, #327).
 
+* `vars_pull()` now also warns when using `.data` (#335). Please
+  use string-quotation programmatic usage, consistently with other
+  tidyselect contexts.
+
+* `num_range()` now recycles its arguments using tidyverse rules (#355).
+  In addition, it gains a `cross` argument that allows you to take the
+  cartesian product of these arguments instead.
+
+* `eval_select(allow_empty = FALSE)` gains a new argument to yield a better error
+  message in case of empty selection (@olivroy, #327)
+
+* `eval_select()` and `eval_relocate()` gain a new `error_arg` argument that can be specified to throw a better error message when `allow_empty = FALSE`.
+
 * `eval_select()` and `eval_relocate()` throw a classed error message when `allow_empty = FALSE` (@olivroy, #347).
 
 # tidyselect 1.2.1
@@ -42,17 +55,17 @@
 
   * `any_of()` generates a more informative error if you supply too many
     arguments (#241).
-  
-  * `all_of()` (like `any_of()`) returns an integer vector to make it easier 
-    to combine in functions (#270, #294). It also fails when it can't find 
+
+  * `all_of()` (like `any_of()`) returns an integer vector to make it easier
+    to combine in functions (#270, #294). It also fails when it can't find
     variables even when `strict = FALSE`.
-  
+
   * `matches()` recognises and correctly uses stringr pattern objects
     (`stringr::regex()`, `stringr::fixed()`, etc) (#238). It also now
     works with named vectors (#250).
-  
+
   * `num_range()` gains a `suffix` argument (#229).
-  
+
   * `where()` is now exported, like all other select helpers (#201),
     and gives more informative errors (#236).
 
@@ -62,11 +75,11 @@
 * `eval_select()` always returns a named vector, even when renaming is not
   permitted (#220).
 
-* `eval_select()` and `eval_relocate()` gain new `allow_empty` argument which 
+* `eval_select()` and `eval_relocate()` gain new `allow_empty` argument which
   makes it possible to forbid empty selections with `allow_empty = FALSE` (#252).
 
 * `eval_select(allow_rename = FALSE)` no longer fails with empty
-  selections (#221, @eutwt) or with predicate functions (#225). It now properly 
+  selections (#221, @eutwt) or with predicate functions (#225). It now properly
   fails with partial renaming (#305).
 
 * `peek_var()` error now generates hyperlink to docs with recent RStudio (#289).
@@ -74,15 +87,15 @@
 * `vars_pull()` generates more informative error messages (#234, #258, #318)
   and gains `error_call` and `error_arg` arguments.
 
-* Errors produced by tidyselect should now be more informative. Evaluation 
-  errors are now chained, with the child error call is set to the `error_call` 
-  argument of `eval_select()` and `eval_rename()`. We've also improved 
-  backtraces of base errors, and done better at propagating the root 
+* Errors produced by tidyselect should now be more informative. Evaluation
+  errors are now chained, with the child error call is set to the `error_call`
+  argument of `eval_select()` and `eval_rename()`. We've also improved
+  backtraces of base errors, and done better at propagating the root
   `error_call` to vctrs input checkers.
 
 * `tidyselect_verbosity` is no longer used; deprecation messaging is now
   controlled by `lifecycle_verbosity` like all other packages (#317).
-  
+
 # tidyselect 1.1.2
 
 * Fix for CRAN checks.

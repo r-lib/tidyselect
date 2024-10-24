@@ -242,6 +242,7 @@ test_that("use of .data is deprecated", {
   var <- "a"
   expect_snapshot(x <- select_loc(x, .data$a))
   expect_snapshot(x <- select_loc(x, .data[[var]]))
+  expect_snapshot(x <- vars_pull("a", .data[[var]]))
 })
 
 test_that(".data in env-expression has the lexical definition", {
@@ -249,7 +250,7 @@ test_that(".data in env-expression has the lexical definition", {
     .data <- mtcars
     quo({ stopifnot(identical(.data, mtcars)); NULL})
   })
-  expect_error(select_loc(mtcars, !!quo), regexp = NA)
+  expect_no_error(select_loc(mtcars, !!quo))
 })
 
 test_that("binary `/` is short for set difference", {
@@ -260,8 +261,6 @@ test_that("binary `/` is short for set difference", {
 })
 
 test_that("can select names with unrepresentable characters", {
-  skip_if_not_installed("rlang", "0.4.2.9000")
-
   # R now emits a warning when converting to symbol. Since Windows
   # gained UTF-8 support, supporting unrepresentable characters is no
   # longer necessary.
@@ -301,23 +300,23 @@ test_that("eval_sym() still supports predicate functions starting with `is`", {
   expect_identical(select_loc(iris, isTRUE), select_loc(iris, where(isTRUE)))
 })
 
-test_that("eval_walk() has informative messages", {
+test_that("eval_walk() warns when using a predicate without where()", {
   expect_snapshot({
-    "Using a predicate without where() warns"
     invisible(select_loc(iris, is_integer))
     invisible(select_loc(iris, is.numeric))
     invisible(select_loc(iris, isTRUE))
-
     "Warning is not repeated"
     invisible(select_loc(iris, is_integer))
+  })
+})
 
-    "formula shorthand must be wrapped"
-    (expect_error(select_loc(mtcars, ~ is.numeric(.x))))
-    (expect_error(select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x))))
-    (expect_error(select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x) ||
-                                       is.numeric(.x) || is.factor(.x) || is.character(.x))))
-
-    (expect_error(select_loc(mtcars, .data$"foo")))
+test_that("eval_walk() errors when formula shorthand are not wrapped", {
+  expect_snapshot(error = TRUE, cnd_class = TRUE, {
+    select_loc(mtcars, ~ is.numeric(.x))
+    select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x))
+    select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x) ||
+                               is.numeric(.x) || is.factor(.x) || is.character(.x))
+    select_loc(mtcars, .data$"foo")
   })
 })
 

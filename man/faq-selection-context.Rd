@@ -35,7 +35,7 @@ argument name). Alternatively, you may be deliberately trying to reduce
 duplication in your code by extracting out a selection into a variable:
 
 \if{html}{\out{<div class="sourceCode r">}}\preformatted{my_vars <- c(name, species, ends_with("color"))
-#> Error: objet 'name' introuvable
+#> Error: object 'name' not found
 }\if{html}{\out{</div>}}
 
 To make this work you’ll need to do two things:

@@ -16,7 +16,15 @@ contains(match, ignore.case = TRUE, vars = NULL)
 
 matches(match, ignore.case = TRUE, perl = FALSE, vars = NULL)
 
-num_range(prefix, range, suffix = "", width = NULL, vars = NULL)
+num_range(
+  prefix,
+  range,
+  suffix = "",
+  width = NULL,
+  ...,
+  cross = FALSE,
+  vars = NULL
+)
 }
 \arguments{
 \item{match}{A character vector. If length > 1, the union of the
@@ -41,6 +49,11 @@ established by functions like \code{select()} or \code{pivot_longer()}).}
 
 \item{width}{Optionally, the "width" of the numeric range. For example,
 a range of 2 gives "01", a range of three "001", etc.}
+
+\item{...}{These dots are for future extensions and must be empty.}
+
+\item{cross}{Whether to take the cartesian product of \code{prefix}, \code{range}, and \code{suffix}.
+If \code{FALSE}, the default, these arguments are recycled using \link[vctrs:theory-faq-recycling]{tidyverse rules}.}
 }
 \description{
 These \link[=language]{selection helpers} match variables according

@@ -229,3 +229,37 @@ mask_error_call <- function(data_mask) {
 }
 
 paste_lines <- function(...) paste(c(...), collapse = "\n")
+
+check_dot_data <- function(expr, env, error_call) {
+  if (is_quosure(expr)) {
+    expr <- quo_get_expr(expr)
+  }
+
+  if (!is_call(expr, c("$", "[[")) || !identical(expr[[2]], quote(.data))) {
+    return()
+  }
+
+  fn <- as_string(expr[[1]])
+  validate_dot_data(expr, error_call)
+
+  what <- I("Use of .data in tidyselect expressions")
+  if (fn == "$") {
+    var <- as_string(expr[[3]])
+    str <- encodeString(var, quote = '"')
+
+    lifecycle::deprecate_soft(
+      "1.2.0",
+      what,
+      details = cli::format_inline("Please use {.code {str}} instead of `.data${var}`"),
+      user_env = env
+    )
+  } else if (fn == "[[") {
+    # .data[[ is an injection operator so can't give specific advice
+    lifecycle::deprecate_soft(
+      "1.2.0",
+      what,
+      details = cli::format_inline("Please use {.code all_of(var)} (or {.code any_of(var)}) instead of {.code .data[[var]]}"),
+      user_env = env
+    )
+  }
+}
