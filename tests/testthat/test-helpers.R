@@ -1,4 +1,3 @@
-
 test_that("one_of gives useful errors", {
   expect_snapshot(error = TRUE, cnd_class = TRUE, {
     one_of(1L, .vars = c("x", "y"))

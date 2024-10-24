@@ -68,6 +68,49 @@ test_that("num_range can use a suffix (#229)", {
   expect_named(select_loc(vars, num_range("x", 1:2, "_y")), c("x1_y", "x2_y"))
 })
 
+test_that("num_range recycles with tidyverse rules (#355)", {
+  vars <- set_names(c("x1", "y1", "y2", "x2", "x3"))
+  expect_snapshot(
+    error = TRUE,
+    select_loc(vars, num_range(c("x", "y"), 1:3)),
+  )
+  expect_named(
+    select_loc(vars, num_range(c("x", "y"), 1:2)),
+    c("x1", "y2")
+  )
+
+  vars <- set_names(c("x1_foo", "y1_bar", "y1_foo", "x2_bar", "x3_bar", "y2_bar"))
+  expect_named(
+    select_loc(vars, num_range(c("x", "y"), 1:2, "_foo")),
+    "x1_foo"
+  )
+  expect_named(
+    select_loc(vars, num_range(c("x", "y"), 1:2, c("_foo", "_bar"))),
+    c("x1_foo", "y2_bar")
+  )
+  expect_snapshot(
+    error = TRUE,
+    select_loc(vars, num_range(c("x", "y"), 1:2, c("_foo", "_bar", "_baz"))),
+  )
+})
+
+test_that("num_range crosses ranges with prefixes and suffixes if requested (#355)", {
+  vars <- set_names(c("x1", "y1", "y2", "x2", "x3"))
+  expect_named(
+    select_loc(vars, num_range(c("x", "y"), 1:3, cross = TRUE)),
+    c("x1", "x2", "x3", "y1", "y2")
+  )
+
+  vars <- set_names(c("x1_foo", "y1_bar", "y1_foo", "x2_bar", "x3_bar", "y2_bar"))
+  expect_named(
+    select_loc(vars, num_range(c("x", "y"), 1:3, "_foo", cross = TRUE)),
+    c("x1_foo", "y1_foo")
+  )
+  expect_named(
+    select_loc(vars, num_range(c("x", "y"), 1:3, c("_foo", "_bar"), cross = TRUE)),
+    c("x1_foo", "x2_bar", "x3_bar", "y1_foo", "y1_bar", "y2_bar")
+  )
+})
 
 test_that("matchers accept length > 1 vectors (#50)", {
   expect_identical(

@@ -174,13 +174,28 @@ matches <- function(match,
 #' @param range A sequence of integers, like `1:5`.
 #' @param width Optionally, the "width" of the numeric range. For example,
 #'   a range of 2 gives "01", a range of three "001", etc.
+#' @inheritParams rlang::args_dots_empty
+#' @param cross Whether to take the cartesian product of `prefix`, `range`, and `suffix`.
+#'   If `FALSE`, the default, these arguments are recycled using tidyverse rules.
 #' @export
 num_range <- function(prefix,
                       range,
                       suffix = "",
                       width = NULL,
+                      ...,
+                      cross = FALSE,
                       vars = NULL) {
+  check_dots_empty()
   vars <- vars %||% peek_vars(fn = "num_range")
+
+  if (cross) {
+    args <- vctrs::vec_expand_grid(prefix = prefix, range = range, suffix = suffix)
+  } else {
+    args <- vctrs::vec_recycle_common(prefix = prefix, range = range, suffix = suffix)
+  }
+  prefix <- args$prefix
+  range <- args$range
+  suffix <- args$suffix
 
   if (!is_null(width)) {
     range <- sprintf(paste0("%0", width, "d"), range)
