@@ -79,22 +79,19 @@
       Error in `f()`:
       ! `var` is absent but must be supplied.
 
-# vars_pull() has informative errors
+# vars_pull() are base errors
 
     Code
-      # # vars_pull() instruments base errors
-      (expect_error(vars_pull(letters, foobar), ""))
-    Output
-      <error/rlang_error>
+      vars_pull(letters, foobar)
+    Condition <rlang_error>
       Error:
       ! object 'foobar' not found
 
 # vars_pull() errors mention correct calls
 
     Code
-      (expect_error(vars_pull(letters, f())))
-    Output
-      <error/rlang_error>
+      vars_pull(letters, f())
+    Condition <rlang_error>
       Error in `f()`:
       ! foo
 

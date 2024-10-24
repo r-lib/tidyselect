@@ -83,10 +83,9 @@
       Use of .data in tidyselect expressions was deprecated in tidyselect 1.2.0.
       i Please use `all_of(var)` (or `any_of(var)`) instead of `.data[[var]]`
 
-# eval_walk() has informative messages
+# eval_walk() warns when using a predicate without where()
 
     Code
-      # Using a predicate without where() warns
       invisible(select_loc(iris, is_integer))
     Condition
       Warning:
@@ -131,11 +130,12 @@
       
         # Now:
         data %>% select(where(is_integer))
+
+# eval_walk() errors when formula shorthand are not wrapped
+
     Code
-      # formula shorthand must be wrapped
-      (expect_error(select_loc(mtcars, ~ is.numeric(.x))))
-    Output
-      <error/rlang_error>
+      select_loc(mtcars, ~ is.numeric(.x))
+    Condition <rlang_error>
       Error in `select_loc()`:
       ! Formula shorthand must be wrapped in `where()`.
       
@@ -145,10 +145,8 @@
         # Good
         data %>% select(where(~is.numeric(.x)))
     Code
-      (expect_error(select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) ||
-        is.character(.x))))
-    Output
-      <error/rlang_error>
+      select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x))
+    Condition <rlang_error>
       Error in `select_loc()`:
       ! Formula shorthand must be wrapped in `where()`.
       
@@ -158,10 +156,9 @@
         # Good
         data %>% select(where(~is.numeric(.x) || is.factor(.x) || is.character(.x)))
     Code
-      (expect_error(select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) ||
-        is.character(.x) || is.numeric(.x) || is.factor(.x) || is.character(.x))))
-    Output
-      <error/rlang_error>
+      select_loc(mtcars, ~ is.numeric(.x) || is.factor(.x) || is.character(.x) ||
+        is.numeric(.x) || is.factor(.x) || is.character(.x))
+    Condition <rlang_error>
       Error in `select_loc()`:
       ! Formula shorthand must be wrapped in `where()`.
       
@@ -171,9 +168,8 @@
         # Good
         data %>% select(where(~...))
     Code
-      (expect_error(select_loc(mtcars, .data$"foo")))
-    Output
-      <error/rlang_error>
+      select_loc(mtcars, .data$"foo")
+    Condition <rlang_error>
       Error in `select_loc()`:
       ! The RHS of `.data$rhs` must be a symbol.
 
