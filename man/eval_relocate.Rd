@@ -17,8 +17,8 @@ eval_relocate(
   allow_predicates = TRUE,
   before_arg = "before",
   after_arg = "after",
-  error_arg = NULL,
   env = caller_env(),
+  error_arg = NULL,
   error_call = caller_env()
 )
 }
@@ -63,12 +63,11 @@ support predicates (as determined by \code{\link[=tidyselect_data_has_predicates
 \item{before_arg, after_arg}{Argument names for \code{before} and \code{after}. These
 are used in error messages.}
 
-\item{error_arg}{Argument names for \code{expr}. These
-are used in error messages. (You can use \code{"..."} if \code{expr = c(...)}).
-For now, this is used when \code{allow_empty = FALSE} or \code{allow_rename = FALSE}.}
-
 \item{env}{The environment in which to evaluate \code{expr}. Discarded
 if \code{expr} is a \link[rlang:enquo]{quosure}.}
+
+\item{error_arg}{Argument names for \code{expr}. These
+are used in error messages. (You can use \code{"..."} if \code{expr = c(...)}).}
 
 \item{error_call}{The execution environment of a currently
 running function, e.g. \code{caller_env()}. The function will be

@@ -16,7 +16,7 @@
       select_loc(x, "a", exclude = 1)
     Condition <rlang_error>
       Error in `select_loc()`:
-      ! `include` must be a character vector.
+      ! `exclude` must be a character vector.
 
 # can forbid rename syntax (#178)
 

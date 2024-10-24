@@ -45,7 +45,6 @@
 #'   support predicates (as determined by [tidyselect_data_has_predicates()]).
 #' @param error_arg Argument names for `expr`. These
 #'   are used in error messages. (You can use `"..."` if `expr = c(...)`).
-#'   For now, this is used when `allow_empty = FALSE` or `allow_rename = FALSE`.
 #' @inheritParams rlang::args_dots_empty
 #'
 #' @return A named vector of numeric locations, one for each of the
@@ -174,8 +173,8 @@ eval_select_impl <- function(x,
                              allow_rename = TRUE,
                              allow_empty = TRUE,
                              allow_predicates = TRUE,
-                             error_arg = NULL,
                              type = "select",
+                             error_arg = NULL,
                              error_call = caller_env()) {
   if (!is_null(x)) {
     vctrs::vec_assert(x)
@@ -201,8 +200,8 @@ eval_select_impl <- function(x,
       allow_rename = allow_rename,
       allow_empty = allow_empty,
       allow_predicates = allow_predicates,
-      error_arg = error_arg,
       type = type,
+      error_arg = error_arg,
       error_call = error_call
     ),
     type = type
@@ -229,7 +228,7 @@ eval_select_impl <- function(x,
 
   if (length(exclude) > 0) {
     if (!is.character(exclude)) {
-      cli::cli_abort("{.arg include} must be a character vector.", call = error_call)
+      cli::cli_abort("{.arg exclude} must be a character vector.", call = error_call)
     }
 
     to_exclude <- vctrs::vec_match(intersect(exclude, names), names)

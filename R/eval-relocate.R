@@ -70,8 +70,8 @@ eval_relocate <- function(expr,
                           allow_predicates = TRUE,
                           before_arg = "before",
                           after_arg = "after",
-                          error_arg = NULL,
                           env = caller_env(),
+                          error_arg = NULL,
                           error_call = caller_env()) {
   check_dots_empty()
 
@@ -89,8 +89,8 @@ eval_relocate <- function(expr,
     allow_rename = allow_rename,
     allow_empty = allow_empty,
     allow_predicates = allow_predicates,
-    error_arg = error_arg,
     type = "relocate",
+    error_arg = error_arg,
     error_call = error_call
   )
 
@@ -125,7 +125,7 @@ eval_relocate <- function(expr,
         error_call = error_call,
         allow_predicates = allow_predicates,
         allow_rename = FALSE,
-        error_arg = before_arg
+        error_arg = error_arg
       ),
       arg = before_arg,
       error_call = error_call
@@ -147,7 +147,7 @@ eval_relocate <- function(expr,
         error_call = error_call,
         allow_predicates = allow_predicates,
         allow_rename = FALSE,
-        error_arg = after_arg
+        error_arg = error_arg
       ),
       arg = after_arg,
       error_call = error_call
