@@ -124,8 +124,7 @@ eval_relocate <- function(expr,
         env = env,
         error_call = error_call,
         allow_predicates = allow_predicates,
-        allow_rename = FALSE,
-        error_arg = error_arg
+        allow_rename = FALSE
       ),
       arg = before_arg,
       error_call = error_call
@@ -146,8 +145,7 @@ eval_relocate <- function(expr,
         env = env,
         error_call = error_call,
         allow_predicates = allow_predicates,
-        allow_rename = FALSE,
-        error_arg = error_arg
+        allow_rename = FALSE
       ),
       arg = after_arg,
       error_call = error_call
