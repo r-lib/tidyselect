@@ -242,6 +242,7 @@ test_that("use of .data is deprecated", {
   var <- "a"
   expect_snapshot(x <- select_loc(x, .data$a))
   expect_snapshot(x <- select_loc(x, .data[[var]]))
+  expect_snapshot(x <- vars_pull("a", .data[[var]]))
 })
 
 test_that(".data in env-expression has the lexical definition", {
