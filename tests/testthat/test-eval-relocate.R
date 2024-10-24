@@ -168,6 +168,7 @@ test_that("can forbid rename syntax", {
   expect_snapshot(error = TRUE, cnd_class = TRUE, {
     relocate_loc(x, c(foo = b), allow_rename = FALSE)
     relocate_loc(x, c(b, foo = b), allow_rename = FALSE)
+    relocate_loc(x, c(b, foo = b), allow_rename = FALSE, error_arg = "...")
   })
 
   expect_named(relocate_loc(x, c(c, b), allow_rename = FALSE), c("c", "b", "a"))

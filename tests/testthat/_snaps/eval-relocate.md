@@ -70,6 +70,12 @@
     Condition <tidyselect:::error_disallowed_rename>
       Error in `relocate_loc()`:
       ! Can't rename variables in this context.
+    Code
+      relocate_loc(x, c(b, foo = b), allow_rename = FALSE, error_arg = "...")
+    Condition <tidyselect:::error_disallowed_rename>
+      Error in `relocate_loc()`:
+      ! Can't rename variables in this context.
+      i `...` can't be renamed.
 
 # can forbid empty selections
 

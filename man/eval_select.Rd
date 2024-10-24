@@ -77,8 +77,7 @@ in an empty selection. If \code{FALSE}, will error if \code{expr} yields an empt
 selection.}
 
 \item{error_arg}{Argument names for \code{expr}. These
-are used in error messages. (You can use \code{"..."} if \code{expr = c(...)}).
-For now, this is used when \code{allow_empty = FALSE}.}
+are used in error messages. (You can use \code{"..."} if \code{expr = c(...)}).}
 }
 \value{
 A named vector of numeric locations, one for each of the
