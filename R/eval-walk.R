@@ -313,29 +313,10 @@ call_kind <- function(expr, context_mask, error_call) {
   }
 
   env <- context_mask$.__current__.
-
   fn <- as_string(head)
 
   if (fn %in% c("$", "[[") && identical(expr[[2]], quote(.data))) {
-    validate_dot_data(expr, error_call)
-
-    what <- I("Use of .data in tidyselect expressions")
-    if (fn == "$") {
-      var <- as_string(expr[[3]])
-      str <- encodeString(var, quote = '"')
-
-      lifecycle::deprecate_soft("1.2.0", what,
-        details = cli::format_inline("Please use {.code {str}} instead of `.data${var}`"),
-        user_env = env
-      )
-    } else if (fn == "[[") {
-      # .data[[ is an injection operator so can't give specific advice
-      lifecycle::deprecate_soft("1.2.0", what,
-        details = cli::format_inline("Please use {.code all_of(var)} (or {.code any_of(var)}) instead of {.code .data[[var]]}"),
-        user_env = env
-      )
-    }
-
+    check_dot_data(expr, env = env, error_call = error_call)
     return(".data")
   }
 
