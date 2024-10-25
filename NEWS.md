@@ -1,5 +1,9 @@
 # tidyselect (development version)
 
+* `vars_pull()` now also warns when using `.data` (#335). Please
+  use string-quotation programmatic usage, consistently with other
+  tidyselect contexts.
+
 * `num_range()` now recycles its arguments using tidyverse rules (#355).
   In addition, it gains a `cross` argument that allows you to take the
   cartesian product of these arguments instead.
