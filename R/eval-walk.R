@@ -301,11 +301,6 @@ chr_as_locations <- function(x, vars, call = caller_env(), arg = NULL) {
   set_names(out, names(x))
 }
 
-as_indices <- function(x, vars, strict = TRUE, call) {
-  inds <- with_subscript_errors(as_indices_impl(x, vars, strict, call))
-  vctrs::vec_as_location(inds, length(vars), vars, convert_values = NULL)
-}
-
 expr_kind <- function(expr, context_mask, error_call) {
   switch(
     typeof(expr),
