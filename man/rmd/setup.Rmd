@@ -1,5 +1,7 @@
 
-```{r, include = FALSE}
+```{r}
+#| include: FALSE
+
 options(
   tibble.print_min = 4,
   tibble.max_extra_cols = 8,

@@ -1,5 +1,7 @@
 
-```{r, child = "setup.Rmd", include = FALSE}
+```{r}
+#| child: "setup.Rmd"
+#| include: FALSE
 ```
 
 Functions like `starts_with()`, `contains()` or `matches()` are

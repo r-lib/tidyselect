@@ -7,19 +7,22 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
 ```
 
-```{r setup}
+```{r}
+#| label: setup
 library(tidyselect)
 library(magrittr)
 ```
 
-```{r, include = FALSE}
+```{r}
+#| include: false
 # For better printing
 mtcars <- tibble::as_tibble(mtcars)
 iris <- tibble::as_tibble(iris)
@@ -49,7 +52,8 @@ selections.
 
 - Passing __dots__ as in `dplyr::select()`.
 
-    ```{r, eval = FALSE}
+    ```{r}
+    #| eval: false
     mtcars %>% dplyr::select(mpg, cyl)
     ```
 
@@ -57,7 +61,8 @@ selections.
   this case, multiple inputs can be provided inside `c()` or by using
   boolean operators:
 
-    ```{r, eval = FALSE}
+    ```{r}
+    #| eval: false
     mtcars %>% pivot_longer(c(mpg, cyl))
     mtcars %>% pivot_longer(mpg | cyl)
     ```
@@ -83,7 +88,8 @@ The following examples illustrate how you could write a function that
 takes a selection of data and returns the corresponding data frame
 with capitalised names:
 
-```{r, eval = FALSE}
+```{r}
+#| eval: false
 # Passing dots
 toupper_dots <- function(data, ...) {
   sel <- dplyr::select(data, ...)
@@ -181,7 +187,8 @@ The data-vars inside the data frame are combined with the env-vars of
 the environment, making it possible for users to refer to their data
 variables:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 NULL %>% with_data(mean(cyl) * 10)
 
 mtcars %>% with_data(mean(cyl) * 10)
@@ -279,7 +286,8 @@ particular it throws an error if the selected inputs are unnamed. In
 practice, `eval_rename()` only accepts a `c()` expression as `expr`
 argument, and all inputs inside the outermost `c()` must be named:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 eval_rename(rlang::expr(mpg), mtcars)
 
 eval_rename(rlang::expr(c(mpg)), mtcars)
@@ -366,7 +374,8 @@ mtcars %>% select(if_width(2))
 The `fn` argument makes the error message more informative when the
 helper is used in the wrong context:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 mtcars[if_width(2)]
 ```
 
@@ -408,7 +417,8 @@ if_width <- function(n, vars = peek_vars(fn = "if_width")) {
 If the input is a data frame, the user is now informed that their
 selection should not contain duplicates:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 dups %>% select(if_width(3))
 ```
 

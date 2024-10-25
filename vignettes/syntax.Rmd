@@ -7,7 +7,9 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
-```{r, include = FALSE}
+```{r}
+#| include: FALSE
+
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
@@ -23,7 +25,7 @@ options(
 
 This is a technical description of the tidyselect syntax.
 
-```{r setup}
+```{r}
 library(tidyselect)
 library(magrittr)
 
@@ -63,9 +65,9 @@ variables).
 
 Today, the syntax of tidyselect is generally designed around Boolean algebra,
 i.e. we recommend writing `starts_with("a") & !ends_with("z")`. Earlier
-versions of tidyselect had more of a flavour of set operations, so that 
+versions of tidyselect had more of a flavour of set operations, so that
 you'd write `starts_with("a") - ends_with("b")`. While the set operations are
-still supported, and is how tidyselect represents variables internally, we no 
+still supported, and is how tidyselect represents variables internally, we no
 longer recommend them because Boolean algebra is easy for people to
 understand.
 
@@ -299,7 +301,8 @@ on the kind of expression:
     includes bare symbols, the boolean operators, `-`, `:`, and `c()`.
     You can't refer to environment-variables in a data-expression:
 
-    ```{r, error = TRUE}
+    ```{r}
+    #| error: true
     cyl_pos <- 2
     mtcars %>% select_loc(mpg | cyl_pos)
     ```
@@ -309,7 +312,8 @@ on the kind of expression:
     symbols that are part of those calls. You can't refer to
     data-variables in a data-expression:
 
-    ```{r, error = TRUE}
+    ```{r}
+    #| error: true
     mtcars %>% select_loc(all_of(mpg))
     ```
 
@@ -352,7 +356,8 @@ overridden to cause an error. This is to prevent confusion stemming
 from normal data masking usage where variables can be transformed on
 the fly:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 mtcars %>% select_loc(cyl^2)
 
 mtcars %>% select_loc(mpg * wt)
@@ -372,7 +377,8 @@ Unlike `eval_select()` which can select without renaming,
 `eval_rename()` expects a fully named selection. If one or several
 names are missing, an error is thrown.
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 mtcars %>% select_loc(mpg)
 
 mtcars %>% rename_loc(mpg)
@@ -385,7 +391,8 @@ If the input data is a data frame, tidyselect generally throws an
 error when duplicate column names are selected, in order to respect
 the invariant of unique column names.
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 # Lists can have duplicates
 as.list(mtcars) %>% select_loc(foo = mpg, foo = cyl)
 
@@ -396,7 +403,8 @@ mtcars %>% select_loc(foo = mpg, foo = cyl)
 A selection can rename a variable to an existing name if the latter is
 not part of the selection:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 mtcars %>% select_loc(cyl, cyl = mpg)
 
 mtcars %>% select_loc(disp, cyl = mpg)
@@ -404,7 +412,8 @@ mtcars %>% select_loc(disp, cyl = mpg)
 
 This is not possible when renaming.
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 mtcars %>% rename_loc(cyl, cyl = mpg)
 
 mtcars %>% rename_loc(disp, cyl = mpg)
@@ -442,7 +451,8 @@ dups %>% select_loc(y)
 
 If the duplicates are selected, this is an error:
 
-```{r, error = TRUE}
+```{r}
+#| error: true
 dups %>% select_loc(x)
 ```
 
