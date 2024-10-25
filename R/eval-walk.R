@@ -323,13 +323,13 @@ eval_literal <- function(expr, data_mask, context_mask) {
 
   if (internal$uniquely_named && is_character(expr)) {
     # Since tidyselect allows repairing data frames with duplicate names by
-    # renaming positions, we can't check the input for duplicates. Instead, we
-    # check the output. But in case of character literals, checking the output
-    # doesn't work because we use `vctrs::vec_as_location()` to transform the
-    # strings to locations and it ignores duplicate names. So we instead check
-    # the input here, since it's not possible to repair duplicate names by
-    # matching them by name. This avoids an inconsistency with the symbolic
-    # path (#346).
+    # renaming or selecting positions, we can't check the input for duplicates.
+    # Instead, we check the output. But in case of character literals, checking
+    # the output doesn't work because we use `vctrs::vec_as_location()` to
+    # transform the strings to locations and it ignores duplicate names. So we
+    # instead check the input here, since it's not possible to repair duplicate
+    # names by matching them by name. This avoids an inconsistency with the
+    # symbolic path (#346).
     vctrs::vec_as_names(
       internal$vars,
       repair = "check_unique",
