@@ -153,7 +153,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   out <- switch(
     expr_kind(expr, context_mask, error_call),
-    literal = expr,
+    literal = eval_literal(expr, data_mask, context_mask),
     symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `!` = eval_bang(expr, data_mask, context_mask),
@@ -316,6 +316,28 @@ call_kind <- function(expr, context_mask, error_call) {
     `c` = fn,
     "call"
   )
+}
+
+eval_literal <- function(expr, data_mask, context_mask) {
+  internal <- data_mask$.__tidyselect__.$internal
+
+  if (internal$uniquely_named && is_character(expr)) {
+    # Since tidyselect allows repairing data frames with duplicate names by
+    # renaming positions, we can't check the input for duplicates. Instead, we
+    # check the output. But in case of character literals, checking the output
+    # doesn't work because we use `vctrs::vec_as_location()` to transform the
+    # strings to locations and it ignores duplicate names. So we instead check
+    # the input here, since it's not possible to repair duplicate names by
+    # matching them by name. This avoids an inconsistency with the symbolic
+    # path (#346).
+    vctrs::vec_as_names(
+      internal$vars,
+      repair = "check_unique",
+      call = internal$error_call
+    )
+ }
+
+  expr
 }
 
 eval_colon <- function(expr, data_mask, context_mask) {

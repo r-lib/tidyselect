@@ -169,3 +169,34 @@
       Error:
       ! Must select at least one item.
 
+# duplicate names are checked when literals are supplied (#346)
+
+    Code
+      select_loc(df, "x")
+    Condition <vctrs_error_names_must_be_unique>
+      Error in `select_loc()`:
+      ! Names must be unique.
+      x These names are duplicated:
+        * "x" at locations 1 and 2.
+    Code
+      select_loc(df, c("x"))
+    Condition <vctrs_error_names_must_be_unique>
+      Error in `select_loc()`:
+      ! Names must be unique.
+      x These names are duplicated:
+        * "x" at locations 1 and 2.
+    Code
+      select_loc(df, c(!!1:2))
+    Condition <vctrs_error_names_must_be_unique>
+      Error in `select_loc()`:
+      ! Names must be unique.
+      x These names are duplicated:
+        * "x" at locations 1 and 2.
+    Code
+      select_loc(df, !!(1:2))
+    Condition <vctrs_error_names_must_be_unique>
+      Error in `select_loc()`:
+      ! Names must be unique.
+      x These names are duplicated:
+        * "x" at locations 1 and 2.
+

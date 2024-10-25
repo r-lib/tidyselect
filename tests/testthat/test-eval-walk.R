@@ -337,3 +337,22 @@ test_that("can make empty selection with allow_rename = FALSE", {
     c(cyl = 2L, am = 9L)
   )
 })
+
+test_that("duplicate names are checked when literals are supplied (#346)", {
+  df <- set_names(data.frame(x = 1, x = 1), c("x", "x"))
+  expect_snapshot(
+    error = TRUE,
+    cnd_class = TRUE,
+    {
+      select_loc(df, "x")
+      select_loc(df, c("x"))
+
+      select_loc(df, c(!!1:2))
+      select_loc(df, !!(1:2))
+    }
+  )
+
+  # In these cases the selection manages to repair the data frame
+  expect_equal(select_loc(df, 1), c(x = 1L))
+  expect_equal(select_loc(df, 2), c(x = 2L))
+})
