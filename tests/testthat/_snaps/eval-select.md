@@ -16,7 +16,7 @@
       select_loc(x, "a", exclude = 1)
     Condition <rlang_error>
       Error in `select_loc()`:
-      ! `include` must be a character vector.
+      ! `exclude` must be a character vector.
 
 # can forbid rename syntax (#178)
 
@@ -40,6 +40,12 @@
     Condition <tidyselect:::error_disallowed_rename>
       Error in `select_loc()`:
       ! Can't rename variables in this context.
+    Code
+      select_loc(mtcars, c(foo = mpg, cyl), error_arg = "x", allow_rename = FALSE)
+    Condition <tidyselect:::error_disallowed_rename>
+      Error in `select_loc()`:
+      ! Can't rename variables in this context.
+      i `x` can't be renamed.
 
 # can forbid empty selections
 

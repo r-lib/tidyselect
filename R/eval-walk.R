@@ -110,11 +110,22 @@ ensure_named <- function(pos,
   check_empty(pos, allow_empty, error_arg, call = call)
 
   if (!allow_rename && any(names2(pos) != "")) {
-    cli::cli_abort(
-      "Can't rename variables in this context.",
-      class = "tidyselect:::error_disallowed_rename",
-      call = call
-    )
+    if (is.null(error_arg)) {
+      cli::cli_abort(
+        "Can't rename variables in this context.",
+        class = "tidyselect:::error_disallowed_rename",
+        call = call
+      )
+    } else {
+      cli::cli_abort(
+        c(
+          "Can't rename variables in this context.",
+          i = "{.arg {error_arg}} can't be renamed."
+        ),
+        class = "tidyselect:::error_disallowed_rename",
+        call = call
+      )
+    }
   }
 
   nms <- names(pos) <- names2(pos)
@@ -132,18 +143,15 @@ ensure_named <- function(pos,
 check_empty <- function(x, allow_empty = TRUE, error_arg = NULL, call = caller_env()) {
   if (!allow_empty && length(x) == 0) {
     if (is.null(error_arg)) {
-      cli::cli_abort(
-        "Must select at least one item.",
-        call = call,
-        class = "tidyselect_error_empty_selection"
-      )
+      msg <- "Must select at least one item."
     } else {
-      cli::cli_abort(
-        "{.arg {error_arg}} must select at least one column.",
-        call = call,
-        class = "tidyselect_error_empty_selection"
-        )
+      msg <- cli::format_inline("{.arg {error_arg}} must select at least one column.")
     }
+    cli::cli_abort(
+      "{msg}",
+      call = call,
+      class = "tidyselect_error_empty_selection"
+    )
   }
 }
 
