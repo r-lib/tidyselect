@@ -428,13 +428,6 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
     lifecycle::deprecate_soft("1.1.0",
       what = I("Use of bare predicate functions"),
       with = I("`where()` to wrap predicate functions"),
-      details = c(
-        " " = "# Was:",
-        " " = glue("data %>% select({name})"),
-        "",
-        " " = "# Now:",
-        " " = glue("data %>% select(where({name}))")
-      ),
       user_env = env
     )
 
@@ -450,15 +443,7 @@ eval_sym <- function(expr, data_mask, context_mask, strict = FALSE) {
   lifecycle::deprecate_soft("1.1.0",
     I("Using an external vector in selections"),
     I("`all_of()` or `any_of()`"),
-    details = c(
-      " " = "# Was:",
-      " " = glue("data %>% select({name})"),
-      "",
-      " " = "# Now:",
-      " " = glue("data %>% select(all_of({name}))"),
-      "",
-      "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>."
-    ),
+    details = "See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.",
     user_env = env
   )
 

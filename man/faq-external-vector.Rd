@@ -40,13 +40,8 @@ external object.
 result <- mtcars \%>\% select(vars)
 #> Warning: Using an external vector in selections was deprecated in tidyselect 1.1.0.
 #> i Please use `all_of()` or `any_of()` instead.
-#>   # Was:
-#>   data \%>\% select(vars)
-#> 
-#>   # Now:
-#>   data \%>\% select(all_of(vars))
-#> 
-#> See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+#> i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+#> This warning is displayed once every 8 hours.
 #> Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
 #> generated.
 }\if{html}{\out{</div>}}

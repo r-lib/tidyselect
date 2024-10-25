@@ -35,13 +35,7 @@
       Warning:
       Using an external vector in selections was deprecated in tidyselect 1.1.0.
       i Please use `all_of()` or `any_of()` instead.
-        # Was:
-        data %>% select(vars)
-      
-        # Now:
-        data %>% select(all_of(vars))
-      
-      See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
+      i See <https://tidyselect.r-lib.org/reference/faq-external-vector.html>.
     Output
       a b 
       1 2 
@@ -100,33 +94,18 @@
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
       i Please use `where()` to wrap predicate functions instead.
-        # Was:
-        data %>% select(is_integer)
-      
-        # Now:
-        data %>% select(where(is_integer))
     Code
       invisible(select_loc(iris, is.numeric))
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
       i Please use `where()` to wrap predicate functions instead.
-        # Was:
-        data %>% select(is.numeric)
-      
-        # Now:
-        data %>% select(where(is.numeric))
     Code
       invisible(select_loc(iris, isTRUE))
     Condition
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
       i Please use `where()` to wrap predicate functions instead.
-        # Was:
-        data %>% select(isTRUE)
-      
-        # Now:
-        data %>% select(where(isTRUE))
     Code
       # Warning is not repeated
       invisible(select_loc(iris, is_integer))
@@ -134,11 +113,6 @@
       Warning:
       Use of bare predicate functions was deprecated in tidyselect 1.1.0.
       i Please use `where()` to wrap predicate functions instead.
-        # Was:
-        data %>% select(is_integer)
-      
-        # Now:
-        data %>% select(where(is_integer))
 
 # eval_walk() errors when formula shorthand are not wrapped
 
