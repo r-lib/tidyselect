@@ -176,7 +176,7 @@ matches <- function(match,
 #'   a range of 2 gives "01", a range of three "001", etc.
 #' @inheritParams rlang::args_dots_empty
 #' @param cross Whether to take the cartesian product of `prefix`, `range`, and `suffix`.
-#'   If `FALSE`, the default, these arguments are recycled using tidyverse rules.
+#'   If `FALSE`, the default, these arguments are recycled using [tidyverse rules][vctrs::vector_recycling_rules].
 #' @export
 num_range <- function(prefix,
                       range,
@@ -189,7 +189,7 @@ num_range <- function(prefix,
   vars <- vars %||% peek_vars(fn = "num_range")
 
   if (cross) {
-    args <- vctrs::vec_expand_grid(prefix = prefix, range = range, suffix = suffix)
+    args <- vctrs::vec_expand_grid(prefix = prefix, range = range, suffix = suffix, .error_call = current_env())
   } else {
     args <- vctrs::vec_recycle_common(prefix = prefix, range = range, suffix = suffix)
   }

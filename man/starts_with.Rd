@@ -53,7 +53,7 @@ a range of 2 gives "01", a range of three "001", etc.}
 \item{...}{These dots are for future extensions and must be empty.}
 
 \item{cross}{Whether to take the cartesian product of \code{prefix}, \code{range}, and \code{suffix}.
-If \code{FALSE}, the default, these arguments are recycled using tidyverse rules.}
+If \code{FALSE}, the default, these arguments are recycled using \link[vctrs:theory-faq-recycling]{tidyverse rules}.}
 }
 \description{
 These \link[=language]{selection helpers} match variables according
