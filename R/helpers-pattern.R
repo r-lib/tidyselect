@@ -186,6 +186,9 @@ num_range <- function(prefix,
                       cross = FALSE,
                       vars = NULL) {
   check_dots_empty()
+  check_bool(cross)
+  check_number_whole(width, allow_null = TRUE)
+
   vars <- vars %||% peek_vars(fn = "num_range")
 
   if (cross) {
