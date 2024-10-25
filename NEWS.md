@@ -1,5 +1,7 @@
 # tidyselect (development version)
-  
+
+* `matches()` now uses `perl = TRUE` by default. This makes it more consitent with regular expressions in stringr (#330).
+
 * `eval_select()` and `eval_relocate()` gain a new `error_arg` argument that can be specified to throw a better error message when `allow_empty = FALSE`  or `allow_rename = FALSE` (@olivroy, #327).
 
 * `vars_pull()` now also warns when using `.data` (#335). Please

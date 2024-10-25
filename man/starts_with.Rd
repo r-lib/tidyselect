@@ -14,7 +14,7 @@ ends_with(match, ignore.case = TRUE, vars = NULL)
 
 contains(match, ignore.case = TRUE, vars = NULL)
 
-matches(match, ignore.case = TRUE, perl = FALSE, vars = NULL)
+matches(match, ignore.case = TRUE, perl = TRUE, vars = NULL)
 
 num_range(
   prefix,
