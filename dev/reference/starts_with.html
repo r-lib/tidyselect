@@ -73,7 +73,15 @@ to a given pattern.</p><ul><li><p><code>starts_with()</code>: Starts with an exa
 <span></span>
 <span><span class="fu">matches</span><span class="op">(</span><span class="va">match</span>, ignore.case <span class="op">=</span> <span class="cn">TRUE</span>, perl <span class="op">=</span> <span class="cn">FALSE</span>, vars <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu">num_range</span><span class="op">(</span><span class="va">prefix</span>, <span class="va">range</span>, suffix <span class="op">=</span> <span class="st">""</span>, width <span class="op">=</span> <span class="cn">NULL</span>, vars <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">num_range</span><span class="op">(</span></span>
+<span>  <span class="va">prefix</span>,</span>
+<span>  <span class="va">range</span>,</span>
+<span>  suffix <span class="op">=</span> <span class="st">""</span>,</span>
+<span>  width <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  cross <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  vars <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -114,6 +122,15 @@ established by functions like <code>select()</code> or <code>pivot_longer()</cod
 <dt id="arg-width">width<a class="anchor" aria-label="anchor" href="#arg-width"></a></dt>
 <dd><p>Optionally, the "width" of the numeric range. For example,
 a range of 2 gives "01", a range of three "001", etc.</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>These dots are for future extensions and must be empty.</p></dd>
+
+
+<dt id="arg-cross">cross<a class="anchor" aria-label="anchor" href="#arg-cross"></a></dt>
+<dd><p>Whether to take the cartesian product of <code>prefix</code>, <code>range</code>, and <code>suffix</code>.
+If <code>FALSE</code>, the default, these arguments are recycled using <a href="https://vctrs.r-lib.org/reference/theory-faq-recycling.html" class="external-link">tidyverse rules</a>.</p></dd>
 
 </dl></div>
     <div class="section level2">

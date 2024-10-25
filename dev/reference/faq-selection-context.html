@@ -26,7 +26,7 @@ place, possibly as the result of a typo (e.g. misplaced comma or wrong
 argument name). Alternatively, you may be deliberately trying to reduce
 duplication in your code by extracting out a selection into a variable:
 my_vars &amp;lt;- c(name, species, ends_with(&quot;color&quot;))
-#&amp;gt; Error: objet 'name' introuvable
+#&amp;gt; Error: object 'name' not found
 
 To make this work you’ll need to do two things:
 Wrap the whole thing in a function
@@ -72,7 +72,7 @@ place, possibly as the result of a typo (e.g. misplaced comma or wrong
 argument name). Alternatively, you may be deliberately trying to reduce
 duplication in your code by extracting out a selection into a variable:
 my_vars &amp;lt;- c(name, species, ends_with(&quot;color&quot;))
-#&amp;gt; Error: objet 'name' introuvable
+#&amp;gt; Error: object 'name' not found
 
 To make this work you’ll need to do two things:
 Wrap the whole thing in a function
@@ -157,7 +157,7 @@ place, possibly as the result of a typo (e.g. misplaced comma or wrong
 argument name). Alternatively, you may be deliberately trying to reduce
 duplication in your code by extracting out a selection into a variable:</p>
 <p></p><div class="sourceCode r"><pre><code><span><span class="va">my_vars</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">name</span>, <span class="va">species</span>, <span class="fu"><a href="../reference/starts_with.html">ends_with</a></span><span class="op">(</span><span class="st">"color"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Error: objet 'name' introuvable</span></span></code></pre><p></p></div>
+<span><span class="co">#&gt; Error: object 'name' not found</span></span></code></pre><p></p></div>
 <p>To make this work you’ll need to do two things:</p><ul><li><p>Wrap the whole thing in a function</p></li>
 <li><p>Use <code><a href="all_of.html">any_of()</a></code> or <code><a href="all_of.html">all_of()</a></code> instead of bare variable names</p></li>
 </ul><p></p><div class="sourceCode r"><pre><code><span><span class="va">my_vars</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="op">)</span> <span class="op">{</span></span>
