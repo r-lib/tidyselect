@@ -18,36 +18,12 @@ vars_select_eval <- function(vars,
     return(pos)
   }
 
-  uniquely_named <- uniquely_named %||% is.data.frame(data)
-
-  if (!is_symbolic(wrapped)) {
-    pos <- as_indices_sel_impl(
-      wrapped,
-      vars = vars,
-      strict = strict,
-      data = data,
-      allow_predicates = allow_predicates,
-      call = error_call
-    )
-    pos <- loc_validate(pos, vars, call = error_call)
-    pos <- ensure_named(
-      pos,
-      vars,
-      uniquely_named = uniquely_named,
-      allow_rename = allow_rename,
-      allow_empty = allow_empty,
-      error_arg = error_arg,
-      call = error_call
-    )
-    return(pos)
-  }
-
   vars <- peek_vars()
-
   vars_split <- vctrs::vec_split(seq_along(vars), vars)
 
   # Mark data duplicates so we can fail instead of disambiguating them
   # when renaming
+  uniquely_named <- uniquely_named %||% is.data.frame(data)
   if (uniquely_named) {
     vars_split$val <- map(vars_split$val, mark_data_dups)
   }
