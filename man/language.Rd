@@ -7,35 +7,46 @@
 \description{
 \subsection{Overview of selection features:}{
 
-tidyselect implements a DSL for selecting variables. It provides helpers
-for selecting variables:
+Tidyverse selections implement a dialect of R where operators make
+it easy to select variables:
 \itemize{
-\item \code{var1:var10}: variables lying between \code{var1} on the left and \code{var10} on the right.
-}
-\itemize{
-\item \code{\link[=starts_with]{starts_with("a")}}: names that start with \code{"a"}.
-\item \code{\link[=ends_with]{ends_with("z")}}: names that end with \code{"z"}.
-\item \code{\link[=contains]{contains("b")}}: names that contain \code{"b"}.
-\item \code{\link[=matches]{matches("x.y")}}: names that match regular expression \code{x.y}.
-\item \code{\link[=num_range]{num_range(x, 1:4)}}: names following the pattern, \code{x1}, \code{x2}, ..., \code{x4}.
-\item \code{\link[=all_of]{all_of(vars)}}/\code{\link[=any_of]{any_of(vars)}}:
-matches names stored in the character vector \code{vars}. \code{all_of(vars)} will
-error if the variables aren't present; \code{any_of(var)} will match just the
-variables that exist.
-\item \code{\link[=everything]{everything()}}: all variables.
-\item \code{\link[=last_col]{last_col()}}: furthest column on the right.
-\item \code{\link[=where]{where(is.numeric)}}: all variables where
-\code{is.numeric()} returns \code{TRUE}.
+\item \code{:} for selecting a range of consecutive variables.
+\item \code{!} for taking the complement of a set of variables.
+\item \code{&} and \code{|} for selecting the intersection or the union of two
+sets of variables.
+\item \code{c()} for combining selections.
 }
 
-As well as operators for combining those selections:
+In addition, you can use \strong{selection helpers}. Some helpers select specific
+columns:
 \itemize{
-\item \code{!selection}: only variables that don't match \code{selection}.
-\item \code{selection1 & selection2}: only variables included in both \code{selection1} and \code{selection2}.
-\item \code{selection1 | selection2}: all variables that match either \code{selection1} or \code{selection2}.
+\item \code{\link[=everything]{everything()}}: Matches all variables.
+\item \code{\link[=last_col]{last_col()}}: Select last variable, possibly with an offset.
 }
 
-When writing code inside packages you can substitute \code{"var"} for \code{var} to avoid \verb{R CMD check} notes.
+Other helpers select variables by matching patterns in their names:
+\itemize{
+\item \code{\link[=starts_with]{starts_with()}}: Starts with a prefix.
+\item \code{\link[=ends_with]{ends_with()}}: Ends with a suffix.
+\item \code{\link[=contains]{contains()}}: Contains a literal string.
+\item \code{\link[=matches]{matches()}}: Matches a regular expression.
+\item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
+}
+
+Or from variables stored in a character vector:
+\itemize{
+\item \code{\link[=all_of]{all_of()}}: Matches variable names in a character vector. All
+names must be present, otherwise an out-of-bounds error is
+thrown.
+\item \code{\link[=any_of]{any_of()}}: Same as \code{all_of()}, except that no error is thrown
+for names that don't exist.
+}
+
+Or using a predicate function:
+\itemize{
+\item \code{\link[=where]{where()}}: Applies a function to all variables and selects those
+for which the function returns \code{TRUE}.
+}
 }
 }
 \section{Simple examples}{

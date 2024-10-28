@@ -4,6 +4,13 @@
 
 * `eval_select()` now fails when data has duplicate names and a character vector is provided as input (#346).
 
+* New `args_tidy_select` documentation topic. Use the following tags to document tidyselect arguments in your functions:
+
+  ```r
+  #' @param ... <[`tidy-select`][tidyselect::args_tidy_select]> *doc*
+  #' @param sel <[`tidy-select`][tidyselect::args_tidy_select]> *doc*
+  ```
+
 * `eval_select()` and `eval_relocate()` gain a new `error_arg` argument that can be specified to throw a better error message when `allow_empty = FALSE`  or `allow_rename = FALSE` (@olivroy, #327).
 
 * `vars_pull()` now also warns when using `.data` (#335). Please
