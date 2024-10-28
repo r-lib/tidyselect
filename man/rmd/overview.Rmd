@@ -21,7 +21,7 @@ Other helpers select variables by matching patterns in their names:
 * [`matches()`][tidyselect::matches()]: Matches a regular expression.
 * [`num_range()`][tidyselect::num_range()]: Matches a numerical range like x01, x02, x03.
 
-Or from variables stored in a character vector:
+Or from external variables stored in a character vector:
 
 * [`all_of()`][tidyselect::all_of()]: Matches variable names in a character vector. All
   names must be present, otherwise an out-of-bounds error is
