@@ -21,11 +21,6 @@
   In addition, it gains a `cross` argument that allows you to take the
   cartesian product of these arguments instead.
 
-* `eval_select(allow_empty = FALSE)` gains a new argument to yield a better error
-  message in case of empty selection (@olivroy, #327)
-
-* `eval_select()` and `eval_relocate()` gain a new `error_arg` argument that can be specified to throw a better error message when `allow_empty = FALSE`.
-
 * `eval_select()` and `eval_relocate()` throw a classed error message when `allow_empty = FALSE` (@olivroy, #347).
 
 # tidyselect 1.2.1

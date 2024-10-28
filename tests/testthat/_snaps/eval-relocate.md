@@ -112,22 +112,22 @@
 
     Code
       relocate_loc(x, b, before = c(new = c))
-    Condition <tidyselect_error_cannot_rename>
+    Condition <rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables in this context.
+      ! Can't rename variables when `before` is supplied.
     Code
       relocate_loc(x, b, before = c(new = c), before_arg = ".before")
-    Condition <tidyselect_error_cannot_rename>
+    Condition <rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables in this context.
+      ! Can't rename variables when `.before` is supplied.
     Code
       relocate_loc(x, b, after = c(new = c))
-    Condition <tidyselect_error_cannot_rename>
+    Condition <rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables in this context.
+      ! Can't rename variables when `after` is supplied.
     Code
       relocate_loc(x, b, after = c(new = c), after_arg = ".after")
-    Condition <tidyselect_error_cannot_rename>
+    Condition <rlang_error>
       Error in `relocate_loc()`:
-      ! Can't rename variables in this context.
+      ! Can't rename variables when `.after` is supplied.
 
