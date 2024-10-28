@@ -75,7 +75,7 @@
     Condition <tidyselect_error_cannot_rename>
       Error in `relocate_loc()`:
       ! Can't rename variables in this context.
-      i `...` can't be renamed.
+      i In argument: `...`.
 
 # can forbid empty selections
 
