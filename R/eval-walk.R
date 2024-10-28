@@ -18,36 +18,12 @@ vars_select_eval <- function(vars,
     return(pos)
   }
 
-  uniquely_named <- uniquely_named %||% is.data.frame(data)
-
-  if (!is_symbolic(wrapped)) {
-    pos <- as_indices_sel_impl(
-      wrapped,
-      vars = vars,
-      strict = strict,
-      data = data,
-      allow_predicates = allow_predicates,
-      call = error_call
-    )
-    pos <- loc_validate(pos, vars, call = error_call)
-    pos <- ensure_named(
-      pos,
-      vars,
-      uniquely_named = uniquely_named,
-      allow_rename = allow_rename,
-      allow_empty = allow_empty,
-      error_arg = error_arg,
-      call = error_call
-    )
-    return(pos)
-  }
-
   vars <- peek_vars()
-
   vars_split <- vctrs::vec_split(seq_along(vars), vars)
 
   # Mark data duplicates so we can fail instead of disambiguating them
   # when renaming
+  uniquely_named <- uniquely_named %||% is.data.frame(data)
   if (uniquely_named) {
     vars_split$val <- map(vars_split$val, mark_data_dups)
   }
@@ -177,7 +153,7 @@ walk_data_tree <- function(expr, data_mask, context_mask, colon = FALSE) {
 
   out <- switch(
     expr_kind(expr, context_mask, error_call),
-    literal = expr,
+    literal = eval_literal(expr, data_mask, context_mask),
     symbol = eval_sym(expr, data_mask, context_mask),
     `(` = walk_data_tree(expr[[2]], data_mask, context_mask, colon = colon),
     `!` = eval_bang(expr, data_mask, context_mask),
@@ -301,11 +277,6 @@ chr_as_locations <- function(x, vars, call = caller_env(), arg = NULL) {
   set_names(out, names(x))
 }
 
-as_indices <- function(x, vars, strict = TRUE, call) {
-  inds <- with_subscript_errors(as_indices_impl(x, vars, strict, call))
-  vctrs::vec_as_location(inds, length(vars), vars, convert_values = NULL)
-}
-
 expr_kind <- function(expr, context_mask, error_call) {
   switch(
     typeof(expr),
@@ -345,6 +316,28 @@ call_kind <- function(expr, context_mask, error_call) {
     `c` = fn,
     "call"
   )
+}
+
+eval_literal <- function(expr, data_mask, context_mask) {
+  internal <- data_mask$.__tidyselect__.$internal
+
+  if (internal$uniquely_named && is_character(expr)) {
+    # Since tidyselect allows repairing data frames with duplicate names by
+    # renaming or selecting positions, we can't check the input for duplicates.
+    # Instead, we check the output. But in case of character literals, checking
+    # the output doesn't work because we use `vctrs::vec_as_location()` to
+    # transform the strings to locations and it ignores duplicate names. So we
+    # instead check the input here, since it's not possible to repair duplicate
+    # names by matching them by name. This avoids an inconsistency with the
+    # symbolic path (#346).
+    vctrs::vec_as_names(
+      internal$vars,
+      repair = "check_unique",
+      call = internal$error_call
+    )
+ }
+
+  expr
 }
 
 eval_colon <- function(expr, data_mask, context_mask) {

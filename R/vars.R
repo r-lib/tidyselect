@@ -1,4 +1,3 @@
-
 peeker <- function(what) {
   function(..., fn = NULL) {
     if (!missing(...)) {
