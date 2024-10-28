@@ -89,7 +89,7 @@ ensure_named <- function(pos,
     if (is.null(error_arg)) {
       cli::cli_abort(
         "Can't rename variables in this context.",
-        class = "tidyselect:::error_disallowed_rename",
+        class = "tidyselect_error_cannot_rename",
         call = call
       )
     } else {
@@ -98,7 +98,7 @@ ensure_named <- function(pos,
           "Can't rename variables in this context.",
           i = "{.arg {error_arg}} can't be renamed."
         ),
-        class = "tidyselect:::error_disallowed_rename",
+        class = "tidyselect_error_cannot_rename",
         call = call
       )
     }
