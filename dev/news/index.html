@@ -41,6 +41,12 @@
 <h2 class="pkg-version" data-toc-text="development version" id="tidyselect-development-version">tidyselect (development version)<a class="anchor" aria-label="anchor" href="#tidyselect-development-version"></a></h2>
 <ul><li><p><code><a href="../reference/starts_with.html">matches()</a></code> now uses <code>perl = TRUE</code> by default. This makes it more consitent with regular expressions in stringr (<a href="https://github.com/r-lib/tidyselect/issues/330" class="external-link">#330</a>).</p></li>
 <li><p><code><a href="../reference/eval_select.html">eval_select()</a></code> now fails when data has duplicate names and a character vector is provided as input (<a href="https://github.com/r-lib/tidyselect/issues/346" class="external-link">#346</a>).</p></li>
+<li>
+<p>New <code>args_tidy_select</code> documentation topic. Use the following tags to document tidyselect arguments in your functions:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co">#' @param ... &lt;[`tidy-select`][tidyselect::args_tidy_select]&gt; *doc*</span></span>
+<span><span class="co">#' @param sel &lt;[`tidy-select`][tidyselect::args_tidy_select]&gt; *doc*</span></span></code></pre></div>
+</li>
 <li><p><code><a href="../reference/eval_select.html">eval_select()</a></code> and <code><a href="../reference/eval_relocate.html">eval_relocate()</a></code> gain a new <code>error_arg</code> argument that can be specified to throw a better error message when <code>allow_empty = FALSE</code> or <code>allow_rename = FALSE</code> (<a href="https://github.com/olivroy" class="external-link">@olivroy</a>, <a href="https://github.com/r-lib/tidyselect/issues/327" class="external-link">#327</a>).</p></li>
 <li><p><code><a href="../reference/vars_pull.html">vars_pull()</a></code> now also warns when using <code>.data</code> (<a href="https://github.com/r-lib/tidyselect/issues/335" class="external-link">#335</a>). Please use string-quotation programmatic usage, consistently with other tidyselect contexts.</p></li>
 <li><p><code><a href="../reference/starts_with.html">num_range()</a></code> now recycles its arguments using tidyverse rules (<a href="https://github.com/r-lib/tidyselect/issues/355" class="external-link">#355</a>). In addition, it gains a <code>cross</code> argument that allows you to take the cartesian product of these arguments instead.</p></li>
@@ -145,7 +151,7 @@
 </li>
 <li>
 <p>You can now use predicate functions in selection contexts:</p>
-<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="va">is.factor</span><span class="op">)</span></span>
 <span><span class="va">iris</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="va">is.factor</span> <span class="op">|</span> <span class="va">is.numeric</span><span class="op">)</span></span></code></pre></div>
 <p>This feature is not available in functions that use the legacy interface of tidyselect. These need to be updated to use the new <code><a href="../reference/eval_select.html">eval_select()</a></code> function instead of <code><a href="../reference/vars_select.html">vars_select()</a></code>.</p>
@@ -154,11 +160,11 @@
 <li><p>Improved support for named elements. It is now possible to assign the same name to multiple elements, if the input data structure doesn’t require unique names (i.e. anything but a data frame).</p></li>
 <li>
 <p>The selection engine has been rewritten to support a clearer separation between data-expressions (calls to <code>:</code>, <code>-</code>, and <code>c</code>) and env-expressions (anything else). This means you can now safely use expressions of the type:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">select</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">pivot_longer</span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Even if the data frame <code>data</code> contains a column also named <code>data</code>, the subexpression <code>ncol(data)</code> is still correctly evaluated. The <code>data:ncol(data)</code> expression is equivalent to <code>2:3</code> because <code>data</code> is looked up in the relevant context without ambiguity:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="op">(</span>foo <span class="op">=</span> <span class="fl">1</span>, data <span class="op">=</span> <span class="fl">2</span>, bar <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
 <span><span class="va">data</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">data</span><span class="op">:</span><span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">data</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; # A tibble: 1 x 2</span></span>
@@ -179,7 +185,7 @@
 </li>
 <li>
 <p>Selection helpers like <code><a href="../reference/all_of.html">all_of()</a></code> and <code><a href="../reference/starts_with.html">starts_with()</a></code> are now available in all selection contexts, even when they haven’t been attached to the search path. The most visible consequence of this change is that it is now easier to use selection functions without attaching the host package:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Before</span></span>
 <span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tidyselect.r-lib.org/reference/starts_with.html">starts_with</a></span><span class="op">(</span><span class="st">"c"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
