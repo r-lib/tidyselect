@@ -144,7 +144,7 @@ contains <- function(match,
 #' @export
 matches <- function(match,
                     ignore.case = TRUE,
-                    perl = FALSE,
+                    perl = TRUE,
                     vars = NULL) {
   check_match(match)
   vars <- vars %||% peek_vars(fn = "matches")
