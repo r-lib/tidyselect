@@ -1,6 +1,6 @@
 # tidyselect (development version)
 
-* `matches()` now uses `perl = TRUE` by default. This makes it more consitent with regular expressions in stringr (#330).
+* `matches()` now uses `perl = TRUE` by default. This makes it more consistent with regular expressions in stringr (#330).
 
 * `eval_select()` now fails when data has duplicate names and a character vector is provided as input (#346).
 
