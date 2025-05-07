@@ -111,7 +111,7 @@ combine_names <- function(x,
   vctrs::vec_c(!!tag := x, .name_spec = name_spec)
 }
 unique_name_spec <- function(outer, inner) {
-  # For compatibily, we enumerate as "foo1", "foo2", rather than
+  # For compatibility, we enumerate as "foo1", "foo2", rather than
   # "foo...1", "foo...2"
   sep <- if (is_character(inner)) "..." else ""
   paste(outer, inner, sep = sep)
