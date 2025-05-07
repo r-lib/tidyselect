@@ -8,8 +8,8 @@
 <title>Technical description of tidyselect • tidyselect</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.9/font.css" rel="stylesheet">
-<link href="../deps/Source_Code_Pro-0.4.9/font.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/Source_Sans_Pro-0.4.10/font.css" rel="stylesheet">
+<link href="../deps/Source_Code_Pro-0.4.10/font.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Technical description of tidyselect">
@@ -372,8 +372,8 @@ env-vars:</p>
 <span></span>
 <span><span class="co"># `cyl` represents the data frame column here:</span></span>
 <span><span class="va">mtcars</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu">mask</span><span class="op">(</span><span class="va">cyl</span> <span class="op">*</span> <span class="va">foo</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] 60 60 40 60 80 60 80 40 40 60 60 80 80 80 80 80 80 40 40 40 40 80 80</span></span>
-<span><span class="co">#&gt; [24] 80 80 40 40 40 80 60 80 40</span></span></code></pre></div>
+<span><span class="co">#&gt;  [1] 60 60 40 60 80 60 80 40 40 60 60 80 80 80 80 80 80 40 40 40 40 80</span></span>
+<span><span class="co">#&gt; [23] 80 80 80 40 40 40 80 60 80 40</span></span></code></pre></div>
 <p>It is possible to bypass the data frame variables by forcing symbols
 to be looked up in the environment with <code>!!</code> or
 <code>.env</code>:</p>
@@ -441,10 +441,11 @@ warning in the future, and then an error.</p>
 <span><span class="co">#&gt; Warning: Using an external vector in selections was deprecated in tidyselect</span></span>
 <span><span class="co">#&gt; 1.1.0.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> Please use `all_of()` or `any_of()` instead.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BBBB;">ℹ</span> See</span></span>
+<span><span class="co">#&gt;   &lt;https://tidyselect.r-lib.org/reference/faq-external-vector.html&gt;.</span></span>
 <span><span class="co">#&gt; <span style="color: #555555;">This warning is displayed once every 8 hours.</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
-<span><span class="co">#&gt; <span style="color: #555555;">generated.</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning</span></span></span>
+<span><span class="co">#&gt; <span style="color: #555555;">was generated.</span></span></span>
 <span><span class="co">#&gt; cyl </span></span>
 <span><span class="co">#&gt;   2</span></span></code></pre></div>
 </div>
@@ -605,7 +606,7 @@ tone for the development of the tidyselect syntax.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.2.</p>
 </div>
 
   </div></footer>
