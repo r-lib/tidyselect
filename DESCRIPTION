@@ -23,8 +23,6 @@ Imports:
     vctrs (>= 0.5.2),
     withr
 Suggests:
-    covr,
-    crayon,
     dplyr,
     knitr,
     magrittr,

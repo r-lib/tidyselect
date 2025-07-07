@@ -33,7 +33,7 @@ Other helpers select variables by matching patterns in their names:
 \item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
 }
 
-Or from variables stored in a character vector:
+Or from external variables stored in a character vector:
 \itemize{
 \item \code{\link[=all_of]{all_of()}}: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is

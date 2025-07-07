@@ -6,7 +6,7 @@ options(
   tibble.print_min = 4,
   tibble.max_extra_cols = 8,
   digits = 2,
-  crayon.enabled = FALSE,
+  cli.num_colors = 1,
   cli.unicode = FALSE
 )
 
