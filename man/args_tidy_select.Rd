@@ -9,7 +9,7 @@ the argument supports \strong{tidy selections}. Tidy selection provides a concis
 dialect of R for selecting variables based on their names or properties.
 
 Tidy selection is a variant of tidy evaluation. This means that inside
-functions, tidy-select arguments require special attention, as described in
+functions tidy-select arguments require special attention, as described in
 the \emph{Indirection} section below. If you've never heard of tidy evaluation
 before, start with \code{vignette("programming")}.
 }
@@ -40,7 +40,7 @@ Other helpers select variables by matching patterns in their names:
 \item \code{\link[=num_range]{num_range()}}: Matches a numerical range like x01, x02, x03.
 }
 
-Or from variables stored in a character vector:
+Or from external variables stored in a character vector:
 \itemize{
 \item \code{\link[=all_of]{all_of()}}: Matches variable names in a character vector. All
 names must be present, otherwise an out-of-bounds error is
@@ -59,11 +59,11 @@ for which the function returns \code{TRUE}.
 \section{Indirection}{
 There are two main cases:
 \itemize{
-\item If you have a character vector of column names, use \code{all_of()}
+\item If you want the user to supply a character vector of column names, use \code{all_of()}
 or \code{any_of()}, depending on whether or not you want unknown variable
 names to cause an error, e.g. \code{select(df, all_of(vars))},
 \code{select(df, !any_of(vars))}.
-\item If you want the user to be able to supply a tidyselect specification in
+\item If you want the user to supply a tidyselect specification in
 a function argument, embrace the function argument, e.g.
 \code{select(df, {{ vars }})}.
 }
